@@ -204,3 +204,13 @@ node scripts/measure-build.mjs
 The browser scripts use installed Chrome or Edge on Windows. Configure an available Playwright browser on another platform.
 
 For optional account browser checks, start the backend with a separate test DATABASE_URL, set TEST_URL to that server, and run npm run test:fullstack. The runner explicitly enables the optional API for that browser context.
+
+### Accessibility and timeline usability (2026-11-14)
+
+- Site timelines retain every sampled date in a horizontally scrollable, labeled strip and a native date select. Available and unsaved dates stay distinct. Month buttons include the year and completeness in their accessible names.
+- Search has an explicit dialog name; native modal focus, result arrows, Escape and focus return remain intact. Headline analysis results use polite atomic status regions. Vegetation loading updates are muted during monthly playback.
+- Chart/catalog/method/import tables have captions and column headers; chart and weather tables also identify date/month row headers. Wide scientific-table regions support keyboard scrolling. Monthly rainfall departures have an expandable table, including unavailable observations.
+- Validation: 38 unit tests; TypeScript and production build; accessibility (6 groups), general browser (15), site timeline (12), weather (6), radar evidence (8), selections (9), detailed map (9), satellite (19), and globe display (17) browser groups passed. General, weather, radar, selections and satellite suites checked the regenerated offline edition, including zero external requests. Final general offline isolation was rerun after regeneration.
+- Reflow checked at 1280, 640 and 320 CSS pixels (200%/400% equivalent layout widths), plus existing 390px light/dark checks. This is not a claim of actual browser-zoom or screen-reader testing. Screenshots are generated under ignored .artifacts.
+- Offline HTML: 2,989,669 bytes, below the 3,000,000-byte budget. No new dependencies or scientific values.
+- Manual follow-up: actual 200%/400% browser zoom, NVDA/VoiceOver reading order and live-region speech, keyboard map/globe use, touch scrolling, and focus visibility in both themes. Canvas/WebGL imagery still needs its accompanying controls and textual evidence; full screen-reader compatibility is not certified.

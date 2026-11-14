@@ -150,7 +150,7 @@ export default function GlobeExperience({active,sites,points,place,enso,news,sel
   <p>{monthPlayback?.months[0]} → {monthPlayback?.months.at(-1)} · {vegetationStatus==='loading'?'Waiting for the selected image…':'Monthly images reveal seasonal greening and browning.'}</p>
  </>}
  </div>
- <ConceptVegetation active={active&&mode==='concept'} month={selection.month||concept?.month||''} onStatus={setVegetationStatus}/>
+ <ConceptVegetation playing={!!monthPlayback?.playing} active={active&&mode==='concept'} month={selection.month||concept?.month||''} onStatus={setVegetationStatus}/>
  </div>
  <ConceptTimeline requestedMonth={selection.month} onMonthChange={setMonth} navigationKey={navigationKey} onPlaybackChange={setMonthPlayback} waiting={vegetationStatus==='loading'} active={active&&mode==='concept'} sites={sites} enso={enso} selectedSiteId={selected?.id} radarDates={frames.filter(f=>f.status==='ready').map(f=>f.date)} onSnapshot={receiveConcept} onSelectSite={focusConceptSite} onOpenRadar={openConceptRadar}/>
  </div>

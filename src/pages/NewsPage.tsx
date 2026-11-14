@@ -18,7 +18,7 @@ function NewsItem({item}: {item: Headline}) {
   return <article className="news-item">
     <div className="news-meta"><span>{formatDate(item.date)}</span><span>{item.source}</span></div>
     <div><h3><a href={safeURL(item.url)} target="_blank" rel="noopener">{item.title} ↗</a></h3><p className="tagline">{item.region || 'Unclassified'} / {item.theme || 'Climate'} · {item.verification || 'Source review pending'}</p></div>
-    <div className="sentiment">Headline tone<strong>{finite(item.vader) ? item.vader.toFixed(2) : 'Pending'}</strong>{finite(item.vaderAdjusted) ? 'Adjusted tone: ' + item.vaderAdjusted.toFixed(2) : 'Not scored yet'}<br/><button className="text-link" data-ai-item={item.id} disabled={busy} onClick={analyze}>Explain headline tone</button><p className="ai-result">{result}</p></div>
+    <div className="sentiment">Headline tone<strong>{finite(item.vader) ? item.vader.toFixed(2) : 'Pending'}</strong>{finite(item.vaderAdjusted) ? 'Adjusted tone: ' + item.vaderAdjusted.toFixed(2) : 'Not scored yet'}<br/><button className="text-link" data-ai-item={item.id} disabled={busy} onClick={analyze}>Explain headline tone</button><p className="ai-result" role="status" aria-atomic="true">{result}</p></div>
   </article>;
 }
 export function NewsPage({active, news}: {active: boolean; news: News}) {

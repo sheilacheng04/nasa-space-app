@@ -30,7 +30,7 @@ export function Search({ open, close, data, locate }: { open: boolean; close: ()
     catch (error) { if (token === version.current) setStatus(errorMessage(error)); }
     finally { if (token === version.current) setBusy(false); }
   }
-  return <dialog id="search-dialog" ref={dialog} onClose={() => { close(); document.getElementById('open-search')?.focus(); }} onKeyDown={event => {
+  return <dialog aria-labelledby="search-title" aria-describedby="search-status" id="search-dialog" ref={dialog} onClose={() => { close(); document.getElementById('open-search')?.focus(); }} onKeyDown={event => {
     if (event.key === 'Escape') { event.preventDefault(); dialog.current?.close(); return; }
     if (!['ArrowDown', 'ArrowUp'].includes(event.key)) return;
     const buttons = Array.from(dialog.current!.querySelectorAll<HTMLElement>('.search-result'));
@@ -39,8 +39,8 @@ export function Search({ open, close, data, locate }: { open: boolean; close: ()
     const index = buttons.indexOf(document.activeElement as HTMLElement);
     buttons[(index + (event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length].focus();
   }}>
-    <form method="dialog"><div className="dialog-head"><label htmlFor="global-search">Search the Pacific</label><button className="icon-button" aria-label="Close search">×</button></div></form>
-    <input id="global-search" type="search" placeholder="A study area, a place, a headline…" autoComplete="off" value={query} onChange={event => { version.current++; setBusy(false); setQuery(event.target.value); setRemote(null); }}/>
+    <form method="dialog"><div className="dialog-head"><label id="search-title" htmlFor="global-search">Search the Pacific</label><button className="icon-button" aria-label="Close search">×</button></div></form>
+    <input aria-controls="search-results" id="global-search" type="search" placeholder="A study area, a place, a headline…" autoComplete="off" value={query} onChange={event => { version.current++; setBusy(false); setQuery(event.target.value); setRemote(null); }}/>
     <div id="search-results">{remote ? remote.map((place, i) => <button key={i} className="search-result" onClick={() => { locate(place); dialog.current?.close(); }}>{[place.properties.name, place.properties.state, place.properties.country].filter(Boolean).join(', ')}</button>) : matches.map((item, i) => <a key={i} className="search-result" href={item.href} target={item.href.startsWith('https:') ? '_blank' : undefined} rel="noopener" onClick={event => {if(item.href.startsWith('#sites/')&&location.hash.startsWith('#globe')){event.preventDefault();dispatchEvent(new CustomEvent('globe:select-site',{detail:{id:item.href.slice(7)}}));}else if(item.place){event.preventDefault();locate(item.place);}dialog.current?.close();}}>{item.title}<small>{item.detail}</small></a>)}
       {(remote ? remote.length === 0 : matches.length === 0) && <p>No results. Try a study area or search world places.</p>}
     </div>
