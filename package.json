@@ -21,7 +21,10 @@
     "check": "npm test && npm run test:api && npm run build",
     "test:satellite": "node scripts/satellite-browser-check.mjs",
     "test:globe-display": "node scripts/globe-display-check.mjs",
-    "test:site-timeline": "node scripts/site-timeline-check.mjs"
+    "test:site-timeline": "node scripts/site-timeline-check.mjs",
+    "test:weather": "node scripts/weather-browser-check.mjs",
+    "test:radar-evidence": "node scripts/radar-evidence-browser-check.mjs",
+    "test:site-map": "node scripts/site-map-browser-check.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

@@ -39,7 +39,8 @@ try{
  await expect(page.locator('#radar-status')).toContainText('SIMULATED');
  await page.getByRole('button',{name:'Radar images',exact:true}).click();
  await page.getByRole('button',{name:'Before / after',exact:true}).click();await page.locator('#date-slider').fill('0');
- await expect(page.locator('#radar-stage-container')).toContainText('Choose an earlier');
+ await expect(page.locator('#radar-stage-container')).toContainText('No coverage resolved in the saved preview');
+ await page.locator('#after-date').selectOption(await page.locator('#before-date').inputValue());await expect(page.locator('#radar-stage-container')).toContainText('Choose an earlier');
  await page.locator('#site-select').selectOption('dadu');
  await expect(page.locator('.method-note').first()).toContainText('La Ni');
  await page.locator('#site-select').selectOption('angat');

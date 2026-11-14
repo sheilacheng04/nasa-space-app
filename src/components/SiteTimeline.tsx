@@ -2,13 +2,15 @@ import {useEffect,useLayoutEffect,useMemo,useState} from 'react';
 import type {KeyboardEvent} from 'react';
 import {assetURL,safeURL} from '../core.js';
 import {hosted} from '../api/client';
+import {radarUnavailable} from '../radar-data.js';
+import type {RadarRecord} from '../radar-data.js';
 import '../site-timeline.css';
 
 export interface SiteTimelineFrame {
  date:string;image?:string;url?:string;status?:string;reason?:string;parameters?:{BBOX?:string};
 }
-export function SiteTimeline({siteName,frames,index,onIndexChange,active}:{
- siteName:string;frames:SiteTimelineFrame[];index:number;onIndexChange:(index:number)=>void;active:boolean;
+export function SiteTimeline({siteName,frames,index,onIndexChange,active,scenes}:{
+ siteName:string;frames:SiteTimelineFrame[];index:number;onIndexChange:(index:number)=>void;active:boolean;scenes?:RadarRecord[];
 }){
  const [playing,setPlaying]=useState(false),[speed,setSpeed]=useState(1),[availableOnly,setAvailableOnly]=useState(true),[retry,setRetry]=useState(0);
  const [loaded,setLoaded]=useState<{key:string;url:string}|null>(null),[load,setLoad]=useState<{key:string;status:string}>({key:'',status:'loading'});
@@ -18,6 +20,7 @@ export function SiteTimeline({siteName,frames,index,onIndexChange,active}:{
  const steps=availableOnly?available:frames.map((_,i)=>i);
  const status=load.key===key?load.status:'loading';
  const shown=loaded?.key===key?loaded:null;
+ const absent=radarUnavailable(frame,scenes);
  const previous=steps.filter(i=>i<index).at(-1),next=steps.find(i=>i>index);
  const days=previous===undefined||!frame?null:Math.round((Date.parse(frame.date)-Date.parse(frames[previous].date))/86400000);
  useLayoutEffect(()=>{
@@ -65,7 +68,7 @@ export function SiteTimeline({siteName,frames,index,onIndexChange,active}:{
  return <section className="site-timeline" aria-label={'Dated radar image player for '+siteName} tabIndex={0} onKeyDown={keyboard} data-frame-date={frame?.date||''} data-frame-status={status} data-frame-bounds={frame?.parameters?.BBOX||''} data-playing={playing}>
   <div className="site-time-heading"><div><h3>Watch change through time</h3><p>Real NISAR radar images of the same place. These colors are radar returns, not natural-color photography.</p></div><strong className="site-time-date" aria-live={playing?'off':'polite'}>{frame?.date||'No date available'}</strong></div>
   <div className="radar-stage site-time-stage" aria-busy={status==='loading'}>
-   {shown?<img src={shown.url} alt={'NISAR false-color radar image of '+siteName+', mosaic date '+frame?.date+'; saved NASA GIBS image, not calibrated'} data-image-date={frame?.date}/>:<div className="site-time-placeholder" role={playing?undefined:'status'}><strong>{status==='loading'?'Loading this date...':status==='error'?'This image could not load':status==='offline'?'This date is not included offline':'No saved image for this date'}</strong><span>{frame?.date}</span><p>{status==='loading'?'The previous image is cleared while this one loads.':status==='offline'?'Choose a marked available image or open the hosted edition.':status==='error'?'Your date is preserved. Retry to load the same image.':'The timeline keeps this gap visible. No earlier image or invented frame replaces it.'}</p>{status==='error'&&<button onClick={()=>setRetry(n=>n+1)}>Retry image</button>}</div>}
+   {shown?<img src={shown.url} alt={'NISAR false-color radar image of '+siteName+', mosaic date '+frame?.date+'; saved NASA GIBS image, not calibrated'} data-image-date={frame?.date}/>:<div className="site-time-placeholder" role={playing?undefined:'status'}><strong>{status==='loading'?'Loading this date...':status==='error'?'This image could not load':status==='offline'?'This date is not included offline':absent.title}</strong><span>{frame?.date}</span><p>{status==='loading'?'The previous image is cleared while this one loads.':status==='offline'?'Choose a marked available image or open the hosted edition.':status==='error'?'Your date is preserved. Retry to load the same image.':absent.description}</p>{status==='error'&&<button onClick={()=>setRetry(n=>n+1)}>Retry image</button>}</div>}
   </div>
   <div className="site-time-readout"><span>{days===null?'No earlier step in this sequence':days+' days since the previous '+(availableOnly?'available image':'sampled date')}</span><span>Checkered areas: no displayed radar coverage</span></div>
   <div className="site-time-controls">

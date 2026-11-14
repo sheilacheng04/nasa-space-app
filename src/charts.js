@@ -15,3 +15,29 @@ export function chart(input,{key,label,unit,color='var(--blue)',bars=false,annot
  const desc=label+', n = '+clean.length+' available samples, '+rows[0].date+' to '+rows.at(-1).date+'. '+annotation;
  return '<svg class="chart-svg" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+esc(desc)+'"><text x="'+p.l+'" y="14" font-size="10" fill="'+color+'">'+esc(label)+' · '+esc(unit)+' · n = '+clean.length+'</text>'+gap+ticks+marks+'<text x="'+p.l+'" y="'+(h-7)+'" font-size="10" fill="var(--muted)">'+esc(rows[0].date)+'</text><text x="'+(w-p.r)+'" y="'+(h-7)+'" text-anchor="end" font-size="10" fill="var(--muted)">'+esc(rows.at(-1).date)+'</text></svg><p class="source-line">'+esc(annotation)+'</p><details><summary class="source-line">View chart data · n = '+clean.length+'</summary><div class="data-preview"><table><thead><tr><th>Date</th><th>'+esc(label)+' ('+esc(unit)+')</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+esc(r.date)+'</td><td>'+(finite(r[key])?r[key].toFixed(2):'not available')+'</td></tr>').join('')+'</tbody></table></div></details>';
 }
+
+// Weather-only comparison; keep radar charts and their gap handling unchanged.
+export function weatherChart(rows,{label,unit,color='var(--blue)',bars=false,domain,annotation=''}) {
+ const [lo,hi]=domain,w=560,h=260,p={l:50,r:16,t:24,b:40};
+ const x=i=>p.l+(i+.5)*(w-p.l-p.r)/12;
+ const y=v=>h-p.b-(v-lo)*(h-p.t-p.b)/(hi-lo);
+ const monthName=i=>new Date(Date.UTC(2026,i,1)).toLocaleDateString('en',{month:'short',timeZone:'UTC'});
+ const value=v=>finite(v)?v.toFixed(2):'not available';
+ const departure=v=>finite(v)?(v>0?'+':'')+v.toFixed(2):'not available';
+ const title=r=>r.date+': observed '+value(r.observed)+' '+unit+', historical average '+value(r.baseline)+' '+unit+', departure '+departure(r.anomaly)+' '+unit+'. '+r.status;
+ const ticks=Array.from({length:5},(_,i)=>lo+(hi-lo)*i/4).map(v=>'<line x1="'+p.l+'" x2="'+(w-p.r)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="var(--line)"/><text x="'+(p.l-8)+'" y="'+(y(v)+4)+'" text-anchor="end" font-size="11" fill="var(--muted)">'+v.toFixed(1)+'</text>').join('');
+ let marks='';
+ if(bars){
+  marks=rows.map((r,i)=>'<g><title>'+esc(title(r))+'</title>'+(finite(r.observed)?'<rect x="'+(x(i)-12)+'" y="'+y(r.observed)+'" width="11" height="'+(y(0)-y(r.observed))+'" fill="'+color+'"/>':'')+(finite(r.baseline)?'<rect x="'+(x(i)+2)+'" y="'+y(r.baseline)+'" width="11" height="'+(y(0)-y(r.baseline))+'" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="3 2"/>':'')+'</g>').join('');
+ }else{
+  for(const key of ['baseline','observed']){
+   let previous=false;
+   const path=rows.map((r,i)=>{if(!finite(r[key])){previous=false;return '';}const command=previous?'L':'M';previous=true;return command+x(i)+','+y(r[key]);}).join(' ');
+   marks+='<path d="'+path+'" fill="none" stroke="'+(key==='observed'?color:'var(--muted)')+'" stroke-width="2"'+(key==='baseline'?' stroke-dasharray="5 4"':'')+'/>';
+   marks+=rows.map((r,i)=>finite(r[key])?'<circle cx="'+x(i)+'" cy="'+y(r[key])+'" r="3" fill="'+(key==='observed'?color:'var(--card)')+'" stroke="'+(key==='observed'?color:'var(--muted)')+'"><title>'+esc(title(r))+'</title></circle>':'').join('');
+  }
+ }
+ const labels=rows.map((r,i)=>'<text x="'+x(i)+'" y="'+(h-21)+'" text-anchor="middle" font-size="11" fill="var(--muted)">'+monthName(i)+'</text>'+(r.observed===null?'<text x="'+x(i)+'" y="'+(h-5)+'" text-anchor="middle" font-size="12" fill="var(--muted)">'+(r.status==='Incomplete month'?'I':'—')+'</text>':'')).join('');
+ const count=rows.filter(r=>r.observed!==null).length;
+ return '<div class="weather-legend"><span style="color:'+color+'">Observed ERA5 estimate (solid)</span><span>Historical average (dashed) (1991–2020)</span></div><svg class="chart-svg" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+esc(label+' ('+unit+'), '+count+' complete observations. Historical average for the same calendar month. Missing observations stay blank; values and departures in the table below.')+'"><text x="'+p.l+'" y="14" font-size="11" fill="var(--muted)">'+esc(unit)+'</text>'+ticks+marks+labels+'</svg><p class="source-line">I: incomplete month; —: observation unavailable. Historical averages can remain visible when an observation is missing. Same scale for 2025 and 2026.</p><p class="source-line">'+esc(annotation)+'</p><details><summary>View '+esc(label.toLowerCase())+' values and departures</summary><div class="table-scroll"><table><caption>'+esc(label+' / '+rows[0]?.date.slice(0,4)+' / '+unit)+'</caption><thead><tr><th scope="col">Month</th><th scope="col">Observed</th><th scope="col">Historical average</th><th scope="col">Departure</th><th scope="col">Observation status</th></tr></thead><tbody>'+rows.map((r,i)=>'<tr><th scope="row">'+monthName(i)+'</th><td>'+value(r.observed)+'</td><td>'+value(r.baseline)+'</td><td>'+departure(r.anomaly)+'</td><td>'+esc(r.status)+'</td></tr>').join('')+'</tbody></table></div></details>';
+}

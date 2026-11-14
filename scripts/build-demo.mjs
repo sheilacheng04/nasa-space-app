@@ -1,4 +1,5 @@
 import {build} from 'esbuild';
+import assert from 'node:assert/strict';
 import {readFile,writeFile,readdir,mkdir} from 'node:fs/promises';
 import path from 'node:path';
 import {existsSync} from 'node:fs';
@@ -55,9 +56,29 @@ const bundled=await build({entryPoints:['src/main.tsx'],bundle:true,write:false,
 }}]});
 const globe=await readFile('node_modules/globe.gl/dist/globe.gl.min.js','utf8');
 let css=await readFile('src/styles.css','utf8');css=css.replace("@import url('./map.css');",await readFile('src/map.css','utf8'));
-for(const name of ['story','globe','local-window','account','editorial','satellite','concept-timeline','site-timeline'])css+='\n'+await readFile('src/'+name+'.css','utf8');
+for(const name of ['story','globe','local-window','account','editorial','satellite','concept-timeline','site-timeline','weather','radar-evidence'])css+='\n'+await readFile('src/'+name+'.css','utf8');
 const serialize=v=>JSON.stringify(v).replaceAll('<','\\u003c');
-const setup='globalThis.__PACIFIC_DEMO__=true;globalThis.__PACIFIC_DATA__='+serialize(data)+';globalThis.__PACIFIC_ASSETS__='+serialize(assets)+';for(const s of globalThis.__PACIFIC_DATA__["sites.json"]){globalThis.__PACIFIC_DATA__["sites/"+s.id+"/evidence.json"].inventory=globalThis.__PACIFIC_DATA__["inventory.json"].sites.find(r=>r.siteId===s.id||r.id===s.id);};';
+// Store repeated long provenance strings once; reconstruct the exact records offline.
+const counts=new Map();
+JSON.stringify(data,(_,v)=>{if(typeof v==='string'&&v.length>=80)counts.set(v,(counts.get(v)||0)+1);return v;});
+const strings=[...counts].filter(([,n])=>n>1).map(([value])=>value),indices=new Map(strings.map((v,i)=>[v,i]));
+const packed=JSON.parse(JSON.stringify(data,(_,v)=>{
+ if(v&&typeof v==='object'&&Object.hasOwn(v,'$pacificText'))throw new Error('Reserved offline encoding key');
+ return typeof v==='string'&&indices.has(v)?{$pacificText:indices.get(v)}:v;
+}));
+function unpack(payload){
+ const restore=value=>{
+  if(Array.isArray(value))return value.map(restore);
+  if(value&&typeof value==='object'){
+   if(Object.hasOwn(value,'$pacificText'))return payload.strings[value.$pacificText];
+   return Object.fromEntries(Object.entries(value).map(([key,item])=>[key,restore(item)]));
+  }
+  return value;
+ };
+ return restore(payload.records);
+}
+assert.ok(JSON.stringify(unpack({strings,records:packed}))===JSON.stringify(data),'Offline JSON provenance must round-trip exactly');
+const setup='globalThis.__PACIFIC_DEMO__=true;globalThis.__PACIFIC_DATA__='+'('+unpack.toString()+')('+serialize({strings,records:packed})+')'+';globalThis.__PACIFIC_ASSETS__='+serialize(assets)+';for(const s of globalThis.__PACIFIC_DATA__["sites.json"]){globalThis.__PACIFIC_DATA__["sites/"+s.id+"/evidence.json"].inventory=globalThis.__PACIFIC_DATA__["inventory.json"].sites.find(r=>r.siteId===s.id||r.id===s.id);};';
 let html=await readFile('index.html','utf8');
 html=html.replace('</head>',()=>'<style>'+css+'</style></head>').replace('<script type="module" src="/src/main.tsx"></script>',()=>'<script>'+setup+(globe+';\n'+bundled.outputFiles[0].text).replaceAll('</script','<\\/script')+'</script>');
 const size=Buffer.byteLength(html);

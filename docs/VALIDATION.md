@@ -2,6 +2,48 @@
 
 Checked on 14 November 2026 using Windows, Node 25.6.1, Python 3.13.4 and installed Chrome. The project requires Node >=22.12.
 
+## Detailed site map synchronization
+
+Verified on 14 November 2026 against the production preview in installed Chrome. **31 Node tests**, TypeScript checking and the production build passed. **9 focused site-map browser groups**, **15 general page groups including offline**, **8 radar-evidence groups**, **6 weather groups**, and **12 site-timeline groups** passed. The general browser suite recorded zero console/application errors. Focused map checks recorded zero uncaught application errors and explicitly check MapLibre source errors; intentional request failures exercise recovery.
+
+The map receives the selected record, channel, matching catalog and available context layers. Playback, date and channel updates reuse the canvas and retain user camera controls. The map follows After in a comparison. Site changes retain the open-map preference and clear prior site evidence while loading. Pending radar/optical requests are aborted, and late responses cannot restore old layers or dates. Readiness waits for MapLibre source loading, not just image decoding.
+
+GIBS images use their saved EPSG:4326 WMS request bounds. Regional HH/HV quicklooks are not draped over study boxes: their image-to-ground transform is unavailable. Exact acquisition IDs select catalog footprint polygons, with clear geometric-reference labels and a Fit selected footprint action. Mosaic pixels never inherit catalog lineage from a same-date scene. No currently saved site has additional raster context layers; eligible future layers must have valid bounds, spatial relevance, attribution and an exact date or explicit static-reference status.
+
+Optical context is optional and requests only the selected real record's validated UTC calendar day. The interface labels it a MODIS Terra daily mosaic and links the exact NASA GIBS request. Contributing pixel acquisition times are unverified; same-day mosaics are not assumed simultaneous with radar. Missing dates, simulations, failed/empty responses and superseded requests never trigger a runtime-relative date or replacement observation. Focused optical success/failure/empty tests use controlled image fixtures and do not certify live provider coverage on every date.
+
+Desktop and 390px light/dark screenshots were reviewed, including actual radar rendering and the regional footprint. Unit tests cover all four sites' saved georeferencing/footprints, date validation (including timezone offsets), missing metadata, context-layer filtering and simulation. Browser checks cover map-radar Retry, optical Retry, stale requests, playback, exact identity matching, site switching and camera/canvas preservation.
+
+The regenerated standalone edition is **2,977,869 bytes**, below the unchanged 3 MB limit; embedded real-image data URIs remain **583,548 bytes**. General, radar and weather offline checks passed with zero external requests. Detailed MapLibre maps remain intentionally unavailable offline, preserving the existing edition's behavior.
+
+Reproduce the new suite with PREVIEW_URL=http://127.0.0.1:5175 and npm run test:site-map against production preview. Other browser suites retain their existing environment settings. Reports/screenshots are under ignored .artifacts/. Saved scientific data and processing/backend implementations were unchanged; Python/API tests were not rerun. Physical phones, Safari/Firefox, screen-reader speech and exhaustive live optical availability remain unverified.
+
+## Radar interpretation and geometric coverage explanations
+
+Verified on 14 November 2026 in installed Chrome against the production preview. **26 Node tests**, TypeScript and the production build passed. **8 focused radar-evidence browser groups**, **12 existing site-timeline groups**, **6 weather groups**, and **15 general page groups including offline** passed. No uncaught application errors were recorded. The general suite recorded no console errors; the focused suites intentionally fail requests to test recovery.
+
+The focused suite checks mosaic versus acquisition labels, channel/date/site/request-bound metadata, explicit unavailable lineage, regional before/after metadata, known mismatches and missing values, geometric overlap, distinct empty-preview/catalog/browse states, comparison image failure and Retry, unchanged saved-date counts for unsaved selections, and both themes at desktop and 390px phone width. Metadata screenshots were visually reviewed. Weather Retry and stale-response protection remain covered by the unchanged weather suite.
+
+Coverage percentages display existing bboxCoverageFraction values only: footprint intersection divided by the whole study box, calculated by the catalog pipeline in longitude/latitude coordinates. This is geometric overlap, not equal-area observed ground area or valid radar pixel coverage. No catalog metadata are assigned to GIBS pixels from a matching date. No calibrated measurements or causal conclusions are added; saved evidence files are unchanged.
+
+The regenerated standalone edition is **2,976,313 bytes**, under the unchanged 3 MB cap. Repeated long provenance strings are encoded once and reconstructed before startup; the packaging script asserts exact equality with the previous JSON serialization. All record content and embedded images are retained. Embedded real-image data URIs remain **583,548 bytes**. Offline radar and weather tests, plus the general standalone check, passed with zero external requests.
+
+Reproduce with PREVIEW_URL=http://127.0.0.1:5175 against production preview: npm run test:radar-evidence, npm run test:weather, and npm run test:browser (CHECK_OFFLINE=1 includes the standalone checks). Set SITE_TIMELINE_TEST_URL to the same URL for npm run test:site-timeline. Reports and screenshots are in ignored .artifacts/.
+
+Physical phones, Safari/Firefox and screen-reader speech remain untested. Python/API tests were not rerun because no scientific processing or backend implementation changed. Actual mosaic lineage, calibrated pixel coverage and independent change validation remain unavailable.
+
+## Weather baseline comparison and request recovery
+
+Verified on 14 November 2026 against the production preview in installed Chrome. All **20 Node tests**, TypeScript checking and the production build passed. **6 focused weather browser groups**, **15 general browser groups including offline**, and **12 site timeline browser groups** passed. No uncaught application errors were recorded; the general suite also recorded zero console errors. The weather suite intentionally returns an HTTP 503 to exercise recovery.
+
+Weather checks cover same-calendar-month baseline joins, zero values, signed rainfall/temperature departures, missing and incomplete observations, invalid day counts, leap years, missing baselines, stable 2025/2026 chart scales, independent radar loading, failed requests, weather-only Retry, and out-of-order site responses. Desktop (1440px) and phone (390px) screenshots in both themes were reviewed. These remain browser emulation checks, not physical-phone or screen-reader certification.
+
+The existing charts, radar controls, source information and comparison table remain. Baselines use saved 1991-2020 monthly means; departures are observed minus baseline, without statistical significance or causal attribution. Temperature retains the mean of daily high/low midpoints. All saved source data are unchanged.
+
+The regenerated offline edition is **2,999,629 bytes**, within the existing 3 MB limit, with **583,548 bytes** of embedded real-image data URIs. Focused weather and general offline checks passed with zero external requests. The standalone file is very close to its size budget; future additions should account for that limit.
+
+Reproduce with a production preview on port 5175 and PREVIEW_URL=http://127.0.0.1:5175: run npm run test:weather and npm run test:browser with CHECK_OFFLINE=1. Run npm run test:site-timeline with SITE_TIMELINE_TEST_URL=http://127.0.0.1:5175. Reports and screenshots are under ignored .artifacts/. Python/API tests were not rerun because those implementations were unchanged.
+
 ## Current revision: global story and dated image playback
 
 The production build, TypeScript and **15 Node tests** passed. **63 browser checks** passed: 15 general page checks, 17 globe display checks, 12 site timeline checks and 19 satellite checks. All four reports contain no application/console errors. Python code was unchanged and **Python tests were not rerun this turn**; earlier results below are historical.
