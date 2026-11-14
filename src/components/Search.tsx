@@ -38,7 +38,8 @@ export function Search({ open, close, data, locate, newsNotice,sitesNotice }: { 
     if (!buttons.length) return;
     event.preventDefault();
     const index = buttons.indexOf(document.activeElement as HTMLElement);
-    buttons[(index + (event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length].focus();
+    const next=index<0?(event.key==='ArrowDown'?0:buttons.length-1):(index+(event.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length;
+    buttons[next].focus();
   }}>
     <form method="dialog"><div className="dialog-head"><label id="search-title" htmlFor="global-search">Search the Pacific</label><button className="icon-button" aria-label="Close search">×</button></div></form>
     <input aria-controls="search-results" id="global-search" type="search" placeholder="A study area, a place, a headline…" autoComplete="off" value={query} onChange={event => { version.current++; setBusy(false); setQuery(event.target.value); setRemote(null); }}/>

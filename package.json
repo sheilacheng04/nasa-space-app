@@ -28,7 +28,8 @@
     "test:selections": "node scripts/selection-browser-check.mjs",
     "test:accessibility": "node scripts/accessibility-browser-check.mjs",
     "test:startup": "node scripts/startup-browser-check.mjs",
-    "test:globe-performance": "node scripts/globe-performance-check.mjs"
+    "test:globe-performance": "node scripts/globe-performance-check.mjs",
+    "test:audit": "node scripts/final-audit-check.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

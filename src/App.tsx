@@ -41,7 +41,7 @@ export function App(){
  useEffect(()=>{const keys=(e:KeyboardEvent)=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();setSearch(x=>!x);}};addEventListener('keydown',keys);return()=>removeEventListener('keydown',keys);},[]);
  function update(rows:Observation[]){setPoints(rows);try{if(rows.length)localStorage.setItem('pacific-observations',JSON.stringify(rows));else localStorage.removeItem('pacific-observations');return true;}catch{return false;}}
  const site=data?.sites.find(s=>s.id===route.sub)||data?.sites.find(s=>s.id==='angat')||data?.sites[0];
- return <><a className="skip-link" href="#main">Skip to content</a><Header page={route.page} openSearch={()=>setSearch(true)}/>
+ return <><a className="skip-link" href="#main" onClick={event=>{event.preventDefault();document.getElementById('main')?.focus();}}>Skip to content</a><Header page={route.page} openSearch={()=>setSearch(true)}/>
  {!hosted&&<div className="demo-ribbon">OFFLINE EDITION · Real browse thumbnails and saved source data. Simulated examples are labeled.</div>}
  <main id="main" tabIndex={-1}>
  {!data?<div className="wrap" hidden={route.page==='media'||route.page==='method'}>{notice('sites')}</div>:<>

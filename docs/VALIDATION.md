@@ -1,5 +1,7 @@
 # Validation record
 
+The final cross-browser submission audit, fixes, exact browser versions and manual checklist are recorded in [FINAL_AUDIT.md](FINAL_AUDIT.md). Frontend: **43 unit tests and 175 browser groups passed**, plus TypeScript/build. Optional backend test collection remains blocked by the local Python/pydantic-core binary mismatch; see the audit report. Final offline size: **2,997,271 bytes**.
+
 ## Globe performance and inactive views
 
 Verified on 14 November 2026 with installed Chrome. **43 unit tests**, TypeScript and production build passed. **123 browser groups** passed: 9 new globe-performance, 17 globe-display, 19 satellite, 9 selections, 13 startup, 6 accessibility, 15 general, 6 weather, 8 radar evidence, 9 detailed map and 12 site timeline. Source-module performance/display checks use Vite 5174; other suites use production preview 5175.
