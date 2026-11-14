@@ -1,0 +1,3 @@
+# Generated offline bundle: embeds compiled code, saved data and images.
+# Keep it downloadable, but exclude it from GitHub language statistics.
+/el-nino-app.html linguist-generated=true
