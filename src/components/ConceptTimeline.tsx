@@ -3,12 +3,13 @@ import {useEffect,useLayoutEffect,useId,useMemo,useRef,useState} from 'react';
 import {dataFile} from '../api/client';
 import {calendarMonths,conceptSnapshot,illustrativeRainSignal,latestCompleteMonth,monthEnd,oceanAtMonthEnd,previousMonth,readConceptMonth} from '../concept-data';
 import type {ClimateContext,ClimateContexts,ConceptMonthReading,ConceptSnapshot} from '../concept-data';
+import type {ReactNode} from 'react';
 import type {Enso,Site} from '../types';
 import '../concept-timeline.css';
 
 export interface ConceptPlayback {month:string;months:string[];playing:boolean;canPlay:boolean;step:(delta:number)=>void;seek:(month:string)=>void;toggle:()=>void}
 interface Props {
- active:boolean;sites:Site[];enso:Enso;requestedMonth?:string;onMonthChange:(month:string,history?:HistoryMode)=>void;navigationKey:number;
+ active:boolean;sites:Site[];enso?:Enso;oceanNotice:ReactNode;requestedMonth?:string;onMonthChange:(month:string,history?:HistoryMode)=>void;navigationKey:number;
  onSnapshot:(snapshot:ConceptSnapshot)=>void;onSelectSite:(site:Site)=>void;onOpenRadar:(date:string)=>void;
  selectedSiteId?:string;radarDates?:string[];waiting?:boolean;onPlaybackChange?:(state:ConceptPlayback|null)=>void;
 }
@@ -62,7 +63,7 @@ function RainfallHistory({site,contexts,months,selected,onSeek}:{site:Site;conte
   <details><summary>View monthly rainfall departures</summary><div className="table-scroll" role="region" aria-label="Scrollable scientific data table" tabIndex={0}><table><caption>{site.name}: ERA5 rainfall minus the same-month 1991–2020 average (mm)</caption><thead><tr><th scope="col">Month</th><th scope="col">Departure (mm)</th><th scope="col">Observation status</th></tr></thead><tbody>{rows.map(row=><tr key={row.month}><th scope="row">{displayMonth(row.month)}</th><td>{signed(row.rainAnomaly,'mm')}</td><td>{row.complete?'Complete month':'Incomplete or unavailable'}</td></tr>)}</tbody></table></div></details>
  </div>;
 }
-export default function ConceptTimeline({active,sites,enso,onSnapshot,onSelectSite,onOpenRadar,selectedSiteId,radarDates=[],waiting=false,onPlaybackChange,requestedMonth,onMonthChange,navigationKey}:Props){
+export default function ConceptTimeline({active,sites,enso,oceanNotice,onSnapshot,onSelectSite,onOpenRadar,selectedSiteId,radarDates=[],waiting=false,onPlaybackChange,requestedMonth,onMonthChange,navigationKey}:Props){
  const [contexts,setContexts]=useState<ClimateContexts|null>(null),[loading,setLoading]=useState(false),[failed,setFailed]=useState<string[]>([]),[attempt,setAttempt]=useState(0);
  const [playing,setPlaying]=useState(false),[announcement,setAnnouncement]=useState('');
  const setMonth=onMonthChange;
@@ -85,7 +86,7 @@ export default function ConceptTimeline({active,sites,enso,onSnapshot,onSelectSi
  const snapshot=useMemo(()=>month&&contexts?conceptSnapshot(sites,contexts,month):null,[month,contexts,sites]);
  const current=useMemo(()=>site&&month?readConceptMonth(site,contexts?.[site.id],month):null,[site,month,contexts]);
  const previous=useMemo(()=>site&&month?readConceptMonth(site,contexts?.[site.id],previousMonth(month)):null,[site,month,contexts]);
- const ocean=useMemo(()=>month?oceanAtMonthEnd(enso.weekly,month):null,[enso.weekly,month]);
+ const ocean=useMemo(()=>month?oceanAtMonthEnd(enso?.weekly,month):null,[enso?.weekly,month]);
  useLayoutEffect(()=>{if(active&&snapshot)callbacks.current.onSnapshot(snapshot);},[active,snapshot]);
  useEffect(()=>{if(!active)setPlaying(false);},[active]);
  useEffect(()=>{
@@ -120,7 +121,7 @@ export default function ConceptTimeline({active,sites,enso,onSnapshot,onSelectSi
    <div className="concept-year-rows" aria-label="Choose a calendar month">{[...new Set(months.map(value=>value.slice(0,4)))].map(year=><div key={year}><strong>{year}</strong><div>{months.filter(value=>value.startsWith(year)).map(value=>{const reading=readConceptMonth(site,contexts?.[site.id],value);return <button key={value} aria-label={displayMonth(value)+(reading.complete?', complete month':', incomplete or unavailable')} aria-pressed={month===value} className={reading.complete?'':'is-missing'} onClick={()=>chooseMonth(value)} title={displayMonth(value)+(reading.complete?'':' · incomplete or unavailable')}>{new Date(value+'-01T00:00:00Z').toLocaleDateString('en',{month:'short',timeZone:'UTC'})}{!reading.complete&&<span aria-hidden="true"> *</span>}</button>;})}</div></div>)}</div>
    <div className="concept-season-compare"><button disabled={!months.includes(previousYear)} onClick={()=>chooseMonth(previousYear)}>← Same month last year</button><button disabled={!months.includes(nextYear)} onClick={()=>chooseMonth(nextYear)}>Same month next year →</button></div>
    <p className="concept-source-note">Greening and browning follow seasonal cycles. Compare the same month across years. Weather estimates (ERA5) combine observations with a weather model; the baseline is the 1991–2020 average for that month. * Incomplete or missing months remain unknown. Playback stops at the latest complete month.</p>
-   <div className="concept-evidence-values"><article><h3>Rainfall at {site.name}</h3><strong>{numeric(current.rain,'mm')}</strong><p>Baseline {numeric(current.baselineRain,'mm')}</p><p>Departure <b>{signed(current.rainAnomaly,'mm')}</b></p><small>Change in departure since {displayMonth(previous.month)}: {signed(comparisonRain,'mm')}. Calendar-month baselines account for seasonality.</small></article><article><h3>Temperature context</h3><strong>{numeric(current.temperature,'°C')}</strong><p>Baseline {numeric(current.baselineTemperature,'°C')}</p><p>Departure <b>{signed(current.temperatureAnomaly,'°C')}</b></p><small>Departure change from the previous month: {signed(comparisonTemperature,'°C')}. Monthly mean of daily (maximum + minimum) / 2.</small></article><article><h3>Pacific temperature context</h3><strong>{signed(ocean?.anomaly??null,'°C')}</strong><p>Difference from the usual ocean temperature</p><small>{ocean?'NOAA Niño 3.4 reading '+ocean.date+', the latest available on or before '+monthEnd(month)+'.':'No preceding NOAA weekly value available.'} No later readings or interpolation are used.</small><a href={enso.url} target="_blank" rel="noopener">NOAA CPC source ↗</a></article></div>
+   <div className="concept-evidence-values"><article><h3>Rainfall at {site.name}</h3><strong>{numeric(current.rain,'mm')}</strong><p>Baseline {numeric(current.baselineRain,'mm')}</p><p>Departure <b>{signed(current.rainAnomaly,'mm')}</b></p><small>Change in departure since {displayMonth(previous.month)}: {signed(comparisonRain,'mm')}. Calendar-month baselines account for seasonality.</small></article><article><h3>Temperature context</h3><strong>{numeric(current.temperature,'°C')}</strong><p>Baseline {numeric(current.baselineTemperature,'°C')}</p><p>Departure <b>{signed(current.temperatureAnomaly,'°C')}</b></p><small>Departure change from the previous month: {signed(comparisonTemperature,'°C')}. Monthly mean of daily (maximum + minimum) / 2.</small></article><article><h3>Pacific temperature context</h3>{oceanNotice}<strong>{signed(ocean?.anomaly??null,'°C')}</strong><p>Difference from the usual ocean temperature</p><small>{ocean?'NOAA Niño 3.4 reading '+ocean.date+', the latest available on or before '+monthEnd(month)+'.':'No preceding NOAA weekly value available.'} No later readings or interpolation are used.</small>{enso&&<a href={enso.url} target="_blank" rel="noopener">NOAA CPC source ↗</a>}</article></div>
    <div className="concept-land-comparison"><LandResponse label="Previous month" reading={previous}/><LandResponse label="Selected month" reading={current}/></div>
    <p className="concept-land-limit"><strong>The drawings are conceptual.</strong> Rainfall departure changes their rain, soil-water, vegetation and surface-storage symbols. They do not measure reservoir level, soil moisture, crop condition or flood extent, and are not a calibrated response model.</p>
    <RainfallHistory site={site} contexts={contexts||{}} months={months} selected={month} onSeek={chooseMonth}/>

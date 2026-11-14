@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { initStory,setStoryActive } from '../story.js';
 import { assetURL,finite,formatDate,safeURL } from '../core.js';
+import type {ReactNode} from 'react';
 import type { Bootstrap } from '../types';
 
-export function StoryPage({active,data}:{active:boolean;data:Bootstrap}){
+export function StoryPage({active,data,oceanNotice,evidenceNotice}:{active:boolean;data:Bootstrap;oceanNotice:ReactNode;evidenceNotice:ReactNode}){
  useEffect(()=>{initStory().catch(()=>{});},[]);
  useEffect(()=>{setStoryActive(active);return()=>setStoryActive(false);},[active]);
- const lead=data.evidence?.find(s=>s.siteId==='angat')||data.evidence?.[0],enso=data.enso,oni=enso.oni?.at(-1);
+ const lead=data.evidence?.find(s=>s.siteId==='angat')||data.evidence?.[0],enso=data.enso,oni=enso?.oni?.at(-1);
  return <section id="page-story" className="page" hidden={!active}>
   <div className="hero"><div className="wrap">
    <p className="eyebrow">NASA Space Apps 2026 · Dancing with the SARs</p>
@@ -20,8 +21,9 @@ export function StoryPage({active,data}:{active:boolean;data:Bootstrap}){
     <p className="large-copy">El Niño is an unusual warming of the central and eastern tropical Pacific, linked to changes in winds and rainfall. Its influence can reach far beyond the ocean.</p>
     <p>Some places become wetter, others drier. The response depends on the season, the location and the event. Move the slider to explore the mechanism.</p>
     <div className="ocean-control"><div id="ocean-diagram"/><div className="ocean-slider"><label htmlFor="ocean-phase">Explore the mechanism <output id="phase-label">Normal year</output></label><input id="ocean-phase" type="range" min="0" max="100" defaultValue="0"/></div><p className="source-line">Conceptual animation: an explanation, not measured conditions or a forecast.</p></div>
-    <p>Latest saved ocean reading: <strong className="heat">{finite(enso.nino34)?(enso.nino34>=0?'+':'')+enso.nino34.toFixed(1)+' °C':'not available'}</strong> relative to the usual surface temperature in the central equatorial Pacific, for the week dated {formatDate(enso.issuedAt)}.</p>
-    <details><summary>Ocean measurements and sources</summary><p>The weekly Niño 3.4 reading describes a defined Pacific region. The Oceanic Niño Index (ONI) averages three months: {oni&&finite(oni.anomaly)?oni.season+' '+oni.year+', '+(oni.anomaly>=0?'+':'')+oni.anomaly.toFixed(2)+' °C':'not available'}. These summarize different periods; neither measures an effect at a study site.</p><p className="source-line"><a href={safeURL(enso.url)}>NOAA weekly record ↗</a> · <a href={safeURL(enso.oniSource)}>NOAA three-month record ↗</a> · Retrieved {formatDate(enso.retrievedAt)}. <a href="https://oceanservice.noaa.gov/facts/ninonina.html">NOAA: how El Niño works ↗</a></p></details>
+    {oceanNotice}
+    {enso&&<><p>Latest saved ocean reading: <strong className="heat">{finite(enso.nino34)?(enso.nino34>=0?'+':'')+enso.nino34.toFixed(1)+' °C':'not available'}</strong> relative to the usual surface temperature in the central equatorial Pacific, for the week dated {formatDate(enso.issuedAt)}.</p>
+    <details><summary>Ocean measurements and sources</summary><p>The weekly Niño 3.4 reading describes a defined Pacific region. The Oceanic Niño Index (ONI) averages three months: {oni&&finite(oni.anomaly)?oni.season+' '+oni.year+', '+(oni.anomaly>=0?'+':'')+oni.anomaly.toFixed(2)+' °C':'not available'}. These summarize different periods; neither measures an effect at a study site.</p><p className="source-line"><a href={safeURL(enso.url)}>NOAA weekly record ↗</a> · <a href={safeURL(enso.oniSource)}>NOAA three-month record ↗</a> · Retrieved {formatDate(enso.retrievedAt)}. <a href="https://oceanservice.noaa.gov/facts/ninonina.html">NOAA: how El Niño works ↗</a></p></details></>}
    </article>
    <article className="story-section">
     <p className="eyebrow">Why it matters</p><h2><span className="chapter-number">2</span>Rain connects climate to everyday life</h2>
@@ -36,9 +38,10 @@ export function StoryPage({active,data}:{active:boolean;data:Bootstrap}){
     <p className="eyebrow">A way to observe change</p><h2><span className="chapter-number">3</span>Send a pulse. Read the return. Look again.</h2>
     <p className="large-copy">Radar sends microwave pulses toward Earth and measures what returns. Water, plants and buildings reflect those pulses differently, giving us another way to observe the surface.</p>
     <p>Synthetic aperture radar, or SAR, combines echoes collected as a sensor moves to build a detailed image. NISAR is a joint satellite mission from NASA and the Indian Space Research Organisation (ISRO), designed to repeat those observations over time.</p>
+    {evidenceNotice}
     <figure className="hero-observation">
      {lead?.image?<img src={assetURL(lead.image)} alt={'Real regional radar preview covering '+lead.name+'; not a measured water-extent map'} fetchPriority="high"/>:<div className="empty-chart">Radar preview not available.</div>}
-     <figcaption><div className="caption-top"><strong>One observation, many possible explanations</strong></div><p>{lead?.name||'Study-area'} example · {formatDate(lead?.date)}</p><p>This real radar preview helps us ask where to investigate. It does not measure a shrinking reservoir, crop damage or the cause of a change.</p><details><summary>Image source and technical details</summary><p>{lead?.label||'Preview not available'} · downsampled. Channel: {lead?.channel||'not available'}.</p><p className="mono">{lead?.maturity||'Maturity not available'} · processing version (CRID): {lead?.crid||'not available'}</p><p className="source-line">NASA/ISRO NISAR via {lead?.source||'ASF DAAC'} · {lead?.n??0} catalog scenes. Measured water-area series: not available.</p></details></figcaption>
+     <figcaption><div className="caption-top"><strong>One observation, many possible explanations</strong></div><p>{lead?.name||'Study-area'} example · {formatDate(lead?.date)}</p><p>This real radar preview helps us ask where to investigate. It does not measure a shrinking reservoir, crop damage or the cause of a change.</p><details><summary>Image source and technical details</summary><p>{lead?.label||'Preview not available'} · downsampled. Channel: {lead?.channel||'not available'}.</p><p className="mono">{lead?.maturity||'Maturity not available'} · processing version (CRID): {lead?.crid||'not available'}</p><p className="source-line">NASA/ISRO NISAR via {lead?.source||'ASF DAAC'} · {lead?.n??'not available'} catalog scenes. Measured water-area series: not available.</p></details></figcaption>
     </figure>
     <p>Smooth water often looks dark, but so can smooth soil or radar shadow. Wind can brighten water. Comparing dates and checking other evidence is essential.</p>
     <p className="source-line"><a href="https://science.nasa.gov/mission/nisar/get-to-know-sar/">NASA: how radar images work ↗</a> · <a href="https://science.nasa.gov/mission/nisar/">About the NASA–ISRO mission ↗</a></p>

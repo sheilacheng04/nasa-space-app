@@ -1,4 +1,7 @@
 import { localTone } from '../core.js';
+import {createJSONCache} from '../json-cache.js';
+import {datasetStatus} from '../startup-data.js';
+import type {DatasetKey} from '../startup-data.js';
 import type { Analysis, Bootstrap, Dataset, Observation, Place, SavedDataset, Site, User, Weather } from '../types';
 
 export const hosted = !globalThis.__PACIFIC_DEMO__;
@@ -28,20 +31,22 @@ export async function request<T>(url: string, options: RequestInit & { timeout?:
     throw error;
   } finally { clearTimeout(timer); }
 }
-export function dataFile<T = unknown>(path: string): Promise<T> {
+export function dataFile<T = unknown>(path: string,options:{reload?:boolean}={}): Promise<T> {
   if (!hosted) {
     const data = globalThis.__PACIFIC_DATA__?.[path];
     return data === undefined ? Promise.reject(new Error('This file is not included in the offline demo.')) : Promise.resolve(structuredClone(data) as T);
   }
-  return request<T>('./data/' + path);
+  return request<T>('./data/' + path,options.reload?{cache:'reload'}:{});
 }
-export async function bootstrap(): Promise<Bootstrap> {
-
-  const [sites, news, enso, sources, evidence] = await Promise.all([
-    dataFile<Bootstrap['sites']>('sites.json'), dataFile<Bootstrap['news']>('news.json'),
-    dataFile<Bootstrap['enso']>('enso.json'), dataFile<Bootstrap['sources']>('sources.json'), dataFile<Bootstrap['evidence']>('evidence.json'),
-  ]);
-  return { sites, news, enso, sources, evidence };
+const startupCache=createJSONCache();
+export function startupFile<K extends DatasetKey>(key:K,reload=false):Promise<Required<Bootstrap>[K]>{
+ return startupCache(key,async()=>{
+  const value=await dataFile<Required<Bootstrap>[K]>(key+'.json',{reload}).catch(error=>{
+   if(error instanceof ApiError&&error.message.startsWith('The application API is unavailable.'))throw new Error('The saved '+key+'.json file did not return JSON (HTTP '+error.status+').');
+   throw error;
+  });
+  datasetStatus(key,value);return value;
+ },reload);
 }
 export function weather(site: Site): Promise<Weather> {
   if (!hosted) throw new Error('Live weather is disabled in the offline demo.');

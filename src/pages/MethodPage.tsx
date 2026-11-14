@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { downloadText } from '../core.js';
 import { dataFile } from '../api/client';
 import { EvidenceLead } from '../components/EvidenceLead';
+import type {ReactNode} from 'react';
 import type { Bootstrap } from '../types';
 
 type SourceRecord = {name?:string;url:string;status:string;retrievedAt?:string;maturity?:string;crid?:string;parameters?:unknown};
@@ -17,7 +18,7 @@ const glossary = [
  ['Maturity / CRID','Maturity describes the calibration and validation stage; CRID identifies the processing release.'],
 ];
 
-export function MethodPage({active,data}:{active:boolean;data:Bootstrap}) {
+export function MethodPage({active,data,newsNotice,sourcesNotice,evidenceNotice}:{active:boolean;data:Pick<Bootstrap,'news'|'sources'|'evidence'>;newsNotice:ReactNode;sourcesNotice:ReactNode;evidenceNotice:ReactNode}) {
  const [record,setRecord]=useState<MethodRecord|null>(null);
  const [error,setError]=useState('');
  useEffect(()=>{
@@ -32,7 +33,7 @@ export function MethodPage({active,data}:{active:boolean;data:Bootstrap}) {
   ['MODIS vegetation','NASA Terra, via GIBS','Monthly greenness from reflected sunlight, shown as NDVI.','Growth, harvest, weather and land use can change greenness. Clouds and snow affect this optical record.'],
   ['Ocean temperature','NOAA CPC','Tropical Pacific temperature differences from a reference average.','El Niño context: weekly Niño 3.4 and three-month ONI cover different periods.'],
   ['Local weather','ECMWF ERA5, via Open-Meteo','Rainfall and temperature estimates; a 1991–2020 reference where available.','Reanalysis blends observations and a model. Check site dates; values are not local weather-station readings.'],
-  ['News reports','GDELT and supplied archive',data.news.items.length+' source-linked headlines about events and their effects.','Human context. Sentiment scores describe wording, not hazard size or public opinion.'],
+  ['News reports','GDELT and supplied archive',data.news?data.news.items.length+' source-linked headlines about events and their effects.':'Headline count unavailable while the news archive is unavailable.','Human context. Sentiment scores describe wording, not hazard size or public opinion.'],
  ];
  const conclusionRows = [
   ['Radar browse and catalog coverage','Water area and calibrated radar-change series remain unmeasured. A catalog footprint does not guarantee useful pixels throughout.'],
@@ -48,6 +49,7 @@ export function MethodPage({active,data}:{active:boolean;data:Bootstrap}) {
   <section className="story-section" id="evidence"><h2><span className="chapter-number">2</span>What each source tells us</h2><p>NISAR is NASA and ISRO’s radar satellite. It uses synthetic aperture radar (SAR), a technique that combines microwave echoes to form images.</p><div className="table-scroll" role="region" aria-label="Scrollable scientific data table" tabIndex={0}><table><caption>Sources, imagery types and interpretation</caption><thead><tr><th scope="col">Source</th><th scope="col">What we see</th><th scope="col">How to read it</th></tr></thead><tbody>{sourceRows.map(([name,credit,view,meaning])=><tr key={name}><td><strong>{name}</strong><br/>{credit}</td><td>{view}</td><td>{meaning}</td></tr>)}</tbody></table></div>
   <p>The globe’s natural-color base is Blue Marble, a static reference from 2004 MODIS imagery that helps locate places.</p>
   <p className="source-line">Learn more: <a href="https://science.nasa.gov/mission/nisar/get-to-know-sar/">NASA’s radar introduction</a> · <a href="https://science.nasa.gov/earth/earth-observatory/measuring-vegetation-ndvi-evi/">NASA’s vegetation guide</a> · <a href="https://www.ecmwf.int/en/about/media-centre/focus/2023/fact-sheet-reanalysis">ECMWF’s reanalysis explanation</a>.</p>
+  {newsNotice}
   <details className="source-row"><summary>Plain-language glossary</summary><div className="table-scroll" role="region" aria-label="Scrollable scientific data table" tabIndex={0}><table><caption>Scientific glossary</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th></tr></thead><tbody>{glossary.map(([term,meaning])=><tr key={term}><th scope="row">{term}</th><td>{meaning}</td></tr>)}</tbody></table></div></details>
   </section>
 
@@ -65,8 +67,8 @@ export function MethodPage({active,data}:{active:boolean;data:Bootstrap}) {
   <details className="source-row"><summary>Advanced: radar processing and quality checks</summary><p>Inventory checks ASF’s NISAR GCOV catalog, CMR collection IDs, site footprints and the observation plan. Quantitative extraction remains untested without authenticated Earthdata access. Compare PROVISIONAL pairs with matching track, frame and CRID; exclude BETA and mixed-stage browse. Check units and masks, preserve gamma-0, and average valid linear power before converting to dB.</p><p>Candidate-water defaults (HH &lt; −17 dB; HV &lt; −24 dB) are uncalibrated demonstrations. OPERA agreement, land-cover statistics, exposure, deformation and soil-moisture estimates are not demonstrated. The saved GIBS check advertised the daily layer, but not the requested rolling 12-day layer.</p><p>Permanent gap: 27 July 2026, 22:03:25 UTC–10 August 2026, 00:55:27 UTC; boundary days can be partial. VALIDATED acquisitions begin 21 October, released 6 November 2026. Reprocessing may change older results. SME2 soil moisture remains preliminary.</p><p className="source-line"><a href="https://nisar-docs.asf.alaska.edu/gcov/">GCOV product guide</a> · <a href="https://nisar-docs.asf.alaska.edu/availability-overview/">Availability and quality stages</a>.</p></details>
   </section>
 
-  <section className="story-section" id="provenance"><h2>Check the source record</h2><p>Inspect sources, retrieval dates and the requests behind this record.</p><EvidenceLead evidence={data.evidence?.[0]}/>{error&&<p role="status">{error}</p>}
-  <div className="button-row"><button className="text-link" onClick={()=>download('inventory.json')}>Download scene inventory</button><button className="text-link" onClick={()=>download('network-status.json')}>Download URL audit</button><button className="text-link" onClick={()=>download('globe/vegetation.json')}>Download vegetation record</button></div>
+  <section className="story-section" id="provenance"><h2>Check the source record</h2><p>Inspect sources, retrieval dates and the requests behind this record.</p>{evidenceNotice}<EvidenceLead evidence={data.evidence?.[0]}/>{sourcesNotice}{error&&<p role="status">{error}</p>}
+  <div className="button-row"><button className="text-link" disabled={!data.sources} onClick={()=>data.sources&&downloadText('sources.json',JSON.stringify(data.sources,null,2),'application/json')}>Download source index</button><button className="text-link" onClick={()=>download('inventory.json')}>Download scene inventory</button><button className="text-link" onClick={()=>download('network-status.json')}>Download URL audit</button><button className="text-link" onClick={()=>download('globe/vegetation.json')}>Download vegetation record</button></div>
   <details className="source-row"><summary>Source ledger {record?.sources?`(${record.sources.length} saved checks)`:''}</summary><p>Dates are UTC. Web reachability does not establish scientific usability. Maturity and CRID apply to NISAR.</p><div className="table-scroll" role="region" aria-label="Scrollable scientific data table" tabIndex={0}><table><caption>Saved source checks: dates in UTC</caption><thead><tr><th scope="col">Source and URL</th><th scope="col">Status</th><th scope="col">Retrieved</th><th scope="col">Maturity / CRID</th><th scope="col">Parameters</th></tr></thead><tbody>{record?.sources?.map((source,i)=><tr key={i}><td><a href={source.url} target="_blank" rel="noopener noreferrer">{source.name||source.url} ↗</a></td><td>{source.status}</td><td>{source.retrievedAt?.slice(0,10)||'not available'}</td><td>{source.maturity||'not applicable'} / {source.crid||'not applicable'}</td><td><details><summary>Request</summary><pre>{JSON.stringify(source.parameters||{},null,2)}</pre></details></td></tr>)}</tbody></table></div></details>
   <details className="source-row"><summary>Local study boundaries and archive assumptions</summary><p>Angat uses the reservoir area near 121.16°E, 14.91°N, supported by an <a href="https://www.napocor.gov.ph/bcsd/bid_files/Bid%20Docs_HO-FFW23-010.pdf">NPC dam-station specification</a>. Piura is an additional case for testing a wet-weather hypothesis. The original 43 supplied headlines are retained with unverified claims labeled.</p></details>
   </section>

@@ -4,6 +4,7 @@ import { initGlobe,pauseGlobe,resumeGlobe,setGlobePoints,flyTo,setGlobeMode,setS
 import { closeLocalWindow } from '../local-window.js';
 import { FrameCache,siteCrop,wmsURL } from '../globe-data';
 import type { GlobeManifest,GlobeFrame,LoadedFrame } from '../globe-data';
+import type {ReactNode} from 'react';
 import type { Enso,News,Observation,Place,Site } from '../types';
 import '../satellite.css';
 import ConceptTimeline from './ConceptTimeline';
@@ -16,13 +17,13 @@ import type { ConceptSnapshot } from '../concept-data';
 
 const marker=<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v5m0 12v5M1 12h5m12 0h5"/></svg>;
 const time=(date:string)=>Date.parse(date.slice(0,10)+'T00:00:00Z');
-function OceanStrip({enso,news,frame,start,end}:{enso:Enso;news:News;frame?:GlobeFrame;start:string;end:string}){
+function OceanStrip({enso,news,frame,start,end}:{enso:Enso;news?:News;frame?:GlobeFrame;start:string;end:string}){
  const rows=enso.weekly?.filter(r=>time(r.date)>=time(start)&&time(r.date)<=time(end)&&Number.isFinite(r.anomaly))||[];
  const x=(date:string)=>40+(time(date)-time(start))/Math.max(86400000,time(end)-time(start))*900;
  const min=Math.min(-1,...rows.map(r=>r.anomaly)),max=Math.max(1,...rows.map(r=>r.anomaly)),y=(v:number)=>48-(v-min)/(max-min)*36;
  const path=rows.map((r,i)=>(i?'L':'M')+x(r.date).toFixed(1)+','+y(r.anomaly).toFixed(1)).join(' ');
  const nearest=frame?rows.filter(r=>time(r.date)<=time(frame.date)).at(-1):null;
- const events=Array.from(new Map(news.items.filter(n=>n.url.startsWith('https:')&&time(n.date)>=time(start)&&time(n.date)<=time(end)).map(n=>[n.date.slice(0,7),n])).values()).slice(0,8);
+ const events=Array.from(new Map((news?.items||[]).filter(n=>n.url.startsWith('https:')&&time(n.date)>=time(start)&&time(n.date)<=time(end)).map(n=>[n.date.slice(0,7),n])).values()).slice(0,8);
  return <div className="ocean-strip"><p><strong>Pacific temperature context</strong><span>Difference from usual · {rows.length} weekly readings{nearest?' · '+nearest.date+': '+(nearest.anomaly>0?'+':'')+nearest.anomaly.toFixed(1)+' °C':''}</span></p>
  <svg viewBox="0 0 980 76" role="img" aria-label={'NOAA weekly Niño 3.4 sea-surface temperature anomaly; '+rows.length+' observations. Cursor '+(frame?.date||'not available')}>
  <line x1="40" x2="940" y1={y(0)} y2={y(0)} stroke="#49545e" strokeDasharray="3 5"/><path d={path} fill="none" stroke="var(--orange)" strokeWidth="2"/>
@@ -31,7 +32,7 @@ function OceanStrip({enso,news,frame,start,end}:{enso:Enso;news:News;frame?:Glob
  {events.map(n=><a key={n.id} href={n.url} target="_blank" rel="noopener" aria-label={'Reporting on '+n.date+': '+n.title}><circle cx={x(n.date)} cy="66" r="3" fill="var(--muted)"/><title>{n.date+' · '+n.title+' · '+n.source}</title></a>)}
  </svg><p className="strip-note"><a href={enso.url} target="_blank" rel="noopener">Source: NOAA CPC</a> · Niño 3.4 ocean region. News dots link to reporting, not independently confirmed events. Latest preceding weekly reading; no interpolation.</p></div>;
 }
-export default function GlobeExperience({active,sites,points,place,enso,news,selection,onSelection,navigationKey}:{active:boolean;sites:Site[];points:Observation[];place:Place|null;enso:Enso;news:News;selection:GlobeSelection;onSelection:(selection:GlobeSelection,history?:HistoryMode)=>void;navigationKey:number}){
+export default function GlobeExperience({active,sites,points,place,enso,news,oceanNotice,newsNotice,selection,onSelection,navigationKey}:{active:boolean;sites:Site[];points:Observation[];place:Place|null;enso?:Enso;news?:News;oceanNotice:ReactNode;newsNotice:ReactNode;selection:GlobeSelection;onSelection:(selection:GlobeSelection,history?:HistoryMode)=>void;navigationKey:number}){
  const [manifest,setManifest]=useState<GlobeManifest|null>(null),[manifestError,setManifestError]=useState(''),[retryManifest,setRetryManifest]=useState(0);
  const mode=selection.mode||'satellite',selected=sites.find(site=>site.id===selection.site)||null;
  const latestSelection=useRef(selection);latestSelection.current=selection;
@@ -152,7 +153,7 @@ export default function GlobeExperience({active,sites,points,place,enso,news,sel
  </div>
  <ConceptVegetation playing={!!monthPlayback?.playing} active={active&&mode==='concept'} month={selection.month||concept?.month||''} onStatus={setVegetationStatus}/>
  </div>
- <ConceptTimeline requestedMonth={selection.month} onMonthChange={setMonth} navigationKey={navigationKey} onPlaybackChange={setMonthPlayback} waiting={vegetationStatus==='loading'} active={active&&mode==='concept'} sites={sites} enso={enso} selectedSiteId={selected?.id} radarDates={frames.filter(f=>f.status==='ready').map(f=>f.date)} onSnapshot={receiveConcept} onSelectSite={focusConceptSite} onOpenRadar={openConceptRadar}/>
+ <ConceptTimeline oceanNotice={oceanNotice} requestedMonth={selection.month} onMonthChange={setMonth} navigationKey={navigationKey} onPlaybackChange={setMonthPlayback} waiting={vegetationStatus==='loading'} active={active&&mode==='concept'} sites={sites} enso={enso} selectedSiteId={selected?.id} radarDates={frames.filter(f=>f.status==='ready').map(f=>f.date)} onSnapshot={receiveConcept} onSelectSite={focusConceptSite} onOpenRadar={openConceptRadar}/>
  </div>
  <div className="satellite-workspace" hidden={mode!=='satellite'}>
  <section className="playback-sheet" aria-label="Radar playback options and evidence">
@@ -165,7 +166,7 @@ export default function GlobeExperience({active,sites,points,place,enso,news,sel
  {manifest!.maturityWindows.map((w,i)=>{const lo=Math.max(time(w.start),dates[0]),hi=Math.min(time(w.end||layer.end),dates.at(-1)!);return hi>=lo?<a key={w.label} href={w.source} target="_blank" rel="noopener" className={'maturity-segment maturity-'+i} style={{left:(lo-dates[0])/range*100+'%',width:Math.max(.4,(hi-lo)/range*100)+'%'}} title={w.label+' release window; not pixel lineage'}>{w.label}</a>:null;})}
  {frames.filter(f=>f.status==='no-data').map(f=><i key={f.date} className="missing-day" style={{left:(time(f.date)-dates[0])/range*100+'%',width:Math.max(.2,86400000/range*100)+'%'}} title={f.date+' · no data'}/>)}
  {gap&&<span className="mission-gap-label" style={{left:Math.max(0,(Date.parse(gap.start)-dates[0])/range*100)+'%'}}>No data</span>}
- </div><div className="timeline-ends"><span>{layer.start}</span><span>{layer.end}</span></div><OceanStrip enso={enso} news={news} frame={frame} start={layer.start} end={layer.end}/></>}
+ </div><div className="timeline-ends"><span>{layer.start}</span><span>{layer.end}</span></div>{oceanNotice}{newsNotice}{enso&&<OceanStrip enso={enso} news={news} frame={frame} start={layer.start} end={layer.end}/>}</>}
  <p className="frame-status" role={playing?undefined:"status"} aria-live={playing?"off":"polite"}>{manifestError||message}</p>
  <p className="sat-source">Radar: NASA–ISRO NISAR previews via NASA GIBS. Display colors are not natural color or calibrated measurements. Ocean: NOAA{frame&&<> · <a href={frame.sourceUrl||wmsURL(frame.layer,frame.date)} target="_blank" rel="noopener">This frame’s source</a></>}</p>
  <details className="playback-notes"><summary>How to read this record · sources and processing</summary><p>Radar sends microwave pulses toward Earth and measures their return. These previews come from NISAR, the NASA–ISRO radar satellite.</p><p>Selected release window: {frame?.maturityWindow||'not confirmed'}. Individual pixel maturity and acquisition time are unconfirmed. Layer: {layerId||'not available'}.</p><p>The background is NASA Blue Marble, a historical 2004 MODIS optical reference. It is stored with the app, available without an API key, and does not change with the NISAR date. It is not current imagery or evidence of land change.</p><p>{manifest?.colorMapping.text||'Color mapping not confirmed.'} <a href={manifest?.colorMapping.source||'https://nisar-docs.asf.alaska.edu/worldview/'}>Color guide</a></p><p>{manifest?.maturityNote}</p><p>With the satellite basemap hidden, areas without radar coverage stay dark. Dark pixels within covered strips can also be low radar returns; darkness alone is not a water classification. Frames are replaced without blending or differencing maturities.</p><p>{manifest?.defaultReason}. The production date domain includes January–June imagery, so that interval is not drawn as an assumed gap.</p><p>{gap&&<>Permanent gap: {gap.start} through {gap.end}. July 27 and August 10 have partial boundary-day coverage. <a href={gap.source}>NISAR availability guide</a></>}</p><p>Global overviews are downsampled to 1024 × 512 or smaller, about 39-104 km per pixel at the equator. Zooming does not add detail. The current frame dimensions are recorded in the manifest. <a href={layer?.domainUrl}>Full advertised date domain</a></p><p>Space: play/pause. Left/right: step. Home/end: first/latest. No autoplay. Playback waits for each image. Loop starts off.</p></details>

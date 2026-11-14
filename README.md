@@ -100,3 +100,5 @@ The offline edition bundles the application code, images and data into one large
 Data and imagery come from NASA/ISRO, ASF DAAC, NASA GIBS, MODIS, NOAA, ECMWF ERA5 via Open-Meteo, GDELT and the linked publishers. See [data credits](DATA_CREDITS.md) for attribution.
 
 The software is MIT-licensed. Data and imagery retain their providers' terms.
+
+Startup loads the site catalog independently from NOAA context, preview summaries, news and the source index. Optional failures have scoped Retry actions; Media and Data and method also work when the site catalog is unavailable. See [startup dependencies and failure validation](docs/VALIDATION.md#independent-startup-data-loading).

@@ -26,7 +26,8 @@
     "test:radar-evidence": "node scripts/radar-evidence-browser-check.mjs",
     "test:site-map": "node scripts/site-map-browser-check.mjs",
     "test:selections": "node scripts/selection-browser-check.mjs",
-    "test:accessibility": "node scripts/accessibility-browser-check.mjs"
+    "test:accessibility": "node scripts/accessibility-browser-check.mjs",
+    "test:startup": "node scripts/startup-browser-check.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

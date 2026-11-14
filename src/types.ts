@@ -7,7 +7,7 @@ export interface News { items: Headline[]; status: string; retrievedAt: string |
 export interface Enso { weekly?:{date:string;sst:number;anomaly:number}[]; oni?: {season:string;year:number;anomaly:number}[]; oniSource?:string; nino34: number | null; label: string; measurement: string; issuedAt: string; retrievedAt: string; outlook: string; url: string }
 export interface Source { name: string; url: string; note: string; status: string; reviewedAt: string }
 export interface EvidenceSummary {siteId:string;name:string;image?:string;date:string;maturity:string;crid:string;n:number;channel:string;label:string;source:string}
-export interface Bootstrap { evidence?:EvidenceSummary[]; sites: Site[]; news: News; enso: Enso; sources: Source[] }
+export interface Bootstrap { evidence?:EvidenceSummary[]; sites: Site[]; news?: News; enso?: Enso; sources?: Source[] }
 export interface Weather { status: string; source: string; retrievedAt: string; warning?: string; daily: { date: string; temperature: number | null; rain: number | null }[] }
 export interface Place { properties: { name?: string; state?: string; country?: string }; geometry: { coordinates: [number, number] } }
 export interface User { id: string; username: string }

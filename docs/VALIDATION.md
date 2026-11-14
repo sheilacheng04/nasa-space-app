@@ -1,5 +1,24 @@
 # Validation record
 
+## Independent startup data loading
+
+Verified on 14 November 2026 with installed Chrome against production preview (5175); globe graphics checks use Vite (5174). **43 unit tests**, TypeScript, production build, and **114 browser groups** passed: startup 13, general 15, selections 9, accessibility 6, weather 6, radar evidence 8, detailed map 9, site timeline 12, satellite 19, globe display 17. The startup suite includes deliberately failed HTTP responses, malformed JSON structures, independently delayed responses, scoped retries, empty catalogs, and missing embedded data.
+
+| Root dataset | Dependency and failure behavior |
+| --- | --- |
+| sites.json | Required configuration for Story/site lists, Sites, and Globe. A missing, invalid or empty catalog has a dedicated status and Retry; no default site is invented. Media, search, Data and method, and CSV controls remain usable. |
+| enso.json | Independent NOAA context on Story and Globe. On failure, ocean numbers/plots are unavailable with Retry; conceptual explanations, radar, site weather and vegetation remain usable. |
+| evidence.json | Independent preview summaries on Story, Globe, Media and Method. Failed summaries show a scoped status and existing unavailable previews; per-site evidence still loads separately. Missing catalog counts are unknown, not zero. |
+| news.json | Independent Media archive, headline search and reporting markers. Failure removes the unavailable archive/markers with scoped Retry; manual text analysis, site search and the rest of the application remain usable. |
+| sources.json | Independent downloadable source index in Method. Failure disables that download with scoped Retry; method explanations, CSV and the separately loaded method.json ledger are unaffected. |
+
+The five root requests start concurrently, without an all-or-nothing barrier. Each has loading, ready, empty and error states. Root JSON successes and in-flight requests are shared within the current application session; rejected requests (including schema failures) are evicted. Retry clears only its dataset, bypasses both the root cache and browser HTTP cache, and preserves the route. Request generations and effect cleanup ignore superseded completions. Late optional arrivals do not reset route focus or the selected evidence. Per-site, weather, imagery, map and API request safeguards remain separate and unchanged.
+
+The regenerated offline edition is **2,993,357 bytes**, below the 3,000,000-byte budget. General, startup, weather, radar, sharing and satellite checks cover embedded data and zero external requests. A separate startup check removes the embedded news file, verifies the local failure, restores it and retries without a network request. No scientific data files, dates or imagery values changed; no dependencies were added.
+
+Remaining limits: absent site configuration still prevents site-driven pages from rendering; failed datasets cannot be recovered until their files/connection are available. The root cache is session-local, not a persistent offline cache. Lazy modules, imagery, per-site evidence, and detailed method records retain their existing independent failure behavior. Real hosted connection loss/timeouts, deployed caching rules and additional browsers should still receive manual checks.
+
+
 Checked on 14 November 2026 using Windows, Node 25.6.1, Python 3.13.4 and installed Chrome. The project requires Node >=22.12.
 
 ## Shareable Sites and Globe selections
