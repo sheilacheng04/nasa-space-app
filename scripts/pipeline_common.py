@@ -8,8 +8,7 @@ try:
 except ImportError:
  pass
 ROOT=Path(__file__).resolve().parents[1]
-DATA=ROOT/'data'
-PUBLIC=ROOT/'public/data'
+DATA=ROOT/'public/data'
 AS_OF='2026-11-14'
 def now(): return dt.datetime.now(dt.timezone.utc).isoformat()
 def get(url,params=None,timeout=35):
@@ -17,10 +16,14 @@ def get(url,params=None,timeout=35):
  r.raise_for_status()
  return r
 def save(relative,value):
- for folder in (DATA,PUBLIC):
-  path=folder/relative
-  path.parent.mkdir(parents=True,exist_ok=True)
-  temp=path.with_suffix(path.suffix+'.tmp')
-  temp.write_text(json.dumps(value,indent=2,ensure_ascii=False,allow_nan=False),encoding='utf-8')
-  temp.replace(path)
+ path=DATA/relative
+ path.parent.mkdir(parents=True,exist_ok=True)
+ temp=path.with_suffix(path.suffix+'.tmp')
+ temp.write_text(json.dumps(value,indent=2,ensure_ascii=False,allow_nan=False),encoding='utf-8')
+ temp.replace(path)
+
+def save_image(relative,image):
+ path=DATA/relative
+ path.parent.mkdir(parents=True,exist_ok=True)
+ image.save(path,optimize=True)
 def read(relative): return json.loads((DATA/relative).read_text(encoding='utf-8'))

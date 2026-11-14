@@ -48,7 +48,7 @@ def save(client):
 def test_real_bootstrap_health_and_openapi(client):
     assert client.get("/api/health").json()["database"] == "sqlite"
     data = client.get("/api/bootstrap").json()
-    assert len(data["sites"]) == 3
+    assert {site["id"] for site in data["sites"]} == {"luzon", "angat", "dadu", "piura"}
     assert len(data["news"]["items"]) > 0
     assert client.get("/api/data/observations/angat.json").json()["status"] == "pending"
     assert "/api/datasets" in client.get("/api/openapi.json").json()["paths"]

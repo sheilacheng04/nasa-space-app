@@ -15,8 +15,7 @@ def fetch_site(record):
    try:
     r=get(url,timeout=35);im=Image.open(io.BytesIO(r.content)).convert('L');im.thumbnail((720,720))
     relative='sites/'+record['siteId']+'/browse/'+scene['date'][:10]+'-'+pol+'.png'
-    for base in (DATA,PUBLIC):
-     path=base/relative;path.parent.mkdir(parents=True,exist_ok=True);im.save(path,optimize=True)
+    save_image(relative,im)
     item['channels'][pol]={'image':'data/'+relative,'sourceUrl':url,'label':'downsampled regional '+pol+' quicklook; not calibrated; display stretch may differ'}
    except Exception as e:item['channels'][pol]={'status':'not available','reason':type(e).__name__}
   output.append(item)

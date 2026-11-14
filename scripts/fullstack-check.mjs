@@ -6,6 +6,7 @@ const executablePath = process.env.BROWSER_PATH || ['C:/Program Files/Google/Chr
 const browser = await chromium.launch({headless: true, ...(executablePath ? {executablePath} : {})});
 const base = process.env.TEST_URL || 'http://127.0.0.1:4173';
 const context = await browser.newContext({viewport: {width: 1440, height: 1000}, reducedMotion: 'reduce'});
+await context.addInitScript(() => { globalThis.__PACIFIC_API__ = true; });
 const page = await context.newPage();
 const errors = [];
 page.on('pageerror', error => errors.push(error.message));

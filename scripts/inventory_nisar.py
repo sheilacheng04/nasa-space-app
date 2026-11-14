@@ -55,7 +55,7 @@ def inventory_site(site):
  print(site['id'],record['status'],record.get('maturityCounts',{}),flush=True)
  return record
 def main():
- sites=json.loads((PUBLIC/'sites.json').read_text(encoding='utf-8'))
+ sites=json.loads((DATA/'sites.json').read_text(encoding='utf-8'))
  # Refined Angat box already follows the actual reservoir near 121.16 E, not the approximate prompt center.
  for s in sites:
   if s['id']=='luzon':s['bbox']=[120.4,15.0,121.4,16.0]

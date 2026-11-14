@@ -1,5 +1,5 @@
 # Assumptions
-- The existing React/TypeScript project is the implementation base; the supplied 43 headlines are preserved. The original prototype stays in archive/.
+- The existing React/TypeScript project is the implementation base; the supplied 43 headlines are preserved. The superseded original prototype is retained in Git history.
 - The review date is 14 November 2026. Source timestamps remain UTC. Weather ends 8 November to allow for ERA5 latency.
 - Angat's supplied approximate center at 121.4 E is east of the actual dam/reservoir. The existing 121.08–121.24 E, 14.84–15.0 N box is retained. An NPC station specification supports 121.161194 E, 14.909611 N; this is a dam station, not a reservoir centroid.
 - Luzon and Dadu use the wider requested boxes. Real footprint fractions are reported; an intersecting scene does not guarantee valid coverage of the full box.

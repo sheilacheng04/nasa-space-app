@@ -33,6 +33,6 @@ let html=await readFile('index.html','utf8');
 html=html.replace('</head>',()=>'<style>'+css+'</style></head>').replace('<script type="module" src="/src/main.tsx"></script>',()=>'<script>'+setup+(globe+';\n'+bundled.outputFiles[0].text).replaceAll('</script','<\\/script')+'</script>');
 const size=Buffer.byteLength(html);
 if(size>3000000)throw new Error('Offline first-load budget exceeded: '+size);
-await mkdir('demo',{recursive:true});await writeFile('demo/pacific-preview.html',html);await writeFile('el-nino-app.html',html);
+await writeFile('el-nino-app.html',html);
 await writeFile('.artifacts/offline-size.json',JSON.stringify({htmlBytes:size,embeddedRealImageDataURIBytes:embeddedImageBytes,networkRequests:0},null,2));
 console.log('Self-contained preview: '+size+' bytes; real image data URIs '+embeddedImageBytes+' bytes. No external scripts or data requests.');

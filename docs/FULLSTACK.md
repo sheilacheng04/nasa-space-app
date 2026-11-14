@@ -108,4 +108,4 @@ This migration was verified locally with SQLite. No PostgreSQL service, deployme
 
 The backend tests emit Starlette's deprecation notice for the httpx test transport; all cases pass. Scientific preprocessing was unchanged. Live keyed AI and quantitative findings from the pending team radar data remain unverified.
 
-Reports and screenshots are in ignored .artifacts/. Run npm run check for unit/API tests, types and build. Against npm start, run npm run test:browser, npm run test:fullstack, and node scripts/restoration-check.mjs. Rebuild the offline preview with npm run demo before checks that open it.
+Reports and screenshots are in ignored .artifacts/. Run npm run check for unit/API tests, types and build. Against npm start, run npm run test:browser, npm run test:fullstack. Rebuild the offline preview with npm run demo before checks that open it.

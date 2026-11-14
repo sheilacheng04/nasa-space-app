@@ -4,7 +4,7 @@ import {mkdir,writeFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import path from 'node:path';
 const offline=process.env.OFFLINE==='true';
-const url=offline?pathToFileURL(path.resolve('demo/pacific-preview.html')).href+'#globe':(process.env.TEST_URL||'http://127.0.0.1:5173')+'/#globe';
+const url=offline?pathToFileURL(path.resolve('el-nino-app.html')).href+'#globe':(process.env.TEST_URL||'http://127.0.0.1:5173')+'/#globe';
 const executablePath=process.env.BROWSER_PATH||['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'].find(existsSync);
 const browser=await chromium.launch({headless:true,...(executablePath?{executablePath}:{})});
 const report={url,checks:[],errors:[],requests:[]};await mkdir('.artifacts',{recursive:true});

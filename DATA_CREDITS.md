@@ -1,8 +1,8 @@
 # Data credits
 Software is MIT licensed; external data are not relicensed.
 
-- NASA/ISRO NISAR, distributed by ASF DAAC: GCOV catalog metadata, acquisition footprints and regional HH/HV browse. [Guide](https://nisar-docs.asf.alaska.edu/) and [source inventory](data/inventory.json). PROVISIONAL pairs use P05023; VALIDATED catalog records use P05036. All browse is downsampled and not calibrated.
-- NASA GIBS: real daily false-color NISAR mosaics. [Capabilities](data/gibs-capabilities.json) and per-site manifests retain complete GetMap URLs and parameters. Pixel-level maturity/CRID are unavailable.
+- NASA/ISRO NISAR, distributed by ASF DAAC: GCOV catalog metadata, acquisition footprints and regional HH/HV browse. [Guide](https://nisar-docs.asf.alaska.edu/) and [source inventory](public/data/inventory.json). PROVISIONAL pairs use P05023; VALIDATED catalog records use P05036. All browse is downsampled and not calibrated.
+- NASA GIBS: real daily false-color NISAR mosaics. [Capabilities](public/data/gibs-capabilities.json) and per-site manifests retain complete GetMap URLs and parameters. Pixel-level maturity/CRID are unavailable.
 - NOAA CPC: [weekly Niño SST](https://www.cpc.ncep.noaa.gov/data/indices/wksst9120.for), [ONI](https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt). Ocean context, not NISAR observations.
 - Open-Meteo and ECMWF ERA5: [historical API](https://open-meteo.com/en/docs/historical-weather-api), point reanalysis for 2025–2026 and baseline 1991–2020. Values can be revised.
 - GDELT DOC 2.0 plus the supplied 43-item archive: headline discovery, per-item publisher links, raw/adjusted VADER. Publisher rights remain with each source. No full articles are redistributed.

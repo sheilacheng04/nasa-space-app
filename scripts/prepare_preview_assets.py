@@ -14,7 +14,7 @@ def main():
   for f in e['browse']['frames']:
    paths.extend((v['image'],160) for v in f.get('channels',{}).values() if v.get('image'))
   for name,size in paths:
-   original=PUBLIC/name.removeprefix('data/')
+   original=DATA/name.removeprefix('data/')
    if not original.exists():continue
    im=Image.open(original);im.thumbnail((size,size))
    if im.mode in ['RGB','RGBA']:im=im.convert('RGBA').quantize(colors=96,method=Image.Quantize.FASTOCTREE)

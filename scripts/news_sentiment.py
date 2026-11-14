@@ -13,7 +13,7 @@ def merge(existing,added):
   if key not in result:result[key]=item
  return sorted(result.values(),key=lambda x:x['date'],reverse=True)
 def main():
- cached=json.loads((PUBLIC/'news.json').read_text(encoding='utf-8'))
+ cached=json.loads((DATA/'news.json').read_text(encoding='utf-8'))
  original=cached['items'];added=[];end=dt.date.fromisoformat(AS_OF);start=dt.date(2026,8,15)
  params={'query':'("El Nino" OR "El Niño" OR NISAR) sourcelang:english','mode':'artlist','format':'json','startdatetime':start.strftime('%Y%m%d')+'000000','enddatetime':end.strftime('%Y%m%d')+'000000','maxrecords':250,'sort':'datedesc'}
  status='not available';error=None;url='https://api.gdeltproject.org/api/v2/doc/doc'

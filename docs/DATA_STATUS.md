@@ -13,7 +13,7 @@ Real GCOV catalog footprints intersect all four retained sites. Track/frame inte
 | dadu | 13 | 47 | 3 | 2026-06-24 / 2026-10-10 | 142/15 | P05023 |
 | piura | 0 | 28 | 3 | 2026-06-21 / 2026-10-19 | 104/175 | P05023 |
 
-Counts include overlapping frames and collections, and can include multiple granules from one acquisition. Luzon and Angat share scenes. Pair selection uses same track/frame/direction/maturity/CRID and favors footprint coverage; it does not identify a hydrologic event. See [inventory.json](../data/inventory.json) for every scene and observation-plan match.
+Counts include overlapping frames and collections, and can include multiple granules from one acquisition. Luzon and Angat share scenes. Pair selection uses same track/frame/direction/maturity/CRID and favors footprint coverage; it does not identify a hydrologic event. See [inventory.json](../public/data/inventory.json) for every scene and observation-plan match.
 
 ## Imagery fetched
 
@@ -109,7 +109,7 @@ Additional content checks: both Kaggle pages and public metadata APIs failed to 
 
 ## Provenance and parameters
 
-Every dataset request records URL, retrieval time, maturity, CRID and parameters, or an explicit not-applicable/not-available value. Exact requests are in [method.json](../data/method.json), [network-status.json](../data/network-status.json), [inventory.json](../data/inventory.json), each data/sites/<site>/gibs/manifest.json and browse/manifest.json, each data/context/<site>.json, [enso.json](../data/enso.json), and [news.json](../data/news.json).
+Every dataset request records URL, retrieval time, maturity, CRID and parameters, or an explicit not-applicable/not-available value. Exact requests are in [method.json](../public/data/method.json), [network-status.json](../public/data/network-status.json), [inventory.json](../public/data/inventory.json), each public/data/sites/<site>/gibs/manifest.json and browse/manifest.json, each public/data/context/<site>.json, [enso.json](../public/data/enso.json), and [news.json](../public/data/news.json).
 
 ## Citation wording
 

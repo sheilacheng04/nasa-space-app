@@ -13,7 +13,7 @@ def main():
   browse=optional('sites/'+sid+'/browse/manifest.json',{'frames':[]})
   series=optional('sites/'+sid+'/series.json',{'n':0,'rows':[],'status':'not available'})
   stats=optional('sites/'+sid+'/stats.json',{'status':'not available'})
-  old=PUBLIC/'observations'/f'{sid}.json'
+  old=DATA/'observations'/f'{sid}.json'
   processed=json.loads(old.read_text(encoding='utf-8')) if old.exists() else {'acquisitions':[],'comparisons':[]}
   # Do not infer lineage for GIBS from matching dates. Pixel provenance is unavailable.
   for f in gibs['frames']:
@@ -24,11 +24,10 @@ def main():
   f=candidates[-1] if candidates else None
   item={'siteId':sid,'name':site['name'],'n':record.get('n',0),'date':f['date'] if f else '', 'maturity':f['maturity'] if f else 'not available','crid':f.get('crid','not available') if f else 'not available','channel':'HH / regional quicklook','source':'ASF DAAC','label':'Grayscale regional browse, not a site clip, not calibrated'}
   if f:
-   origin=PUBLIC/f['channels']['HH']['image'].removeprefix('data/')
+   origin=DATA/f['channels']['HH']['image'].removeprefix('data/')
    im=Image.open(origin);im.thumbnail((480,480))
    relative='sites/'+sid+'/thumbnail.png'
-   for base in (DATA,PUBLIC):
-    path=base/relative;path.parent.mkdir(parents=True,exist_ok=True);im.save(path,optimize=True)
+   save_image(relative,im)
    item['image']='data/'+relative
   summaries.append(item)
  save('evidence.json',summaries)

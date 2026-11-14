@@ -22,7 +22,7 @@ class Safeguards(unittest.TestCase):
   new={'url':'https://example.org/a','date':'2026-10-01','title':'Duplicate','ai':None}
   result=merge([old],[new]);self.assertEqual(len(result),1);self.assertEqual(result[0]['ai']['score'],.3)
  def test_catalog_pairs_match_maturity_frame_track_and_crid(self):
-  inv=json.loads((Path(__file__).resolve().parents[1]/'data/inventory.json').read_text())
+  inv=json.loads((Path(__file__).resolve().parents[1]/'public/data/inventory.json').read_text())
   for site in inv['sites']:
    pair=site.get('pair')
    if not pair:continue

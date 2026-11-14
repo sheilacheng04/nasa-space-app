@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 import rasterio
 from rasterio.warp import Resampling
-from pipeline_common import ROOT,PUBLIC,save,now
+from pipeline_common import ROOT,DATA,save,now
 from prepare_radar import read_tiff,warp,write_cog,save_png
 def water_mask(hh,hv,hh_threshold=-17.,hv_threshold=-24.):
  valid=np.isfinite(hh)&np.isfinite(hv)
@@ -18,8 +18,8 @@ def agreement(candidate,reference):
  return {'status':'computed','nValidPixels':int(valid.sum()),'agreement':float(np.mean(a==b)),'iou':float(np.sum(a&b)/union) if union else None,'truePositive':int(np.sum(a&b)),'falsePositive':int(np.sum(a&~b)),'falseNegative':int(np.sum(~a&b)),'trueNegative':int(np.sum(~a&~b))}
 def enrich(manifest_path):
  manifest_path=Path(manifest_path).resolve();m=json.loads(manifest_path.read_text(encoding='utf-8'));sid=m['siteId']
- package=json.loads((PUBLIC/'observations'/f'{sid}.json').read_text(encoding='utf-8'))
- site=next(s for s in json.loads((PUBLIC/'sites.json').read_text(encoding='utf-8')) if s['id']==sid)
+ package=json.loads((DATA/'observations'/f'{sid}.json').read_text(encoding='utf-8'))
+ site=next(s for s in json.loads((DATA/'sites.json').read_text(encoding='utf-8')) if s['id']==sid)
  thresholds=m.get('waterThresholdsDb',{'HH':-17.,'HV':-24.});rows=[];validation=[];cohorts=set()
  for scene in package['acquisitions']:
   if not all(p in scene['channels'] for p in ['HH','HV']):continue

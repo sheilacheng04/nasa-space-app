@@ -44,8 +44,7 @@ def fetch_one(site,date,server):
   valid=a[:,:,3]>0;row['nontransparentFraction']=round(float(valid.mean()),5)
   if not valid.any() or np.unique(a[valid,:3],axis=0).shape[0]<3:raise ValueError('Empty or uniform tile; no usable browse coverage')
   relative='sites/'+site['id']+'/gibs/'+date+'.png'
-  for base in (DATA,PUBLIC):
-   path=base/relative;path.parent.mkdir(parents=True,exist_ok=True);im.save(path,optimize=True)
+  save_image(relative,im)
   row.update(status='ready',image='data/'+relative)
  except Exception as e:row['reason']=type(e).__name__+': '+str(e)[:200]
  return row
