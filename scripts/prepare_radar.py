@@ -32,7 +32,7 @@ def paired_change(before,after):
     return result,{'meanDeltaDb':float(np.mean(result[valid])) if valid.any() else None,'validFraction':float(valid.mean())}
 
 def cohort(a):return tuple(a[k] for k in ['sensor','track','direction','frequency','maturity','processingVersion'])
-def compatible(a,b):return cohort(a)==cohort(b) and a['date']<b['date']
+def compatible(a,b):return cohort(a)==cohort(b) and a.get('frame')==b.get('frame') and a['date']<b['date']
 def scalar(ds):
     v=ds[()]
     return v.decode() if isinstance(v,bytes) else v.item() if hasattr(v,'item') else v
@@ -50,7 +50,13 @@ def read_gcov(path,frequency,channel,bbox,mask_values):
         win=window_from_bounds(left,bottom,right,top,transform=transform).round_offsets().round_lengths()
         r0=max(0,int(win.row_off));c0=max(0,int(win.col_off));r1=min(len(ys),int(win.row_off+win.height)+2);c1=min(len(xs),int(win.col_off+win.width)+2)
         if r1<=r0 or c1<=c0:raise ValueError('Scene does not intersect study area')
-        data=np.array(g[CHANNELS[channel]][r0:r1,c0:c1],dtype='float32');mask=np.array(g['mask'][r0:r1,c0:c1]);valid=np.isin(mask,mask_values)&np.isfinite(data)&(data>0)
+        units=g[CHANNELS[channel]].attrs.get('units','')
+        if isinstance(units,bytes):units=units.decode()
+        if str(units).lower() not in ['1','unitless','linear','linear power','db']:raise ValueError('Unknown GCOV units; inspect HDF5 attributes before conversion')
+        if 'rtcGammaToSigmaFactor' not in g or 'numberOfLooks' not in g:raise ValueError('Required RTC factor / looks metadata missing')
+        data=np.array(g[CHANNELS[channel]][r0:r1,c0:c1],dtype='float32')
+        if str(units).lower()=='db':data=10**(data/10)
+        mask=np.array(g['mask'][r0:r1,c0:c1]);valid=np.isin(mask,mask_values)&np.isfinite(data)&(data>0)
         if 'numberOfLooks' in g:valid&=g['numberOfLooks'][r0:r1,c0:c1]>0
         data[~valid]=np.nan
         t=rasterio.windows.transform(rasterio.windows.Window(c0,r0,c1-c0,r1-r0),transform)
@@ -91,8 +97,9 @@ def save_png(path,array,grid,bbox,kind='db'):
     arr=geographic(array,grid,bbox);valid=np.isfinite(arr);rgba=np.zeros((*arr.shape,4),dtype='uint8')
     clean=np.nan_to_num(arr,nan=-35)
     if kind=='change':
-        magnitude=np.clip(abs(clean)/6,0,1);white=np.array([245,243,237]);low=np.array([190,99,44]);high=np.array([34,105,135]);rgb=white+(np.where((clean<0)[...,None],low,high)-white)*magnitude[...,None];rgba[:,:,:3]=rgb.astype('uint8')
-    elif kind=='water':rgba[:,:,:3]=np.where((clean>0)[...,None],np.array([34,105,135]),np.array([220,223,214]))
+        gray=(np.clip((clean+6)/12,0,1)*255).astype('uint8');rgba[:,:,:3]=gray[...,None]
+    elif kind=='water':rgba[:,:,:3]=np.where((clean>0)[...,None],np.array([30,97,125]),np.array([235,232,223]))
+    elif kind=='ratio':rgba[:,:,:3]=(np.clip(clean/20,0,1)*255).astype('uint8')[...,None]
     else:
         gray=(np.clip((clean+35)/35,0,1)*255).astype('uint8');rgba[:,:,:3]=gray[...,None]
     rgba[:,:,3]=valid.astype('uint8')*255;Image.fromarray(rgba).save(path)
@@ -103,10 +110,13 @@ def validate_entry(a):
         if not isinstance(a.get(key),str) or not a[key].strip() or 'REPLACE' in a[key] or 'ACTUAL_' in a[key]:raise ValueError(f'Missing string metadata: {key}')
     if not re.fullmatch(r'[a-zA-Z0-9_-]{1,100}',a['id']):raise ValueError('Invalid acquisition id')
     dt.date.fromisoformat(a['date'])
+    if a['kind'] in ['gcov','gcov-subset'] and not a.get('unitsAndMasksReviewed'):raise ValueError('Set unitsAndMasksReviewed only after inspecting actual HDF5 units, mask flags, numberOfLooks and RTC factor')
+    if a['kind'] in ['gcov','gcov-subset'] and not a.get('frame'):raise ValueError('A real GCOV frame is required')
     if not a['sourceUrl'].startswith('https://'):raise ValueError('sourceUrl must be HTTPS')
-    if a['kind'] not in ['gcov','rtc','water']:raise ValueError('kind must be gcov, rtc or water')
-    if a['kind']=='gcov' and (a['sensor']!='NISAR' or a['frequency'] not in ['A','B']):raise ValueError('GCOV requires sensor NISAR and frequency A or B')
-    if a['kind']=='rtc' and a.get('units') not in ['linear_power','dB']:raise ValueError('RTC input units must be explicit: linear_power or dB')
+    if a['kind'] not in ['gcov','gcov-subset','rtc','water']:raise ValueError('kind must be gcov, rtc or water')
+    if a['kind'] in ['gcov','gcov-subset'] and (a['sensor']!='NISAR' or a['frequency'] not in ['A','B']):raise ValueError('GCOV requires sensor NISAR and frequency A or B')
+    if a['kind'] in ['rtc','gcov-subset'] and a.get('units') not in ['linear_power','dB']:raise ValueError('RTC input units must be explicit: linear_power or dB')
+    if a['kind']=='gcov-subset' and (not a.get('validMaskValues') or not all(k in a.get('metadataLayers',{}) for k in ['mask','numberOfLooks','rtcGammaToSigmaFactor'])):raise ValueError('Harmony subsets require reviewed mask values and all three metadata raster paths')
     if a['kind']=='water' and (not a.get('waterClasses') or not a.get('validClasses')):raise ValueError('Water imports require explicit waterClasses and validClasses')
 
 def prepare(manifest_path):
@@ -121,8 +131,8 @@ def prepare(manifest_path):
     grid=grid_for(site,resolution);west,south,east,north=site['bbox'];aoi={'type':'Polygon','coordinates':[[[west,south],[east,south],[east,north],[west,north],[west,south]]]};aoi_mask=geometry_mask([transform_geom('EPSG:4326',grid['crs'],aoi)],out_shape=(grid['height'],grid['width']),transform=grid['transform'],invert=True);folder=DATA/'rasters'/site['id']/dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%S%f');folder.mkdir(parents=True,exist_ok=True)
     acquisitions=[];arrays={};artifact=lambda p:str(p.relative_to(ROOT/'public')).replace('\\','/')
     for entry in sorted(entries,key=lambda a:a['date']):
-        paths=entry.get('channels',{}) if entry['kind']=='rtc' else {p:entry['path'] for p in (CHANNELS if entry['kind']=='gcov' else ['water'])}
-        item={k:entry[k] for k in ['id','date','sensor','track','direction','frequency','maturity','processingVersion','sourceUrl']};item.update(bounds=site['bbox'],channels={},resolutionM=resolution,inputHashes={},maskPolicy={'validMaskValues':entry.get('validMaskValues'),'validClasses':entry.get('validClasses'),'waterClasses':entry.get('waterClasses')})
+        paths=entry.get('channels',{}) if entry['kind'] in ['rtc','gcov-subset'] else {p:entry['path'] for p in (CHANNELS if entry['kind']=='gcov' else ['water'])}
+        item={k:entry[k] for k in ['id','date','sensor','track','direction','frequency','maturity','processingVersion','sourceUrl']};item.update(frame=entry.get('frame'),hdf5LayersVerified=entry['kind'] in ['gcov','gcov-subset'],bounds=site['bbox'],channels={},resolutionM=resolution,inputHashes={},maskPolicy={'validMaskValues':entry.get('validMaskValues'),'validClasses':entry.get('validClasses'),'waterClasses':entry.get('waterClasses')})
         for channel,rel in paths.items():
             path=(manifest_path.parent/rel).resolve()
             if channel not in list(CHANNELS)+['water']:raise ValueError(f'Unsupported channel {channel}')
@@ -131,9 +141,17 @@ def prepare(manifest_path):
             native=read_gcov(path,entry['frequency'],channel,site['bbox'],entry.get('validMaskValues')) if entry['kind']=='gcov' else read_tiff(path,int(entry.get('band',1)),site['bbox'])
             if native is None:continue
             arr,transform,crs=native
+            if entry['kind']=='gcov-subset':
+                layers={}
+                for name,relative in entry['metadataLayers'].items():
+                    layer,lt,lc=read_tiff((manifest_path.parent/relative).resolve(),1,site['bbox'])
+                    if layer.shape!=arr.shape or lt!=transform or lc!=crs:raise ValueError('Harmony science and quality layers must use identical grids')
+                    layers[name]=layer
+                valid=np.isin(layers['mask'],entry['validMaskValues'])&np.isfinite(layers['numberOfLooks'])&(layers['numberOfLooks']>0)&np.isfinite(layers['rtcGammaToSigmaFactor'])&(layers['rtcGammaToSigmaFactor']>0)
+                arr[~valid]=np.nan
             if entry['kind']=='water':arr=np.where(np.isin(arr,entry['validClasses']),np.isin(arr,entry['waterClasses']).astype('float32'),np.nan);out=warp(arr,transform,crs,grid,Resampling.nearest)
             else:
-                if entry['kind']=='rtc' and entry['units']=='dB':arr=np.where(np.isfinite(arr),10**(arr/10),np.nan)
+                if entry['kind'] in ['rtc','gcov-subset'] and entry['units']=='dB':arr=np.where(np.isfinite(arr),10**(arr/10),np.nan)
                 arr=np.where(arr>0,arr,np.nan);out=power_db(warp(arr,transform,crs,grid))
             out[~aoi_mask]=np.nan
             valid=np.isfinite(out)

@@ -1,0 +1,12 @@
+{
+  "siteId": "luzon",
+  "status": "not available",
+  "n": 0,
+  "rows": [],
+  "gap": {
+    "start": "2026-07-27T22:03:25Z",
+    "end": "2026-08-10T00:55:27Z",
+    "source": "https://nisar-docs.asf.alaska.edu/availability-overview/"
+  },
+  "reason": "EARTHDATA_USERNAME and EARTHDATA_PASSWORD are not configured. Authenticated HDF5/Harmony extraction, masks and OPERA agreement are untested."
+}

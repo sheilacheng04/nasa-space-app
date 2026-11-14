@@ -1,0 +1,77 @@
+{
+  "siteId": "piura",
+  "retrievedAt": "2026-11-14T02:24:10.298152+00:00",
+  "n": 2,
+  "status": "browse only",
+  "frames": [
+    {
+      "id": "NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001",
+      "date": "2026-06-21T11:09:03Z",
+      "track": 104,
+      "frame": 175,
+      "direction": "ASCENDING",
+      "maturity": "PROVISIONAL",
+      "crid": "P05023",
+      "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+      "polarizations": [
+        "HH",
+        "HV"
+      ],
+      "hdf5LayersVerified": false,
+      "coversCenter": true,
+      "coversBox": true,
+      "bboxCoverageFraction": 1.0,
+      "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001.h5",
+      "matchesObservationPlan": true,
+      "channels": {
+        "HH": {
+          "image": "data/sites/piura/browse/2026-06-21-HH.png",
+          "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "label": "downsampled regional HH quicklook; not calibrated; display stretch may differ"
+        },
+        "HV": {
+          "image": "data/sites/piura/browse/2026-06-21-HV.png",
+          "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "label": "downsampled regional HV quicklook; not calibrated; display stretch may differ"
+        }
+      },
+      "kind": "regional quicklook",
+      "retrievedAt": "2026-11-14T02:23:57.853093+00:00"
+    },
+    {
+      "id": "NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001",
+      "date": "2026-10-19T11:09:00Z",
+      "track": 104,
+      "frame": 175,
+      "direction": "ASCENDING",
+      "maturity": "PROVISIONAL",
+      "crid": "P05023",
+      "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+      "polarizations": [
+        "HH",
+        "HV"
+      ],
+      "hdf5LayersVerified": false,
+      "coversCenter": true,
+      "coversBox": true,
+      "bboxCoverageFraction": 1.0,
+      "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001.h5",
+      "matchesObservationPlan": true,
+      "channels": {
+        "HH": {
+          "image": "data/sites/piura/browse/2026-10-19-HH.png",
+          "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "label": "downsampled regional HH quicklook; not calibrated; display stretch may differ"
+        },
+        "HV": {
+          "image": "data/sites/piura/browse/2026-10-19-HV.png",
+          "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "label": "downsampled regional HV quicklook; not calibrated; display stretch may differ"
+        }
+      },
+      "kind": "regional quicklook",
+      "retrievedAt": "2026-11-14T02:24:04.377947+00:00"
+    }
+  ],
+  "warning": "Same track/frame and maturity; regional native quicklooks are not site clips. Independent display stretches cannot establish backscatter change. HDF5 layers have not been inspected."
+}

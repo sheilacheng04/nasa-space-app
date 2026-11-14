@@ -1,0 +1,700 @@
+{
+  "retrievedAt": "2026-11-14T02:19:11.866471+00:00",
+  "meaning": "Reachability only. 400 may mean missing API parameters. 403 may mean authentication or bot protection.",
+  "sources": [
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/",
+      "retrievedAt": "2026-11-14T02:17:42.693202+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/availability-overview/",
+      "retrievedAt": "2026-11-14T02:17:42.693946+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/availability-overview/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/products-overview/",
+      "retrievedAt": "2026-11-14T02:17:42.694316+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/products-overview/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/access-overview",
+      "retrievedAt": "2026-11-14T02:17:42.694558+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/access-overview/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/observation-plan",
+      "retrievedAt": "2026-11-14T02:17:42.694892+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/observation-plan/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/worldview/",
+      "retrievedAt": "2026-11-14T02:17:42.695171+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/worldview/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/harmony",
+      "retrievedAt": "2026-11-14T02:17:42.695881+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/harmony/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/python-tutorials",
+      "retrievedAt": "2026-11-14T02:17:42.696993+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/python-tutorials/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/storymaps",
+      "retrievedAt": "2026-11-14T02:17:42.699653+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/storymaps/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/applications-overview",
+      "retrievedAt": "2026-11-14T02:17:42.704644+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/applications-overview/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/gcov",
+      "retrievedAt": "2026-11-14T02:18:15.867920+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/gcov/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/nisar-known-issues",
+      "retrievedAt": "2026-11-14T02:18:15.876286+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/nisar-known-issues/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/provisional-known-issues",
+      "retrievedAt": "2026-11-14T02:18:15.886359+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/provisional-known-issues/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nisar-docs.asf.alaska.edu/data-use-citation-guidance",
+      "retrievedAt": "2026-11-14T02:18:15.909221+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nisar-docs.asf.alaska.edu/data-use-citation-guidance/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/nisar/nisar-composite-release-id-crid",
+      "retrievedAt": "2026-11-14T02:18:16.138604+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/nisar/nisar-composite-release-id-crid",
+      "contentType": "text/html; charset=UTF-8",
+      "reachable": true
+    },
+    {
+      "url": "https://search.asf.alaska.edu/#/?prodConfig=PR&dataMaturity=PROVISIONAL",
+      "retrievedAt": "2026-11-14T02:18:16.148526+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://search.asf.alaska.edu/#/?prodConfig=PR&dataMaturity=PROVISIONAL",
+      "contentType": "text/html",
+      "reachable": true
+    },
+    {
+      "url": "https://search.earthdata.nasa.gov/search/granules/collection-details?p=C2854338529-ASF",
+      "retrievedAt": "2026-11-14T02:18:16.149816+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://search.earthdata.nasa.gov/search/granules/collection-details?p=C2854338529-ASF",
+      "contentType": "text/html",
+      "reachable": true
+    },
+    {
+      "url": "https://urs.earthdata.nasa.gov/",
+      "retrievedAt": "2026-11-14T02:18:16.158419+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://urs.earthdata.nasa.gov/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://cmr.earthdata.nasa.gov/search/collections.json?keyword=NISAR%20GCOV",
+      "retrievedAt": "2026-11-14T02:18:16.180248+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://cmr.earthdata.nasa.gov/search/collections.json?keyword=NISAR%20GCOV",
+      "contentType": "application/json;charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://harmony.earthdata.nasa.gov/docs",
+      "retrievedAt": "2026-11-14T02:18:16.356670+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://harmony.earthdata.nasa.gov/docs",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://github.com/nasa/harmony-py",
+      "retrievedAt": "2026-11-14T02:18:17.010172+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://github.com/nasa/harmony-py",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://docs.asf.alaska.edu/",
+      "retrievedAt": "2026-11-14T02:18:17.248656+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://docs.asf.alaska.edu/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://experience.arcgis.com/experience/6052a864cd01459393884a7f751558e3",
+      "retrievedAt": "2026-11-14T02:18:17.278877+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://experience.arcgis.com/experience/6052a864cd01459393884a7f751558e3",
+      "contentType": "text/html",
+      "reachable": true
+    },
+    {
+      "url": "https://experience.arcgis.com/experience/0042193b06104889971cd77f505190e0",
+      "retrievedAt": "2026-11-14T02:18:17.439129+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://experience.arcgis.com/experience/0042193b06104889971cd77f505190e0",
+      "contentType": "text/html",
+      "reachable": true
+    },
+    {
+      "url": "https://science.nasa.gov/mission/nisar/data/",
+      "retrievedAt": "2026-11-14T02:18:17.589817+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://science.nasa.gov/mission/nisar/data/",
+      "contentType": "text/html; charset=UTF-8",
+      "reachable": true
+    },
+    {
+      "url": "https://worldview.earthdata.nasa.gov/?v=-283.0791525473933,-136.9755200581828,233.8728850905137,117.46181096672454&l=Reference_Labels_15m(hidden),Reference_Features_15m(hidden),Coastlines_15m,NISAR_L2_Geocoded_Polarimetric_Covariance_12Day,NISAR_L2_Geocoded_Polarimetric_Covariance,Land_Water_Map(opacity=0.77)&lg=true&t=2026-07-17-T13%3A26%3A54Z",
+      "retrievedAt": "2026-11-14T02:18:17.729888+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://worldview.earthdata.nasa.gov/?v=-283.0791525473933,-136.9755200581828,233.8728850905137,117.46181096672454&l=Reference_Labels_15m(hidden),Reference_Features_15m(hidden),Coastlines_15m,NISAR_L2_Geocoded_Polarimetric_Covariance_12Day,NISAR_L2_Geocoded_Polarimetric_Covariance,Land_Water_Map(opacity=0.77)&lg=true&t=2026-07-17-T13%3A26%3A54Z",
+      "contentType": "text/html",
+      "reachable": true
+    },
+    {
+      "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+      "retrievedAt": "2026-11-14T02:18:17.757577+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+      "contentType": "text/html; charset=UTF-8",
+      "reachable": true
+    },
+    {
+      "url": "https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi.",
+      "retrievedAt": "2026-11-14T02:18:17.829122+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi.",
+      "contentType": "text/html; charset=UTF-8",
+      "reachable": true
+    },
+    {
+      "url": "https://nasa-gibs.github.io/gibs-api-docs/",
+      "retrievedAt": "2026-11-14T02:18:18.170432+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nasa-gibs.github.io/gibs-api-docs/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://asfopensarlab.github.io/NISAR_Cookbook/",
+      "retrievedAt": "2026-11-14T02:18:18.590048+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://asfopensarlab.github.io/NISAR_Cookbook/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://github.com/ASFOpenSARlab/NISAR_Cookbook",
+      "retrievedAt": "2026-11-14T02:18:18.633799+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://github.com/ASFOpenSARlab/NISAR_Cookbook",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://asfopensarlab.github.io/NISAR_Cookbook/notebooks/nisar-gcov-time-series-example",
+      "retrievedAt": "2026-11-14T02:18:18.656203+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 404,
+      "finalUrl": "https://asfopensarlab.github.io/NISAR_Cookbook/notebooks/nisar-gcov-time-series-example",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": false
+    },
+    {
+      "url": "https://asfopensarlab.github.io/NISAR_Cookbook/notebooks/gcov-intro",
+      "retrievedAt": "2026-11-14T02:18:18.825231+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 404,
+      "finalUrl": "https://asfopensarlab.github.io/NISAR_Cookbook/notebooks/gcov-intro",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": false
+    },
+    {
+      "url": "https://podaac.jpl.nasa.gov/dataset/OPERA_L3_DSWX-S1_V1",
+      "retrievedAt": "2026-11-14T02:18:19.502513+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://podaac.jpl.nasa.gov/dataset/OPERA_L3_DSWX-S1_V1",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://open-meteo.com/en/docs/historical-weather-api",
+      "retrievedAt": "2026-11-14T02:18:20.250044+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://open-meteo.com/en/docs/historical-weather-api",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://power.larc.nasa.gov/docs/services/api/",
+      "retrievedAt": "2026-11-14T02:18:20.671925+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://power.larc.nasa.gov/docs/services/api/",
+      "contentType": "text/html",
+      "reachable": true
+    },
+    {
+      "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+      "retrievedAt": "2026-11-14T02:18:21.545380+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+      "contentType": "text/plain; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://api.gdeltproject.org/api/v2/doc/doc",
+      "retrievedAt": "2026-11-14T02:18:22.664077+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "reachable": false,
+      "error": "ReadTimeout: HTTPSConnectionPool(host='api.gdeltproject.org', port=443): Read timed out. (read timeout=8)"
+    },
+    {
+      "url": "https://nasa-impact.github.io/etci2021",
+      "retrievedAt": "2026-11-14T02:18:31.086703+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://nasa-impact.github.io/etci2021/",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://www.kaggle.com/datasets/maelysboudier/ecti-2021",
+      "retrievedAt": "2026-11-14T02:18:48.827517+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://www.kaggle.com/datasets/maelysboudier/ecti-2021",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://www.kaggle.com/datasets/osamaktk/pakistan-flood-dataset-2022-2024-dadu-sindh",
+      "retrievedAt": "2026-11-14T02:18:48.829247+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://www.kaggle.com/datasets/osamaktk/pakistan-flood-dataset-2022-2024-dadu-sindh",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://www.earthdata.nasa.gov/learn/trainings/introduction-synthetic-aperture-radar",
+      "retrievedAt": "2026-11-14T02:18:48.832257+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://www.earthdata.nasa.gov/learn/trainings/introduction-synthetic-aperture-radar",
+      "contentType": "text/html; charset=UTF-8",
+      "reachable": true
+    },
+    {
+      "url": "https://appliedsciences.nasa.gov/join-mission/training/english/arset-radar-remote-sensing-land-water-disaster-applications",
+      "retrievedAt": "2026-11-14T02:18:48.833275+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://science.nasa.gov/earth-science/earth-action/",
+      "contentType": "text/html; charset=UTF-8",
+      "reachable": true
+    },
+    {
+      "url": "https://www.earthdata.nasa.gov/learn/trainings/harnessing-nisar-next-generation-radar-observations-earth-applications",
+      "retrievedAt": "2026-11-14T02:18:49.490950+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://www.earthdata.nasa.gov/learn/trainings/harnessing-nisar-next-generation-radar-observations-earth-applications",
+      "contentType": "text/html; charset=UTF-8",
+      "reachable": true
+    },
+    {
+      "url": "https://doi.org/10.48577/jpl.UD4HV3",
+      "retrievedAt": "2026-11-14T02:18:49.492984+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "reachable": false,
+      "error": "ConnectTimeout: HTTPConnectionPool(host='dataverse.jpl.nasa.gov', port=80): Max retries exceeded with url: /citation?persistentId=doi:10.48577/jpl.UD4HV3 (Caused by ConnectTimeoutError(<HTTPConnection(host='dataverse.jpl.nasa.gov', port=80) at 0x1750841bb60>, 'Conne"
+    },
+    {
+      "url": "https://science.nasa.gov/mission/nisar/arcgis-storymaps/",
+      "retrievedAt": "2026-11-14T02:18:49.833245+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://science.nasa.gov/mission/nisar/arcgis-storymaps/",
+      "contentType": "text/html; charset=UTF-8",
+      "reachable": true
+    },
+    {
+      "url": "https://storymaps.arcgis.com/stories/c00d7691b8004b20a14f28df710d05fd",
+      "retrievedAt": "2026-11-14T02:18:50.066012+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://storymaps.arcgis.com/stories/c00d7691b8004b20a14f28df710d05fd",
+      "contentType": "text/html; charset=utf-8",
+      "reachable": true
+    },
+    {
+      "url": "https://www.spaceappschallenge.org/2026/challenges/dancing-with-the-sars/",
+      "retrievedAt": "2026-11-14T02:18:50.174836+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "reachable": false,
+      "error": "SSLError: HTTPSConnectionPool(host='www.spaceappschallenge.org', port=443): Max retries exceeded with url: /2026/challenges/dancing-with-the-sars/ (Caused by SSLError(SSLCertVerificationError('A certificate chain processed, but terminated in a root certificate"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/NISAR/",
+      "retrievedAt": "2026-11-14T02:18:50.572768+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://bhoonidhi.nrsc.gov.in/NISAR/",
+      "contentType": "text/html",
+      "reachable": true
+    },
+    {
+      "url": "https://www.eodms-sgdot.nrcan-rncan.gc.ca/index-en.html",
+      "retrievedAt": "2026-11-14T02:18:50.573805+00:00",
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "parameters": {
+        "method": "GET",
+        "timeoutSeconds": 18
+      },
+      "status": 200,
+      "finalUrl": "https://www.eodms-sgdot.nrcan-rncan.gc.ca/index-en.html",
+      "contentType": "text/html",
+      "reachable": true
+    }
+  ]
+}

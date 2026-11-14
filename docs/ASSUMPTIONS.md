@@ -1,13 +1,13 @@
-# Assumptions and outstanding inputs
-
-1. Vercel is the primary target, taking precedence over the older GitHub Pages brief. The full system requires the Python API and PostgreSQL in production; the offline preview remains available.
-2. The unreleased team dataset is not available yet. Real regional quicklooks cannot replace comparable calibrated acquisitions.
-3. Central Luzon and Angat are primary sites; Dadu is a flood-method test. Historical flooding is not attributed to a later El Niño.
-4. This is educational, noncommercial use under Open-Meteo's free API terms. Commercial deployment must revisit them.
-5. “Super El Niño” is framing, not an invented classification. The app uses a dated NOAA advisory and identifies the index.
-6. Personal stories, photographs, reservoir operations and ground truth have not been supplied. Slots are explicit; no experience is fabricated.
-7. Paid APIs stay off until configured. Core features require no keys.
-8. WorldCover, WorldPop and DEM inputs remain pending; prepared layers are supported. GPM IMERG, SMAP and NASA POWER are not substituted into ERA5 charts.
-9. Radar change requires independent evidence before interpreting it as drought, flood or an El Niño impact.
-
-Next: ingest and validate the scientific data; add local evidence and the team story; deploy the reviewed build and rehearse the demo.
+# Assumptions
+- The existing React/TypeScript project is the implementation base; the supplied 43 headlines are preserved. The original prototype stays in archive/.
+- The review date is 14 November 2026. Source timestamps remain UTC. Weather ends 8 November to allow for ERA5 latency.
+- Angat's supplied approximate center at 121.4 E is east of the actual dam/reservoir. The existing 121.08–121.24 E, 14.84–15.0 N box is retained. An NPC station specification supports 121.161194 E, 14.909611 N; this is a dam station, not a reservoir centroid.
+- Luzon and Dadu use the wider requested boxes. Real footprint fractions are reported; an intersecting scene does not guarantee valid coverage of the full box.
+- Lower Piura is added as a covered wet-side hypothesis. Its local seasonal timing must be tested; no 2026 flood or El Niño attribution is asserted.
+- BETA remains historical context. All chosen baseline/event pairs are PROVISIONAL, same track/frame/direction/CRID. Dates identify observations, not a confirmed hydrologic event.
+- The requested rolling GIBS layer is absent from current GetCapabilities. Daily imagery is used with explicit missing dates; no rolling product is fabricated.
+- GIBS pixel lineage is unavailable. Its maturity/CRID badge says not available. Regional ASF quicklooks have known metadata but are not quantitative site clips.
+- No Earthdata credentials are present. Calibrated science and independent OPERA validation are untested, not inferred from browse.
+- The personal paragraph and photo remain clearly marked author slots.
+- The self-contained file includes a bounded real-image subset and the last 60 daily weather rows; complete monthly comparisons remain embedded.
+- Hosted static pages work without accounts. Existing server features are optional and must be explicitly enabled/configured.

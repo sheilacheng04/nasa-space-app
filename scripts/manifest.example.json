@@ -9,12 +9,14 @@
       "track": "REPLACE_FROM_METADATA",
       "direction": "ASCENDING",
       "frequency": "A",
-      "maturity": "VALIDATED",
+      "maturity": "PROVISIONAL",
       "processingVersion": "REPLACE_WITH_CRID",
       "sourceUrl": "https://search.asf.alaska.edu/",
       "kind": "gcov",
       "path": "before.h5",
-      "validMaskValues": []
+      "validMaskValues": [],
+      "frame": "REPLACE_FROM_METADATA",
+      "unitsAndMasksReviewed": false
     },
     {
       "id": "angat-after",
@@ -23,12 +25,14 @@
       "track": "REPLACE_FROM_METADATA",
       "direction": "ASCENDING",
       "frequency": "A",
-      "maturity": "VALIDATED",
+      "maturity": "PROVISIONAL",
       "processingVersion": "REPLACE_WITH_CRID",
       "sourceUrl": "https://search.asf.alaska.edu/",
       "kind": "gcov",
       "path": "after.h5",
-      "validMaskValues": []
+      "validMaskValues": [],
+      "frame": "REPLACE_FROM_METADATA",
+      "unitsAndMasksReviewed": false
     }
   ]
 }

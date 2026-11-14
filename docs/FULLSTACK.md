@@ -1,3 +1,5 @@
+> Optional backend architecture record. The NISAR revision serves saved evidence directly from static files. Account and live AI features require an explicitly configured `globalThis.__PACIFIC_API__` backend. For current results, see [VALIDATION](VALIDATION.md) and [README](../README.md).
+
 # Full-stack application — 14 November 2026
 
 The main application now uses React 19 and TypeScript, with a Python FastAPI API and SQLAlchemy database. The root HTML is only the browser entrypoint. The offline HTML is a generated demonstration of the same React application.

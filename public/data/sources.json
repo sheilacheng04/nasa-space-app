@@ -1,128 +1,485 @@
 [
   {
-    "name": "NOAA CPC",
-    "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml",
-    "note": "Verified advisory dated 12 November 2026. Niño 3.4 weekly index is not ONI or RONI.",
-    "status": "Snapshot included",
-    "reviewedAt": "2026-11-13"
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:17:42.693202+00:00",
+    "note": "not applicable"
   },
   {
-    "name": "NISAR / ASF DAAC",
+    "name": "nisar-docs.asf.alaska.edu",
     "url": "https://nisar-docs.asf.alaska.edu/availability-overview/",
-    "note": "Validated L0–L2 released 6 November for acquisitions from 21 October 2026. Provisional acquisitions begin 17 June; earlier beta data exist. Record maturity and processing version.",
-    "status": "Regional browse available; quantitative observations pending",
-    "reviewedAt": "2026-11-13"
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:17:42.693946+00:00",
+    "note": "not applicable"
   },
   {
-    "name": "NISAR GCOV",
-    "url": "https://nisar-docs.asf.alaska.edu/gcov/",
-    "note": "Terrain-corrected gamma-zero power. Read only the polarizations present. A diagonal covariance element is converted to dB with 10 log10(power).",
-    "status": "Pipeline prepared",
-    "reviewedAt": "2026-11-13"
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/products-overview/",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:17:42.694316+00:00",
+    "note": "not applicable"
   },
   {
-    "name": "NISAR known issues",
-    "url": "https://nisar-docs.asf.alaska.edu/nisar-known-issues/",
-    "note": "Review known issues for the exact maturity, processing version and acquisition period before interpreting change.",
-    "status": "Manual review required",
-    "reviewedAt": "2026-11-13"
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/access-overview",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:17:42.694558+00:00",
+    "note": "not applicable"
   },
   {
-    "name": "ASF search",
-    "url": "https://nisar-docs.asf.alaska.edu/asf-search/",
-    "note": "Public metadata search. Scientific HDF5 downloads require Earthdata Login. Browse images are regional contrast-stretched quicklooks, not calibrated pixel values.",
-    "status": "API tested",
-    "reviewedAt": "2026-11-13"
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/observation-plan",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:17:42.694892+00:00",
+    "note": "not applicable"
   },
   {
-    "name": "Open-Meteo / ECMWF ERA5",
-    "url": "https://open-meteo.com/en/docs/historical-weather-api",
-    "note": "Daily temperature and precipitation reanalysis. Request models=era5, timezone=UTC and a seven-day publication buffer. CC BY 4.0 attribution; noncommercial free API limits apply.",
-    "status": "Browser refresh and build snapshot",
-    "reviewedAt": "2026-11-13"
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/worldview/",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:17:42.695171+00:00",
+    "note": "not applicable"
   },
   {
-    "name": "Open-Meteo terms",
-    "url": "https://open-meteo.com/en/terms",
-    "note": "Free noncommercial API: fewer than 10,000 calls/day, 5,000/hour and 600/minute. Institutional or commercial deployments must review the service terms.",
-    "status": "Reviewed",
-    "reviewedAt": "2026-11-13"
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/harmony",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:17:42.695881+00:00",
+    "note": "not applicable"
   },
   {
-    "name": "NASA GIBS",
-    "url": "https://nasa-gibs.github.io/gibs-api-docs/access-basics/",
-    "note": "WMS 1.1.1 with EPSG:4326, longitude/latitude BBOX, dated MODIS Terra true color. Optical context, not a SAR product.",
-    "status": "Optional live imagery",
-    "reviewedAt": "2026-11-13"
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/python-tutorials",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:17:42.696993+00:00",
+    "note": "not applicable"
   },
   {
-    "name": "Sentinel-1 / ASF",
-    "url": "https://www.earthdata.nasa.gov/centers/asf-daac/data-access-tools",
-    "note": "Use radiometrically terrain-corrected, comparable Sentinel-1 scenes for a longer baseline. Never subtract C-band and L-band observations as equivalent measurements.",
-    "status": "Prepared raster import",
-    "reviewedAt": "2026-11-13"
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/storymaps",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:17:42.699653+00:00",
+    "note": "not applicable"
   },
   {
-    "name": "OPERA DSWx-S1",
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/applications-overview",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:17:42.704644+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/gcov",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:15.867920+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/nisar-known-issues",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:15.876286+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/provisional-known-issues",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:15.886359+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "nisar-docs.asf.alaska.edu",
+    "url": "https://nisar-docs.asf.alaska.edu/data-use-citation-guidance",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:15.909221+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "www.earthdata.nasa.gov",
+    "url": "https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/nisar/nisar-composite-release-id-crid",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:16.138604+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "search.asf.alaska.edu",
+    "url": "https://search.asf.alaska.edu/#/?prodConfig=PR&dataMaturity=PROVISIONAL",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:16.148526+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "search.earthdata.nasa.gov",
+    "url": "https://search.earthdata.nasa.gov/search/granules/collection-details?p=C2854338529-ASF",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:16.149816+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "urs.earthdata.nasa.gov",
+    "url": "https://urs.earthdata.nasa.gov/",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:16.158419+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "cmr.earthdata.nasa.gov",
+    "url": "https://cmr.earthdata.nasa.gov/search/collections.json?keyword=NISAR%20GCOV",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:16.180248+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "harmony.earthdata.nasa.gov",
+    "url": "https://harmony.earthdata.nasa.gov/docs",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:16.356670+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "github.com",
+    "url": "https://github.com/nasa/harmony-py",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:17.010172+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "docs.asf.alaska.edu",
+    "url": "https://docs.asf.alaska.edu/",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:17.248656+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "experience.arcgis.com",
+    "url": "https://experience.arcgis.com/experience/6052a864cd01459393884a7f751558e3",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:17.278877+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "experience.arcgis.com",
+    "url": "https://experience.arcgis.com/experience/0042193b06104889971cd77f505190e0",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:17.439129+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "science.nasa.gov",
+    "url": "https://science.nasa.gov/mission/nisar/data/",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:17.589817+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "worldview.earthdata.nasa.gov",
+    "url": "https://worldview.earthdata.nasa.gov/?v=-283.0791525473933,-136.9755200581828,233.8728850905137,117.46181096672454&l=Reference_Labels_15m(hidden),Reference_Features_15m(hidden),Coastlines_15m,NISAR_L2_Geocoded_Polarimetric_Covariance_12Day,NISAR_L2_Geocoded_Polarimetric_Covariance,Land_Water_Map(opacity=0.77)&lg=true&t=2026-07-17-T13%3A26%3A54Z",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:17.729888+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "gibs.earthdata.nasa.gov",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:17.757577+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "gibs.earthdata.nasa.gov",
+    "url": "https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi.",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:17.829122+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "nasa-gibs.github.io",
+    "url": "https://nasa-gibs.github.io/gibs-api-docs/",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:18.170432+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "asfopensarlab.github.io",
+    "url": "https://asfopensarlab.github.io/NISAR_Cookbook/",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:18.590048+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "github.com",
+    "url": "https://github.com/ASFOpenSARlab/NISAR_Cookbook",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:18.633799+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "asfopensarlab.github.io",
+    "url": "https://asfopensarlab.github.io/NISAR_Cookbook/notebooks/nisar-gcov-time-series-example",
+    "status": "404 not available",
+    "reviewedAt": "2026-11-14T02:18:18.656203+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "asfopensarlab.github.io",
+    "url": "https://asfopensarlab.github.io/NISAR_Cookbook/notebooks/gcov-intro",
+    "status": "404 not available",
+    "reviewedAt": "2026-11-14T02:18:18.825231+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "podaac.jpl.nasa.gov",
     "url": "https://podaac.jpl.nasa.gov/dataset/OPERA_L3_DSWX-S1_V1",
-    "note": "30 m categorical surface-water maps with confidence information. Use water classes as water classes, not as dB. Inspect product version and known anomalies.",
-    "status": "Separate categorical import path",
-    "reviewedAt": "2026-11-13"
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:19.502513+00:00",
+    "note": "not applicable"
   },
   {
-    "name": "ESA WorldCover",
-    "url": "https://esa-worldcover.org/en/data-access",
-    "note": "2020 and 2021 use different algorithms; a difference between them is not necessarily a land-cover change. CC BY 4.0.",
-    "status": "Local context raster pending",
-    "reviewedAt": "2026-11-13"
+    "name": "open-meteo.com",
+    "url": "https://open-meteo.com/en/docs/historical-weather-api",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:20.250044+00:00",
+    "note": "not applicable"
   },
   {
-    "name": "WorldPop",
-    "url": "https://www.worldpop.org/",
-    "note": "Population estimates are context, not observed counts of people affected. Record product, year and license with the downloaded layer.",
-    "status": "Local context raster pending",
-    "reviewedAt": "2026-11-13"
+    "name": "power.larc.nasa.gov",
+    "url": "https://power.larc.nasa.gov/docs/services/api/",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:20.671925+00:00",
+    "note": "not applicable"
   },
   {
-    "name": "Copernicus DEM",
-    "url": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
-    "note": "A digital surface model including vegetation and buildings. Keep the required product attribution and license.",
-    "status": "Local context raster pending",
-    "reviewedAt": "2026-11-13"
+    "name": "www.cpc.ncep.noaa.gov",
+    "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:21.545380+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "api.gdeltproject.org",
+    "url": "https://api.gdeltproject.org/api/v2/doc/doc",
+    "status": "network error not available",
+    "reviewedAt": "2026-11-14T02:18:22.664077+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "nasa-impact.github.io",
+    "url": "https://nasa-impact.github.io/etci2021",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:31.086703+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "www.kaggle.com",
+    "url": "https://www.kaggle.com/datasets/maelysboudier/ecti-2021",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:48.827517+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "www.kaggle.com",
+    "url": "https://www.kaggle.com/datasets/osamaktk/pakistan-flood-dataset-2022-2024-dadu-sindh",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:48.829247+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "www.earthdata.nasa.gov",
+    "url": "https://www.earthdata.nasa.gov/learn/trainings/introduction-synthetic-aperture-radar",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:48.832257+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "appliedsciences.nasa.gov",
+    "url": "https://appliedsciences.nasa.gov/join-mission/training/english/arset-radar-remote-sensing-land-water-disaster-applications",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:48.833275+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "www.earthdata.nasa.gov",
+    "url": "https://www.earthdata.nasa.gov/learn/trainings/harnessing-nisar-next-generation-radar-observations-earth-applications",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:49.490950+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "doi.org",
+    "url": "https://doi.org/10.48577/jpl.UD4HV3",
+    "status": "network error not available",
+    "reviewedAt": "2026-11-14T02:18:49.492984+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "science.nasa.gov",
+    "url": "https://science.nasa.gov/mission/nisar/arcgis-storymaps/",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:49.833245+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "storymaps.arcgis.com",
+    "url": "https://storymaps.arcgis.com/stories/c00d7691b8004b20a14f28df710d05fd",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:50.066012+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "www.spaceappschallenge.org",
+    "url": "https://www.spaceappschallenge.org/2026/challenges/dancing-with-the-sars/",
+    "status": "network error not available",
+    "reviewedAt": "2026-11-14T02:18:50.174836+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "bhoonidhi.nrsc.gov.in",
+    "url": "https://bhoonidhi.nrsc.gov.in/NISAR/",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:50.572768+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "www.eodms-sgdot.nrcan-rncan.gc.ca",
+    "url": "https://www.eodms-sgdot.nrcan-rncan.gc.ca/index-en.html",
+    "status": "200 reachable",
+    "reviewedAt": "2026-11-14T02:18:50.573805+00:00",
+    "note": "not applicable"
+  },
+  {
+    "name": "ASF GCOV catalog / luzon",
+    "url": "https://api.daac.asf.alaska.edu/services/search/param?dataset=NISAR&processingLevel=GCOV&shortName=%5B%27NISAR_L2_GCOV_BETA_V1%27%2C+%27NISAR_L2_GCOV_PROVISIONAL_V1%27%2C+%27NISAR_L2_GCOV_V1%27%5D&intersectsWith=POLYGON+%28%28121.4+15%2C+121.4+16%2C+120.4+16%2C+120.4+15%2C+121.4+15%29%29&start=2025-10-17T00%3A00%3A00Z&end=2026-11-14T00%3A00%3A00Z&maxResults=1000&output=geojson",
+    "status": "catalog coverage confirmed",
+    "reviewedAt": "2026-11-14T02:23:33.162964+00:00",
+    "note": "BETA / PROVISIONAL / VALIDATED; see scene rows"
+  },
+  {
+    "name": "Observation plan / luzon",
+    "url": "https://services7.arcgis.com/WSiUmUhlFx4CtMBB/arcgis/rest/services/nisar_merged_observation_plans/FeatureServer/0/query?f=json&where=1%3D1&geometry=120.4%2C15.0%2C121.4%2C16.0&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=track%2Cframe%2Cproducegcov%2Cpassdirection%2CDH%2CDV%2CQP&returnGeometry=false",
+    "status": "track/frame intersections checked against official reference plan",
+    "reviewedAt": "2026-11-14T02:23:38.697038+00:00",
+    "note": "reference plan"
+  },
+  {
+    "name": "ASF GCOV catalog / angat",
+    "url": "https://api.daac.asf.alaska.edu/services/search/param?dataset=NISAR&processingLevel=GCOV&shortName=%5B%27NISAR_L2_GCOV_BETA_V1%27%2C+%27NISAR_L2_GCOV_PROVISIONAL_V1%27%2C+%27NISAR_L2_GCOV_V1%27%5D&intersectsWith=POLYGON+%28%28121.24+14.84%2C+121.24+15%2C+121.08+15%2C+121.08+14.84%2C+121.24+14.84%29%29&start=2025-10-17T00%3A00%3A00Z&end=2026-11-14T00%3A00%3A00Z&maxResults=1000&output=geojson",
+    "status": "catalog coverage confirmed",
+    "reviewedAt": "2026-11-14T02:23:33.163655+00:00",
+    "note": "BETA / PROVISIONAL / VALIDATED; see scene rows"
+  },
+  {
+    "name": "Observation plan / angat",
+    "url": "https://services7.arcgis.com/WSiUmUhlFx4CtMBB/arcgis/rest/services/nisar_merged_observation_plans/FeatureServer/0/query?f=json&where=1%3D1&geometry=121.08%2C14.84%2C121.24%2C15.0&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=track%2Cframe%2Cproducegcov%2Cpassdirection%2CDH%2CDV%2CQP&returnGeometry=false",
+    "status": "track/frame intersections checked against official reference plan",
+    "reviewedAt": "2026-11-14T02:23:38.186441+00:00",
+    "note": "reference plan"
+  },
+  {
+    "name": "ASF GCOV catalog / dadu",
+    "url": "https://api.daac.asf.alaska.edu/services/search/param?dataset=NISAR&processingLevel=GCOV&shortName=%5B%27NISAR_L2_GCOV_BETA_V1%27%2C+%27NISAR_L2_GCOV_PROVISIONAL_V1%27%2C+%27NISAR_L2_GCOV_V1%27%5D&intersectsWith=POLYGON+%28%2868.3+26.2%2C+68.3+27.2%2C+67.3+27.2%2C+67.3+26.2%2C+68.3+26.2%29%29&start=2025-10-17T00%3A00%3A00Z&end=2026-11-14T00%3A00%3A00Z&maxResults=1000&output=geojson",
+    "status": "catalog coverage confirmed",
+    "reviewedAt": "2026-11-14T02:23:33.164363+00:00",
+    "note": "BETA / PROVISIONAL / VALIDATED; see scene rows"
+  },
+  {
+    "name": "Observation plan / dadu",
+    "url": "https://services7.arcgis.com/WSiUmUhlFx4CtMBB/arcgis/rest/services/nisar_merged_observation_plans/FeatureServer/0/query?f=json&where=1%3D1&geometry=67.3%2C26.2%2C68.3%2C27.2&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=track%2Cframe%2Cproducegcov%2Cpassdirection%2CDH%2CDV%2CQP&returnGeometry=false",
+    "status": "track/frame intersections checked against official reference plan",
+    "reviewedAt": "2026-11-14T02:23:38.102569+00:00",
+    "note": "reference plan"
+  },
+  {
+    "name": "ASF GCOV catalog / piura",
+    "url": "https://api.daac.asf.alaska.edu/services/search/param?dataset=NISAR&processingLevel=GCOV&shortName=%5B%27NISAR_L2_GCOV_BETA_V1%27%2C+%27NISAR_L2_GCOV_PROVISIONAL_V1%27%2C+%27NISAR_L2_GCOV_V1%27%5D&intersectsWith=POLYGON+%28%28-80.4+-5.45%2C+-80.4+-5%2C+-80.85+-5%2C+-80.85+-5.45%2C+-80.4+-5.45%29%29&start=2025-10-17T00%3A00%3A00Z&end=2026-11-14T00%3A00%3A00Z&maxResults=1000&output=geojson",
+    "status": "catalog coverage confirmed",
+    "reviewedAt": "2026-11-14T02:23:33.165049+00:00",
+    "note": "BETA / PROVISIONAL / VALIDATED; see scene rows"
+  },
+  {
+    "name": "Observation plan / piura",
+    "url": "https://services7.arcgis.com/WSiUmUhlFx4CtMBB/arcgis/rest/services/nisar_merged_observation_plans/FeatureServer/0/query?f=json&where=1%3D1&geometry=-80.85%2C-5.45%2C-80.4%2C-5.0&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=track%2Cframe%2Cproducegcov%2Cpassdirection%2CDH%2CDV%2CQP&returnGeometry=false",
+    "status": "track/frame intersections checked against official reference plan",
+    "reviewedAt": "2026-11-14T02:23:37.548450+00:00",
+    "note": "reference plan"
+  },
+  {
+    "name": "ERA5 luzon / recent",
+    "url": "https://archive-api.open-meteo.com/v1/archive?latitude=15.5&longitude=120.9&start_date=2025-01-01&end_date=2026-11-08&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+    "status": "ready",
+    "reviewedAt": "2026-11-14T02:25:43.846490+00:00",
+    "note": "reanalysis"
+  },
+  {
+    "name": "ERA5 luzon / baseline",
+    "url": "https://archive-api.open-meteo.com/v1/archive?latitude=15.5&longitude=120.9&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+    "status": "ready",
+    "reviewedAt": "2026-11-14T02:25:45.343247+00:00",
+    "note": "reanalysis"
+  },
+  {
+    "name": "ERA5 angat / recent",
+    "url": "https://archive-api.open-meteo.com/v1/archive?latitude=14.91&longitude=121.16&start_date=2025-01-01&end_date=2026-11-08&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+    "status": "ready",
+    "reviewedAt": "2026-11-14T02:25:43.846889+00:00",
+    "note": "reanalysis"
+  },
+  {
+    "name": "ERA5 angat / baseline",
+    "url": "https://archive-api.open-meteo.com/v1/archive?latitude=14.91&longitude=121.16&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+    "status": "ready",
+    "reviewedAt": "2026-11-14T02:25:45.340609+00:00",
+    "note": "reanalysis"
+  },
+  {
+    "name": "ERA5 dadu / recent",
+    "url": "https://archive-api.open-meteo.com/v1/archive?latitude=26.7&longitude=67.8&start_date=2025-01-01&end_date=2026-11-08&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+    "status": "ready",
+    "reviewedAt": "2026-11-14T02:25:43.847225+00:00",
+    "note": "reanalysis"
+  },
+  {
+    "name": "ERA5 dadu / baseline",
+    "url": "https://archive-api.open-meteo.com/v1/archive?latitude=26.7&longitude=67.8&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+    "status": "ready",
+    "reviewedAt": "2026-11-14T02:25:45.336708+00:00",
+    "note": "reanalysis"
+  },
+  {
+    "name": "ERA5 piura / recent",
+    "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-5.2&longitude=-80.63&start_date=2025-01-01&end_date=2026-11-08&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+    "status": "ready",
+    "reviewedAt": "2026-11-14T02:44:45.774220+00:00",
+    "note": "reanalysis"
+  },
+  {
+    "name": "ERA5 piura / baseline",
+    "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-5.2&longitude=-80.63&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+    "status": "ready",
+    "reviewedAt": "2026-11-14T02:44:47.034115+00:00",
+    "note": "reanalysis"
+  },
+  {
+    "name": "NOAA weekly Nino 3.4",
+    "url": "https://www.cpc.ncep.noaa.gov/data/indices/wksst9120.for",
+    "status": "ready",
+    "reviewedAt": "2026-11-14T02:25:48.913277+00:00",
+    "note": "operational index"
+  },
+  {
+    "name": "NOAA ONI",
+    "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+    "status": "ready",
+    "reviewedAt": "2026-11-14T02:25:52.424818+00:00",
+    "note": "operational index"
   },
   {
     "name": "GDELT DOC 2.0",
-    "url": "https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/",
-    "note": "Build-time headline discovery with source links. A live probe returned HTTP 429; cached news is retained on errors. No article bodies are republished.",
-    "status": "Refresh script with cached fallback",
-    "reviewedAt": "2026-11-13"
-  },
-  {
-    "name": "VADER",
-    "url": "https://github.com/cjhutto/vaderSentiment",
-    "note": "Hutto & Gilbert (2014). Raw VADER plus a separately labeled climate-adjusted lexicon. The project override is a heuristic, not a validated climate classifier.",
-    "status": "Pipeline scoring",
-    "reviewedAt": "2026-11-13"
-  },
-  {
-    "name": "Photon / OpenStreetMap",
-    "url": "https://github.com/komoot/photon",
-    "note": "Explicit search only, maximum five results. Public demo service is best effort and may throttle. OpenStreetMap attribution applies.",
-    "status": "Optional place search",
-    "reviewedAt": "2026-11-13"
-  },
-  {
-    "name": "NASA POWER",
-    "url": "https://power.larc.nasa.gov/docs/services/api/temporal/daily/",
-    "note": "An alternative meteorological source, reviewed but not mixed into the ERA5 charts. At most 20 parameters per point request; preserve UTC/LST distinction.",
-    "status": "Not used in current charts",
-    "reviewedAt": "2026-11-13"
-  },
-  {
-    "name": "Natural Earth / world-atlas 2.0.2",
-    "url": "https://github.com/topojson/world-atlas",
-    "note": "Pinned small-scale locator boundaries. Natural Earth public-domain geography; world-atlas ISC license included. Not authoritative local geometry.",
-    "status": "Bundled locator data",
-    "reviewedAt": "2026-11-13"
+    "url": "https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22El+Nino%22+OR+%22El+Ni%3Fo%22+OR+NISAR%29+sourcelang%3Aenglish&mode=artlist&format=json&startdatetime=20260815000000&enddatetime=20261114000000&maxrecords=250&sort=datedesc",
+    "status": "ready",
+    "reviewedAt": "2026-11-14T02:26:17.872911+00:00",
+    "note": "news discovery, unverified claims"
   }
 ]

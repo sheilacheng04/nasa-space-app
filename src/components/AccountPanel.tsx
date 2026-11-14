@@ -14,7 +14,7 @@ export function AccountPanel({points, load, selected, select}: {points: Observat
   const [status, setStatus] = useState('');
   const [deleting, setDeleting] = useState<string | null>(null);
   useEffect(() => {
-    if (!hosted) { setBusy(false); return; }
+    if (!hosted || !globalThis.__PACIFIC_API__) { setBusy(false); return; }
     let active = true;
     account.me().then(async result => {
       if (!active) return;
@@ -51,7 +51,7 @@ export function AccountPanel({points, load, selected, select}: {points: Observat
       setStatus('Saved ' + result.rowCount + ' observations to your account.');
     });
   }
-  if (!hosted) return <section className="account-panel"><h2>Saved datasets</h2><p>Account storage is available in the full application. This offline preview keeps observations in this browser.</p></section>;
+  if (!hosted || !globalThis.__PACIFIC_API__) return <section className="account-panel"><h2>Saved datasets</h2><p>Your CSV observations are saved in this browser. Account storage is not enabled in this edition.</p></section>;
   return <section className="account-panel" aria-labelledby="account-heading">
     <div className="section-title"><div><p className="eyebrow">Your workspace</p><h2 id="account-heading">Saved datasets</h2></div>{user && <button id="account-logout" className="text-link" disabled={busy} onClick={() => void perform(async () => {
       await account.logout(); setUser(null); setDatasets([]); select(undefined); setStatus('Signed out. Browser observations are still available.');
@@ -61,14 +61,14 @@ export function AccountPanel({points, load, selected, select}: {points: Observat
       <div className="button-row" role="group" aria-label="Account action"><button type="button" className="button secondary" aria-pressed={mode === 'login'} disabled={busy} onClick={() => setMode('login')}>Sign in</button><button type="button" className="button secondary" aria-pressed={mode === 'register'} disabled={busy} onClick={() => setMode('register')}>Create account</button></div>
       <label htmlFor="account-username">Username<input id="account-username" autoComplete="username" required minLength={3} maxLength={32} pattern="[a-zA-Z0-9_-]+" value={username} onChange={e => setUsername(e.target.value)}/></label>
       <label htmlFor="account-password">Password<input id="account-password" type="password" autoComplete={mode === 'login' ? 'current-password' : 'new-password'} required minLength={12} maxLength={128} value={password} onChange={e => setPassword(e.target.value)}/></label>
-      <p className="source-line">Use 3–32 letters, numbers, underscores or hyphens for your username, and at least 12 characters for your password.</p>
-      <button id="account-submit" className="button primary" disabled={busy}>{busy ? 'Please wait…' : mode === 'login' ? 'Sign in to your workspace' : 'Create your account'}</button>
+      <p className="source-line">Use 3â€“32 letters, numbers, underscores or hyphens for your username, and at least 12 characters for your password.</p>
+      <button id="account-submit" className="button primary" disabled={busy}>{busy ? 'Please waitâ€¦' : mode === 'login' ? 'Sign in to your workspace' : 'Create your account'}</button>
     </form> : <>
       <p id="account-user">Signed in as <strong>{user.username}</strong></p>
       <label htmlFor="dataset-name">Dataset name<input id="dataset-name" value={name} required maxLength={120} onChange={e => setName(e.target.value)}/></label>
       <div className="button-row"><button id="save-dataset" className="button primary" disabled={busy || !points.length || !name.trim()} onClick={() => void save()}>{selected ? 'Update saved dataset' : 'Save to account'}</button>{selected && <button className="button secondary" disabled={busy || !points.length || !name.trim()} onClick={() => void save(true)}>Save a copy</button>}<button className="text-link" disabled={busy} onClick={() => void perform(async () => { setDatasets((await account.list()).datasets); setStatus('Dataset list refreshed.'); })}>Refresh saved datasets</button></div>
       <div id="saved-datasets">{datasets.length ? datasets.map(item => <article className="saved-dataset" key={item.id}>
-        <div><h3>{item.name}</h3><p className="source-line">{item.rowCount} observations · saved {new Date(item.updatedAt * 1000).toLocaleDateString()}</p></div>
+        <div><h3>{item.name}</h3><p className="source-line">{item.rowCount} observations Â· saved {new Date(item.updatedAt * 1000).toLocaleDateString()}</p></div>
         <div className="button-row"><button className="button secondary" disabled={busy} onClick={() => void perform(async () => {
           const result = await account.get(item.id); load(result.observations); select(item.id); setName(result.name); setStatus('Opened ' + result.name + ' in this browser and on the globe.');
         })}>Open</button><a className="text-link" href={'/api/datasets/' + item.id + '/export.csv'} download>Download CSV</a><button className="text-link" disabled={busy} onClick={() => setDeleting(item.id)}>Delete</button></div>

@@ -1,3 +1,4 @@
+import { localTone } from '../core.js';
 import type { Analysis, Bootstrap, Dataset, Observation, Place, SavedDataset, Site, User, Weather } from '../types';
 
 export const hosted = !globalThis.__PACIFIC_DEMO__;
@@ -32,15 +33,15 @@ export function dataFile<T = unknown>(path: string): Promise<T> {
     const data = globalThis.__PACIFIC_DATA__?.[path];
     return data === undefined ? Promise.reject(new Error('This file is not included in the offline demo.')) : Promise.resolve(structuredClone(data) as T);
   }
-  return request<T>('/api/data/' + path);
+  return request<T>('./data/' + path);
 }
 export async function bootstrap(): Promise<Bootstrap> {
-  if (hosted) return request<Bootstrap>('/api/bootstrap');
-  const [sites, news, enso, sources] = await Promise.all([
+
+  const [sites, news, enso, sources, evidence] = await Promise.all([
     dataFile<Bootstrap['sites']>('sites.json'), dataFile<Bootstrap['news']>('news.json'),
-    dataFile<Bootstrap['enso']>('enso.json'), dataFile<Bootstrap['sources']>('sources.json'),
+    dataFile<Bootstrap['enso']>('enso.json'), dataFile<Bootstrap['sources']>('sources.json'), dataFile<Bootstrap['evidence']>('evidence.json'),
   ]);
-  return { sites, news, enso, sources };
+  return { sites, news, enso, sources, evidence };
 }
 export function weather(site: Site): Promise<Weather> {
   if (!hosted) throw new Error('Live weather is disabled in the offline demo.');
@@ -48,14 +49,23 @@ export function weather(site: Site): Promise<Weather> {
 }
 export async function geocode(query: string): Promise<Place[]> {
   if (!hosted) throw new Error('World search is disabled in the offline demo.');
-  return (await request<{ features: Place[] }>('/api/geocode?q=' + encodeURIComponent(query))).features;
+  try {
+    const url=globalThis.__PACIFIC_API__?'/api/geocode?q='+encodeURIComponent(query):'https://photon.komoot.io/api/?limit=6&q='+encodeURIComponent(query);
+    return (await request<{features:Place[]}>(url)).features;
+  } catch {
+    const saved=await dataFile<{places:[string,string,number,number][]}>('places.json');
+    return saved.places.filter(p=>(p[0]+' '+p[1]).toLowerCase().includes(query.toLowerCase())).slice(0,8).map(p=>({properties:{name:p[0],country:p[1]},geometry:{coordinates:[p[3],p[2]]}}));
+  }
 }
 function json<T>(path: string, body: unknown, method = 'POST'): Promise<T> {
   return request<T>('/api/' + path, { method, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
 }
-export function analyzeAI(text: string) {
-  if (!hosted) throw new Error('AI is unavailable in the offline demo.');
-  return request<Analysis>('/api/analyze', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({text}), timeout: 28000});
+export async function analyzeAI(text: string) {
+  if (hosted && globalThis.__PACIFIC_API__) {
+    try { return await request<Analysis>('/api/analyze', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text}),timeout:28000}); } catch {}
+  }
+  const sample=localTone(text);
+  return {score:sample.score,summary:'Simulated Claude-style sample: local keyword counts find '+sample.negative+' risk words and '+sample.positive+' recovery words.',caveat:'Offline heuristic, not a Claude response or scientific evidence. Actual AI re-score is not available.',model:'offline-sample'};
 }
 export const account = {
   me: () => request<{ user: User | null }>('/api/auth/me'),

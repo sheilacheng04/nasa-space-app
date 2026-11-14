@@ -1,11 +1,38 @@
 import {build} from 'esbuild';
 import {readFile,writeFile,readdir,mkdir} from 'node:fs/promises';
 import path from 'node:path';
-const root=process.cwd(),data={},assets={};
-async function collect(folder){for(const entry of await readdir(folder,{withFileTypes:true})){const file=path.join(folder,entry.name);if(entry.isDirectory())await collect(file);else {const relative=path.relative(path.join(root,'public/data'),file).replaceAll('\\','/');if(file.endsWith('.json'))data[relative]=JSON.parse(await readFile(file,'utf8'));if(relative.startsWith('demo/')&&file.endsWith('.svg'))assets['data/'+relative]='data:image/svg+xml;base64,'+(await readFile(file)).toString('base64');}}}
-await collect(path.join(root,'public/data'));
-for(const [key,value]of Object.entries(data)){if(key.startsWith('observations/'))delete value.browse;}
-const bundled=await build({entryPoints:['src/main.tsx'],bundle:true,write:false,format:'iife',minify:true,target:'es2022',loader:{'.css':'empty'},plugins:[{name:'offline-heavy-views',setup(b){b.onResolve({filter:/^\.\/globe-loader\.js$/},()=>({path:'globe-loader',namespace:'inline-globe'}));b.onLoad({filter:/.*/,namespace:'inline-globe'},()=>({contents:'export function loadGlobe(){return Promise.resolve(globalThis.Globe)}',loader:'js'}));b.onResolve({filter:/^\.\/local-map\.js$/},args=>({path:args.path,namespace:'offline'}));b.onLoad({filter:/.*/,namespace:'offline'},()=>({contents:'export default function(){throw new Error("Open hosted app for 3D")} export function mountMap(){throw new Error("Open hosted app for maps")}',loader:'js'}));}}]});
-const globeBundle=await readFile('node_modules/globe.gl/dist/globe.gl.min.js','utf8');
-let html=await readFile('index.html','utf8');let css=await readFile('src/styles.css','utf8');css=css.replace("@import url('./map.css');",await readFile('src/map.css','utf8'));for(const name of ['story','globe','local-window','account'])css+='\n'+await readFile('src/'+name+'.css','utf8');const serialize=value=>JSON.stringify(value).replaceAll('<','\\u003c');const setup=`globalThis.__PACIFIC_DEMO__=true;globalThis.__PACIFIC_DATA__=${serialize(data)};globalThis.__PACIFIC_ASSETS__=${serialize(assets)};`;
-html=html.replace('</head>',()=>`<style>${css}</style></head>`).replace('<script type="module" src="/src/main.tsx"></script>',()=>`<script>${setup}${(globeBundle+';\n'+bundled.outputFiles[0].text).replaceAll('</script','<\\/script')}</script>`);await mkdir('demo',{recursive:true});await writeFile('demo/pacific-preview.html',html);console.log(`Self-contained preview: demo/pacific-preview.html (${Math.round(Buffer.byteLength(html)/1024)} KB). No remote scripts or images.`);
+import {existsSync} from 'node:fs';
+import {execFileSync} from 'node:child_process';
+const python=process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python';
+execFileSync(existsSync(python)?python:'python',['scripts/prepare_preview_assets.py'],{stdio:'inherit'});
+const root=process.cwd(),data={};
+const {assets,bytes:embeddedImageBytes}=JSON.parse(await readFile('.artifacts/preview-assets.json','utf8'));
+const read=async p=>JSON.parse(await readFile(path.join('public/data',p),'utf8'));
+for(const name of ['sites.json','news.json','enso.json','sources.json','evidence.json','method.json','inventory.json','network-status.json','world.topo.json','places.json'])data[name]=await read(name);
+const compactInventory=r=>({...r,scenes:r.scenes.map(({browseUrls,footprint,...s})=>s)});
+data['inventory.json'].sites=data['inventory.json'].sites.map(compactInventory);
+for(const site of data['sites.json']){
+ const key='sites/'+site.id+'/evidence.json';const e=await read(key);e.inventory=compactInventory(e.inventory);
+ for(const frame of e.gibs.frames)if(frame.image&&!assets[frame.image]){delete frame.image;frame.status='not available';frame.reason='This frame is not embedded in the offline edition. The hosted project contains the full saved sequence.';}
+ data[key]=e;
+ const climate=await read('context/'+site.id+'.json');climate.daily=climate.daily?.slice(-60)||[];climate.offlineNote='Monthly comparisons are complete. Daily data in this offline edition contain the latest 60 days only.';data['context/'+site.id+'.json']=climate;
+}
+for(const entry of await readdir('public/data/demo'))if(entry.endsWith('.svg'))assets['data/demo/'+entry]='data:image/svg+xml;base64,'+(await readFile('public/data/demo/'+entry)).toString('base64');
+const bundled=await build({entryPoints:['src/main.tsx'],bundle:true,write:false,format:'iife',minify:true,target:'es2022',loader:{'.css':'empty'},plugins:[{name:'offline-heavy-views',setup(b){
+ b.onResolve({filter:/^\.\/globe-loader\.js$/},()=>({path:'globe-loader',namespace:'inline-globe'}));
+ b.onLoad({filter:/.*/,namespace:'inline-globe'},()=>({contents:'export function loadGlobe(){return Promise.resolve(globalThis.Globe)}',loader:'js'}));
+ b.onResolve({filter:/local-map\.js$/},()=>({path:'local-map',namespace:'offline'}));
+ b.onLoad({filter:/.*/,namespace:'offline'},()=>({contents:'export function mountMap(){throw new Error("Detailed maps are available in the hosted edition.")}',loader:'js'}));
+}}]});
+const globe=await readFile('node_modules/globe.gl/dist/globe.gl.min.js','utf8');
+let css=await readFile('src/styles.css','utf8');css=css.replace("@import url('./map.css');",await readFile('src/map.css','utf8'));
+for(const name of ['story','globe','local-window','account','editorial'])css+='\n'+await readFile('src/'+name+'.css','utf8');
+const serialize=v=>JSON.stringify(v).replaceAll('<','\\u003c');
+const setup='globalThis.__PACIFIC_DEMO__=true;globalThis.__PACIFIC_DATA__='+serialize(data)+';globalThis.__PACIFIC_ASSETS__='+serialize(assets)+';';
+let html=await readFile('index.html','utf8');
+html=html.replace('</head>',()=>'<style>'+css+'</style></head>').replace('<script type="module" src="/src/main.tsx"></script>',()=>'<script>'+setup+(globe+';\n'+bundled.outputFiles[0].text).replaceAll('</script','<\\/script')+'</script>');
+const size=Buffer.byteLength(html);
+if(size>3000000)throw new Error('Offline first-load budget exceeded: '+size);
+await mkdir('demo',{recursive:true});await writeFile('demo/pacific-preview.html',html);await writeFile('el-nino-app.html',html);
+await writeFile('.artifacts/offline-size.json',JSON.stringify({htmlBytes:size,embeddedRealImageDataURIBytes:embeddedImageBytes,networkRequests:0},null,2));
+console.log('Self-contained preview: '+size+' bytes; real image data URIs '+embeddedImageBytes+' bytes. No external scripts or data requests.');

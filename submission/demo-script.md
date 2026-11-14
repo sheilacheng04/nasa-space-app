@@ -1,27 +1,10 @@
-# 90-second demonstration
+# 90-second demo script
+**0–15 seconds — Story.** “Is Angat reservoir shrinking? Start with this real NISAR radar quicklook, acquired on 9 October 2026. It is a regional browse image. We have not measured a shrinking reservoir.”
 
-Rehearse at approximately 130 words/minute. Use the current truthful version below. After real data are validated, replace the illustrative demonstration with the measured pair and state its dates and sensor.
+**15–35 seconds — Sites.** “Open the site explorer. Swipe between real dated views, or select HH and HV regional quicklooks. Each view tells you its source and maturity. Missing dates stay visible, including the mission gap. The water-area chart says n equals zero because calibrated pixels have not been processed.”
 
-**0–15 seconds — Story**
+**35–55 seconds — The hypothesis.** “Lower rainfall could coincide with a changing shoreline. Dam releases could produce the same pattern. The hypothesis would be weaker if water levels stayed stable or operations explained the change. ERA5 rainfall and NOAA ocean indices supply context; NISAR measures neither heat nor El Niño.”
 
-“The Pacific has two faces. A shift in ocean temperature changes the pattern of rain, but the consequences are local. Our application connects that climate story to evidence from the ground.”
+**55–70 seconds — Both faces.** “Compare Luzon’s rice question with a wet-side hypothesis in Peru. Dadu tests flood methods separately: the 2022 floods were in a La Niña year. The globe’s climate colors are simulated.”
 
-**15–30 seconds — Mechanism and source**
-
-Move the trade-wind slider. “This diagram explains El Niño; it is labeled as an illustration. The climate number comes from a dated NOAA advisory. Radar does not measure heat.”
-
-**30–50 seconds — Observatory**
-
-Open Angat. “Here we ask whether the reservoir shoreline is changing. This is a real regional NISAR quicklook. Quantitative observations are still pending our dataset, so the app does not invent a result. Weather charts provide independent ERA5 context.”
-
-**50–65 seconds — Comparison interaction**
-
-Enable the illustrative comparison and move the divider. “Once compatible scenes are processed, the same controls compare dates, polarizations and measured change. Missing channels stay unavailable. Every chart keeps its source and units.”
-
-**65–80 seconds — Test an explanation**
-
-Return to site observations and show the hypothesis. “Less rain is one possible explanation. Dam operations are another. We state the evidence needed and what would disprove our idea.”
-
-**80–90 seconds — Close**
-
-Open Data & method. “Our contribution is an accessible, reproducible path from radar to a testable local question. The code is open, and the next dataset can enter this same workflow.”
+**70–90 seconds — Limits and next observations.** “Our source ledger shows what ran and what did not. News sentiment describes language, not climate risk. We leave the Philippine personal story for its author. NISAR’s 12-day repeat can build a longer land-and-water record. Next we need calibrated GCOV pairs and independent validation. One season cannot prove attribution.”

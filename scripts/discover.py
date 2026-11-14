@@ -11,15 +11,17 @@ def main():
         import earthaccess
         results=earthaccess.search_data(short_name='OPERA_L3_DSWX-S1_V1',bounding_box=tuple(site['bbox']),temporal=(args.start,args.end),count=100)
         (folder/'opera-search.json').write_text(json.dumps([dict(x) for x in results],indent=2,default=str),encoding='utf-8')
-        if args.download:earthaccess.login();earthaccess.download(results,str(folder/'opera'))
+        if args.download:earthaccess.login(strategy='environment',persist=False);earthaccess.download(results,str(folder/'opera'))
     else:
         import asf_search as asf
         polygon=f'POLYGON(({l} {b},{r} {b},{r} {t},{l} {t},{l} {b}))';options=dict(intersectsWith=polygon,start=args.start,end=args.end,maxResults=100)
-        options.update(dict(dataset='NISAR',processingLevel='GCOV',dataMaturity=args.maturity) if args.source=='nisar' else dict(platform='Sentinel-1',processingLevel='GRD_HD'))
+        options.update(dict(dataset='NISAR',processingLevel='GCOV',shortName={'VALIDATED':'NISAR_L2_GCOV_V1','PROVISIONAL':'NISAR_L2_GCOV_PROVISIONAL_V1','BETA':'NISAR_L2_GCOV_BETA_V1'}[args.maturity]) if args.source=='nisar' else dict(platform='Sentinel-1',processingLevel='GRD_HD'))
         results=asf.search(**options);(folder/f'{args.source}-search.geojson').write_text(json.dumps(results.geojson(),indent=2),encoding='utf-8')
         if args.download:
-            import getpass
-            username=input('Earthdata username: ');password=getpass.getpass('Earthdata password (not stored): ');session=asf.ASFSession().auth_with_creds(username,password);dest=folder/args.source;dest.mkdir(exist_ok=True);results.download(path=str(dest),session=session)
+            import os,earthaccess
+            if not (os.getenv('EARTHDATA_USERNAME') and os.getenv('EARTHDATA_PASSWORD')):raise RuntimeError('Earthdata environment credentials are not configured')
+            earthaccess.login(strategy='environment',persist=False)
+            session=asf.ASFSession().auth_with_creds(os.environ['EARTHDATA_USERNAME'],os.environ['EARTHDATA_PASSWORD']);dest=folder/args.source;dest.mkdir(exist_ok=True);results.download(path=str(dest),session=session)
     print(f'{len(results)} matching products. Inspect metadata, quality, footprint and channels before selecting dates.')
     if args.source=='sentinel':print('GRD discovery is not RTC processing. Use ASF HyP3 or another documented RTC workflow before importing GeoTIFFs.')
 if __name__=='__main__':main()

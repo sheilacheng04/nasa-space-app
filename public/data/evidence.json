@@ -1,0 +1,50 @@
+[
+  {
+    "siteId": "luzon",
+    "name": "Central Luzon",
+    "n": 95,
+    "date": "2026-10-09T21:30:31Z",
+    "maturity": "PROVISIONAL",
+    "crid": "P05023",
+    "channel": "HH / regional quicklook",
+    "source": "ASF DAAC",
+    "label": "Grayscale regional browse, not a site clip, not calibrated",
+    "image": "data/sites/luzon/thumbnail.png"
+  },
+  {
+    "siteId": "angat",
+    "name": "Angat reservoir",
+    "n": 31,
+    "date": "2026-10-09T21:30:31Z",
+    "maturity": "PROVISIONAL",
+    "crid": "P05023",
+    "channel": "HH / regional quicklook",
+    "source": "ASF DAAC",
+    "label": "Grayscale regional browse, not a site clip, not calibrated",
+    "image": "data/sites/angat/thumbnail.png"
+  },
+  {
+    "siteId": "dadu",
+    "name": "Dadu, Sindh",
+    "n": 63,
+    "date": "2026-10-10T00:53:39Z",
+    "maturity": "PROVISIONAL",
+    "crid": "P05023",
+    "channel": "HH / regional quicklook",
+    "source": "ASF DAAC",
+    "label": "Grayscale regional browse, not a site clip, not calibrated",
+    "image": "data/sites/dadu/thumbnail.png"
+  },
+  {
+    "siteId": "piura",
+    "name": "Lower Piura",
+    "n": 31,
+    "date": "2026-10-19T11:09:00Z",
+    "maturity": "PROVISIONAL",
+    "crid": "P05023",
+    "channel": "HH / regional quicklook",
+    "source": "ASF DAAC",
+    "label": "Grayscale regional browse, not a site clip, not calibrated",
+    "image": "data/sites/piura/thumbnail.png"
+  }
+]

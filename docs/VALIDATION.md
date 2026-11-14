@@ -1,50 +1,69 @@
-> **14 November 2026 — Full-stack migration:** The active application is now React + TypeScript with a Python FastAPI backend and persistent account datasets. Read [the current architecture and validation record](FULLSTACK.md). Older references below to the vanilla controller, Node AI endpoint, static-only hosting and setup commands are historical.
-
 # Validation record
 
-Checked on 13 November 2026 using Windows, Node 25.6.1, Python 3.13.4 and installed Chrome. The project declares Node >=22.12.
+Checked on 14 November 2026 using Windows, Node 25.6.1, Python 3.13.4 and installed Chrome. The project requires Node >=22.12.
 
-## Passed
+## Passed for this revision
 
-- Production Vite build, including the separately bundled MapLibre 6 worker.
-- Nine Node tests: CSV quoting/validation/limits, safe URLs, compatible comparisons, observation schema, local sentiment and AI method/origin/configuration handling.
-- Four Python tests: power-to-dB conversion, invalid-pixel handling, GCOV HDF5 mask/channel reading with a synthetic fixture, and an end-to-end calibrated RTC fixture producing valid COGs and the expected 3.0103 dB change.
-- Fourteen browser checks: story, real browse/pending states, swipe, change/polarization controls, invalid dates, geographic map/worker, news, CSV persistence/errors, keyboard search, 3D globe/tour, local/method routes, 390 px mobile layout, failed-weather fallback and the self-contained preview.
-- Production browser checks were run with the security headers from `vercel.json` applied by the preview server.
-- Standalone HTML opens from disk and makes zero network requests.
-- Successful browser fetches under those security headers: Open-Meteo ERA5 JSON, Photon JSON and NASA GIBS PNG. GIBS initially returned a service exception; a subsequent request succeeded. The actual optical-layer control also loaded MODIS imagery dated 6 November 2026. The application checks content type and handles either result.
-- Dependency audit after updating MapLibre and Vite: zero reported npm vulnerabilities.
-- `git diff --check` passed. The pre-existing deletion of `index.html.html` was left unchanged.
+- TypeScript type checking and the production Vite build.
+- Eight Node tests covering CSV parsing/validation, safe assets and compatible observation data.
+- Nine Python tests covering power-to-dB conversion, invalid-pixel handling, a synthetic HDF5 fixture, raster preparation, missing water pixels, agreement metrics, incomplete weather months, news merging and real catalog pair compatibility.
+- Thirteen browser checks against the production build: real dated Story imagery; all text pages; HH/HV before/after swipe and unavailable computed channels; simulated mode and missing dates; Dadu's La Niña distinction; site switching; lazy MapLibre; Media filtering and the labeled local Claude-style fallback; CSV quoting and zero values; keyboard search and focus; lazy 3D globe; 390 px layouts; mobile search; numerical contrast; and the offline edition.
+- Browser console errors: **0**. Uncaught page errors: **0**.
+- Standalone HTML opened from disk with real embedded thumbnails, all five pages and the 3D globe; external requests: **0**.
+- Python scripts compile. The submission summary contains exactly 200 whitespace-separated words, excluding its title.
 
-## Size and console
+Browser and size reports are written to ignored `.artifacts/` by the reproducible check scripts. Screenshots were reviewed at desktop and phone widths.
 
-The browser recorded 81,884 bytes of encoded first-route resources, plus the HTML document. Heavy map/globe code and regional browse images are lazy loaded. The generated self-contained demo is approximately 378 KB. Both are below the 3 MB first-load budget.
+## Size and loading
 
-No uncaught JavaScript errors or unexpected console errors occurred in the final suite. The deliberately aborted weather request generated the expected browser `net::ERR_FAILED` entry; the UI retained the saved snapshot and displayed its failure message. An earlier MapLibre worker error was fixed and verified by waiting for the rendered map to become idle, rather than checking only for a canvas.
+| Check | Measured result |
+| --- | ---: |
+| Initial hosted page responses, uncompressed, 1440 × 1000 viewport | 893,075 bytes |
+| Standalone HTML | 2,890,477 bytes |
+| Real embedded image data URIs, including encoding overhead | 495,940 bytes |
+| Initial globe/MapLibre requests | 0 |
 
-Screenshots and detailed reports are in `.artifacts/` (ignored by Git). They include desktop and mobile Story and Observatory views. Python emitted a transitive affine/rasterio deprecation warning; calculations and output checks passed.
+The first-load measurement includes the visible Story images and bootstrap JSON; images further down the page load on demand. Full study archives are deliberately much larger and are fetched only when their pages need them. Offline thumbnails are downsampled; the standalone edition includes a smaller image/date subset.
 
-## Still requires real-world verification
+## Contrast
 
-- Scientific interpretation and calibration checks on the team's actual NISAR files. Synthetic numerical fixtures test software behavior, not the validity of a scientific finding.
-- Independent field validation, water-level/operations records, uncertainty estimates and causal attribution.
-- The optional keyed Anthropic endpoint, the Claude preview capability, and a real Vercel deployment. No provider key was supplied and no production deployment was performed.
-- Physical mid-range phone performance, assistive-technology testing, and a full independent WCAG audit. Keyboard flows, contrast choices, reduced motion and mobile sizing are implemented, but browser emulation is not a substitute for those audits.
-- WorldCover, WorldPop and Copernicus DEM overlays with real local source rasters. Their importer is implemented, but these inputs remain absent.
-- Fresh GDELT news: the service returned HTTP 429, and the original 43-item archive was retained. Headlines have real upstream VADER scores; their claims and links are not independently reverified.
+Computed foreground/background contrast against warm off-white:
 
-## UI restoration - 14 November 2026
+| Use | Ratio |
+| --- | ---: |
+| Body text | 13.33:1 |
+| Muted text | 5.60:1 |
+| Water blue | 6.14:1 |
+| Heat orange | 5.89:1 |
 
-The original-style UI and interactions were restored at the user's request. See [UI_RESTORATION.md](UI_RESTORATION.md) for the updated implementation and evidence. The final production build passed, all 15 restored-interaction groups passed, and all 14 production browser checks passed, including the now fully interactive offline 3D globe with zero HTTP requests. Initial production resources measured 101,183 encoded bytes plus HTML; standalone output is 2,524,622 bytes. Real local and global NASA GIBS imagery loaded successfully under production security headers. Actual camera movement was verified after replacing an inactive library tween with cancelable camera animation. No unexpected JavaScript/console errors remain in the final suites. Python scientific processing was unchanged.
+These tested text colors exceed 4.5:1. This is a focused numerical and keyboard check, not a formal accessibility certification.
 
-## Blank-globe compatibility fix - 14 November 2026
+## Scientific and service limits
 
-A follow-up user report identified a blank globe in their browser. Reproduced the failure by allowing WebGL 1 and blocking WebGL 2: the ESM build resolved Three.js 0.187, which requires WebGL 2, while the original HTML's complete globe.gl browser bundle includes Three.js 0.157 with WebGL 1 support. The failed path previously removed the canvas and left controls disabled.
+The scene catalog, CMR collection metadata, observation plan, real GIBS/ASF browse, NOAA context, ERA5 weather and GDELT refresh were run. Per-request results and retrieval timestamps are in [DATA_STATUS](DATA_STATUS.md) and the saved manifests.
 
-`src/globe-loader.js` now loads the original pinned globe.gl browser bundle from the installed package as a local, lazily loaded asset. The offline builder inlines that exact bundle. No external CDN or new dependency is required. `src/canvas-globe.js` provides an interactive projected globe when WebGL is unavailable: drag, zoom, countries, places, layers, tour, imported points and the local satellite window remain usable. This mode is labeled Compatibility view; the global image texture is unavailable there, while local optical imagery remains supported in the hosted app.
+Authenticated Harmony/GCOV extraction remains **untested** because EARTHDATA_USERNAME and EARTHDATA_PASSWORD are absent. Synthetic processor tests are software checks, not validation of real NISAR measurements. No calibrated site water extent, backscatter series, OPERA agreement or WorldCover class result is claimed. Browse comparisons cannot substitute for these products.
 
-The app detects WebGL 2, WebGL 1 or unavailable graphics. Lost hardware contexts switch automatically to the compatible canvas renderer. If even canvas creation fails, a visible Retry globe action replaces the previous dead end. The duplicate app-level initialization cache was removed so renderer recovery cannot return a stale instance.
+The requested rolling 12-day GIBS layer was absent from GetCapabilities. Available daily imagery is used and missing dates remain visible. Exact dataset citation wording from the linked NASA guidance remains unavailable after 403 responses. Kaggle schemas could not be verified. Optional GUNW, SME2, S-band, RCM and population analysis were not attempted.
 
-New regression helper: `scripts/globe-compatibility-check.mjs`. It passed native WebGL 2, forced WebGL 1 and completely blocked WebGL checks in both hosted and standalone versions, including actual zoom/flight coordinates, drag, layers, route re-entry and simulated context loss. All 14 standard and 15 restored-interaction checks also passed against the production preview with Vercel security headers. No unexpected JavaScript/console errors. Final initial resources: 104,384 encoded bytes plus HTML; offline HTML: 1,524,333 bytes and zero HTTP requests.
+The retained FastAPI account/database features are optional, disabled in this static edition and were not revalidated as part of this revision. Actual Claude responses require a configured server; the offline local heuristic is labeled simulated. Live provider availability and latency can change.
 
-Run the compatibility helper with `TEST_URL` for a hosted preview, or set `OFFLINE=true` to test the generated HTML. Screenshots/reports are `.artifacts/globe-compatible-*.png`, `globe-compatibility-report.json` and `globe-compatibility-offline-report.json`. The user's existing development server at port 5173 was retained; the temporary production test server was stopped. No deployment, commit or scientific dataset change was made.
+## Reproduce
+
+~~~text
+npm test
+.venv\Scripts\python -m unittest discover -s tests -p "test_*.py"
+npm run build
+npm run demo
+~~~
+
+Serve `dist/` on port 4175, then run:
+
+~~~powershell
+$env:PREVIEW_URL='http://127.0.0.1:4175'
+$env:CHECK_OFFLINE='1'
+node scripts/revision-browser-check.mjs
+node scripts/measure-build.mjs
+~~~
+
+The browser scripts use installed Chrome or Edge on Windows. Configure an available Playwright browser on another platform.

@@ -1,0 +1,106 @@
+[
+  {
+    "id": "luzon",
+    "name": "Central Luzon",
+    "subtitle": "The rice belt",
+    "country": "Philippines",
+    "coordinates": [
+      120.9,
+      15.5
+    ],
+    "bbox": [
+      120.4,
+      15.0,
+      121.4,
+      16.0
+    ],
+    "type": "Crops & water",
+    "question": "When the rains shift, what happens to the rice fields?",
+    "description": "Follow the seasonal rhythm of flooded paddies, planting and crop growth across the Central Luzon plain.",
+    "hypothesis": "A rainfall deficit may delay field flooding or planting. A changing HH/HV signal could reveal a shift in the crop cycle.",
+    "evidence": "Compare same-track radar acquisitions with rainfall, crop calendars and field observations. A single dark pixel is not evidence of drought.",
+    "disprove": "Normal planting dates and irrigation deliveries, or changes explained by harvest, would weaken the rainfall explanation.",
+    "humanDrivers": "Irrigation schedules, crop choice, harvest and changes in land use also reshape the radar signal.",
+    "selectionNote": "Prompt study box; retained only with real intersecting GCOV footprints.",
+    "coverageStatus": "catalog coverage confirmed",
+    "sceneCount": 95
+  },
+  {
+    "id": "angat",
+    "name": "Angat reservoir",
+    "subtitle": "A changing shoreline",
+    "country": "Philippines",
+    "coordinates": [
+      121.16,
+      14.91
+    ],
+    "bbox": [
+      121.08,
+      14.84,
+      121.24,
+      15.0
+    ],
+    "type": "Reservoir",
+    "question": "How much of the shoreline moves between observations?",
+    "description": "Track the footprint of open water in the reservoir and compare it with rainfall in its catchment.",
+    "hypothesis": "Lower rainfall may reduce inflow and expose the shoreline. Reservoir operations may produce the same pattern.",
+    "evidence": "Look for persistent, spatially connected changes along the shoreline. Compare with official water levels and rainfall. Surface area is not water volume.",
+    "disprove": "Stable or rising water levels, or a documented release explaining the drawdown, would weaken a drought explanation.",
+    "humanDrivers": "Dam releases, water abstraction and irrigation allocations can outweigh the rainfall signal.",
+    "selectionNote": "Angat uses the existing reservoir-centered box; the supplied 121.4 E center is east of this reservoir.",
+    "coverageStatus": "catalog coverage confirmed",
+    "sceneCount": 31
+  },
+  {
+    "id": "dadu",
+    "name": "Dadu, Sindh",
+    "subtitle": "Reading a floodplain",
+    "country": "Pakistan",
+    "coordinates": [
+      67.8,
+      26.7
+    ],
+    "bbox": [
+      67.3,
+      26.2,
+      68.3,
+      27.2
+    ],
+    "type": "Flood test case",
+    "question": "Can radar separate new floodwater from permanent water?",
+    "description": "Use historical flooding as a method test, then apply the same questions to new radar observations.",
+    "hypothesis": "New connected low-backscatter areas may indicate open floodwater, if rainfall and independent imagery support the interpretation.",
+    "evidence": "Compare pre-event and post-event Sentinel-1 or compatible NISAR scenes, permanent water, elevation and rainfall.",
+    "disprove": "Radar shadow, dry smooth soil or unchanged permanent water would contradict an open-floodwater interpretation.",
+    "humanDrivers": "Embankments, drainage, canal operations and settlement patterns influence where water collects. The 2022 flood is a historical test, not evidence for a 2026 El Niño impact.",
+    "selectionNote": "Prompt study box; retained only with real intersecting GCOV footprints.",
+    "coverageStatus": "catalog coverage confirmed",
+    "sceneCount": 63
+  },
+  {
+    "id": "piura",
+    "name": "Lower Piura",
+    "subtitle": "A Pacific floodplain",
+    "country": "Peru",
+    "coordinates": [
+      -80.63,
+      -5.2
+    ],
+    "bbox": [
+      -80.85,
+      -5.45,
+      -80.4,
+      -5.0
+    ],
+    "type": "Wet-side hypothesis",
+    "question": "Does surface water expand on the Piura floodplain?",
+    "description": "A coastal Peru site for testing seasonal water change, subject to the timing of the local rainy season.",
+    "hypothesis": "Extra seasonal rain can coincide with Pacific warming. Coastal SST, local rainfall and river operations must support this interpretation.",
+    "evidence": "Same-track water masks, rainfall and independent river or flood observations; a seasonal baseline is needed.",
+    "disprove": "No rainfall increase, stable river levels, or irrigation explaining the signal would weaken the hypothesis.",
+    "humanDrivers": "Irrigation, levees, reservoir releases and land use can change surface water.",
+    "selectionNote": "Prompt study box; retained only with real intersecting GCOV footprints.",
+    "coverageStatus": "catalog coverage confirmed",
+    "sceneCount": 31
+  }
+]

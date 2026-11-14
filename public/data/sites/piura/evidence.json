@@ -1,0 +1,2665 @@
+{
+  "siteId": "piura",
+  "inventory": {
+    "siteId": "piura",
+    "bbox": [
+      -80.85,
+      -5.45,
+      -80.4,
+      -5.0
+    ],
+    "retrievedAt": "2026-11-14T02:23:33.165049+00:00",
+    "parameters": {
+      "dataset": "NISAR",
+      "processingLevel": "GCOV",
+      "shortName": [
+        "NISAR_L2_GCOV_BETA_V1",
+        "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "NISAR_L2_GCOV_V1"
+      ],
+      "intersectsWith": "POLYGON ((-80.4 -5.45, -80.4 -5, -80.85 -5, -80.85 -5.45, -80.4 -5.45))",
+      "start": "2025-10-17T00:00:00Z",
+      "end": "2026-11-14T00:00:00Z",
+      "maxResults": 1000
+    },
+    "url": "https://api.daac.asf.alaska.edu/services/search/param?dataset=NISAR&processingLevel=GCOV&shortName=%5B%27NISAR_L2_GCOV_BETA_V1%27%2C+%27NISAR_L2_GCOV_PROVISIONAL_V1%27%2C+%27NISAR_L2_GCOV_V1%27%5D&intersectsWith=POLYGON+%28%28-80.4+-5.45%2C+-80.4+-5%2C+-80.85+-5%2C+-80.85+-5.45%2C+-80.4+-5.45%29%29&start=2025-10-17T00%3A00%3A00Z&end=2026-11-14T00%3A00%3A00Z&maxResults=1000&output=geojson",
+    "scenes": [
+      {
+        "id": "NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001",
+        "date": "2026-06-21T11:09:03Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -79.99576,
+                -5.91711
+              ],
+              [
+                -80.45661,
+                -3.7692
+              ],
+              [
+                -82.65282,
+                -4.23835
+              ],
+              [
+                -82.20176,
+                -6.37976
+              ],
+              [
+                -79.99576,
+                -5.91711
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001",
+        "date": "2026-06-21T23:40:21Z",
+        "track": 112,
+        "frame": 91,
+        "direction": "DESCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -81.31222,
+                -3.80309
+              ],
+              [
+                -81.76139,
+                -5.89137
+              ],
+              [
+                -79.49674,
+                -6.3665
+              ],
+              [
+                -79.04203,
+                -4.28787
+              ],
+              [
+                -81.31222,
+                -3.80309
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_112_D_091_4005_DHDH_A_20260621T234021_20260621T234055_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001",
+        "date": "2026-06-26T11:00:43Z",
+        "track": 3,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -77.892,
+                -5.93661
+              ],
+              [
+                -78.32393,
+                -3.78248
+              ],
+              [
+                -80.57175,
+                -4.26259
+              ],
+              [
+                -80.11696,
+                -6.4032
+              ],
+              [
+                -77.892,
+                -5.93661
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": false,
+        "coversBox": false,
+        "bboxCoverageFraction": 0.0026,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_003_A_175_2005_DHDH_M_20260626T110043_20260626T110118_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001",
+        "date": "2026-07-03T11:09:03Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -80.00513,
+                -5.87615
+              ],
+              [
+                -80.45443,
+                -3.78816
+              ],
+              [
+                -82.64939,
+                -4.25694
+              ],
+              [
+                -82.21086,
+                -6.33887
+              ],
+              [
+                -80.00513,
+                -5.87615
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_104_A_175_2005_DHDH_A_20260703T110903_20260703T110937_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001",
+        "date": "2026-07-03T23:40:20Z",
+        "track": 112,
+        "frame": 91,
+        "direction": "DESCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -81.30895,
+                -3.78634
+              ],
+              [
+                -81.75811,
+                -5.87463
+              ],
+              [
+                -79.49142,
+                -6.35021
+              ],
+              [
+                -79.03468,
+                -4.27201
+              ],
+              [
+                -81.30895,
+                -3.78634
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_112_D_091_4005_DHDH_A_20260703T234020_20260703T234054_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001",
+        "date": "2026-07-08T11:00:42Z",
+        "track": 3,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -77.88613,
+                -5.96159
+              ],
+              [
+                -78.32406,
+                -3.80874
+              ],
+              [
+                -80.56639,
+                -4.28762
+              ],
+              [
+                -80.11217,
+                -6.42834
+              ],
+              [
+                -77.88613,
+                -5.96159
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": false,
+        "coversBox": false,
+        "bboxCoverageFraction": 0.0027,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_003_A_175_2005_DHDH_M_20260708T110042_20260708T110117_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001",
+        "date": "2026-07-15T11:09:02Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -80.0008,
+                -5.89407
+              ],
+              [
+                -80.45053,
+                -3.80619
+              ],
+              [
+                -82.64515,
+                -4.27481
+              ],
+              [
+                -82.20669,
+                -6.35674
+              ],
+              [
+                -80.0008,
+                -5.89407
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_104_A_175_2005_DHDH_A_20260715T110902_20260715T110936_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001",
+        "date": "2026-07-15T23:40:19Z",
+        "track": 112,
+        "frame": 91,
+        "direction": "DESCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -81.30445,
+                -3.76654
+              ],
+              [
+                -81.81757,
+                -6.15315
+              ],
+              [
+                -79.55353,
+                -6.62702
+              ],
+              [
+                -79.03023,
+                -4.25227
+              ],
+              [
+                -81.30445,
+                -3.76654
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001/NISAR_L2_PR_GCOV_025_112_D_091_4005_DHDH_A_20260715T234019_20260715T234058_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001",
+        "date": "2026-07-20T11:00:42Z",
+        "track": 3,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -77.89607,
+                -5.91695
+              ],
+              [
+                -78.32248,
+                -3.82404
+              ],
+              [
+                -80.56313,
+                -4.3025
+              ],
+              [
+                -80.12125,
+                -6.38369
+              ],
+              [
+                -77.89607,
+                -5.91695
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": false,
+        "coversBox": false,
+        "bboxCoverageFraction": 0.0026,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_003_A_175_2005_DHDH_M_20260720T110042_20260720T110116_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001",
+        "date": "2026-07-27T11:09:01Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -79.99442,
+                -5.92491
+              ],
+              [
+                -80.45569,
+                -3.77709
+              ],
+              [
+                -82.65144,
+                -4.24606
+              ],
+              [
+                -82.20045,
+                -6.38748
+              ],
+              [
+                -79.99442,
+                -5.92491
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_104_A_175_2005_DHDH_A_20260727T110901_20260727T110936_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001",
+        "date": "2026-08-13T11:00:41Z",
+        "track": 3,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -77.89147,
+                -5.90184
+              ],
+              [
+                -78.32419,
+                -3.81026
+              ],
+              [
+                -80.56536,
+                -4.28882
+              ],
+              [
+                -80.12364,
+                -6.37005
+              ],
+              [
+                -77.89147,
+                -5.90184
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": false,
+        "coversBox": false,
+        "bboxCoverageFraction": 0.0024,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_003_A_175_2005_DHDH_M_20260813T110041_20260813T110115_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001",
+        "date": "2026-08-20T11:09:00Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -79.9927,
+                -5.93087
+              ],
+              [
+                -80.44176,
+                -3.84286
+              ],
+              [
+                -82.63714,
+                -4.31155
+              ],
+              [
+                -82.19874,
+                -6.39348
+              ],
+              [
+                -79.9927,
+                -5.93087
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_104_A_175_2005_DHDH_A_20260820T110900_20260820T110934_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001",
+        "date": "2026-08-20T23:40:17Z",
+        "track": 112,
+        "frame": 91,
+        "direction": "DESCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -81.29628,
+                -3.72942
+              ],
+              [
+                -81.75834,
+                -5.87738
+              ],
+              [
+                -79.49285,
+                -6.35273
+              ],
+              [
+                -79.02462,
+                -4.2148
+              ],
+              [
+                -81.29628,
+                -3.72942
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_112_D_091_4005_DHDH_A_20260820T234017_20260820T234052_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001",
+        "date": "2026-08-25T11:00:40Z",
+        "track": 3,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -77.88666,
+                -5.95148
+              ],
+              [
+                -78.32286,
+                -3.79826
+              ],
+              [
+                -80.56832,
+                -4.2778
+              ],
+              [
+                -80.11385,
+                -6.41846
+              ],
+              [
+                -77.88666,
+                -5.95148
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": false,
+        "coversBox": false,
+        "bboxCoverageFraction": 0.0026,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_003_A_175_2005_DHDH_M_20260825T110040_20260825T110115_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001",
+        "date": "2026-09-01T11:09:00Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -79.99589,
+                -5.91893
+              ],
+              [
+                -80.44715,
+                -3.83139
+              ],
+              [
+                -82.64036,
+                -4.29963
+              ],
+              [
+                -82.20195,
+                -6.38157
+              ],
+              [
+                -79.99589,
+                -5.91893
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_104_A_175_2005_DHDH_A_20260901T110900_20260901T110934_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001",
+        "date": "2026-09-01T23:40:17Z",
+        "track": 112,
+        "frame": 91,
+        "direction": "DESCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -81.29931,
+                -3.74096
+              ],
+              [
+                -81.81251,
+                -6.12756
+              ],
+              [
+                -79.54932,
+                -6.6014
+              ],
+              [
+                -79.02653,
+                -4.22651
+              ],
+              [
+                -81.29931,
+                -3.74096
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_112_D_091_4005_DHDH_A_20260901T234017_20260901T234056_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001",
+        "date": "2026-09-06T11:00:40Z",
+        "track": 3,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -77.88915,
+                -5.94247
+              ],
+              [
+                -78.32393,
+                -3.78895
+              ],
+              [
+                -80.57113,
+                -4.26892
+              ],
+              [
+                -80.11548,
+                -6.40934
+              ],
+              [
+                -77.88915,
+                -5.94247
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": false,
+        "coversBox": false,
+        "bboxCoverageFraction": 0.0028,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_003_A_175_2005_DHDH_M_20260906T110040_20260906T110115_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001",
+        "date": "2026-09-13T11:09:00Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -79.99832,
+                -5.90583
+              ],
+              [
+                -80.44985,
+                -3.81834
+              ],
+              [
+                -82.64277,
+                -4.28656
+              ],
+              [
+                -82.20434,
+                -6.36849
+              ],
+              [
+                -79.99832,
+                -5.90583
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_104_A_175_2005_DHDH_A_20260913T110900_20260913T110934_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001",
+        "date": "2026-09-13T23:40:17Z",
+        "track": 112,
+        "frame": 91,
+        "direction": "DESCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -81.30154,
+                -3.75243
+              ],
+              [
+                -81.75074,
+                -5.84072
+              ],
+              [
+                -79.47605,
+                -6.31809
+              ],
+              [
+                -79.02602,
+                -4.23849
+              ],
+              [
+                -81.30154,
+                -3.75243
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_112_D_091_4005_DHDH_A_20260913T234017_20260913T234051_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001",
+        "date": "2026-09-18T11:00:40Z",
+        "track": 3,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -77.88814,
+                -5.94484
+              ],
+              [
+                -78.3234,
+                -3.79142
+              ],
+              [
+                -80.57061,
+                -4.2714
+              ],
+              [
+                -80.11507,
+                -6.41184
+              ],
+              [
+                -77.88814,
+                -5.94484
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": false,
+        "coversBox": false,
+        "bboxCoverageFraction": 0.0028,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001/NISAR_L2_PR_GCOV_031_003_A_175_2005_DHDH_M_20260918T110040_20260918T110115_P05023_F_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001",
+        "date": "2026-09-25T11:09:00Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -79.99805,
+                -5.9097
+              ],
+              [
+                -80.44876,
+                -3.82202
+              ],
+              [
+                -82.6437,
+                -4.29064
+              ],
+              [
+                -82.20529,
+                -6.37258
+              ],
+              [
+                -79.99805,
+                -5.9097
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_104_A_175_2005_SHSH_A_20260925T110900_20260925T110934_P05023_N_F_J_001_NATIVE_B_HHHH.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001",
+        "date": "2026-09-25T23:40:17Z",
+        "track": 112,
+        "frame": 91,
+        "direction": "DESCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -81.30148,
+                -3.75079
+              ],
+              [
+                -81.75066,
+                -5.83908
+              ],
+              [
+                -79.47625,
+                -6.31637
+              ],
+              [
+                -79.02588,
+                -4.23686
+              ],
+              [
+                -81.30148,
+                -3.75079
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_112_D_091_4005_DHDH_A_20260925T234017_20260925T234051_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001",
+        "date": "2026-09-30T11:00:40Z",
+        "track": 3,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -77.8866,
+                -5.94714
+              ],
+              [
+                -78.32372,
+                -3.79411
+              ],
+              [
+                -80.56999,
+                -4.27385
+              ],
+              [
+                -80.11473,
+                -6.41435
+              ],
+              [
+                -77.8866,
+                -5.94714
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": false,
+        "coversBox": false,
+        "bboxCoverageFraction": 0.0028,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_003_A_175_2005_DHDH_M_20260930T110040_20260930T110115_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001",
+        "date": "2026-10-07T11:09:00Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -79.996,
+                -5.91788
+              ],
+              [
+                -80.44727,
+                -3.83033
+              ],
+              [
+                -82.64042,
+                -4.29858
+              ],
+              [
+                -82.202,
+                -6.38051
+              ],
+              [
+                -79.996,
+                -5.91788
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_104_A_175_2005_DHDH_A_20261007T110900_20261007T110934_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001",
+        "date": "2026-10-07T23:40:17Z",
+        "track": 112,
+        "frame": 91,
+        "direction": "DESCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -81.29946,
+                -3.74129
+              ],
+              [
+                -81.76148,
+                -5.88924
+              ],
+              [
+                -79.49625,
+                -6.36447
+              ],
+              [
+                -79.02657,
+                -4.22686
+              ],
+              [
+                -81.29946,
+                -3.74129
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_112_D_091_4005_DHDH_A_20261007T234017_20261007T234052_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001",
+        "date": "2026-10-12T11:00:40Z",
+        "track": 3,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -77.88717,
+                -5.95602
+              ],
+              [
+                -78.32272,
+                -3.80268
+              ],
+              [
+                -80.56761,
+                -4.28208
+              ],
+              [
+                -80.11279,
+                -6.42266
+              ],
+              [
+                -77.88717,
+                -5.95602
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": false,
+        "coversBox": false,
+        "bboxCoverageFraction": 0.0026,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_003_A_175_2005_DHDH_M_20261012T110040_20261012T110115_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001",
+        "date": "2026-10-19T11:09:00Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -79.99071,
+                -5.94009
+              ],
+              [
+                -80.44328,
+                -3.85284
+              ],
+              [
+                -82.63524,
+                -4.32074
+              ],
+              [
+                -82.19689,
+                -6.40266
+              ],
+              [
+                -79.99071,
+                -5.94009
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001",
+        "date": "2026-10-19T23:40:17Z",
+        "track": 112,
+        "frame": 91,
+        "direction": "DESCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -81.29425,
+                -3.72047
+              ],
+              [
+                -81.7563,
+                -5.86844
+              ],
+              [
+                -79.48961,
+                -6.34405
+              ],
+              [
+                -79.02426,
+                -4.20551
+              ],
+              [
+                -81.29425,
+                -3.72047
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_112_D_091_4005_DHDH_A_20261019T234017_20261019T234052_P05023_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001",
+        "date": "2026-10-24T11:00:41Z",
+        "track": 3,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "VALIDATED",
+        "crid": "P05036",
+        "collection": "NISAR_L2_GCOV_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -77.89487,
+                -5.91277
+              ],
+              [
+                -78.32387,
+                -3.82042
+              ],
+              [
+                -80.56391,
+                -4.29873
+              ],
+              [
+                -80.12188,
+                -6.37989
+              ],
+              [
+                -77.89487,
+                -5.91277
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": false,
+        "coversBox": false,
+        "bboxCoverageFraction": 0.0026,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_003_A_175_2005_DHDH_M_20261024T110041_20261024T110115_P05036_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001",
+        "date": "2026-10-31T11:09:00Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "VALIDATED",
+        "crid": "P05036",
+        "collection": "NISAR_L2_GCOV_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -79.98473,
+                -5.97082
+              ],
+              [
+                -80.44893,
+                -3.82365
+              ],
+              [
+                -82.64175,
+                -4.29185
+              ],
+              [
+                -82.19087,
+                -6.43327
+              ],
+              [
+                -79.98473,
+                -5.97082
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_104_A_175_2005_DHDH_A_20261031T110900_20261031T110935_P05036_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001",
+        "date": "2026-10-31T23:40:17Z",
+        "track": 112,
+        "frame": 91,
+        "direction": "DESCENDING",
+        "maturity": "VALIDATED",
+        "crid": "P05036",
+        "collection": "NISAR_L2_GCOV_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "footprint": {
+          "coordinates": [
+            [
+              [
+                -81.28804,
+                -3.6901
+              ],
+              [
+                -81.75014,
+                -5.83805
+              ],
+              [
+                -79.47582,
+                -6.31537
+              ],
+              [
+                -79.0204,
+                -4.17476
+              ],
+              [
+                -81.28804,
+                -3.6901
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        },
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001.h5",
+        "browseUrls": [
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001_LATLON.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001_LATLON_thumbnail.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001_NATIVE.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001_NATIVE_A_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001_NATIVE_A_HVHV.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001_NATIVE_B_HHHH.png",
+          "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_112_D_091_4005_DHDH_A_20261031T234017_20261031T234052_P05036_N_F_J_001_NATIVE_B_HVHV.png"
+        ],
+        "matchesObservationPlan": true
+      }
+    ],
+    "status": "catalog coverage confirmed",
+    "catalogMethods": [
+      "asf_search.search",
+      "ASF public REST catalog merge for current collection metadata"
+    ],
+    "pair": {
+      "before": "NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001",
+      "after": "NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001",
+      "maturity": "PROVISIONAL",
+      "crid": "P05023",
+      "track": 104,
+      "frame": 175,
+      "status": "catalog-selected; valid-pixel overlap and calibration untested"
+    },
+    "n": 31,
+    "maturityCounts": {
+      "PROVISIONAL": 28,
+      "VALIDATED": 3
+    },
+    "observationPlan": {
+      "url": "https://services7.arcgis.com/WSiUmUhlFx4CtMBB/arcgis/rest/services/nisar_merged_observation_plans/FeatureServer/0/query?f=json&where=1%3D1&geometry=-80.85%2C-5.45%2C-80.4%2C-5.0&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=track%2Cframe%2Cproducegcov%2Cpassdirection%2CDH%2CDV%2CQP&returnGeometry=false",
+      "retrievedAt": "2026-11-14T02:23:37.548450+00:00",
+      "status": "track/frame intersections checked against official reference plan",
+      "records": [
+        {
+          "track": 3,
+          "frame": 175,
+          "producegcov": 1,
+          "passdirection": "Ascending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 104,
+          "frame": 175,
+          "producegcov": 1,
+          "passdirection": "Ascending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 112,
+          "frame": 91,
+          "producegcov": 1,
+          "passdirection": "Descending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        }
+      ]
+    }
+  },
+  "gibs": {
+    "siteId": "piura",
+    "retrievedAt": "2026-11-14T02:26:23.041397+00:00",
+    "source": "NASA GIBS / NASA–ISRO NISAR",
+    "layer": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+    "mode": "daily mosaic; rolling layer absent from GetCapabilities",
+    "note": "A rolling mosaic can contain multiple dates, tracks and processing versions. Do not derive quantitative change, polarization ratios or scene count from RGB. TIME is the mosaic end date, not an acquisition timestamp. GIBS color mapping differs from our HH/HV-ratio composite.",
+    "frames": [
+      {
+        "date": "2026-06-17",
+        "windowStart": "2026-06-17",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-06-17",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-06-17"
+        },
+        "retrievedAt": "2026-11-14T02:26:12.437648+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-06-21",
+        "windowStart": "2026-06-21",
+        "status": "ready",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-06-21",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-06-21"
+        },
+        "retrievedAt": "2026-11-14T02:26:12.499817+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 1.0,
+        "image": "data/sites/piura/gibs/2026-06-21.png"
+      },
+      {
+        "date": "2026-06-29",
+        "windowStart": "2026-06-29",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-06-29",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-06-29"
+        },
+        "retrievedAt": "2026-11-14T02:26:13.261672+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-07-03",
+        "windowStart": "2026-07-03",
+        "status": "ready",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-07-03",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-07-03"
+        },
+        "retrievedAt": "2026-11-14T02:26:13.417397+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 1.0,
+        "image": "data/sites/piura/gibs/2026-07-03.png"
+      },
+      {
+        "date": "2026-07-11",
+        "windowStart": "2026-07-11",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-07-11",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-07-11"
+        },
+        "retrievedAt": "2026-11-14T02:26:13.645360+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-07-15",
+        "windowStart": "2026-07-15",
+        "status": "ready",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-07-15",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-07-15"
+        },
+        "retrievedAt": "2026-11-14T02:26:13.916852+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 1.0,
+        "image": "data/sites/piura/gibs/2026-07-15.png"
+      },
+      {
+        "date": "2026-07-23",
+        "windowStart": "2026-07-23",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-07-23",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-07-23"
+        },
+        "retrievedAt": "2026-11-14T02:26:13.946677+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-07-27",
+        "windowStart": "2026-07-27",
+        "status": "ready",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-07-27",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-07-27"
+        },
+        "retrievedAt": "2026-11-14T02:26:14.260553+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 1.0,
+        "image": "data/sites/piura/gibs/2026-07-27.png"
+      },
+      {
+        "date": "2026-08-04",
+        "windowStart": "2026-08-04",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-08-04",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-08-04"
+        },
+        "retrievedAt": "2026-11-14T02:26:14.681476+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-08-16",
+        "windowStart": "2026-08-16",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-08-16",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-08-16"
+        },
+        "retrievedAt": "2026-11-14T02:26:14.761558+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-08-20",
+        "windowStart": "2026-08-20",
+        "status": "ready",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-08-20",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-08-20"
+        },
+        "retrievedAt": "2026-11-14T02:26:14.927648+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 1.0,
+        "image": "data/sites/piura/gibs/2026-08-20.png"
+      },
+      {
+        "date": "2026-08-28",
+        "windowStart": "2026-08-28",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-08-28",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-08-28"
+        },
+        "retrievedAt": "2026-11-14T02:26:15.205930+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-09-01",
+        "windowStart": "2026-09-01",
+        "status": "ready",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-09-01",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-09-01"
+        },
+        "retrievedAt": "2026-11-14T02:26:15.774292+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 1.0,
+        "image": "data/sites/piura/gibs/2026-09-01.png"
+      },
+      {
+        "date": "2026-09-09",
+        "windowStart": "2026-09-09",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-09-09",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-09-09"
+        },
+        "retrievedAt": "2026-11-14T02:26:15.910943+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-09-13",
+        "windowStart": "2026-09-13",
+        "status": "ready",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-09-13",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-09-13"
+        },
+        "retrievedAt": "2026-11-14T02:26:15.923285+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 1.0,
+        "image": "data/sites/piura/gibs/2026-09-13.png"
+      },
+      {
+        "date": "2026-09-21",
+        "windowStart": "2026-09-21",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-09-21",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-09-21"
+        },
+        "retrievedAt": "2026-11-14T02:26:16.621501+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-09-25",
+        "windowStart": "2026-09-25",
+        "status": "ready",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-09-25",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-09-25"
+        },
+        "retrievedAt": "2026-11-14T02:26:16.804857+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 1.0,
+        "image": "data/sites/piura/gibs/2026-09-25.png"
+      },
+      {
+        "date": "2026-10-03",
+        "windowStart": "2026-10-03",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-10-03",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-10-03"
+        },
+        "retrievedAt": "2026-11-14T02:26:17.140883+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-10-07",
+        "windowStart": "2026-10-07",
+        "status": "ready",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-10-07",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-10-07"
+        },
+        "retrievedAt": "2026-11-14T02:26:17.284948+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 1.0,
+        "image": "data/sites/piura/gibs/2026-10-07.png"
+      },
+      {
+        "date": "2026-10-15",
+        "windowStart": "2026-10-15",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-10-15",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-10-15"
+        },
+        "retrievedAt": "2026-11-14T02:26:17.888447+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-10-19",
+        "windowStart": "2026-10-19",
+        "status": "ready",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-10-19",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-10-19"
+        },
+        "retrievedAt": "2026-11-14T02:26:18.607067+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 1.0,
+        "image": "data/sites/piura/gibs/2026-10-19.png"
+      },
+      {
+        "date": "2026-10-21",
+        "windowStart": "2026-10-21",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-10-21",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-10-21"
+        },
+        "retrievedAt": "2026-11-14T02:26:18.907075+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-10-23",
+        "windowStart": "2026-10-23",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-10-23",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-10-23"
+        },
+        "retrievedAt": "2026-11-14T02:26:19.017043+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-10-24",
+        "windowStart": "2026-10-24",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-10-24",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-10-24"
+        },
+        "retrievedAt": "2026-11-14T02:26:19.042192+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      },
+      {
+        "date": "2026-10-31",
+        "windowStart": "2026-10-31",
+        "status": "ready",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-10-31",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-10-31"
+        },
+        "retrievedAt": "2026-11-14T02:26:19.119359+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 1.0,
+        "image": "data/sites/piura/gibs/2026-10-31.png"
+      },
+      {
+        "date": "2026-11-02",
+        "windowStart": "2026-11-02",
+        "status": "not available",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=NISAR_L2_Geocoded_Polarimetric_Covariance&STYLES=&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SRS=EPSG%3A4326&BBOX=-80.85%2C-5.45%2C-80.4%2C-5.0&WIDTH=768&HEIGHT=512&TIME=2026-11-02",
+        "parameters": {
+          "SERVICE": "WMS",
+          "REQUEST": "GetMap",
+          "VERSION": "1.1.1",
+          "LAYERS": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+          "STYLES": "",
+          "FORMAT": "image/png",
+          "TRANSPARENT": "TRUE",
+          "SRS": "EPSG:4326",
+          "BBOX": "-80.85,-5.45,-80.4,-5.0",
+          "WIDTH": 768,
+          "HEIGHT": 512,
+          "TIME": "2026-11-02"
+        },
+        "retrievedAt": "2026-11-14T02:26:19.157412+00:00",
+        "maturity": "NOT AVAILABLE (mosaic lineage)",
+        "crid": "not available at pixel level",
+        "label": "browse imagery, false color, not calibrated",
+        "downsampled": true,
+        "n": null,
+        "nontransparentFraction": 0.0,
+        "reason": "ValueError: Empty or uniform tile; no usable browse coverage"
+      }
+    ],
+    "available": 11
+  },
+  "browse": {
+    "siteId": "piura",
+    "retrievedAt": "2026-11-14T02:24:10.298152+00:00",
+    "n": 2,
+    "status": "browse only",
+    "frames": [
+      {
+        "id": "NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001",
+        "date": "2026-06-21T11:09:03Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001.h5",
+        "matchesObservationPlan": true,
+        "channels": {
+          "HH": {
+            "image": "data/sites/piura/browse/2026-06-21-HH.png",
+            "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+            "label": "downsampled regional HH quicklook; not calibrated; display stretch may differ"
+          },
+          "HV": {
+            "image": "data/sites/piura/browse/2026-06-21-HV.png",
+            "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_104_A_175_2005_DHDH_A_20260621T110903_20260621T110938_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+            "label": "downsampled regional HV quicklook; not calibrated; display stretch may differ"
+          }
+        },
+        "kind": "regional quicklook",
+        "retrievedAt": "2026-11-14T02:23:57.853093+00:00"
+      },
+      {
+        "id": "NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001",
+        "date": "2026-10-19T11:09:00Z",
+        "track": 104,
+        "frame": 175,
+        "direction": "ASCENDING",
+        "maturity": "PROVISIONAL",
+        "crid": "P05023",
+        "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+        "polarizations": [
+          "HH",
+          "HV"
+        ],
+        "hdf5LayersVerified": false,
+        "coversCenter": true,
+        "coversBox": true,
+        "bboxCoverageFraction": 1.0,
+        "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001.h5",
+        "matchesObservationPlan": true,
+        "channels": {
+          "HH": {
+            "image": "data/sites/piura/browse/2026-10-19-HH.png",
+            "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+            "label": "downsampled regional HH quicklook; not calibrated; display stretch may differ"
+          },
+          "HV": {
+            "image": "data/sites/piura/browse/2026-10-19-HV.png",
+            "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_104_A_175_2005_DHDH_A_20261019T110900_20261019T110934_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+            "label": "downsampled regional HV quicklook; not calibrated; display stretch may differ"
+          }
+        },
+        "kind": "regional quicklook",
+        "retrievedAt": "2026-11-14T02:24:04.377947+00:00"
+      }
+    ],
+    "warning": "Same track/frame and maturity; regional native quicklooks are not site clips. Independent display stretches cannot establish backscatter change. HDF5 layers have not been inspected."
+  },
+  "series": {
+    "siteId": "piura",
+    "status": "not available",
+    "n": 0,
+    "rows": [],
+    "gap": {
+      "start": "2026-07-27T22:03:25Z",
+      "end": "2026-08-10T00:55:27Z",
+      "source": "https://nisar-docs.asf.alaska.edu/availability-overview/"
+    },
+    "reason": "EARTHDATA_USERNAME and EARTHDATA_PASSWORD are not configured. Authenticated HDF5/Harmony extraction, masks and OPERA agreement are untested."
+  },
+  "stats": {
+    "siteId": "piura",
+    "status": "not available",
+    "execution": "untested on real calibrated GCOV",
+    "retrievedAt": "2026-11-14T02:37:54.344466+00:00",
+    "reason": "EARTHDATA_USERNAME and EARTHDATA_PASSWORD are not configured. Authenticated HDF5/Harmony extraction, masks and OPERA agreement are untested.",
+    "maturity": "not available",
+    "crid": "not available",
+    "waterAreaKm2": null,
+    "validation": {
+      "status": "not available",
+      "reference": "OPERA DSWx-S1",
+      "agreement": null,
+      "iou": null
+    },
+    "worldcover": "not available",
+    "gunw": "not attempted; optional"
+  },
+  "processed": {
+    "acquisitions": [],
+    "comparisons": []
+  }
+}

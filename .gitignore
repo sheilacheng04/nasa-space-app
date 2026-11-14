@@ -12,3 +12,4 @@ raw/
 
 .storage/
 *.tsbuildinfo
+/outputs/

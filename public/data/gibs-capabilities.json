@@ -1,0 +1,69 @@
+{
+  "retrievedAt": "2026-11-14T02:25:50.673004+00:00",
+  "servers": [
+    {
+      "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+      "retrievedAt": "2026-11-14T02:25:44.463909+00:00",
+      "parameters": {
+        "SERVICE": "WMS",
+        "REQUEST": "GetCapabilities"
+      },
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "nisarLayers": [
+        "NISAR_L2_Geocoded_Polarimetric_Covariance",
+        "OrbitTracks_NISAR_Ascending",
+        "OrbitTracks_NISAR_Ascending_Lines",
+        "OrbitTracks_NISAR_Ascending_Points",
+        "OrbitTracks_NISAR_Descending",
+        "OrbitTracks_NISAR_Descending_Lines",
+        "OrbitTracks_NISAR_Descending_Points"
+      ],
+      "status": "reachable"
+    },
+    {
+      "url": "https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi",
+      "retrievedAt": "2026-11-14T02:25:46.385367+00:00",
+      "parameters": {
+        "SERVICE": "WMS",
+        "REQUEST": "GetCapabilities"
+      },
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "nisarLayers": [
+        "NISAR_L2_Geocoded_Polarimetric_Covariance",
+        "OrbitTracks_NISAR_Ascending",
+        "OrbitTracks_NISAR_Ascending_Lines",
+        "OrbitTracks_NISAR_Ascending_Points",
+        "OrbitTracks_NISAR_Descending",
+        "OrbitTracks_NISAR_Descending_Lines",
+        "OrbitTracks_NISAR_Descending_Points"
+      ],
+      "status": "reachable"
+    },
+    {
+      "url": "https://uat.gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+      "retrievedAt": "2026-11-14T02:25:48.281007+00:00",
+      "parameters": {
+        "SERVICE": "WMS",
+        "REQUEST": "GetCapabilities"
+      },
+      "maturity": "not applicable",
+      "crid": "not applicable",
+      "nisarLayers": [
+        "OPERA_L3_Dynamic_Surface_Water_Extent-NISAR",
+        "NISAR_L2_Geocoded_Polarimetric_Covariance",
+        "OrbitTracks_NISAR_Ascending",
+        "OrbitTracks_NISAR_Ascending_Lines",
+        "OrbitTracks_NISAR_Ascending_Points",
+        "OrbitTracks_NISAR_Descending",
+        "OrbitTracks_NISAR_Descending_Lines",
+        "OrbitTracks_NISAR_Descending_Points"
+      ],
+      "status": "reachable"
+    }
+  ],
+  "selected": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+  "selectedLayer": "NISAR_L2_Geocoded_Polarimetric_Covariance",
+  "rolling12DayAvailable": false
+}

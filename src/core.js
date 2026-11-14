@@ -25,7 +25,7 @@ export function validateObservation(pkg) {
  const ids=new Set();
  for(const a of pkg.acquisitions){if(!a.id||ids.has(a.id)||!/^\d{4}-\d{2}-\d{2}/.test(a.date)||!a.sensor||!a.channels)throw new Error('Acquisition identity or metadata is invalid.');for(const field of ['track','direction','frequency','maturity','processingVersion'])if(typeof a[field]!=='string'||!a[field])throw new Error('Acquisition comparability metadata is missing.');ids.add(a.id);
  if(!Array.isArray(a.bounds)||a.bounds.length!==4||!a.bounds.every(finite)||a.bounds[0]>=a.bounds[2]||a.bounds[1]>=a.bounds[3]||a.bounds[0]< -180||a.bounds[2]>180||a.bounds[1]< -90||a.bounds[3]>90)throw new Error('Acquisition bounds are invalid.');
- for(const [pol,ch]of Object.entries(a.channels)){if(!['HH','HV','VV','VH','composite','water'].includes(pol)||!assetURL(ch.image))throw new Error('Channel asset path is invalid.');if(ch.meanDb!=null&&!finite(ch.meanDb))throw new Error('Backscatter must be a number or null.');}}
+ for(const [pol,ch]of Object.entries(a.channels)){if(!['HH','HV','VV','VH','ratio','composite','water'].includes(pol)||!assetURL(ch.image))throw new Error('Channel asset path is invalid.');if(ch.meanDb!=null&&!finite(ch.meanDb))throw new Error('Backscatter must be a number or null.');}}
  for(const c of pkg.comparisons){if(!ids.has(c.before)||!ids.has(c.after)||!assetURL(c.image)||!c.channel)throw new Error('Comparison references are invalid.');const a=pkg.acquisitions.find(x=>x.id===c.before),b=pkg.acquisitions.find(x=>x.id===c.after);if(!compatible(a,b,c.channel))throw new Error('Comparison mixes incompatible acquisitions.');}
  return pkg;
 }

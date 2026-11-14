@@ -15,7 +15,7 @@ class PipelineTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as temp:
    file=Path(temp)/'scene.h5'
    with h5py.File(file,'w') as f:
-    g=f.create_group('/science/LSAR/GCOV/grids/frequencyA');g['xCoordinates']=np.array([120.995,121.005]);g['yCoordinates']=np.array([15.005,14.995]);g['xCoordinateSpacing']=.01;g['yCoordinateSpacing']=-.01;g['projection']=4326;g['HHHH']=np.array([[1.,.1],[.2,.3]],dtype='float32');g['mask']=np.array([[0,1],[0,0]],dtype='uint8');g['numberOfLooks']=np.array([[1,1],[0,1]],dtype='float32')
+    g=f.create_group('/science/LSAR/GCOV/grids/frequencyA');g['xCoordinates']=np.array([120.995,121.005]);g['yCoordinates']=np.array([15.005,14.995]);g['xCoordinateSpacing']=.01;g['yCoordinateSpacing']=-.01;g['projection']=4326;g['HHHH']=np.array([[1.,.1],[.2,.3]],dtype='float32');g['HHHH'].attrs['units']='1';g['rtcGammaToSigmaFactor']=np.ones((2,2));g['mask']=np.array([[0,1],[0,0]],dtype='uint8');g['numberOfLooks']=np.array([[1,1],[0,1]],dtype='float32')
    with self.assertRaises(ValueError):p.read_gcov(file,'A','HH',[120.99,14.99,121.01,15.01],[])
    data,transform,crs=p.read_gcov(file,'A','HH',[120.99,14.99,121.01,15.01],[0]);self.assertAlmostEqual(data[0,0],1);self.assertTrue(np.isnan(data[0,1]));self.assertTrue(np.isnan(data[1,0]));self.assertEqual(crs,'EPSG:4326');self.assertIsNone(p.read_gcov(file,'A','HV',[120.99,14.99,121.01,15.01],[0]))
  def test_end_to_end_rtc(self):
