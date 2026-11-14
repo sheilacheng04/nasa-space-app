@@ -115,7 +115,6 @@ export function GlossaryTerm({ termKey, label, children }: { termKey: keyof type
         title={`${entry.term}: ${entry.short}`}
       >
         {children || label || termKey}
-        <span className="glossary-term-icon" aria-hidden="true">?</span>
       </button>
       {open && (
         <span id={popId} role="region" aria-label={entry.term} className="glossary-popover">

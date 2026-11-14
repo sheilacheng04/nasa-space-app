@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { initStory, setStoryActive } from '../story.js';
-import { assetURL, finite, formatDate, safeURL } from '../core.js';
+import { finite, formatDate, safeURL } from '../core.js';
 import { GlossaryTerm } from '../components/GlossaryTerm';
 import { FigureCaption } from '../components/FigureCaption';
 import { StoryPreviewPlayer } from '../components/StoryPreviewPlayer';
-import { PlaceNewsPanel } from '../components/PlaceNewsPanel';
 import { WhereToNext } from '../components/FirstVisitGuide';
 import type { ReactNode } from 'react';
 import type { Bootstrap } from '../types';
@@ -13,17 +12,10 @@ const CHAPTERS = [
   { id: 'ocean', num: '1', label: 'Pacific shift' },
   { id: 'why-it-matters', num: '2', label: 'Daily life' },
   { id: 'reading-radar', num: '3', label: 'How radar works' },
-  { id: 'site-evidence', num: '4', label: 'Global & PH places' },
+  { id: 'site-evidence', num: '4', label: 'Local outcomes' },
   { id: 'future', num: '5', label: 'Test the cause' },
   { id: 'local', num: '6', label: 'Human stories' }
 ];
-
-const SITE_FRAME_COUNTS: Record<string, number> = {
-  angat: 21,
-  luzon: 20,
-  dadu: 8,
-  piura: 8
-};
 
 export function StoryPage({
   active,
@@ -37,7 +29,6 @@ export function StoryPage({
   evidenceNotice: ReactNode;
 }) {
   const [activeChapter, setActiveChapter] = useState('ocean');
-  const [selectedStoryPlaceId, setSelectedStoryPlaceId] = useState('angat');
 
   useEffect(() => {
     initStory().catch(() => {});
@@ -67,49 +58,6 @@ export function StoryPage({
 
   const enso = data.enso;
   const oni = enso?.oni?.at(-1);
-  const places = data.places || [];
-  const newsByPlace = data.newsByPlace;
-
-  const philippinesPlaces = useMemo(
-    () => places.filter((p) => p.countryCode === 'PH'),
-    [places]
-  );
-
-  const regionalSummary = useMemo(() => {
-    const map = new Map<
-      string,
-      { region: string; placesCount: number; radarSitesCount: number; savedFramesCount: number; headlinesCount: number; regimes: Set<string> }
-    >();
-    const headlineCountsByPlace = new Map<string, number>();
-    for (const item of newsByPlace?.items || []) {
-      headlineCountsByPlace.set(item.placeId, (headlineCountsByPlace.get(item.placeId) || 0) + 1);
-    }
-    for (const p of places) {
-      const existing = map.get(p.region) || {
-        region: p.region,
-        placesCount: 0,
-        radarSitesCount: 0,
-        savedFramesCount: 0,
-        headlinesCount: 0,
-        regimes: new Set<string>()
-      };
-      existing.placesCount += 1;
-      if (p.hasRadarFrames && p.siteId) {
-        existing.radarSitesCount += 1;
-        existing.savedFramesCount += SITE_FRAME_COUNTS[p.siteId] || 0;
-      }
-      existing.headlinesCount += headlineCountsByPlace.get(p.id) || 0;
-      existing.regimes.add(p.regime);
-      map.set(p.region, existing);
-    }
-    return [...map.values()];
-  }, [places, newsByPlace]);
-
-  const selectedStoryPlace = useMemo(
-    () => places.find((p) => p.id === selectedStoryPlaceId) || places[0] || null,
-    [places, selectedStoryPlaceId]
-  );
-
   const chapterIndex = Math.max(0, CHAPTERS.findIndex((c) => c.id === activeChapter));
   const chapterProgressPct = Math.round(((chapterIndex + 1) / CHAPTERS.length) * 100);
 
@@ -120,7 +68,7 @@ export function StoryPage({
           <p className="eyebrow">NASA Space Apps 2026 · Dancing with the SARs · 57 Real Observations Across 4 Places</p>
           <h1>When the Pacific warms, what changes on land?</h1>
           <p className="page-purpose-line">
-            <strong>What this page is for:</strong> Understand how Pacific ocean shifts connect to local rain, farms, and reservoirs, then inspect real satellite radar images before jumping to conclusions.
+            Follow a changing Pacific—and discover what satellites reveal about life on land.
           </p>
           <div className="hero-actions">
             <a className="button primary" href="#sites/angat">
@@ -133,8 +81,7 @@ export function StoryPage({
               <summary className="button secondary">More actions ▾</summary>
               <div className="more-actions-menu">
                 <a href="#story/ocean">Start Chapter 1: Ocean shift</a>
-                <a href="#philippines-focus">Jump to Philippines focus (6 places)</a>
-                <a href="#overall-impact-summary">View overall regional data counts</a>
+                <a href="#story/site-evidence">Chapter 4: Local outcomes</a>
                 <a href="#method">Read data sources &amp; method</a>
               </div>
             </details>
@@ -257,18 +204,18 @@ export function StoryPage({
         <article className="story-section radar-lead" id="reading-radar">
           <p className="eyebrow">Chapter 3 · Observing the surface day or night</p>
           <h2>
-            <span className="chapter-number">3</span>Send a radar pulse. Read the echo. Compare dates.
+            <span className="chapter-number">3</span>See how the land looks on two different dates.
           </h2>
           <p className="large-copy">
-            Optical cameras cannot see through storm clouds or darkness. Synthetic aperture radar (<GlossaryTerm termKey="SAR" />) sends its own microwave pulses toward Earth and records the returning echo (<GlossaryTerm termKey="backscatter" />).
+            Radar sends a signal toward Earth and listens for the echo. It can observe the ground through clouds and at night.
           </p>
           <p>
-            <GlossaryTerm termKey="NISAR" /> is a joint satellite mission from NASA and the Indian Space Research Organisation (ISRO). It observes the same land and water areas every 12 days so we can compare dates through clouds and monsoon seasons.
+            The <GlossaryTerm termKey="NISAR" /> satellite uses radar to observe land and water. Choose a study area below to compare an earlier image with a later one.
           </p>
           {evidenceNotice}
-          <StoryPreviewPlayer evidence={data.evidence} sites={data.sites} places={places} />
+          <StoryPreviewPlayer active={active} sites={data.sites} />
           <p>
-            Smooth open water reflects radar pulses away from the satellite and looks dark. Rough soil, crop canopies, and buildings scatter energy back and look bright. Comparing dates and checking local weather (<GlossaryTerm termKey="ERA5" />) and <GlossaryTerm termKey="greenness" /> is essential.
+            The colors help us spot differences, but they do not tell us the cause. Rain, crops, and water management can all change what radar sees.
           </p>
           <details>
             <summary>Technical details: radar polarization, maturity, and processing</summary>
@@ -283,186 +230,34 @@ export function StoryPage({
         </article>
 
         <article className="story-section" id="site-evidence">
-          <div className="section-title">
-            <div>
-              <p className="eyebrow">Chapter 4 · 57 real observations across 4 radar sites &amp; 34 global places</p>
-              <h2>
-                <span className="chapter-number">4</span>Global places and a closer look at the Philippines
-              </h2>
-            </div>
-            <div className="section-title-links">
-              <a href="#sites/angat">Explore in Sites ↗</a>
-              <a href="#globe">See on the Globe ↗</a>
-            </div>
-          </div>
-          <p>
-            We pair four sites that have saved dated NISAR radar sequences with {places.length || 34} study places across every continent affected by El Niño. Pakistan’s Dadu floodplain is included and clearly labeled as a 2022 La Niña reference case.
+          <p className="eyebrow">Chapter 4 · From global patterns to local outcomes</p>
+          <h2>
+            <span className="chapter-number">4</span>One climate pattern. Different local outcomes.
+          </h2>
+          <p className="large-copy">
+            El Niño shifts rainfall patterns, but places do not respond in the same way. Season, landscape, and water management shape what happens on the ground.
           </p>
-
-          <div id="story-sites" className="evidence-list">
-            {data.sites.map((site) => {
-              const e = data.evidence?.find((ev) => ev.siteId === site.id);
-              const frameCount = SITE_FRAME_COUNTS[site.id] || 0;
-              return (
-                <a className="evidence-row" href={'#sites/' + site.id} key={site.id}>
-                  <figure>
-                    {e?.image ? (
-                      <img
-                        src={assetURL(e.image)}
-                        alt={'Real regional radar preview covering ' + site.name + '; not a calibrated measurement'}
-                      />
-                    ) : (
-                      <span>Image not available</span>
-                    )}
-                    <figcaption>
-                      {formatDate(e?.date)} · {frameCount} saved radar frames
-                    </figcaption>
-                  </figure>
-                  <div>
-                    <p className="eyebrow">
-                      {site.country} · {site.id === 'dadu' ? 'La Niña 2022 reference' : site.id === 'piura' ? 'Wet-side hypothesis' : 'Dry-side hypothesis'}
-                    </p>
-                    <h3>
-                      {site.name} <span aria-hidden="true">↗</span>
-                    </h3>
-                    <p>{site.question}</p>
-                    <p className="source-line">
-                      {frameCount} saved NASA GIBS frames.{' '}
-                      {site.id === 'dadu'
-                        ? 'The 2022 floods occurred during a triple-dip La Niña year and serve as a radar flood-detection test case, not an El Niño impact.'
-                        : site.id === 'piura'
-                        ? 'Seasonal timing and local rainfall need checking alongside river management.'
-                        : 'Rainfall and human water management both need checking.'}
-                    </p>
-                  </div>
-                </a>
-              );
-            })}
-          </div>
-
-          <section id="philippines-focus" className="card philippines-focus-box" aria-labelledby="ph-focus-heading">
-            <div className="section-title">
-              <div>
-                <p className="eyebrow">Regional Case Study · One example among many</p>
-                <h3 id="ph-focus-heading">Focus on the Philippines: reservoirs and rice plains</h3>
-              </div>
-              <a className="button secondary" href="#globe?mode=satellite&site=angat&preset=philippines">
-                Open Philippines preset on Globe →
-              </a>
+          <dl className="story-outcomes">
+            <div>
+              <dt>Where rain decreases</dt>
+              <dd>Water supplies and crops may face stress. Stored water and irrigation can change the outcome.</dd>
             </div>
-            <p>
-              In the western tropical Pacific, El Niño often brings below-average rainfall. Across the Philippines, that dry tendency tests both mountain reservoirs supplying cities and irrigated lowland rice bowls. Only Central Luzon and Angat have saved NISAR radar frames on disk; the other four Philippine places link directly to live ASF Vertex coverage search.
-            </p>
-            <div className="ph-places-grid">
-              {philippinesPlaces.map((place) => {
-                const w = place.bounds[0],
-                  s = place.bounds[1],
-                  e = place.bounds[2],
-                  n = place.bounds[3];
-                const vertexUrl = `https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=${encodeURIComponent(
-                  `POLYGON((${w} ${s},${e} ${s},${e} ${n},${w} ${n},${w} ${s}))`
-                )}`;
-                return (
-                  <div className="card ph-place-card" key={place.id}>
-                    <p className="eyebrow">
-                      {place.kind} · {place.hasRadarFrames ? `${SITE_FRAME_COUNTS[place.siteId!] || 20} saved radar frames` : 'No saved local frames'}
-                    </p>
-                    <h4>{place.name}</h4>
-                    <p className="source-line">
-                      {place.lat.toFixed(2)}°N, {place.lng.toFixed(2)}°E · Regime: {place.regime}
-                    </p>
-                    {place.hasRadarFrames ? (
-                      <div className="ph-card-actions">
-                        <a className="button primary" href={`#sites/${place.siteId}`}>
-                          Play saved radar ({SITE_FRAME_COUNTS[place.siteId!]}) →
-                        </a>
-                        <a className="text-link" href={`#globe?mode=satellite&site=${place.siteId}`}>
-                          See on Globe
-                        </a>
-                      </div>
-                    ) : (
-                      <div className="ph-card-actions">
-                        <p className="no-radar-badge">Radar frames not saved for this place</p>
-                        <a className="text-link" href={`#sites/${place.id}`}>
-                          Inspect place &amp; local news →
-                        </a>
-                        <a className="text-link" href={vertexUrl} target="_blank" rel="noopener noreferrer">
-                          Check NISAR on ASF Vertex ↗
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+            <div>
+              <dt>Where rain increases</dt>
+              <dd>Rivers may rise and soils may become wetter. Drainage and flood protection can change the outcome.</dd>
             </div>
-          </section>
-
-          <section id="overall-impact-summary" className="card regional-summary-box" aria-labelledby="overall-impact-heading">
-            <div className="section-title">
-              <div>
-                <p className="eyebrow">Overall coverage by region · Real counts, not modeled colors</p>
-                <h3 id="overall-impact-heading">Global study places, saved radar frames, and headlines by region</h3>
-              </div>
-              <a className="text-link" href="#media">
-                Open Media dashboard →
-              </a>
+            <div>
+              <dt>Where the signal is unclear</dt>
+              <dd>Local changes may have other causes. Missing observations leave the outcome unknown.</dd>
             </div>
-            <p>
-              This table summarizes our {places.length || 34} study places across six global regions using real counts of saved places, saved NISAR radar frames (57 total), and matched headlines from our 293-item news archive.
-            </p>
-            <div className="table-scroll" role="region" aria-label="Overall regional summary counts" tabIndex={0}>
-              <table>
-                <caption>Real counts of study places, saved NISAR radar frames, and matched headlines per region</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Region</th>
-                    <th scope="col">Typical El Niño tendency</th>
-                    <th scope="col">Study places</th>
-                    <th scope="col">Places with saved radar</th>
-                    <th scope="col">Saved radar frames</th>
-                    <th scope="col">Matched headlines</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {regionalSummary.map((row) => (
-                    <tr key={row.region}>
-                      <th scope="row">{row.region}</th>
-                      <td>{[...row.regimes].join(', ')}</td>
-                      <td>{row.placesCount}</td>
-                      <td>{row.radarSitesCount}</td>
-                      <td>{row.savedFramesCount}</td>
-                      <td>{row.headlinesCount}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <div className="story-local-news-preview">
-            <div className="story-place-picker-bar">
-              <label htmlFor="story-place-select">
-                <strong>Check local headlines for any study place:</strong>
-              </label>
-              <select
-                id="story-place-select"
-                value={selectedStoryPlaceId}
-                onChange={(e) => setSelectedStoryPlaceId(e.target.value)}
-              >
-                {places.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name} ({p.country} · {p.regime})
-                  </option>
-                ))}
-              </select>
-              {selectedStoryPlace && (
-                <a className="text-link" href={`#sites/${selectedStoryPlace.id}`}>
-                  Open {selectedStoryPlace.name} in Sites →
-                </a>
-              )}
-            </div>
-            <PlaceNewsPanel place={selectedStoryPlace} newsByPlace={newsByPlace} maxItems={3} compact />
-          </div>
+          </dl>
+          <p>
+            These are possibilities to investigate, not measured impacts or a forecast. The same approach applies everywhere: compare dates, check local conditions, and test other explanations.
+          </p>
+          <p className="source-line">
+            Our saved study sites are a sample, not worldwide coverage.
+          </p>
+          <a className="button secondary" href="#globe">Explore the global view</a>
         </article>
 
         <article className="story-section" id="future">

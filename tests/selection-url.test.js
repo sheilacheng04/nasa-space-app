@@ -22,7 +22,9 @@ test('Invalid dates, months, channels and modes fall back without accepting norm
  const site=siteSelection(new URLSearchParams('source=bad&channel=bad&view=bad&date=2026-02-30'));
  assert.ok(Object.values(site).every(v=>v===undefined));
  const globe=globeSelection(new URLSearchParams('mode=bad&month=2026-13&site=<script>&date=invalid'));
- assert.ok(Object.values(globe).every(v=>v===undefined));
+ assert.equal(globe.mode,'illustrative');
+ assert.equal(globe.site,undefined);assert.equal(globe.date,undefined);assert.equal(globe.month,undefined);
+ assert.equal(readRoute('#globe').globeSelection.mode,'illustrative');
  assert.equal(readRoute('#globe').globeSelection.month,undefined);
  const unsupported=readRoute('#sites/angat?source=browse&view=timeline&before=2026-01-01&after=2026-12-31').siteSelection;assert.equal(unsupported.view,'swipe');assert.equal(unsupported.after,'2026-12-31');
 });

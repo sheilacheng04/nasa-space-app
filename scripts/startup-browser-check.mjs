@@ -16,7 +16,7 @@ const serve=(route,key)=>route.fulfill({json:files[key]});
 try{
  for(const key of ['enso','news','evidence','sources']){
   let fail=true;const {page,counts}=await setup((route,k)=>k===key&&fail?route.fulfill({status:503,json:{error:'Controlled '+k+' failure'}}):serve(route,k));
-  await page.goto(base+'/#story');await expect(page.locator('#story-sites .evidence-row')).toHaveCount(4);
+  await page.goto(base+'/#story');await expect(page.locator('#site-evidence .story-outcomes dt')).toHaveCount(3);
   const route=key==='news'?'media':key==='sources'?'method':'story';await page.evaluate(hash=>{location.hash=hash;},route);
   const section=page.locator(route==='media'?'#page-news':route==='method'?'#page-method':'#page-story');
   await expect(section.getByRole('button',{name:'Retry '+labels[key],exact:true})).toBeVisible();
@@ -24,7 +24,7 @@ try{
   if(key==='sources')await expect(page.getByRole('button',{name:'Download source index'})).toBeDisabled();
   const before={...counts};fail=false;await section.getByRole('button',{name:'Retry '+labels[key],exact:true}).click();
   await expect(section.getByRole('button',{name:'Retry '+labels[key],exact:true})).toHaveCount(0);
-  if(key==='news')await expect(page.locator('#news-search')).toBeVisible();if(key==='evidence')await expect(page.locator('.hero-observation img')).toBeVisible();if(key==='sources')await expect(page.getByRole('button',{name:'Download source index'})).toBeEnabled();
+  if(key==='news')await expect(page.locator('#news-search')).toBeVisible();if(key==='evidence')await expect(page.locator('[data-testid="story-preview-player"] img')).toBeVisible();if(key==='sources')await expect(page.getByRole('button',{name:'Download source index'})).toBeEnabled();
   for(const k of keys)assert.equal(counts[k],before[k]+(k===key?1:0),'Retry must affect only '+key);
   await page.evaluate(()=>{location.hash='sites/angat';});await expect(page.locator('.site-timeline')).toBeVisible();await expect(page.locator('#site-select')).toHaveValue('angat');
   pass(key+' failure is local; scoped Retry makes a new request, restores content, and leaves other datasets and Sites usable');await page.close();
@@ -63,7 +63,7 @@ try{
   const {page}=await setup((route,key)=>key==='sites'?serve(route,key):route.fulfill({status:503,json:{error:'Optional unavailable'}}));await page.goto(base+'/#sites/angat');await expect(page.locator('.site-timeline')).toBeVisible();await page.locator('#site-select').selectOption('dadu');await expect(page.locator('.site-timeline')).toHaveAttribute('aria-label',/Dadu/);await page.evaluate(()=>{location.hash='globe?mode=concept&site=dadu&month=2026-10';});await expect(page.locator('.concept-timeline')).toBeVisible();await expect(page.locator('.concept-evidence-values').getByRole('button',{name:'Retry NOAA ocean context'})).toBeVisible();await expect(page.locator('[data-testid=concept-date]')).toContainText('October');pass('All optional root files can fail together without blocking per-site evidence or dated vegetation and weather context');await page.close();
  }
  if(process.env.CHECK_OFFLINE==='1'){
-  const page=await browser.newPage();pages.push(page);const external=[];page.on('request',r=>{if(/^https?:/.test(r.url()))external.push(r.url());});await page.goto(pathToFileURL(path.resolve('el-nino-app.html')).href+'#story');await expect(page.locator('#story-sites .evidence-row')).toHaveCount(4);await expect(page.locator('.hero-observation img')).toBeVisible();await page.evaluate(()=>{location.hash='media';});await expect(page.locator('#news-search')).toBeVisible();await expect(page.locator('#page-news .dataset-notice')).toHaveCount(0);assert.deepEqual(external,[]);pass('Embedded root data restores Story and Media offline without any external requests');
+  const page=await browser.newPage();pages.push(page);const external=[];page.on('request',r=>{if(/^https?:/.test(r.url()))external.push(r.url());});await page.goto(pathToFileURL(path.resolve('el-nino-app.html')).href+'#story');await expect(page.locator('#site-evidence .story-outcomes dt')).toHaveCount(3);await expect(page.locator('[data-testid="story-preview-player"] img')).toBeVisible();await page.evaluate(()=>{location.hash='media';});await expect(page.locator('#news-search')).toBeVisible();await expect(page.locator('#page-news .dataset-notice')).toHaveCount(0);assert.deepEqual(external,[]);pass('Embedded root data restores Story and Media offline without any external requests');
  }
  if(process.env.CHECK_OFFLINE==='1'){
   const page=await browser.newPage();const external=[];page.on('request',r=>{if(/^https?:/.test(r.url()))external.push(r.url());});

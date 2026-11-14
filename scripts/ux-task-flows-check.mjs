@@ -151,8 +151,9 @@ try {
   {
     let clicks = 0;
     await page.goto(`${base}/#story`, { waitUntil: 'networkidle' });
-    await expect(page.locator('#philippines-focus')).toContainText('Focus on the Philippines');
-    await page.locator('#philippines-focus a[href="#sites/luzon"]').first().click();
+    await page.getByRole('link', { name: /2.*Sites/ }).click();
+    clicks++;
+    await page.locator('#site-select').selectOption('luzon');
     clicks++;
     await expect(page.locator('#site-select')).toHaveValue('luzon');
     await expect(page.locator('.site-timeline')).toBeVisible();

@@ -11,9 +11,8 @@ import ConceptTimeline from './ConceptTimeline';
 import IllustrativeGlobe from './IllustrativeGlobe';
 import type { ConceptPlayback } from './ConceptTimeline';
 import ConceptVegetation from './ConceptVegetation';
-import {globeHash,frameIndex,includeDates} from '../selection-url.js';
+import {frameIndex,includeDates} from '../selection-url.js';
 import type {GlobeSelection,HistoryMode} from '../selection-url.js';
-import {ShareLink} from './ShareLink';
 import {PlaceNewsPanel} from './PlaceNewsPanel';
 import {WhereToNext} from './FirstVisitGuide';
 import {GlossaryTerm} from './GlossaryTerm';
@@ -80,7 +79,8 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
   return()=>{current=false;pauseGlobe();closeLocalWindow();};
  },[active,sites]);
  useEffect(()=>{if(ready&&active&&place)flyTo(...place.geometry.coordinates);},[ready,active,place]);
- useLayoutEffect(()=>{setPlaying(false);closeLocalWindow();if(ready&&active){setGlobeMode(mode);if(mode==='satellite'&&loaded&&loaded.date===frame?.date)void setSatelliteTexture(loaded.url,loaded.image,loaded.date).catch(()=>{setStatus('error');setMessage('The radar texture could not be displayed.');});}},[mode,ready,active]);
+ useLayoutEffect(()=>{closeLocalWindow();},[mode,active]);
+ useLayoutEffect(()=>{setPlaying(false);if(ready&&active){setGlobeMode(mode);if(mode==='satellite'&&loaded&&loaded.date===frame?.date)void setSatelliteTexture(loaded.url,loaded.image,loaded.date).catch(()=>{setStatus('error');setMessage('The radar texture could not be displayed.');});}},[mode,ready,active]);
  useEffect(()=>{
   if(!active)return;let pinTick=0;const update=()=>{cancelAnimationFrame(pinTick);pinTick=requestAnimationFrame(()=>setPins(getGlobeMarkers()));};
   const select=(e:Event)=>{const id=(e as CustomEvent).detail?.id;const site=sites.find(s=>s.id===id);if(site){setSelected(site);if(modeRef.current!=='illustrative')flyTo(...site.coordinates,.65);}};
@@ -193,7 +193,7 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
  const conceptPin=pins.find(p=>p.id===(selected?.id||'angat')&&p.visible),conceptReading=concept?.sites.find(s=>s.id===conceptPin?.id);
  const philippinePlaces=useMemo(()=>places.filter(p=>p.countryCode==='PH'),[places]);
  return <div className="satellite-page" data-view-mode={mode} ref={section} onKeyDownCapture={key}>
- <div className="satellite-heading"><div><p className="eyebrow">Earth / a record through time · 57 real observations across 4 radar sites</p><h1>{mode==='satellite'?'Earth through time':mode==='illustrative'?'The concept globe':'Seasons seen from space'}</h1></div><div className="globe-heading-controls"><div className="mode-switch" role="group" aria-label="Globe mode"><button id="satellite-mode" aria-pressed={mode==='satellite'} onClick={()=>setMode('satellite')}>Radar observations</button><button id="concept-mode" aria-pressed={mode==='concept'} onClick={()=>setMode('concept')}>Land through time</button><button id="illustrative-mode" aria-pressed={mode==='illustrative'} onClick={()=>setMode('illustrative')}>Concept globe</button></div><ShareLink hash={globeHash({mode,site:selected?.id||(mode==='concept'?(sites.find(s=>s.id==='angat')||sites[0])?.id:undefined),date:frame?.date,month:selection.month||concept?.month})}/>{selection.site&&!selected&&<p role="status">Requested study site is not in this edition. {mode==='concept'?'The default study area is shown.':'No site crop is selected.'}</p>}</div></div>
+ <div className="satellite-heading"><div><p className="eyebrow">Earth / a record through time · 57 real observations across 4 radar sites</p><h1>{mode==='satellite'?'Earth through time':mode==='illustrative'?'The concept globe':'Seasons seen from space'}</h1></div><div className="globe-heading-controls"><div className="mode-switch" role="group" aria-label="Globe mode"><button id="concept-mode" aria-pressed={mode==='concept'} onClick={()=>setMode('concept')}>Land through time</button><button id="illustrative-mode" aria-pressed={mode==='illustrative'} onClick={()=>setMode('illustrative')}>Concept globe</button></div>{selection.site&&!selected&&<p role="status">Requested study site is not in this edition. {mode==='concept'?'The default study area is shown.':'No site crop is selected.'}</p>}</div></div>
  <p className="coverage-note">{mode==='satellite'?<>Play dated <GlossaryTerm termKey="NISAR"/> radar images from NASA <GlossaryTerm termKey="GIBS"/>. Colored strips show where the satellite observed Earth; coverage changes with each date.</>:mode==='illustrative'?'Follow an illustrative climate progression, explore connected places, and take a guided tour.':<>Play real monthly <GlossaryTerm termKey="MODIS"/> satellite images to follow vegetation <GlossaryTerm termKey="greenness"/>. Compare seasons and local weather, then explore possible explanations.</>}</p>
  <div className="globe-content"><div className="globe-visual">
  <div id="globe-stage" data-mode={mode} data-frame-status={status} className="satellite-stage">

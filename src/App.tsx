@@ -236,7 +236,6 @@ export function App() {
         )}
         <div hidden={route.page !== 'media'} className="wrap compact">
           {notice('evidence')}
-          <EvidenceLead evidence={optionalData.evidence?.[0]} />
         </div>
         <NewsPage
           notice={notice('news')}

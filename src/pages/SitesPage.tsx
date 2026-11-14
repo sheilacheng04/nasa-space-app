@@ -217,20 +217,7 @@ export function SitesPage({
           </div>
         </div>
 
-        <div className="cross-page-links" role="navigation" aria-label="Cross-page links for this place">
-          <a
-            className="button primary"
-            href={`#globe?mode=satellite&site=${site.id}&date=${encodeURIComponent(latestFrameDate.slice(0, 10))}`}
-          >
-            See this place on the globe →
-          </a>
-          <a className="button secondary" href="#method">
-            See its sources
-          </a>
-          <a className="button secondary" href="#story">
-            ← Back to the story
-          </a>
-        </div>
+
 
         {activePlace && !activePlace.hasRadarFrames && (
           <div className="card no-saved-radar-banner" role="status" data-testid="no-saved-radar-banner">
@@ -262,13 +249,6 @@ export function SitesPage({
         )}
 
         <p className="dek">{site.description}</p>
-        <p>
-          <strong>{site.name}, {site.country}.</strong> Press Play to follow real satellite images through time. Each image shows the same area on a different date.
-        </p>
-        <p className="source-line">
-          <GlossaryTerm termKey="NISAR" /> sends microwave pulses toward Earth and records their echoes (<GlossaryTerm termKey="backscatter" />). These colors describe radar reflections, not what the landscape looks like to our eyes.{' '}
-          <a href="#story/reading-radar">Meet radar in one minute</a>
-        </p>
       </div>
 
       <div className="wrap site-body">
@@ -285,7 +265,7 @@ export function SitesPage({
             active={active}
             site={site}
             evidence={evidence}
-            selection={selection}
+            selection={{ ...selection, source: 'gibs' }}
             onSelection={onSelection}
             navigationKey={navigationKey}
             mapOpen={mapOpen}

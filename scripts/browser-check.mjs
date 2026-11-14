@@ -14,12 +14,12 @@ try{
  page.on('pageerror',e=>report.pageErrors.push(e.message));
  page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text());});
  await page.goto(base,{waitUntil:'networkidle'});
- await expect(page.locator('#story-sites .evidence-row')).toHaveCount(4);
- await expect(page.locator('.hero-observation img')).toBeVisible();
- await expect(page.locator('.hero-observation img')).toHaveJSProperty('complete',true);
+ await expect(page.locator('#site-evidence .story-outcomes dt')).toHaveCount(3);
+ await expect(page.locator('[data-testid="story-preview-player"] img')).toBeVisible();
+ await expect(page.locator('[data-testid="story-preview-player"] img')).toHaveJSProperty('complete',true);
  await page.screenshot({path:'.artifacts/revision-story-desktop.png',fullPage:true});report.screenshots.push('revision-story-desktop.png');
  await expect(page.locator('#page-story h1')).toContainText('what changes on land');await expect(page.locator('#reading-radar')).toContainText(/synthetic aperture radar/i);await expect(page.locator('#reading-radar')).toContainText('NISAR');
- check('Global story explains radar in plain language and retains four real study examples');
+ check('Global story explains radar in plain language and presents local outcomes without featuring individual places');
  for(const route of ['sites/angat','media','method']){
   await page.goto(base+'/#'+route,{waitUntil:'networkidle'});
   const id=route.startsWith('sites')?'sites':route==='media'?'news':'method';
@@ -103,8 +103,8 @@ try{
   offline.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
   offline.on('pageerror',e=>report.pageErrors.push('offline: '+e.message));
   await offline.goto(pathToFileURL(path.resolve('el-nino-app.html')).href);
-  await expect(offline.locator('#story-sites .evidence-row')).toHaveCount(4);
-  await expect(offline.locator('.hero-observation img')).toHaveJSProperty('naturalWidth',240);
+  await expect(offline.locator('#site-evidence .story-outcomes dt')).toHaveCount(3);
+  await expect(offline.locator('[data-testid="story-preview-player"] img')).toHaveJSProperty('naturalWidth',240);
   for(const route of ['sites/angat','media','method','globe']){
    await offline.evaluate(route=>location.hash=route,route);
    if(route==='globe')await expect(offline.locator('#globe-stage')).toHaveAttribute('data-ready','true',{timeout:25000});

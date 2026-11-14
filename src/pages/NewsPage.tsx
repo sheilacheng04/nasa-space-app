@@ -211,17 +211,7 @@ export function NewsPage({
         <p className="page-purpose-line">
           <strong>What this page is for:</strong> Explore how water, farming, and climate stories are reported across regions and individual study places, while separating headline wording tone from physical event severity.
         </p>
-        <div className="hero-actions">
-          <a className="button primary" href="#media-place-news">
-            Check news for a study place →
-          </a>
-          <a className="button secondary" href="#sites/angat">
-            Compare with radar in Sites
-          </a>
-          <a className="button secondary" href="#globe">
-            See places on the Globe
-          </a>
-        </div>
+
       </div>
 
       <div className="wrap">

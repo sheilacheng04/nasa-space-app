@@ -23,6 +23,7 @@
     "test:globe-display": "node scripts/globe-display-check.mjs",
     "test:illustrative-globe": "node scripts/illustrative-globe-check.mjs",
     "test:site-timeline": "node scripts/site-timeline-check.mjs",
+    "test:story-preview": "node scripts/story-preview-check.mjs",
     "test:weather": "node scripts/weather-browser-check.mjs",
     "test:radar-evidence": "node scripts/radar-evidence-browser-check.mjs",
     "test:site-map": "node scripts/site-map-browser-check.mjs",

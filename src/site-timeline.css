@@ -2,3 +2,12 @@
 @media(max-width:600px){.site-time-heading{display:block}.site-time-heading h3{font-size:19px}.site-time-date{display:block;margin-top:8px}.site-time-controls{gap:6px}.site-time-controls button{font-size:12px;padding:7px 10px}.site-time-controls label:last-child{width:100%;margin-top:5px}.site-time-readout{font-size:10px;gap:8px}.site-time-placeholder{padding:12px;gap:4px}.site-time-placeholder strong{font-size:14px}.site-time-placeholder p{font-size:11px;margin:0}.site-time-dates{gap:3px}.site-time-dates button{min-height:24px}}
 
 .site-date-list{display:block;font-size:12px;margin:14px 0 10px}.site-date-list select{margin-top:4px}.acquisition-strip.site-time-dates{overflow-x:auto;padding:5px;gap:6px;scroll-padding:5px}.acquisition-strip.site-time-dates button{flex:0 0 66px;min-width:66px;min-height:44px;font-size:11px;scroll-margin:5px}.site-time-dates .has-data{color:var(--card)}.site-time-dates .no-data{color:var(--ink)}
+
+.site-playback-bar{display:flex;align-items:center;justify-content:center;gap:12px;padding:14px;margin:12px 0;background:var(--bg2);border:1px solid var(--line);border-radius:12px}
+.site-playback-bar button{min-height:48px}
+.site-playback-bar #site-play{min-width:140px;min-height:52px;font-size:17px;font-weight:700;background:var(--orange);border-color:var(--orange);color:#fff}
+:root[data-theme=dark] .site-playback-bar #site-play{color:#111b2e}
+.site-playback-bar button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+@media(max-width:600px){.site-playback-bar{gap:6px;padding:10px 6px}.site-playback-bar button{padding:8px;font-size:12px}.site-playback-bar #site-play{min-width:96px;font-size:16px}}
+
+.site-time-heading{justify-content:flex-start}.site-time-meta-badge{display:flex;align-items:center;flex-wrap:wrap;gap:12px}.site-playback-options{margin-top:16px;border-top:1px solid var(--line)}.site-playback-options>summary,.radar-about summary{min-height:44px;padding:12px 0;cursor:pointer}.radar-about{margin:24px 0;padding:20px;border:1px solid var(--line);border-radius:12px;background:var(--bg2)}.radar-about h3{font-size:20px;margin-bottom:12px}.radar-about>p{max-width:75ch;font-size:14px;line-height:1.7}.radar-about>.reading-notes{border-top:1px solid var(--line);margin-top:12px}

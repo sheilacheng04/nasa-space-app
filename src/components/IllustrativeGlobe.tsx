@@ -1,12 +1,9 @@
-import {useEffect,useRef,useState} from 'react';
+import {useEffect,useState} from 'react';
 import type {ReactNode} from 'react';
 import type {News,Site} from '../types';
-import {hosted} from '../api/client';
-import {REVIEW_DATE} from '../config.js';
-import {validDay} from '../selection-url.js';
 import {illustrationDefaults,illustrationLegends,phaseLabel} from '../illustrative-globe.js';
 import type {IllustrationLayer} from '../illustrative-globe.js';
-import {setIllustration,setIllustrativeTexture,focusIllustrativePlace,flyTo} from '../world.js';
+import {setIllustration,focusIllustrativePlace,flyTo} from '../world.js';
 import {initLocalWindow} from '../local-window.js';
 import '../illustrative-globe.css';
 
@@ -14,8 +11,6 @@ interface Location {name:string;lat:number;lng:number;id?:string;site?:boolean;u
 export default function IllustrativeGlobe({active,ready,sites,news,newsNotice,navigationKey,selectedSiteId}:{active:boolean;ready:boolean;sites:Site[];news?:News;newsNotice:ReactNode;navigationKey:number;selectedSiteId?:string}){
  const [state,setState]=useState({...illustrationDefaults}),[playing,setPlaying]=useState(false),[tab,setTab]=useState<'place'|'events'|'tour'>('place'),[tour,setTour]=useState(0);
  const [selected,setSelected]=useState<Location|null>(null),[rendering,setRendering]=useState(false);
- const [imageDate,setImageDate]=useState(REVIEW_DATE),[image,setImage]=useState<{image:HTMLImageElement;date:string}|null>(null),[imageStatus,setImageStatus]=useState(''),[loading,setLoading]=useState(false);
- const controller=useRef<AbortController|null>(null),imageURL=useRef('');
  useEffect(()=>{setIllustration(state);},[state]);
  useEffect(()=>{
   const select=(event:Event)=>{setSelected((event as CustomEvent<Location>).detail);setTab('place');};
@@ -37,28 +32,11 @@ export default function IllustrativeGlobe({active,ready,sites,news,newsNotice,na
   frame=requestAnimationFrame(tick);return()=>cancelAnimationFrame(frame);
  },[playing,active,rendering]);
  useEffect(()=>{if(state.phase>=100)setPlaying(false);},[state.phase]);
- useEffect(()=>{setIllustrativeTexture(active?image?.image||null:null,image?.date||'');},[active,image,ready]);
- useEffect(()=>{if(!active){controller.current?.abort();setLoading(false);}},[active]);
- useEffect(()=>()=>{controller.current?.abort();if(imageURL.current)URL.revokeObjectURL(imageURL.current);setIllustrativeTexture(null,'');},[]);
  const seek=(phase:number)=>{setPlaying(false);setState(previous=>({...previous,phase}));};
  function toggle(){if(!playing&&state.phase>=100)setState(previous=>({...previous,phase:0}));setPlaying(value=>!value);}
  function choose(site:Site){focusIllustrativePlace({...site,site:true,lng:site.coordinates[0],lat:site.coordinates[1]});}
  const steps=[{name:'The ocean connects the story',description:'Begin over the equatorial Pacific. Moving links illustrate a climate relationship, not measured winds or flows of heat.',coordinates:[-145,0],id:''},...sites.map(site=>({...site,description:site.question+' '+site.hypothesis}))];
  function goTour(index:number){const next=(index+steps.length)%steps.length,step=steps[next];setTour(next);if(step.id){const site=sites.find(s=>s.id===step.id);if(site)choose(site);}else flyTo(step.coordinates[0],step.coordinates[1],2.4,850);setTab('tour');}
- async function loadImagery(){
-  if(!hosted||!validDay(imageDate)||imageDate>REVIEW_DATE)return;
-  controller.current?.abort();const request=new AbortController();controller.current=request;setLoading(true);setImageStatus('Loading dated MODIS imagery…');
-  const timer=setTimeout(()=>request.abort(),12000);let url='';
-  try{
-   const params=new URLSearchParams({SERVICE:'WMS',REQUEST:'GetMap',VERSION:'1.1.1',LAYERS:'MODIS_Terra_CorrectedReflectance_TrueColor',STYLES:'',FORMAT:'image/jpeg',SRS:'EPSG:4326',BBOX:'-180,-90,180,90',WIDTH:'2048',HEIGHT:'1024',TIME:imageDate});
-   const response=await fetch('https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?'+params,{signal:request.signal});
-   if(!response.ok||!response.headers.get('content-type')?.startsWith('image/'))throw new Error('Image unavailable');
-   url=URL.createObjectURL(await response.blob());const decoded=new Image();decoded.src=url;await decoded.decode();
-   if(request.signal.aborted||controller.current!==request)return;
-   if(imageURL.current)URL.revokeObjectURL(imageURL.current);imageURL.current=url;url='';setImage({image:decoded,date:imageDate});setImageStatus('NASA GIBS / MODIS true color · '+imageDate+'. Clouds and missing swaths can obscure land.');
-  }catch{if(controller.current===request)setImageStatus('Imagery unavailable. The concept globe remains usable; choose another date or retry.');}
-  finally{clearTimeout(timer);if(url)URL.revokeObjectURL(url);if(controller.current===request)setLoading(false);}
- }
  const legend=illustrationLegends[state.layer];
  return <aside className="illustrative-panel" hidden={!active} aria-label="Concept globe controls" data-phase={state.phase.toFixed(1)} data-playing={playing}>
   <p className="eyebrow">The original concept globe</p><h2>One ocean. Different stories.</h2>
@@ -78,6 +56,5 @@ export default function IllustrativeGlobe({active,ready,sites,news,newsNotice,na
    {tab==='events'&&<>{newsNotice}<p>Source-linked reporting; headlines are separate from the illustrative climate layers.</p>{news?.items.filter(item=>item.url.startsWith('https:')).slice(0,8).map(item=><a className="illustrative-news" key={item.id} href={item.url} target="_blank" rel="noopener"><small>{item.date} · {item.source}</small>{item.title}</a>)}</>}
    {tab==='tour'&&<><p className="eyebrow">Step {tour+1} of {steps.length}</p><h3>{steps[tour].name}</h3><p>{steps[tour].description}</p><div className="illustrative-tour-actions"><button onClick={()=>goTour(tour-1)}>← Back</button><button onClick={()=>goTour(tour+1)}>Next →</button></div>{steps[tour].id&&<a className="button" href={'#sites/'+steps[tour].id}>Open radar observations</a>}</>}
   </div>
-  <details className="illustrative-imagery"><summary>Optional satellite imagery</summary><p>Overlay the illustration on a dated NASA MODIS image. The imagery date does not change the conceptual progression.</p><label htmlFor="illustrative-image-date">MODIS image date</label><input id="illustrative-image-date" type="date" min="2000-02-24" max={REVIEW_DATE} value={imageDate} disabled={!hosted||loading} onChange={event=>setImageDate(event.target.value)}/><button disabled={!hosted||loading||!validDay(imageDate)||imageDate>REVIEW_DATE} onClick={()=>void loadImagery()}>{loading?'Loading image…':'Load satellite imagery'}</button>{image&&<button onClick={()=>{controller.current?.abort();setLoading(false);setImage(null);setImageStatus('Satellite imagery hidden.');}}>Hide satellite imagery</button>}<p role="status">{hosted?imageStatus:'Dated online imagery needs the hosted app. Concept layers and animations work offline.'}</p>{image&&<p>Displayed optical image: {image.date}. Concept colors remain illustrative.</p>}</details>
  </aside>;
 }
