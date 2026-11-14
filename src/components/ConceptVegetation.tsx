@@ -1,5 +1,6 @@
 import {useEffect,useLayoutEffect,useRef,useState} from 'react';
-import {dataFile,hosted} from '../api/client';
+import {hosted} from '../api/client';
+import {globeFile} from '../globe-data';
 import {assetURL} from '../core.js';
 import {setConceptTexture} from '../world.js';
 
@@ -7,22 +8,32 @@ type VegetationFrame={date:string;label:string;status:string;url:string|null;sou
 type VegetationManifest={layerId:string;title:string;legend:{url:string;pngUrl?:string;sourceUrl:string;colormapUrl:string};frames:VegetationFrame[]};
 export default function ConceptVegetation({active,month,onStatus,playing=false}:{active:boolean;month:string;playing?:boolean;onStatus:(status:string)=>void}){
  const [manifest,setManifest]=useState<VegetationManifest|null>(null),[enabled,setEnabled]=useState(true),[status,setStatus]=useState('loading'),[retry,setRetry]=useState(0);
- const cache=useRef(new Map<string,HTMLImageElement>());
+ const cache=useRef(new Map<string,HTMLImageElement>()),pending=useRef(new Map<string,{image:HTMLImageElement;timer:ReturnType<typeof setTimeout>;promise:Promise<HTMLImageElement>}>()),lastAttempt=useRef(0);
+ useEffect(()=>()=>{for(const value of pending.current.values()){clearTimeout(value.timer);value.image.removeAttribute('src');}pending.current.clear();cache.current.clear();},[]);
  useEffect(()=>{onStatus(enabled?status:'hidden');},[status,enabled,onStatus]);
- useEffect(()=>{if(!active||manifest)return;let current=true;dataFile<VegetationManifest>('globe/vegetation.json').then(m=>{if(current)setManifest(m);}).catch(()=>{if(current)setStatus('error');});return()=>{current=false;};},[active,manifest,retry]);
+ useEffect(()=>{if(!active||manifest)return;let current=true;const reload=retry>lastAttempt.current;lastAttempt.current=retry;globeFile<VegetationManifest>('globe/vegetation.json',reload).then(m=>{if(current)setManifest(m);}).catch(()=>{if(current)setStatus('error');});return()=>{current=false;};},[active,manifest,retry]);
  const frame=manifest?.frames.find(f=>f.date.slice(0,7)===month);
  useLayoutEffect(()=>{
-  let current=true;setConceptTexture(null);if(!active||!enabled)return;
-  if(!manifest||!month)return;
-  if(!frame||frame.status!=='available'||!frame.url){setStatus('gap');return;}
+  let current=true;if(!active)return;
+  if(!enabled){setConceptTexture(null);return;}
+  if(!manifest||!month){setConceptTexture(null);return;}
+  if(!frame||frame.status!=='available'||!frame.url){setConceptTexture(null);setStatus('gap');return;}
   const url=assetURL(frame.url);
-  if(!hosted&&!url.startsWith('data:')){setStatus('offline');return;}
+  if(!hosted&&!url.startsWith('data:')){setConceptTexture(null);setStatus('offline');return;}
   setStatus('loading');
-  const cached=cache.current.get(month),img=cached||new Image();let timer:ReturnType<typeof setTimeout>;
-  const show=()=>{if(!current)return;cache.current.delete(month);cache.current.set(month,img);while(cache.current.size>4)cache.current.delete(cache.current.keys().next().value!);setConceptTexture(img,frame.date);setStatus('ready');};
-  if(cached){show();return()=>{current=false;};}
-  img.src=url;
-  void Promise.race([img.decode(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Image timed out')),8000);})]).then(show).catch(()=>{if(current)setStatus('error');}).finally(()=>clearTimeout(timer));
+  const cached=cache.current.get(month);
+  const show=(img:HTMLImageElement)=>{if(current){setConceptTexture(img,frame.date);setStatus('ready');}};
+  if(cached){cache.current.delete(month);cache.current.set(month,cached);show(cached);return()=>{current=false;};}
+  setConceptTexture(null);
+  let entry=pending.current.get(url);
+  if(!entry){
+   const image=new Image();image.src=url;let timer:ReturnType<typeof setTimeout>;
+   const promise=Promise.race([image.decode().then(()=>image),new Promise<HTMLImageElement>((_,reject)=>{timer=setTimeout(()=>reject(new Error('Image timed out')),8000);})]).then(img=>{
+    if(pending.current.get(url)?.promise===promise){cache.current.set(month,img);while(cache.current.size>4)cache.current.delete(cache.current.keys().next().value!);}return img;
+   }).finally(()=>{clearTimeout(timer);pending.current.delete(url);});
+   entry={image,timer:timer!,promise};pending.current.set(url,entry);
+  }
+  void entry.promise.then(show).catch(()=>{if(current)setStatus('error');});
   return()=>{current=false;};
  },[active,month,frame,manifest,enabled,retry]);
  return <section className="concept-vegetation" hidden={!active} aria-label="Monthly satellite land observations" data-vegetation-status={enabled?status:'hidden'}>

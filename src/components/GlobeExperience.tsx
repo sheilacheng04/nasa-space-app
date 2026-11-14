@@ -1,8 +1,8 @@
 import { useCallback,useEffect,useLayoutEffect,useMemo,useRef,useState } from 'react';
-import { dataFile,hosted } from '../api/client';
-import { initGlobe,pauseGlobe,resumeGlobe,setGlobePoints,flyTo,setGlobeMode,setSatelliteTexture,hideSatelliteTexture,getGlobeMarkers,setGeographicContext,setConceptSnapshot } from '../world.js';
+import { hosted } from '../api/client';
+import { initGlobe,pauseGlobe,resumeGlobe,setGlobePoints,flyTo,setGlobeMode,setSatelliteTexture,hideSatelliteTexture,disposeGlobe,getGlobeMarkers,setGeographicContext,setConceptSnapshot } from '../world.js';
 import { closeLocalWindow } from '../local-window.js';
-import { FrameCache,siteCrop,wmsURL } from '../globe-data';
+import { FrameCache,siteCrop,wmsURL,globeFile } from '../globe-data';
 import type { GlobeManifest,GlobeFrame,LoadedFrame } from '../globe-data';
 import type {ReactNode} from 'react';
 import type { Enso,News,Observation,Place,Site } from '../types';
@@ -48,6 +48,10 @@ export default function GlobeExperience({active,sites,points,place,enso,news,oce
  const [ready,setReady]=useState(false),[status,setStatus]=useState('loading'),[message,setMessage]=useState('Loading the real GIBS date record…'),[retry,setRetry]=useState(0),[announcement,setAnnouncement]=useState('');
  const [loaded,setLoaded]=useState<LoadedFrame|null>(null),[crop,setCrop]=useState({url:'',note:''}),[cropRetry,setCropRetry]=useState(0),[pins,setPins]=useState<{id:string;x:number;y:number;visible:boolean}[]>([]);
  const cache=useRef(new FrameCache()),playingRef=useRef(playing),modeRef=useRef(mode);playingRef.current=playing;modeRef.current=mode;
+ const radarActive=active&&mode==='satellite';
+ const crops=useRef(new Map<string,Promise<{url:string;note:string}>>());
+ const releaseCrop=(promise:Promise<{url:string;note:string}>)=>{void promise.then(result=>{if(result.url.startsWith('blob:'))URL.revokeObjectURL(result.url);}).catch(()=>{});};
+ const lastManifestAttempt=useRef(0);
  const section=useRef<HTMLDivElement>(null),initialFocus=useRef(false);
  const layer=manifest?.layers[layerId];
  const frames=useMemo(()=>includeDates<GlobeFrame>(layer?.frames||[],[selection.date],date=>({date,layer:layerId,status:'no-data',maturity:'not available',maturityWindow:'not available',reason:'This requested date is not in the saved date record; live availability is unverified.'})),[layer,layerId,selection.date]);
@@ -59,7 +63,7 @@ export default function GlobeExperience({active,sites,points,place,enso,news,oce
  const currentFrame=useRef(frame);currentFrame.current=frame;
  const bestIndex=useMemo(()=>frames.reduce((best,f,i)=>(f.nontransparentPixels||0)>(frames[best]?.nontransparentPixels||0)?i:best,0),[frames]);
  const dates=useMemo(()=>frames.map(f=>time(f.date)),[frames]),range=dates.length?dates.at(-1)!-dates[0]:1;
- useEffect(()=>{let live=true;setManifestError('');dataFile<GlobeManifest>('globe/manifest.json').then(m=>{if(!live)return;setManifest(m);setLayerId(m.defaultLayer);}).catch(()=>{if(live){setManifestError('The NISAR date manifest could not be loaded.');setStatus('error');}});return()=>{live=false;};},[retryManifest]);
+ useEffect(()=>{if(!active||manifest)return;let live=true;const reload=retryManifest>lastManifestAttempt.current;lastManifestAttempt.current=retryManifest;setManifestError('');globeFile<GlobeManifest>('globe/manifest.json',reload).then(m=>{if(!live)return;setManifest(m);setLayerId(m.defaultLayer);}).catch(()=>{if(live){setManifestError('The NISAR date manifest could not be loaded.');setStatus('error');}});return()=>{live=false;};},[active,manifest,retryManifest]);
  useEffect(()=>{setGlobePoints(sites,points);},[sites,points]);
  useEffect(()=>{
   let current=true;
@@ -68,15 +72,16 @@ export default function GlobeExperience({active,sites,points,place,enso,news,oce
   return()=>{current=false;pauseGlobe();closeLocalWindow();};
  },[active,sites]);
  useEffect(()=>{if(ready&&active&&place)flyTo(...place.geometry.coordinates);},[ready,active,place]);
- useEffect(()=>{setPlaying(false);if(ready){setGlobeMode(mode);if(mode==='satellite'&&loaded&&loaded.date===frame?.date)void setSatelliteTexture(loaded.url,loaded.image,loaded.date).catch(()=>{setStatus('error');setMessage('The radar texture could not be displayed.');});}},[mode,ready]);
+ useEffect(()=>{setPlaying(false);if(ready&&active){setGlobeMode(mode);if(mode==='satellite'&&loaded&&loaded.date===frame?.date)void setSatelliteTexture(loaded.url,loaded.image,loaded.date).catch(()=>{setStatus('error');setMessage('The radar texture could not be displayed.');});}},[mode,ready,active]);
  useEffect(()=>{
-  let pinTick=0;const update=()=>{cancelAnimationFrame(pinTick);pinTick=requestAnimationFrame(()=>setPins(getGlobeMarkers()));};
+  if(!active)return;let pinTick=0;const update=()=>{cancelAnimationFrame(pinTick);pinTick=requestAnimationFrame(()=>setPins(getGlobeMarkers()));};
   const select=(e:Event)=>{const id=(e as CustomEvent).detail?.id;const site=sites.find(s=>s.id===id);if(site){setSelected(site);flyTo(...site.coordinates,.65);}};
   addEventListener('globe:camera',update);addEventListener('globe:select-site',select);
   if(ready)update();return()=>{cancelAnimationFrame(pinTick);removeEventListener('globe:camera',update);removeEventListener('globe:select-site',select);};
- },[ready,sites,mode,setSelected]);
+ },[ready,sites,mode,setSelected,active]);
+ useLayoutEffect(()=>{if(radarActive)cache.current.resume();else cache.current.pause();},[radarActive]);
  useLayoutEffect(()=>{
-  if(!ready||!active||!frame)return;let live=true;hideSatelliteTexture();setLoaded(null);setStatus('loading');setMessage('Loading '+frame.date+'…');
+  if(!ready||!radarActive||!frame)return;if(loaded?.date===frame.date&&status==='ready')return;let live=true;hideSatelliteTexture();setLoaded(null);setStatus('loading');setMessage('Loading '+frame.date+'…');
   if(frame.status==='no-data'||frame.status==='empty'){
    setStatus('gap');setMessage(frame.reason||(frame.status==='no-data'?'No data. GIBS does not advertise this date.':'No coverage in this global mosaic.'));if(!playingRef.current)setAnnouncement(frame.date+'. No data.');return;
   }
@@ -87,11 +92,11 @@ export default function GlobeExperience({active,sites,points,place,enso,news,oce
    if(!playingRef.current)setAnnouncement(frame.date+'. '+frame.maturityWindow+'. Pixel maturity not available.');
   }).catch(error=>{if(live){setStatus('error');setMessage(error.message);setPlaying(false);setAnnouncement(frame.date+'. Imagery unavailable.');}});
   return()=>{live=false;};
- },[frame,ready,active,retry]);
+ },[frame,ready,radarActive,retry]);
  useEffect(()=>{
-  if(!frame||status!=='ready'||!active)return;
+  if(!frame||status!=='ready'||!radarActive)return;
   frames.slice(index+1,index+3).filter(f=>f.status!=='no-data'&&f.status!=='empty').forEach(f=>{void cache.current.load(f).catch(()=>{});});
- },[frame,status,active,index,frames]);
+ },[frame,status,radarActive,index,frames]);
  useEffect(()=>{
   if(!playing||!active||!frame||status==='loading'||status==='error')return;
   const timer=setTimeout(()=>{if(index===frames.length-1){if(loop)setIndex(0);else setPlaying(false);}else setIndex(i=>i+1);},Math.max(350,1400/speed));
@@ -102,12 +107,18 @@ export default function GlobeExperience({active,sites,points,place,enso,news,oce
   media.addEventListener('change',stop);return()=>media.removeEventListener('change',stop);
  },[]);
  useLayoutEffect(()=>{
+  if(!radarActive)return;
   if(!selected||!frame||status!=='ready'){setCrop({url:'',note:status==='gap'?'No NISAR image for this date.':'Select a loaded frame to view the current-date crop.'});return;}
-  let live=true,objectURL='';setCrop({url:'',note:'Loading current-date site crop…'});
-  void siteCrop(frame,selected.bbox,loaded||undefined).then(result=>{if(result.url.startsWith('blob:'))objectURL=result.url;if(live)setCrop(result);else if(objectURL)URL.revokeObjectURL(objectURL);}).catch(()=>{if(live)setCrop({url:'',note:'Current-date crop unavailable. Retry or open Sites.'});});
-  return()=>{live=false;if(objectURL)URL.revokeObjectURL(objectURL);};
- },[selected,frame,status,loaded,cropRetry]);
- useEffect(()=>()=>cache.current.clear(),[]);
+  let live=true;setCrop({url:'',note:'Loading current-date site crop…'});
+  const key=frame.layer+'/'+frame.date+'/'+selected.id;
+  let pending=crops.current.get(key);
+  if(!pending){pending=siteCrop(frame,selected.bbox,loaded||undefined);const request=pending;void request.catch(()=>{if(crops.current.get(key)===request)crops.current.delete(key);});}
+  crops.current.delete(key);crops.current.set(key,pending);while(crops.current.size>4){const oldest=crops.current.keys().next().value!;releaseCrop(crops.current.get(oldest)!);crops.current.delete(oldest);}
+  void pending.then(result=>{if(live)setCrop(result);}).catch(()=>{if(live)setCrop({url:'',note:'Current-date crop unavailable. Retry or open Sites.'});});
+  return()=>{live=false;};
+ },[selected,frame,status,loaded,cropRetry,radarActive]);
+ useEffect(()=>()=>{cache.current.clear();for(const value of crops.current.values())releaseCrop(value);crops.current.clear();disposeGlobe();},[]);
+ function retryCrop(){if(frame&&selected){const key=frame.layer+'/'+frame.date+'/'+selected.id,pending=crops.current.get(key);if(pending)releaseCrop(pending);crops.current.delete(key);}setCropRetry(n=>n+1);}
  function seek(next:number,history:HistoryMode='push'){setPlaying(false);setIndex(Math.max(0,Math.min(frames.length-1,next)),history);}
  function togglePlay(){if(!frames.length||status==='error')return;if(!playing&&index===frames.length-1)setIndex(0);setPlaying(!playing);}
  function selectSite(site:Site){setSelected(site);flyTo(...site.coordinates,.65);}
@@ -173,7 +184,7 @@ export default function GlobeExperience({active,sites,points,place,enso,news,oce
  {!hosted&&<div className="offline-frames"><p>Offline edition: a few real frames are embedded; other dates remain visible as unavailable.</p>{frames.filter(f=>f.offlineEmbedded).map((f,i)=><button key={f.date} onClick={()=>seek(frames.indexOf(f))}>{f.date}</button>)}</div>}
  </section>
  <aside className="satellite-site-panel" aria-label="Study-site frame crop"><div className="site-marker-list">{sites.map(site=><button key={site.id} aria-pressed={selected?.id===site.id} onClick={()=>selectSite(site)}>{marker}{site.name}</button>)}</div>
- {selected?<><h2>{selected.name}</h2><p className="mono">{frame?.date||'Date not available'} · {frame?.maturityWindow||'Maturity not available'}</p>{crop.url?<img src={crop.url} alt={'Current NISAR mosaic crop for '+selected.name+', '+frame?.date+'; false color; pixel maturity unconfirmed'}/>:<div className="site-crop-empty">{crop.note||'Current-date crop unavailable.'}</div>}{crop.url&&<p>{crop.note}</p>}<p className="source-line">NASA GIBS · mosaic date {frame?.date||'not available'} · maturity / CRID not available at pixel level · downsampled</p><a className="button" href={'#sites/'+selected.id+(frame?'?date='+frame.date:'')}>Open in Sites</a><button className="text-link" onClick={()=>setCropRetry(n=>n+1)}>Retry crop</button></>:<><h2>Follow a place</h2><p>Choose a marker or a study area. Its crop uses the current date, and Sites keeps that date.</p><button className="text-link" onClick={()=>document.getElementById('open-search')?.click()}>Search places and sites</button></>}
+ {selected?<><h2>{selected.name}</h2><p className="mono">{frame?.date||'Date not available'} · {frame?.maturityWindow||'Maturity not available'}</p>{crop.url?<img src={crop.url} alt={'Current NISAR mosaic crop for '+selected.name+', '+frame?.date+'; false color; pixel maturity unconfirmed'}/>:<div className="site-crop-empty">{crop.note||'Current-date crop unavailable.'}</div>}{crop.url&&<p>{crop.note}</p>}<p className="source-line">NASA GIBS · mosaic date {frame?.date||'not available'} · maturity / CRID not available at pixel level · downsampled</p><a className="button" href={'#sites/'+selected.id+(frame?'?date='+frame.date:'')}>Open in Sites</a><button className="text-link" onClick={retryCrop}>Retry crop</button></>:<><h2>Follow a place</h2><p>Choose a marker or a study area. Its crop uses the current date, and Sites keeps that date.</p><button className="text-link" onClick={()=>document.getElementById('open-search')?.click()}>Search places and sites</button></>}
  </aside></div>
  <p className="sr-only" aria-live="polite" aria-atomic="true">{announcement}</p>
  </div>;

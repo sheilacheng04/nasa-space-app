@@ -1,6 +1,6 @@
 import type {HistoryMode} from '../selection-url.js';
 import {useEffect,useLayoutEffect,useId,useMemo,useRef,useState} from 'react';
-import {dataFile} from '../api/client';
+import {globeFile} from '../globe-data';
 import {calendarMonths,conceptSnapshot,illustrativeRainSignal,latestCompleteMonth,monthEnd,oceanAtMonthEnd,previousMonth,readConceptMonth} from '../concept-data';
 import type {ClimateContext,ClimateContexts,ConceptMonthReading,ConceptSnapshot} from '../concept-data';
 import type {ReactNode} from 'react';
@@ -68,11 +68,11 @@ export default function ConceptTimeline({active,sites,enso,oceanNotice,onSnapsho
  const [playing,setPlaying]=useState(false),[announcement,setAnnouncement]=useState('');
  const setMonth=onMonthChange;
  const callbacks=useRef({onSnapshot,onSelectSite});callbacks.current={onSnapshot,onSelectSite};
- const loadedKey=useRef('');
+ const loadedKey=useRef(''),lastAttempt=useRef(0);
  const siteKey=sites.map(site=>site.id).join(',');
  useEffect(()=>{
-  if(!active||loadedKey.current===siteKey+'|'+attempt)return;let live=true;setLoading(true);
-  Promise.allSettled(sites.map(site=>dataFile<ClimateContext>('context/'+site.id+'.json'))).then(results=>{
+  if(!active||loadedKey.current===siteKey+'|'+attempt)return;let live=true;setLoading(true);const reload=attempt>lastAttempt.current;lastAttempt.current=attempt;
+  Promise.allSettled(sites.map(site=>globeFile<ClimateContext>('context/'+site.id+'.json',reload))).then(results=>{
    if(!live)return;
    const next:ClimateContexts={},errors:string[]=[];results.forEach((result,i)=>{next[sites[i].id]=result.status==='fulfilled'?result.value:null;if(result.status==='rejected')errors.push(sites[i].name);});
    loadedKey.current=siteKey+'|'+attempt;setContexts(next);setFailed(errors);setLoading(false);

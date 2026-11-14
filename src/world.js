@@ -9,6 +9,7 @@ import {esc,finite,assetURL} from './core.js';
 let countries,world,observer,geographyPromise;
 let globeMode='satellite',satelliteURL=null,satelliteImage=null,satelliteDate='',geographicContext=true,textureVersion=0;
 let surfaceOwner=null,surfaceReady=null,surfaceMaterial=null,originalMaterial=null,TextureType=null,textureOptions=null,lastSurfaceTexture=null;
+let lastSurface=null,lastMarkers=null,motionQuery;
 let baseImage=null,basePromise=null,conceptImage=null,conceptImageDate='';
 export async function geography(){if(!geographyPromise)geographyPromise=dataFile('world.topo.json').then(topo=>countries=feature(topo,topo.objects.countries)).catch(error=>{geographyPromise=null;throw error;});return geographyPromise;}
 export async function drawPacific(){const data=await geography(),projection=geoOrthographic().rotate([160,-10]).translate([280,270]).scale(222),path=geoPath(projection);const g=path(geoGraticule10());const band={type:'Polygon',coordinates:[[[-175,-5],[-175,5],[-115,5],[-115,-5],[-175,-5]]]};
@@ -107,7 +108,8 @@ function conceptMarkers(){
  });
 }
 function refreshGlobe(){
- if(!world)return;
+ if(!world||!routeActive||document.hidden)return;
+ const inputs=[world,globeMode,globePoints,conceptSnapshot];if(lastMarkers&&inputs.every((value,i)=>value===lastMarkers[i]))return;lastMarkers=inputs;
  world.polygonsData([]).arcsData([]).ringsData([]).showAtmosphere(false);
  const userMarkers=globePoints.filter(p=>finite(p.lat)&&finite(p.lng)).map(p=>({...p,user:true,signal:'user'}));
  const markers=[...(globeMode==='concept'?conceptMarkers():[]),...userMarkers];
@@ -120,11 +122,13 @@ function refreshGlobe(){
  }
 }
 export function setConceptSnapshot(snapshot){
+ if(snapshot?.date===conceptSnapshot.date&&snapshot?.month===conceptSnapshot.month&&snapshot?.sites===conceptSnapshot.sites)return;
  conceptSnapshot={date:snapshot?.date||'',month:snapshot?.month||'',sites:Array.isArray(snapshot?.sites)?snapshot.sites:[]};
  refreshGlobe();
 }
 /** @param {HTMLImageElement|HTMLCanvasElement|null} image @param {string} date */
 export function setConceptTexture(image=null,date=''){
+ if(conceptImage===image&&conceptImageDate===(image?date:''))return;
  conceptImage=image;conceptImageDate=image?date:'';
  if(globeMode==='concept')drawSurface();
 }
@@ -245,7 +249,7 @@ export async function initGlobe(sites,points,onSelect){
    intersector=new IntersectionObserver(entries=>{if(instance!==world)return;visible=entries[0].isIntersecting;syncRendering();},{threshold:.05});intersector.observe(element);
    if(!listenersBound){
     listenersBound=true;document.addEventListener('visibilitychange',syncRendering);
-    matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',()=>{stopRotation();cancelCameraMove();refreshGlobe();});
+    motionQuery=matchMedia('(prefers-reduced-motion: reduce)');motionQuery.addEventListener('change',motionChanged);
    }
    visible=element.getBoundingClientRect().bottom>0&&element.getBoundingClientRect().top<innerHeight;
    setGlobeMode(globeMode);
@@ -276,11 +280,22 @@ function syncRendering(){
  if(!world||!stage())return;
  const active=routeActive&&!document.hidden&&visible&&el('globe-canvas').getClientRects().length>0;
  stage().dataset.rendering=active?'active':'paused';
+ if(active){refreshGlobe();drawSurface();}
  if(active===rendering)return;rendering=active;
  if(active)world.resumeAnimation();else{world.pauseAnimation();cancelCameraMove();}
 }
+function motionChanged(){stopRotation();cancelCameraMove();refreshGlobe();}
 export function resumeGlobe(){routeActive=true;syncRendering();}
 export function pauseGlobe(){routeActive=false;syncRendering();}
+export function disposeGlobe(){
+ pauseGlobe();++rendererGeneration;observer?.disconnect();intersector?.disconnect();observer=intersector=null;
+ document.removeEventListener('visibilitychange',syncRendering);motionQuery?.removeEventListener('change',motionChanged);listenersBound=false;
+ const old=world;disposeSatelliteRenderer(old);world=null;globePromise=null;rendering=false;visible=false;lastMarkers=null;
+ satelliteImage=conceptImage=null;satelliteURL=null;satelliteDate=conceptImageDate='';
+ try{old?.pauseAnimation();old?._destructor?.();old?.renderer()?.dispose();}catch{}
+ el('globe-canvas')?.replaceChildren();
+ if(stage()){stage().dataset.ready='false';stage().dataset.rendering='paused';}
+}
 function disposeSatelliteRenderer(instance){
  if(!instance||surfaceOwner!==instance)return;
  if(!instance.__compatibility){
@@ -288,7 +303,7 @@ function disposeSatelliteRenderer(instance){
   for(const texture of new Set([lastSurfaceTexture,surfaceMaterial?.map,surfaceMaterial?.emissiveMap,originalMaterial?.map,current?.map]))texture?.dispose();
   for(const material of new Set([surfaceMaterial,originalMaterial,current]))material?.dispose();
  }
- surfaceOwner=null;surfaceReady=null;surfaceMaterial=null;originalMaterial=null;TextureType=null;textureOptions=null;lastSurfaceTexture=null;
+ lastSurface=null;surfaceOwner=null;surfaceReady=null;surfaceMaterial=null;originalMaterial=null;TextureType=null;textureOptions=null;lastSurfaceTexture=null;
 }
 // Bootstrap once; pinned globeImageUrl callbacks cannot cancel stale loads.
 async function prepareSatelliteRenderer(instance){
@@ -323,7 +338,17 @@ function drawSurface(){
  if(!world||surfaceOwner!==world)return;
  const radar=globeMode==='satellite'?satelliteImage:null,vegetation=globeMode==='concept'?conceptImage:null;
  const context=globeMode==='concept'||geographicContext;
- const canvas=composeSatelliteSurface(countries,radar||vegetation,context,baseImage);
+ if(stage()){
+  stage().dataset.geographicContext=String(context);stage().dataset.basemap=baseImage?'ready':'reference';
+  stage().dataset.radarVisible=String(Boolean(radar));stage().dataset.radarDate=radar?satelliteDate:'';stage().dataset.radarWidth=String(radar?.naturalWidth||0);
+  stage().dataset.vegetationVisible=String(Boolean(vegetation));stage().dataset.vegetationDate=vegetation?conceptImageDate:'';
+ }
+ if(!routeActive||document.hidden||!visible)return;
+ if(!world.__compatibility&&(!TextureType||!surfaceMaterial))return;
+ const inputs=[world,countries,globeMode,radar||vegetation,context,baseImage,radar?satelliteDate:conceptImageDate];
+ if(lastSurface&&inputs.every((value,i)=>value===lastSurface[i]))return;
+ const canvas=composeSatelliteSurface(countries,radar||vegetation,context,baseImage);lastSurface=inputs;
+ if(stage())stage().dataset.surfaceRevision=String(Number(stage().dataset.surfaceRevision||0)+1);
  if(world.__compatibility)world.globeSurfaceImage(canvas);
  else{
   if(!TextureType||!surfaceMaterial)return;
@@ -332,12 +357,7 @@ function drawSurface(){
   surfaceMaterial.map=texture;surfaceMaterial.emissiveMap=texture;surfaceMaterial.needsUpdate=true;surfaceMaterial.visible=true;
   world.globeMaterial(surfaceMaterial);lastSurfaceTexture?.dispose();lastSurfaceTexture=texture;
  }
- if(stage()){
-  stage().dataset.geographicContext=String(context);stage().dataset.basemap=baseImage?'ready':'reference';
-  stage().dataset.radarVisible=String(Boolean(radar));stage().dataset.radarDate=radar?satelliteDate:'';stage().dataset.radarWidth=String(radar?.naturalWidth||0);
-  stage().dataset.vegetationVisible=String(Boolean(vegetation));stage().dataset.vegetationDate=vegetation?conceptImageDate:'';
- }
- syncRendering();
+
 }
 export function setGeographicContext(enabled){geographicContext=Boolean(enabled);drawSurface();}
 export function setGlobeMode(mode){

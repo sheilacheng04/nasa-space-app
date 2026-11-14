@@ -1,5 +1,23 @@
 # Validation record
 
+## Globe performance and inactive views
+
+Verified on 14 November 2026 with installed Chrome. **43 unit tests**, TypeScript and production build passed. **123 browser groups** passed: 9 new globe-performance, 17 globe-display, 19 satellite, 9 selections, 13 startup, 6 accessibility, 15 general, 6 weather, 8 radar evidence, 9 detailed map and 12 site timeline. Source-module performance/display checks use Vite 5174; other suites use production preview 5175.
+
+Inspection confirmed the existing renderer already pauses for inactive routes, hidden tabs and offscreen canvases. Additional avoidable work came from radar loading/prefetch and crops during Concept mode, abandoned metadata/image requests being repeated after navigation, repeated surface compositions/texture allocations, and repeated marker setup for unchanged inputs. Story already schedules animation only when active/visible; the detailed MapLibre map already disposes on leaving Sites. Those lifecycles were preserved.
+
+- GlobePage now sends tab visibility through the existing active-view lifecycle. Playback pauses without advancing dates while hidden; renderer instances survive ordinary navigation. Camera marker listeners/RAFs are removed while inactive and rebound on return.
+- Globe JSON metadata is cached separately from startup datasets. It loads only after Globe is needed; vegetation metadata/context waits for Concept. Successful and in-flight metadata/vegetation images are reused; failed requests are evicted and explicit Retry remains fresh.
+- Radar loading, two-frame prefetch and crop requests run only in active radar mode. Pausing discards queued prefetch and prevents new live fallbacks. Up to three already-running frame requests may finish and populate the bounded cache, avoiding repeated downloads. Crops retain up to four exact site/layer/date results, including honest unresolved coarse-coverage states; blob URLs are revoked on eviction, Retry or unmount. Radar and decoded vegetation caches remain bounded to eight and four successful images respectively.
+- Surface composition and texture replacement are skipped for unchanged source inputs and deferred while inactive/offscreen. Selection metadata stays current; the surface is composed before rendering resumes. Replaced textures retain disposal; final teardown additionally disconnects observers, removes visibility/reduced-motion listeners, cancels camera work and removes the canvas. Vegetation decode timers and image references are cleared on unmount.
+
+The new suite measures requests and animation callbacks, verifies the same canvas survives repeated navigation, tests zero pending RAFs while inactive, simulates tab visibility, checks unchanged surface revisions, exercises cache queue suspension/disposal and metadata Retry, and proves a delayed vegetation image cannot overwrite a newer month. Existing suites verify URL history, exact source pixels, graphics recovery, keyboard controls and independent startup/weather/radar/map errors.
+
+Regenerated offline HTML: **2,996,187 bytes**, under the unchanged 3,000,000-byte cap (2,830 bytes above the previous edition). Embedded real-image data URIs remain **583,548 bytes**. Offline suites passed with zero external requests. No data refresh, scientific data changes, imagery degradation or new dependencies.
+
+Limits/manual follow-up: active WebGL rendering remains continuous for responsive interaction; bounded caches intentionally retain memory for reuse. Already-started small requests/initialization may finish while inactive, but cannot update superseded views. Visibility tests dispatch controlled visibility events rather than operating-system backgrounding. Check real tab switching, prolonged playback and GPU/memory behavior on target mobile devices and additional browsers; no hardware-wide FPS or energy claim is made.
+
+
 ## Independent startup data loading
 
 Verified on 14 November 2026 with installed Chrome against production preview (5175); globe graphics checks use Vite (5174). **43 unit tests**, TypeScript, production build, and **114 browser groups** passed: startup 13, general 15, selections 9, accessibility 6, weather 6, radar evidence 8, detailed map 9, site timeline 12, satellite 19, globe display 17. The startup suite includes deliberately failed HTTP responses, malformed JSON structures, independently delayed responses, scoped retries, empty catalogs, and missing embedded data.
