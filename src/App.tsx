@@ -13,14 +13,15 @@ import { MethodPage } from './pages/MethodPage';
 import { EvidenceLead } from './components/EvidenceLead';
 import type { Bootstrap, Observation, Page, Place } from './types';
 const pages:Page[]=['story','sites','globe','media','method'];
-function currentRoute():{page:Page;sub:string}{
- let [page,sub='']=location.hash.slice(1).split('/');
+function currentRoute():{page:Page;sub:string;date?:string}{
+ const [path,query='']=location.hash.slice(1).split('?');const requested=new URLSearchParams(query).get('date')||'';
+ let [page,sub='']=path.split('/');
  if(page==='observatory'&&sub==='globe'){page='globe';sub='';}
  else if(page==='observatory')page='sites';
  else if(page==='news')page='media';
  else if(page==='local'){page='story';sub='local';}
  else if(page==='data'){page='method';sub='my-data';}
- return {page:pages.includes(page as Page)?page as Page:'story',sub};
+ return {page:pages.includes(page as Page)?page as Page:'story',sub,date:/^\d{4}-\d{2}-\d{2}$/.test(requested)?requested:undefined};
 }
 export function App(){
  const [route,setRoute]=useState(currentRoute),[data,setData]=useState<Bootstrap|null>(null),[failure,setFailure]=useState(''),[attempt,setAttempt]=useState(0);
@@ -42,9 +43,9 @@ export function App(){
  <main id="main" tabIndex={-1}>
  {!data?<div className="wrap" role="status"><p>{failure||'Loading the field journal…'}</p>{failure&&<button onClick={()=>setAttempt(n=>n+1)}>Retry</button>}</div>:<>
  <StoryPage active={route.page==='story'} data={data}/>
- <SitesPage active={route.page==='sites'} site={site!} sites={data.sites}/>
+ <SitesPage active={route.page==='sites'} site={site!} sites={data.sites} requestedDate={route.date}/>
  <div hidden={route.page!=='globe'} className="globe-evidence"><EvidenceLead evidence={data.evidence?.[0]}/></div>
- <GlobePage active={route.page==='globe'} sites={data.sites} points={points} place={place}/>
+ <GlobePage active={route.page==='globe'} sites={data.sites} points={points} place={place} enso={data.enso} news={data.news}/>
  <div hidden={route.page!=='media'} className="wrap compact"><EvidenceLead evidence={data.evidence?.[0]}/></div>
  <NewsPage active={route.page==='media'} news={data.news}/>
  <MethodPage active={route.page==='method'} data={data}/>

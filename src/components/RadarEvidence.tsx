@@ -6,8 +6,10 @@ import { Markup } from './Markup';
 import { demoPackage } from '../demo.js';
 import type { Site } from '../types';
 type Frame={id?:string;date:string;maturity:string;crid?:string;image?:string;channels?:Record<string,{image?:string;meanDb?:number;waterAreaKm2?:number}>;status?:string;reason?:string;track?:number;frame?:number;kind?:string;hdf5LayersVerified?:boolean;processingVersion?:string};
-export function RadarEvidence({site,evidence}:{site:Site;evidence:any}){
- const availableGibs:Frame[]=evidence.gibs?.frames||[], browse:Frame[]=evidence.browse?.frames||[], processed:Frame[]=(evidence.processed?.acquisitions||[]).map((f:any)=>({...f,crid:f.processingVersion}));
+export function RadarEvidence({site,evidence,requestedDate}:{site:Site;evidence:any;requestedDate?:string}){
+ const savedGibs:Frame[]=evidence.gibs?.frames||[];
+ const availableGibs:Frame[]=requestedDate&&!savedGibs.some(f=>f.date.slice(0,10)===requestedDate)?[...savedGibs,{date:requestedDate,maturity:'not available',status:'not available',reason:'The exact globe date is not saved in this site sequence.'}].sort((a,b)=>a.date.localeCompare(b.date)):savedGibs;
+ const browse:Frame[]=evidence.browse?.frames||[], processed:Frame[]=(evidence.processed?.acquisitions||[]).map((f:any)=>({...f,crid:f.processingVersion}));
  const [display,setDisplay]=useState('swipe');
  const [mode,setMode]=useState('gibs'),[pol,setPol]=useState('HH'),[before,setBefore]=useState(0),[after,setAfter]=useState(0),[swipe,setSwipe]=useState(50),[map,setMap]=useState(false);
  const mapRef=useRef<HTMLDivElement>(null);
@@ -20,8 +22,8 @@ export function RadarEvidence({site,evidence}:{site:Site;evidence:any}){
  },[site.id,evidence]);
  useEffect(()=>{
   const valid=frames.map((f,i)=>image(f)?i:-1).filter(i=>i>=0);
-  setBefore(valid[0]??0);setAfter(valid.at(-1)??0);setSwipe(50);
- },[mode,pol,evidence]);
+  setBefore(valid[0]??0);setAfter(mode==='gibs'&&requestedDate?Math.max(0,frames.findIndex(f=>f.date.slice(0,10)===requestedDate)):valid.at(-1)??0);setSwipe(50);
+ },[mode,pol,evidence,requestedDate]);
  const a=frames[before],b=frames[after];
  const change=calibrated?evidence.processed?.comparisons?.find((c:any)=>c.before===a?.id&&c.after===b?.id&&c.channel===pol):null;
  useEffect(()=>{setDisplay('swipe');},[mode,pol,before,after]);
@@ -43,6 +45,7 @@ export function RadarEvidence({site,evidence}:{site:Site;evidence:any}){
  const series=calibrated?evidence.series?.rows||[]:simulated?demoPackage.acquisitions.map((f:any)=>({date:f.date,HH:f.channels.HH.meanDb,HV:f.channels.HV.meanDb})):[]; 
  return <div className="radar-evidence">
  <div className="section-title"><div><p className="eyebrow">{site.name} / radar evidence</p><h2>{title}</h2></div><span className="mono">{simulated?'n = 0 real scenes':n+' catalog scenes'}</span></div>
+ {requestedDate&&<p className="source-line">Globe date: {requestedDate}. The exact date is selected; an unsaved site image stays unavailable.</p>}
  <div className="radar-tabs" role="group" aria-label="Evidence source">{[['gibs','Site browse'],['browse','Regional HH / HV'],['processed','GCOV measurements'],['simulated','Simulated demo']].map(([id,label])=><button key={id} onClick={()=>setMode(id)} aria-pressed={mode===id} disabled={id==='processed'&&!processed.length}>{label}</button>)}</div>
  <p id="radar-status" className="source-line" role="status">{simulated?'SIMULATED: invented geometry and values. No site observations.':mode==='gibs'?'Real daily NASA GIBS browse, false color, not calibrated. The named 12-day rolling layer was absent from GetCapabilities. Mosaic lineage and pixel-level maturity are not available.':mode==='browse'?'Real same-track regional HH/HV browse. Downsampled; not calibrated. These images cover a broader area than this site. Display stretches may differ.':'Calibrated GCOV derived products; inspect masks and validation limits below.'}</p>
  <div className="radar-tabs" role="group" aria-label="Radar polarization">

@@ -124,3 +124,44 @@ Exact available sentence from [ASF guidance](https://nisar-docs.asf.alaska.edu/d
 | NISAR_L2_GCOV_V1 | C3622241360-ASF | 10.5067/NIL2GCOV-V1 |
 
 Angat location: National Power Corporation telemetry specification, PDF page 34, lists the dam water-level station at 14°54′34.6″N, 121°09′40.3″E. This is a station, not a reservoir centroid. [NPC specification](https://www.napocor.gov.ph/bcsd/bid_files/Bid%20Docs_HO-FFW23-010.pdf).
+
+
+## Satellite globe: verified layer and rendering choice
+
+Checked 14 November 2026. Satellite is the default; Concept keeps the same camera and selected date. The Globe-only dark editorial treatment follows the add-on. Other pages retain the restored design.
+
+The production [full DescribeDomains response](https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=DescribeDomains&VERSION=1.0.0&LAYER=NISAR_L2_Geocoded_Polarimetric_Covariance&TILEMATRIXSET=15.625m&TIME=all) advertises **2025-10-29 through 2026-11-11**. The saved calendar has 379 dates: **361 real images and 18 unadvertised dates**. Every advertised date returned nontransparent pixels at overview resolution. This is not a coverage-area statistic. The first date is the first in this production layer, not a claim about the first mission acquisition worldwide.
+
+Actual advertised periods:
+
+~~~text
+2025-10-29/2026-03-01/P1D,2026-03-04/2026-03-29/P1D,2026-04-01/2026-04-12/P1D,2026-04-14/2026-07-27/P1D,2026-08-10/2026-11-11/P1D
+~~~
+
+The daily layer is NISAR_L2_Geocoded_Polarimetric_Covariance. The corresponding _12Day layer was absent from production and UAT capability probes; its menu option is explicitly unavailable. Production WMTS uses 15.625m in EPSG:4326 and GoogleMapsCompatible_Level13 in EPSG:3857. Capability records, HTTP status, CORS (*), retrieval times and full frame requests are in [the manifest](../public/data/globe/manifest.json). UAT was checked; production supplies this record.
+
+The [availability guide](https://nisar-docs.asf.alaska.edu/availability-overview/) gives the BETA subset, PROVISIONAL and VALIDATED release windows and the permanent outage from **2026-07-27 22:03:25 UTC to 2026-08-10 00:55:27 UTC**. July 28-August 9 are blank. July 27 and August 10 retain actual partial-day mosaics. January-June contains advertised imagery. Overlapping October release windows remain ambiguous. The badge says *release window* and separately says pixel maturity / acquisition time are unavailable; a date does not establish lineage or CRID.
+
+The [Worldview dual-polarization guide](https://nisar-docs.asf.alaska.edu/worldview/) confirms red and blue use co-pol HH/VV and green uses cross-pol HV/VH. Blue is not an HH/HV ratio. Source browse colors and alpha are retained. Dark returns within covered swaths are distinct from uncovered transparent pixels. Neither means classified water.
+
+### Actual option tests
+
+| Option | Test against the real daily layer | Decision |
+| --- | --- | --- |
+| A: MapLibre 6.18.0 globe + WMTS | Installed ES modules, real 2026-10-16 tiles, globe projection confirmed; 32 tile load events, no map errors. | Valid option for a future detailed globe. A second renderer complicates preserving the existing Concept camera and adds another large engine to the offline file. Detailed site maps continue to use MapLibre. |
+| B: globe.gl 2.32.0 | Runtime tile-engine method is absent; globeImageUrl is available. Actual live WMS PNGs rendered on WebGL. CPU compatibility rendering was also tested. | Selected for live textures. One renderer preserves camera/date across modes. Radar textures are unlit and replaced atomically, never blended. |
+| C: saved WebP overview per date | 361 real WMS responses saved; 18,351,202 bytes total; largest 149,964 bytes. Currently 1024x512 or 768x384. | Selected for exact-date fallback and offline playback. Three real frames are embedded in the standalone edition. |
+
+Primary references: [MapLibre projection API](https://maplibre.org/maplibre-gl-js/docs/API/classes/Map/), [raster source](https://maplibre.org/maplibre-gl-js/docs/API/classes/RasterTileSource/), [GIBS access](https://nasa-gibs.github.io/gibs-api-docs/access-basics/), and [pinned globe.gl source](https://github.com/vasturiano/globe.gl/tree/v2.32.0). Reproduce with node scripts/probe-globe-options.mjs while Vite serves port 5174. Reports and screenshots go to ignored .artifacts/.
+
+### Loading, provenance and limits
+
+scripts/render_globe_frames.py reads live capabilities and the complete domain. Rerunning it reuses completed frames and retries missing ones; --refresh refetches existing frames. Newest availability advances when the pipeline is rerun; the saved date manifest is not a live mission feed.
+
+The player requests a dated 1024x512 WMS mosaic, then the exact-date saved WebP, then an explicitly labeled orbit schematic. It never retains a previous image under a new date. All image requests, including crops, share three slots and ten-second request/decode budgets. The frame cache holds eight decoded images, prefetches two upcoming dates, drops obsolete queued work and releases replaced GPU textures. Playback waits for each image and stops at the latest frame unless Loop is enabled. Reduced motion has no automatic rotation or playback. Live date announcements are suppressed during playback.
+
+Overview resolution is approximately 39 km/pixel at 1024 pixels across the world or 52 km/pixel at 768. The fetcher can reduce future overviews to 512 or 384 pixels to stay under 150 KB; exact dimensions are recorded. Zoom does not reveal 15.625 m science pixels. Site panels request a separate 512x320 WMS crop with the same mosaic date; a failed request falls back only to a labeled crop of that dated coarse overview. A blank coarse crop does not establish missing full-resolution coverage. Site links preserve the exact date, showing an explicit unavailable state if the saved site sequence lacks it.
+
+The NOAA strip uses real saved CPC weekly anomalies and the latest preceding observation, without interpolation. News markers link to reporting, not independently confirmed events. No calibrated measurements, water classification, scene-level acquisition time or El Nino attribution are derived from browse mosaics.
+
+Live GIBS, CORS and desktop rendering were tested. Real mid-range phone frame rate, memory pressure, Safari/Firefox and screen-reader speech output were **not** tested; Chrome touch emulation and DOM accessibility behavior were checked.

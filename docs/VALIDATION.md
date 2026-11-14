@@ -2,6 +2,30 @@
 
 Checked on 14 November 2026 using Windows, Node 25.6.1, Python 3.13.4 and installed Chrome. The project requires Node >=22.12.
 
+## Satellite add-on acceptance
+
+The add-on passed **18 browser checks**, plus **14 existing browser regression checks**, against the production build. Eight Node tests and 15 Python tests passed, including six new checks for domains, partial gap boundaries, overlapping release windows, provenance and image budgets. TypeScript and Vite builds passed. Optional API behavior was unchanged; earlier API results below are from the cleanup revision.
+
+The satellite suite checks default mode, advertised endpoints, date/maturity/source, reduced motion, camera/date preservation, keyboard navigation and playback, the permanent gap, January-June imagery, waiting for delayed images, stop-at-end, site selection and exact-date routing, command search, both fallback levels and retry, the three-request cap, mobile layout, offline playback and the CPU compatibility renderer. Date announcements remain unchanged while playing and the loading status has aria-live off. Controlled loading failures use unusable image responses. Console errors: **0**; uncaught errors: **0**.
+
+Live NASA GIBS loaded in the default view. A separate real-layer probe confirms MapLibre globe tiles and globe.gl dated textures. Reports are reproducible with scripts/satellite-browser-check.mjs and scripts/probe-globe-options.mjs; output is in ignored .artifacts/.
+
+| Current measurement | Result |
+| --- | ---: |
+| Story resource response bodies, production Chrome | approximately 485 KB |
+| Standalone HTML | 2,858,831 bytes |
+| Real embedded image data URIs, including encoding overhead | 508,469 bytes |
+| Initial globe engine/controller/date manifest/frame requests | 0 |
+| Maximum simultaneous image requests, including crops | 3 |
+| Offline external requests | 0 |
+| Phone emulation | 390x844, touch, no horizontal overflow |
+| Phone renderer pixel ratio | <=1.25 |
+| Global archive | 361 real frames, each <=150 KB |
+
+The mobile globe stays above a scrolling bottom sheet. Desktop, phone, offline and Canvas screenshots were reviewed. Real hardware frame rate, physical phone memory limits, Safari/Firefox and screen-reader speech remain untested. Emulation is not a real-device performance result. Actual pixel maturity, calibrated water change and independent OPERA validation remain unavailable.
+
+Reproduce with a production preview on port 5175 and npm run test:satellite. The existing suite accepts PREVIEW_URL=http://127.0.0.1:5175 and CHECK_OFFLINE=1.
+
 ## Design restoration
 
 The original gradient hero, sans-serif typography, rounded controls, compact navigation and light/dark theme toggle have been restored with the updated NISAR evidence retained. The production build, both themes at phone width, theme persistence, keyboard search and standalone HTML were checked after this change. The orange accent is slightly deeper in light mode for readable small text.
@@ -12,7 +36,7 @@ Removed the duplicate root data mirror, duplicate offline preview, superseded pr
 
 Saved image references and documentation links resolve. The production CSS and JavaScript hashes are unchanged by the cleanup, preserving the restored design and behavior. The offline file was rebuilt, and the current browser runner checks it directly.
 
-## Passed for this revision
+## Earlier cleanup validation
 
 - TypeScript type checking and the production Vite build.
 - Twenty-two API tests and seven optional account/database browser scenarios passed with an isolated SQLite test database.
@@ -25,7 +49,7 @@ Saved image references and documentation links resolve. The production CSS and J
 
 Browser and size reports are written to ignored `.artifacts/` by the reproducible check scripts. Screenshots were reviewed at desktop and phone widths.
 
-## Size and loading
+## Earlier cleanup size and loading
 
 | Check | Measured result |
 | --- | ---: |

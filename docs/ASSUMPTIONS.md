@@ -11,3 +11,9 @@
 - The personal paragraph and photo remain clearly marked author slots.
 - The self-contained file includes a bounded real-image subset and the last 60 daily weather rows; complete monthly comparisons remain embedded.
 - Hosted static pages work without accounts. Existing server features are optional and must be explicitly enabled/configured.
+
+- The Satellite add-on supersedes the Globe page only; the other pages keep their restored design.
+- "First public data to latest" means the earliest and latest dates advertised by the selected production GIBS layer.
+- Daily mosaics replace the absent rolling 12-day layer. January-June has real advertised frames.
+- Release-window context is separate from unavailable pixel maturity, acquisition time and CRID.
+- Browse overviews preserve the existing Concept camera and offline budget; they are not full-resolution GCOV science.

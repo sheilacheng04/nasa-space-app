@@ -4,7 +4,7 @@ export interface Site { id: string; name: string; subtitle: string; country: str
 export interface Analysis { score: number; summary: string; caveat: string; model?: string; scoredAt?: string }
 export interface Headline { id: string; title: string; source: string; url: string; date: string; theme: string; region: string; verification: string; vader: number | null; vaderAdjusted: number | null; ai: Analysis | null }
 export interface News { items: Headline[]; status: string; retrievedAt: string | null }
-export interface Enso { oni?: {season:string;year:number;anomaly:number}[]; oniSource?:string; nino34: number | null; label: string; measurement: string; issuedAt: string; retrievedAt: string; outlook: string; url: string }
+export interface Enso { weekly?:{date:string;sst:number;anomaly:number}[]; oni?: {season:string;year:number;anomaly:number}[]; oniSource?:string; nino34: number | null; label: string; measurement: string; issuedAt: string; retrievedAt: string; outlook: string; url: string }
 export interface Source { name: string; url: string; note: string; status: string; reviewedAt: string }
 export interface EvidenceSummary {siteId:string;name:string;image?:string;date:string;maturity:string;crid:string;n:number;channel:string;label:string;source:string}
 export interface Bootstrap { evidence?:EvidenceSummary[]; sites: Site[]; news: News; enso: Enso; sources: Source[] }

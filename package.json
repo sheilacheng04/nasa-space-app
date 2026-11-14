@@ -18,7 +18,8 @@
     "start": "node scripts/dev.mjs start",
     "test:api": "node scripts/dev.mjs test",
     "test:fullstack": "node scripts/fullstack-check.mjs",
-    "check": "npm test && npm run test:api && npm run build"
+    "check": "npm test && npm run test:api && npm run build",
+    "test:satellite": "node scripts/satellite-browser-check.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

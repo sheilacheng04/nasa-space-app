@@ -60,7 +60,7 @@ npm run demo
 ~~~
 For browser tests, start `npm run dev:frontend -- --port 5174`, then run `npm run test:browser`. Set `CHECK_OFFLINE=1` to include the standalone HTML. The browser runner uses an installed Chrome/Edge or Playwright Chromium. Results and screenshots are in ignored `.artifacts/`; the human-readable report is [docs/VALIDATION.md](docs/VALIDATION.md).
 
-First-load budgets: hosted initial page <3 MB; offline file <3 MB; embedded real image data URIs <1 MB. Heavy globe/map assets are deferred in hosted mode. The offline edition includes two real GIBS dates per site, both HH/HV quicklooks, complete monthly comparisons and the last 60 daily weather rows.
+First-load budgets: hosted initial page <3 MB; offline file <3 MB; embedded real image data URIs <1 MB. Heavy globe/map assets are deferred in hosted mode. The offline edition includes three real global radar frames, two real GIBS dates per site, both HH/HV quicklooks, complete monthly comparisons and the last 60 daily weather rows.
 
 ## Repository layout
 - `src/`: the five-page React app, with the restored original design.
@@ -76,3 +76,11 @@ First-load budgets: hosted initial page <3 MB; offline file <3 MB; embedded real
 [Data credits](DATA_CREDITS.md), [data status](docs/DATA_STATUS.md), [assumptions](docs/ASSUMPTIONS.md), [90-second script](submission/demo-script.md), [200-word summary](submission/project-summary.md), [six-slide outline](submission/slides.md).
 
 MIT covers the software only. Data retain their providers' terms. The exact accessible ASF guidance sentence is quoted in Data and method; the dataset-specific NASA citation is explicitly unavailable because the linked guidance returned 403. No attribution to El Niño is established by one season.
+
+## Satellite globe
+
+Satellite plays actual daily NASA GIBS NISAR browse mosaics; Concept preserves the camera and date. Full dates come from DescribeDomains, with real gaps and release-window context. The rolling 12-day layer is currently unavailable. See [rendering choices and limits](docs/DATA_STATUS.md#satellite-globe-verified-layer-and-rendering-choice).
+
+Refresh with python scripts/render_globe_frames.py, then npm run build and npm run demo. Existing frames are reused unless --refresh is passed. The hosted archive lives only in public/data/globe/; the standalone file embeds three real frames.
+
+Serve the built app with npx vite preview --host 127.0.0.1 --port 5175, then npm run test:satellite. For the live renderer comparison, serve Vite on 5174 and run node scripts/probe-globe-options.mjs. Real-device phone performance remains untested.
