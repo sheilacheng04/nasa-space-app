@@ -31,9 +31,9 @@ export function App(){
  useEffect(()=>{if(data)initLocalWindow();},[data]);
  useEffect(()=>{
   document.body.dataset.view=route.page;
-  document.title=({story:'A question for radar',sites:'Sites',globe:'Globe',media:'Media',method:'Data and method'}[route.page])+' | The Two-Faced Pacific';
+  document.title=({story:'From ocean to everyday life',sites:'Sites',globe:'Globe',media:'Media',method:'Data and method'}[route.page])+' | The Two-Faced Pacific';
   window.scrollTo({top:0,behavior:'instant'});document.getElementById('main')?.focus({preventScroll:true});
-  if(route.sub&&route.page!=='sites')setTimeout(()=>document.getElementById(route.sub)?.scrollIntoView(),100);
+  if(route.sub&&route.page!=='sites')setTimeout(()=>{const target=document.getElementById(route.sub);if(target instanceof HTMLDetailsElement)target.open=true;target?.scrollIntoView();},100);
  },[route.page,route.sub,data]);
  useEffect(()=>{const keys=(e:KeyboardEvent)=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();setSearch(x=>!x);}};addEventListener('keydown',keys);return()=>removeEventListener('keydown',keys);},[]);
  function update(rows:Observation[]){setPoints(rows);try{if(rows.length)localStorage.setItem('pacific-observations',JSON.stringify(rows));else localStorage.removeItem('pacific-observations');return true;}catch{return false;}}
@@ -49,9 +49,9 @@ export function App(){
  <div hidden={route.page!=='media'} className="wrap compact"><EvidenceLead evidence={data.evidence?.[0]}/></div>
  <NewsPage active={route.page==='media'} news={data.news}/>
  <MethodPage active={route.page==='method'} data={data}/>
- <div hidden={route.page!=='method'} id="my-data"><DataPage active={route.page==='method'} points={points} update={update}/></div>
+ <div hidden={route.page!=='method'} className="wrap"><details id="my-data" className="optional-data"><summary>Optional: add your own observations</summary><DataPage active={route.page==='method'} points={points} update={update}/></details></div>
  </>}
- </main><footer className="site-footer wrap"><a className="footer-brand" href="#story">The Two-Faced Pacific</a><p>Land and water, observed. Climate links, tested.</p><a href="#story/local">Our Philippine story</a><a href="#method">Sources and limits ↗</a><span className="mono">NASA Space Apps / 2026</span></footer>
+ </main><footer className="site-footer wrap"><a className="footer-brand" href="#story">The Two-Faced Pacific</a><p>A changing ocean. A closer look at life on land.</p><a href="#story/local">Community perspectives</a><a href="#method">Sources and limits ↗</a><span className="mono">NASA Space Apps / 2026</span></footer>
  {data&&<Search open={search} close={()=>setSearch(false)} data={data} locate={found=>{setPlace(found);location.hash='globe';}}/>}
  </>;
 }

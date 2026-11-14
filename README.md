@@ -1,7 +1,7 @@
 # The Two-Faced Pacific
-A NISAR-first field journal for NASA Space Apps 2026, **Dancing with the SARs**. React + TypeScript, with a static hosted build and a self-contained offline HTML.
+A global, plain-language story connecting Pacific conditions, rainfall and changes on land for NASA Space Apps 2026, **Dancing with the SARs**. React + TypeScript, with a static hosted build and a self-contained offline HTML.
 
-**Real now:** dated NISAR browse for four covered sites, an ASF/CMR scene inventory checked against the observation plan, NOAA indices, ERA5 monthly comparisons, and 293 source-linked headlines. **Not available:** calibrated water-area and backscatter findings. Browse imagery is never treated as calibrated pixels.
+**Real now:** dated NISAR browse for four sites, global radar overviews, 21 monthly MODIS vegetation images, an ASF/CMR scene inventory, NOAA indices, ERA5 comparisons and 293 source-linked headlines. Calibrated water-area and backscatter findings remain unavailable; image changes do not establish land motion, water level or an El Niño cause.
 
 ## Open the app
 - Double-click [el-nino-app.html](el-nino-app.html). It makes zero external requests, includes real downsampled thumbnails, and labels simulated examples.
@@ -47,7 +47,11 @@ For reviewed Harmony COG subsets, use manifest kind `gcov-subset`, explicit `uni
 The processor uses a common metric grid, averages linear power before dB conversion, keeps gamma-0 normalization, blocks mixed maturity/CRID cohorts and propagates missing pixels. Candidate water uses explicit HH/HV thresholds; defaults are -17/-24 dB and are not calibrated for these sites. Supply documented OPERA class mappings and dated reference rasters for agreement/IoU. WorldCover means require a supplied raster and class mapping. No actual validation result is claimed.
 
 ## Pages and interaction
-**Story → Sites → Globe → Media → Data and method.** Local writing/photo slots and future applications finish Story. Sites has real-image swipe, date availability, HH/HV regional quicklooks, gaps, source metadata, hypothesis tests and monthly weather comparisons. Computed channels remain disabled until real GCOV products exist. The 3D globe and MapLibre load on demand. The globe climate overlays, ocean mechanism and opt-in radar demo are simulated. CSV imports stay in the browser; the Claude-style offline sample is a local heuristic, not a model response.
+**Story → Sites → Globe → Media → Data and method.** Story begins with the global ocean–rainfall–land connection and introduces radar without assuming a science background. Four local examples and source-linked headlines make the questions concrete. Data and method follows the question, each source's role, fair comparisons and conclusions; its glossary, processing details, source ledger, citations and optional CSV import expand when needed.
+
+Sites offers full-image playback alongside the retained before/after comparison. Its **57 saved NASA GIBS frames** comprise Luzon 12, Angat 12, Dadu 22 and Piura 11. Each site's bounds stay fixed as exact dated images advance in discrete steps. Gaps, loading and failures clear the previous image; playback waits for each frame. HH/HV regional quicklooks, hypotheses, weather comparisons and source inspectors remain available. Computed channels stay disabled until real GCOV products exist.
+
+Globe has visible date controls and playback for exact-date radar, plus separate month controls, annual comparisons and playback for real MODIS NDVI. Ocean-mechanism and weather-driven land illustrations remain explicitly conceptual. The original typography, colors, rounded controls and both themes are preserved. Heavy globe/map engines load on demand. CSV stays in the browser; the Claude-style offline sample is a labeled local heuristic.
 
 `HOSTED` in [src/config.js](src/config.js) controls live imagery and map requests. The offline builder sets `__PACIFIC_DEMO__=true`, embeds saved data and thumbnails, and disables live requests. Optional live requests have bounded timeouts and visible fallback states. Real AI requires a configured server, never a client API key.
 
@@ -58,7 +62,9 @@ python -m unittest discover -s tests -p "test_*.py"
 npm run build
 npm run demo
 ~~~
-For browser tests, start `npm run dev:frontend -- --port 5174`, then run `npm run test:browser`. Set `CHECK_OFFLINE=1` to include the standalone HTML. The browser runner uses an installed Chrome/Edge or Playwright Chromium. Results and screenshots are in ignored `.artifacts/`; the human-readable report is [docs/VALIDATION.md](docs/VALIDATION.md).
+For browser tests, start `npm run dev:frontend -- --port 5174`, then run `npm run test:browser`. Set `CHECK_OFFLINE=1` to include the standalone HTML. The browser runner uses an installed Chrome/Edge or Playwright Chromium. Additional suites are `npm run test:site-timeline`, `npm run test:globe-display` and `npm run test:satellite`. Results and screenshots are in ignored `.artifacts/`; [docs/VALIDATION.md](docs/VALIDATION.md) records endpoints and the latest results.
+
+Latest revision: production build and 15 Node tests passed, along with 63 browser checks (15 general, 17 globe display, 12 site timeline, 19 satellite). Python was unchanged and not rerun this turn. Measured Story response bodies: **324,350 bytes**; offline HTML: **2,992,188 bytes**; embedded image data URIs: **583,548 bytes**.
 
 First-load budgets: hosted initial page <3 MB; offline file <3 MB; embedded real image data URIs <1 MB. Heavy globe/map assets are deferred in hosted mode. The offline edition includes three real global radar frames, two real GIBS dates per site, both HH/HV quicklooks, complete monthly comparisons and the last 60 daily weather rows.
 

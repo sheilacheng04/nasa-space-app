@@ -41,3 +41,7 @@ pre{font:11px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;max-wi
 :root[data-theme=dark] .chapter-number{color:#111b2e}
 
 :root[data-theme=dark] .hero .primary{background:var(--orange);border-color:var(--orange);color:#111b2e}
+
+.optional-data>summary{font-size:18px;font-weight:650;cursor:pointer;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.optional-data .wrap{padding-left:0;padding-right:0}
+#page-sites .page-intro .dek{margin-bottom:12px}

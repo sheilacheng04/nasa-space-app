@@ -205,3 +205,30 @@ body[data-view=globe] .globe-evidence{display:none}
  .satellite-page [data-mode=concept] .globe-zoom{bottom:56px}
  .satellite-page .sat-marker-layer .concept-selected-marker{max-width:180px;font-size:10px}
 }
+
+
+/* Date controls stay beside the image they control. */
+.globe-time-bar{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:12px 14px;margin-top:10px;font-size:11px}
+.globe-time-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.globe-time-actions button,.concept-season-compare button{min-height:38px;font-size:12px;font-weight:600;background:var(--card);border:1px solid var(--line);padding:7px 12px}
+.globe-time-actions button[aria-pressed=true]{background:var(--orange);border-color:var(--orange);color:#fff}
+.globe-time-actions label{display:flex;align-items:center;gap:7px;margin-left:auto;font-size:11px}
+.globe-time-actions input{min-width:0;max-width:170px;padding:7px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:12px;min-height:38px;color-scheme:light}
+.globe-time-bar .scrubber-label{margin-top:5px}.satellite-page .globe-time-bar input[type=range]{margin:0;min-height:20px}.globe-time-bar p{color:var(--muted);margin:6px 0 0;font-size:10px}
+.concept-season-compare{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.concept-season-compare button{font-size:11px}
+.concept-vegetation details{color:var(--muted);font-size:11px}.concept-vegetation summary{cursor:pointer;color:var(--ink);padding:6px 0}
+@media(max-width:800px){
+ .satellite-heading{flex-wrap:wrap}.mode-switch{flex-wrap:wrap}
+ .globe-time-bar{padding:8px 10px}.globe-time-actions{gap:5px}.globe-time-actions button{font-size:11px;padding:7px 10px}
+ .globe-time-actions label{font-size:10px}.globe-time-actions input{max-width:145px;font-size:11px}
+ .satellite-page[data-view-mode=satellite]{min-height:740px;grid-template-rows:auto auto minmax(350px,1fr) minmax(180px,24dvh)}
+ .satellite-page[data-view-mode=satellite] .globe-visual{display:grid;grid-template-rows:minmax(230px,1fr) auto}
+ .satellite-page[data-view-mode=satellite] .globe-time-bar{margin:0;border-radius:0;border-bottom:0}
+ .satellite-page[data-view-mode=concept] .globe-time-bar{position:sticky;top:calc(var(--header-height,94px) + 276px);z-index:8;order:2;margin:0}
+ .satellite-page[data-view-mode=concept] .concept-vegetation{order:3}
+ .satellite-page[data-view-mode=concept] .concept-timeline{order:4}
+}
+
+:root[data-theme=dark] .globe-time-actions input{color-scheme:dark}
+@media(max-width:360px){.satellite-page[data-view-mode=satellite]{grid-template-rows:auto auto minmax(395px,1fr) minmax(160px,21dvh)}}

@@ -2,7 +2,26 @@
 
 Checked on 14 November 2026 using Windows, Node 25.6.1, Python 3.13.4 and installed Chrome. The project requires Node >=22.12.
 
-## Satellite Earth and calendar land correction
+## Current revision: global story and dated image playback
+
+The production build, TypeScript and **15 Node tests** passed. **63 browser checks** passed: 15 general page checks, 17 globe display checks, 12 site timeline checks and 19 satellite checks. All four reports contain no application/console errors. Python code was unchanged and **Python tests were not rerun this turn**; earlier results below are historical.
+
+Checks cover the global plain-language story, readable headlines and cohesive methods flow with expandable technical records; all four full-image site timelines; exact dates and fixed bounds; explicit gaps; discrete playback, keyboard control, loading/failure recovery and preserved before/after comparison. Globe checks cover visible radar/month controls, annual comparisons, synchronized playback controls, real NDVI changes, missing months and graphics recovery. The original typography, rounded controls and light/dark themes remain. Desktop and mobile screenshots were reviewed; Story's four lazy images decoded when scrolled into view.
+
+| Current measurement | Result |
+| --- | ---: |
+| Production Story resource response bodies | 324,350 bytes |
+| Offline HTML | 2,992,188 bytes (<3 MB) |
+| Embedded image data URIs | 583,548 bytes (<1 MB) |
+| Globe engine/controller/manifest/frame requests on Story | 0 |
+| Maximum concurrent image requests, including site crops | 3 |
+| Offline external requests | 0 |
+
+The site archive has **57 saved actual NASA frames**: Luzon 12, Angat 12, Dadu 22 and Piura 11. Images progress by observation date without invented intermediate frames. Changing radar appearance is not a measurement of land motion, water level or classified water area.
+
+Reports: `.artifacts/revision-browser-report.json`, `globe-display-report.json`, `site-timeline-report.json` and `satellite-check-report.json`. Reproduce with `npm run test:globe-display` on Vite port 5174; run the site, satellite and general suites against production preview port 5175 using `PREVIEW_URL=http://127.0.0.1:5175`. Set `CHECK_OFFLINE=1` for the general standalone check. Physical-phone performance, Safari/Firefox and screen-reader speech remain untested.
+
+## Previous revision: satellite Earth and calendar land correction
 
 Final checks passed: **15 globe display checks**, **19 satellite acceptance checks**, **14 existing browser checks**, **15 Node tests**, **15 Python science/data tests**, TypeScript, offline packaging and the production build. Browser reports contain zero application or console errors. Python emitted dependency deprecation warnings but all tests passed.
 

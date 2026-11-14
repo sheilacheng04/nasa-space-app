@@ -109,13 +109,14 @@ function conceptMarkers(){
 function refreshGlobe(){
  if(!world)return;
  world.polygonsData([]).arcsData([]).ringsData([]).showAtmosphere(false);
- const markers=globeMode==='concept'?conceptMarkers():[];
+ const userMarkers=globePoints.filter(p=>finite(p.lat)&&finite(p.lng)).map(p=>({...p,user:true,signal:'user'}));
+ const markers=[...(globeMode==='concept'?conceptMarkers():[]),...userMarkers];
  world.pointsMerge(false).pointsData(markers).pointRadius(.48).pointAltitude(.003)
-  .pointColor(d=>signalColor[d.signal]).labelsData([]);
+  .pointColor(d=>d.user?'#d2dce8':signalColor[d.signal]).labelsData([]);
  if(stage()){
   stage().dataset.conceptDate=conceptSnapshot.date||'';
   stage().dataset.conceptSignals=JSON.stringify((conceptSnapshot.sites||[]).map(s=>({id:s.id,signal:s.signal||'unknown',rainAnomaly:finite(s.rainAnomaly)?s.rainAnomaly:null})));
-  stage().dataset.visiblePoints=String(markers.length);stage().dataset.arcCount='0';stage().dataset.labelCount='0';
+  stage().dataset.userPointCount=String(userMarkers.length);stage().dataset.visiblePoints=String(markers.length);stage().dataset.arcCount='0';stage().dataset.labelCount='0';
  }
 }
 export function setConceptSnapshot(snapshot){
@@ -218,7 +219,7 @@ export async function initGlobe(sites,points,onSelect){
    instance=createWorld(Globe,element,graphics);world=instance;
    instance.width(Math.max(1,element.clientWidth)).height(Math.max(1,element.clientHeight)).backgroundColor('rgba(0,0,0,0)').showAtmosphere(false)
     .polygonsData([]).polygonsTransitionDuration(0).pointsData([]).pointLat('lat').pointLng('lng').pointRadius(.48).pointResolution(12)
-    .pointLabel(d=>'<div class="globe-tooltip"><strong>'+esc(d.siteName||d.name)+'</strong><br>'+esc(conceptSnapshot.month||conceptSnapshot.date)+' / '+esc(d.name)+'</div>')
+    .pointLabel(d=>'<div class="globe-tooltip"><strong>'+esc(d.siteName||d.name)+'</strong><br>'+(d.user?'Your observation / '+esc(d.date||'Date not supplied')+' / '+esc(d.value??'No value')+' '+esc(d.category||''):esc(conceptSnapshot.month||conceptSnapshot.date)+' / '+esc(d.name))+'</div>')
     .onPointClick(selectLocation).labelsData([]).labelLat('lat').labelLng('lng').labelText('name').labelColor(()=>'#f2f6fb')
     .labelSize(.5).labelAltitude(.018).labelDotRadius(.22).labelResolution(2).onLabelClick(selectLocation)
     .arcsData([]).ringsData([]).onGlobeClick(({lat,lng})=>selectLocation({name:lat.toFixed(3)+', '+lng.toFixed(3),lat,lng}));

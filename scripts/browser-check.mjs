@@ -18,7 +18,8 @@ try{
  await expect(page.locator('.hero-observation img')).toBeVisible();
  await expect(page.locator('.hero-observation img')).toHaveJSProperty('complete',true);
  await page.screenshot({path:'.artifacts/revision-story-desktop.png',fullPage:true});report.screenshots.push('revision-story-desktop.png');
- check('Story leads with real dated NISAR imagery and four covered sites');
+ await expect(page.locator('#page-story h1')).toContainText('what changes on land');await expect(page.locator('#reading-radar')).toContainText(/synthetic aperture radar/i);await expect(page.locator('#reading-radar')).toContainText('NISAR');
+ check('Global story explains radar in plain language and retains four real study examples');
  for(const route of ['sites/angat','media','method']){
   await page.goto(base+'/#'+route,{waitUntil:'networkidle'});
   const id=route.startsWith('sites')?'sites':route==='media'?'news':'method';
@@ -26,23 +27,23 @@ try{
  }
  check('Story, Sites, Media and Data and method render');
  await page.goto(base+'/#sites/angat',{waitUntil:'networkidle'});
- await expect(page.locator('#swipe-range')).toBeVisible();
+ await page.getByRole('button',{name:'Before / after',exact:true}).click();await expect(page.locator('#swipe-range')).toBeVisible();
  await page.locator('#swipe-range').fill('72');
  await expect(page.locator('.compare-after')).toHaveAttribute('style',/72%/);
- await page.getByRole('button',{name:'Regional HH / HV',exact:true}).click();
- await page.locator('[data-pol="HV"]').click();await expect(page.locator('[data-pol="HV"]')).toHaveAttribute('aria-pressed','true');
+ await page.getByRole('button',{name:'Regional radar views',exact:true}).click();
+ await page.getByText('Radar channels and processing details',{exact:true}).click();await page.locator('[data-pol="HV"]').click();await expect(page.locator('[data-pol="HV"]')).toHaveAttribute('aria-pressed','true');
  await expect(page.locator('[data-pol="ratio"]')).toBeDisabled();
  await expect(page.locator('[data-pol="VV"]')).toHaveCount(0);
  check('Real swipe and HH/HV controls work; missing computed channels are unavailable');
- await page.getByRole('button',{name:'Simulated demo',exact:true}).click();
+ await page.getByRole('button',{name:'Practice with simulated data',exact:true}).click();
  await expect(page.locator('#radar-status')).toContainText('SIMULATED');
- await page.getByRole('button',{name:'Site browse',exact:true}).click();
- await page.locator('#date-slider').fill('0');
+ await page.getByRole('button',{name:'Radar images',exact:true}).click();
+ await page.getByRole('button',{name:'Before / after',exact:true}).click();await page.locator('#date-slider').fill('0');
  await expect(page.locator('#radar-stage-container')).toContainText('Choose an earlier');
  await page.locator('#site-select').selectOption('dadu');
  await expect(page.locator('.method-note').first()).toContainText('La Ni');
  await page.locator('#site-select').selectOption('angat');
- await expect(page.locator('#swipe-range')).toBeVisible();
+ await page.getByRole('button',{name:'Before / after',exact:true}).click();await expect(page.locator('#swipe-range')).toBeVisible();
  await page.screenshot({path:'.artifacts/revision-sites-desktop.png',fullPage:true});
  check('Simulated mode, missing dates, Dadu distinction and site switching work');
  await page.locator('#pending-map').click();
@@ -54,6 +55,7 @@ try{
  await page.locator('.news-item').first().getByRole('button').click();
  await expect(page.locator('.news-item').first().locator('.ai-result')).toContainText('Simulated');
  check('Media filtering and explicitly simulated Claude fallback work');
+ await page.goto(base+'/#method',{waitUntil:'networkidle'});await expect(page.locator('#page-method h1')).toHaveCount(1);await expect(page.locator('#my-data')).not.toHaveAttribute('open','');await expect(page.getByText('Advanced: radar processing and quality checks',{exact:true}).locator('..')).not.toHaveAttribute('open','');check('Data and method follows a plain-language path with advanced records and optional imports collapsed');
  await page.goto(base+'/#method/my-data',{waitUntil:'networkidle'});
  await page.locator('#csv-input').fill('name,lat,lng,value,category,date\n"Rice, north",15.5,120.9,0,mm,2026-11-01');
  await page.locator('#import-csv').click();await expect(page.locator('#csv-status')).toContainText('Imported 1');
@@ -65,7 +67,7 @@ try{
  check('Command search supports keyboard selection and focus return');
  await page.goto(base+'/#globe',{waitUntil:'networkidle'});
  await expect(page.locator('#globe-stage')).toHaveAttribute('data-ready','true',{timeout:25000});
- check('Lazy 3D globe renders');
+ await expect(page.locator('#globe-stage')).toHaveAttribute('data-user-point-count','1');check('Lazy globe renders and retains clearly labeled imported observation points');
  for(const route of ['story','sites/angat','media','method']){
   await page.setViewportSize({width:390,height:844});
   await page.goto(base+'/#'+route,{waitUntil:'networkidle'});
@@ -109,7 +111,7 @@ try{
   for(const route of ['sites/angat','media','method','globe']){
    await offline.evaluate(route=>location.hash=route,route);
    if(route==='globe')await expect(offline.locator('#globe-stage')).toHaveAttribute('data-ready','true',{timeout:25000});
-   else if(route.startsWith('sites'))await expect(offline.locator('#swipe-range')).toBeVisible();
+   else if(route.startsWith('sites')){await expect(offline.locator('.site-timeline')).toHaveAttribute('data-frame-status','ready');await offline.locator('#site-play').click();await expect(offline.locator('.site-timeline')).toHaveAttribute('data-frame-date','2026-06-23');await expect(offline.locator('.site-timeline')).toHaveAttribute('data-frame-date','2026-11-02',{timeout:7000});await expect(offline.locator('#site-play')).toHaveAttribute('aria-pressed','false');}
   }
   if(requests.length)throw new Error('Offline external requests: '+requests.join(','));
   check('Self-contained preview has real thumbnails, all pages, globe and zero external requests');

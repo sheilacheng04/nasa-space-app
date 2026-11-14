@@ -13,6 +13,8 @@ const compactInventory=r=>({...r,scenes:r.scenes.map(({browseUrls,footprint,...s
 data['inventory.json'].sites=data['inventory.json'].sites.map(compactInventory);
 for(const site of data['sites.json']){
  const key='sites/'+site.id+'/evidence.json';const e=await read(key);delete e.inventory;
+ // Each saved GIBS URL already records the complete request; avoid repeating its parameter object offline.
+ for(const frame of e.gibs.frames)delete frame.parameters;
  for(const frame of e.gibs.frames)if(frame.image&&!assets[frame.image]){delete frame.image;frame.status='not available';frame.reason='This frame is not embedded in the offline edition. The hosted project contains the full saved sequence.';}
  data[key]=e;
  const climate=await read('context/'+site.id+'.json');climate.daily=climate.daily?.slice(-60)||[];climate.offlineNote='Monthly comparisons are complete. Daily data in this offline edition contain the latest 60 days only.';data['context/'+site.id+'.json']=climate;
@@ -53,7 +55,7 @@ const bundled=await build({entryPoints:['src/main.tsx'],bundle:true,write:false,
 }}]});
 const globe=await readFile('node_modules/globe.gl/dist/globe.gl.min.js','utf8');
 let css=await readFile('src/styles.css','utf8');css=css.replace("@import url('./map.css');",await readFile('src/map.css','utf8'));
-for(const name of ['story','globe','local-window','account','editorial','satellite','concept-timeline'])css+='\n'+await readFile('src/'+name+'.css','utf8');
+for(const name of ['story','globe','local-window','account','editorial','satellite','concept-timeline','site-timeline'])css+='\n'+await readFile('src/'+name+'.css','utf8');
 const serialize=v=>JSON.stringify(v).replaceAll('<','\\u003c');
 const setup='globalThis.__PACIFIC_DEMO__=true;globalThis.__PACIFIC_DATA__='+serialize(data)+';globalThis.__PACIFIC_ASSETS__='+serialize(assets)+';for(const s of globalThis.__PACIFIC_DATA__["sites.json"]){globalThis.__PACIFIC_DATA__["sites/"+s.id+"/evidence.json"].inventory=globalThis.__PACIFIC_DATA__["inventory.json"].sites.find(r=>r.siteId===s.id||r.id===s.id);};';
 let html=await readFile('index.html','utf8');

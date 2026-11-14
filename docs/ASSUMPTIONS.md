@@ -8,7 +8,6 @@
 - The requested rolling GIBS layer is absent from current GetCapabilities. Daily imagery is used with explicit missing dates; no rolling product is fabricated.
 - GIBS pixel lineage is unavailable. Its maturity/CRID badge says not available. Regional ASF quicklooks have known metadata but are not quantitative site clips.
 - No Earthdata credentials are present. Calibrated science and independent OPERA validation are untested, not inferred from browse.
-- The personal paragraph and photo remain clearly marked author slots.
 - The self-contained file includes a bounded real-image subset and the last 60 daily weather rows; complete monthly comparisons remain embedded.
 - Hosted static pages work without accounts. Existing server features are optional and must be explicitly enabled/configured.
 
@@ -21,3 +20,7 @@
 - The default satellite base is the saved historical NASA Blue Marble optical composite; it is explicitly separate from dated NISAR coverage. Natural Earth outlines are a secondary fallback only if the saved optical base cannot decode.
 - Concept progression follows actual calendar months. MODIS NDVI is observed vegetation greenness; weather-driven soil/water drawings remain conceptual. Neither display establishes land damage or El Nino attribution.
 - Missing MODIS months and incomplete weather months remain unknown. The two modes keep independent observation dates and the same camera.
+
+- The global Story and headline framing explain the ocean–rainfall–land connection for readers without SAR training. Method separates each data source's role and keeps detailed processing and provenance expandable.
+- Sites playback uses 57 actual saved NASA frames with fixed per-site bounds and exact dates. Gaps remain explicit, with no invented intermediate imagery or stale image under a new date. The original before/after comparison remains available.
+- Globe radar dates and vegetation months progress independently through visible calendar controls. Real image changes are evidence to investigate; they are not measured land motion, water level, crop damage or proof of El Niño attribution.

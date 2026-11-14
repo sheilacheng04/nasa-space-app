@@ -19,12 +19,14 @@ Counts include overlapping frames and collections, and can include multiple gran
 
 GetCapabilities was checked on production EPSG:4326, production EPSG:3857, and UAT EPSG:4326. They advertised the daily NISAR layer. The requested rolling 12-day layer was absent. The pipeline uses real daily mosaics, preserves missing dates at the requested 12-day intervals, and adds actual catalog acquisition dates. It never silently substitutes nearby dates.
 
-| Site | Ready daily tiles | Requested dates | Regional before/after scenes |
+| Site | Saved daily frames | Requested dates | Regional before/after scenes |
 |---|---:|---:|---:|
 | luzon | 12 | 24 | 2 |
 | angat | 12 | 24 | 2 |
 | dadu | 22 | 25 | 2 |
 | piura | 11 | 26 | 2 |
+
+The Sites full-image timeline uses these **57 saved actual NASA GIBS frames** (12 Luzon, 12 Angat, 22 Dadu, 11 Piura). The geographic bounds remain fixed for each site. Date stepping and playback replace the whole image discretely; they do not interpolate a scene between observations. The date axis retains explicit gaps. A selected gap, delayed image or failed request clears the previous scene, and Retry retains the exact date. The original before/after comparison and regional HH/HV quicklooks remain separate views of the evidence.
 
 Browse is labeled **false color, not calibrated** or **grayscale regional HH/HV quicklook, not calibrated**. WMS TIME describes a daily mosaic. Pixel-level contributing acquisition time, maturity and CRID are not available from GIBS. ASF quicklooks carry exact scene dates, PROVISIONAL maturity and P05023, but are regional and can have different display stretches.
 
@@ -128,7 +130,7 @@ Angat location: National Power Corporation telemetry specification, PDF page 34,
 
 ## Satellite globe: verified layer and rendering choice
 
-Checked 14 November 2026. Satellite is the default; Concept keeps the same camera and selected date. The latest user correction restores the original system fonts, colors and rounded controls on the Globe page as well.
+Checked 14 November 2026. Satellite is the default; Concept keeps the same camera, with an independent selected month. The latest user correction restores the original system fonts, colors and rounded controls on the Globe page as well.
 
 The production [full DescribeDomains response](https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=DescribeDomains&VERSION=1.0.0&LAYER=NISAR_L2_Geocoded_Polarimetric_Covariance&TILEMATRIXSET=15.625m&TIME=all) advertises **2025-10-29 through 2026-11-11**. The saved calendar has 379 dates: **361 real images and 18 unadvertised dates**. Every advertised date returned nontransparent pixels at overview resolution. This is not a coverage-area statistic. The first date is the first in this production layer, not a claim about the first mission acquisition worldwide.
 
@@ -181,3 +183,9 @@ The monthly panel uses the already-sourced ERA5 weather record and 1991-2020 sam
 The original fonts, colors, rounded controls and light/dark themes remain. Both modes use the same renderer and camera, with independent radar and vegetation dates. Texture sources are owned and disposed explicitly; recovery preserves active imagery. The CPU Canvas fallback also displays the real optical and dated textures. The selected site's HTML marker is legible, with perspective occlusion handled separately from orthographic Canvas visibility.
 
 The offline file embeds the optical Earth, three real NISAR frames, September/October 2026 vegetation previews, the official legend and complete monthly weather context. Other months remain on the axis but explicitly lack embedded imagery. The new vegetation fetch script allows no more than three concurrent requests and retains only advertised monthly observations.
+
+## Reading the current edition
+
+The global Story and headlines introduce the ocean–rainfall–land connection in plain language. NISAR radar, MODIS optical vegetation, ocean-temperature indices and weather reanalysis have distinct roles. Data and method presents four steps—question, sources, fair comparison and conclusions—with the glossary, technical checks, provenance and citations expandable.
+
+Sites and Globe both expose dated image progression. Globe's radar calendar and monthly vegetation controls retain separate selections; monthly playback and annual comparisons use actual records. The original design remains. No new calibrated science products were generated in this interface revision: radar appearance does not measure land motion or water level, and NDVI changes alone establish neither damage nor an ENSO cause.

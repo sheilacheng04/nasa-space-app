@@ -35,7 +35,7 @@ try{
  await expect(page.locator('#sat-play')).toHaveAttribute('aria-pressed','false');pass('Reduced motion has no autoplay or rotation');
  await page.locator('#concept-mode').click();await page.waitForTimeout(250);assert.deepEqual(await camera(),still);
  await page.locator('#satellite-mode').click();await page.waitForTimeout(250);assert.deepEqual(await camera(),still);
- await expect(page.locator('.frame-badge')).toContainText(layer.end);await expect(page.locator('.frame-badge')).toContainText('NASA GIBS');pass('Mode toggle preserves camera and date');
+ await expect(page.locator('.frame-badge')).toContainText(layer.end);await expect(page.locator('.sat-source')).toContainText('NASA GIBS');pass('Mode toggle preserves camera and date');
  await expect(page.locator('.sat-marker-layer button').first()).toBeInViewport();
  await page.screenshot({path:'.artifacts/satellite-desktop.png',fullPage:true});
  // Deterministic playback checks serve exact-date saved NASA responses, not invented imagery.
@@ -77,7 +77,7 @@ try{
  await expect(page.locator('.satellite-site-panel h2')).toContainText('Dadu');
  await expect(page.getByRole('link',{name:'Open in Sites',exact:true})).toHaveAttribute('href','#sites/dadu?date='+layer.end);
  await page.getByRole('link',{name:'Open in Sites',exact:true}).click();
- await expect(page.locator('#after-date option:checked')).toContainText(layer.end);pass('Enter selects a site; Open in Sites carries and selects the exact globe date');
+ await expect(page.locator('.site-timeline')).toHaveAttribute('data-frame-date',layer.end);await expect(page.locator('.site-timeline')).toHaveAttribute('data-frame-status','missing');pass('Enter selects a site; Open in Sites carries and selects the exact globe date');
  await page.locator('a[href="#globe"]').first().click();await ready(page);
  await page.locator('#open-search').click();await page.locator('#global-search').fill('Angat');
  await page.locator('#search-results a[href="#sites/angat"]').press('Enter');
