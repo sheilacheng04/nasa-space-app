@@ -139,3 +139,69 @@ body[data-view=globe] .globe-evidence{display:none}
  .satellite-page [data-mode=concept] .frame-badge{top:100px;left:52px;max-width:calc(100% - 64px)}
 }
 @media(prefers-reduced-motion:reduce){.loading-line.is-loading{animation:none}}
+
+/* Both modes share the same full Earth stage and original design system. */
+.satellite-workspace[hidden]{display:none}
+.satellite-page #globe-stage[data-mode=concept]{height:560px;min-height:440px}
+.satellite-page [data-mode=concept] #globe-canvas{top:0;left:0;width:100%;height:100%}
+.satellite-page [data-mode=concept] .globe-toolbar,.satellite-page [data-mode=concept] .globe-panel,.satellite-page [data-mode=concept] .globe-timeline,.satellite-page [data-mode=concept] .globe-legend{display:none}
+.satellite-page [data-mode=concept] .frame-badge{top:16px;left:16px;max-width:calc(100% - 32px)}
+.satellite-page [data-mode=concept] .globe-zoom{top:auto;bottom:72px;left:14px}
+.satellite-page [data-mode=concept] #globe-status{left:70px;right:70px;bottom:36px}
+.satellite-page .frame-overlay{inset:auto 16px 72px auto;max-width:360px;align-items:flex-start;background:#101e32e6;border:1px solid #7289a4;border-radius:12px;padding:12px 14px;box-shadow:0 3px 14px #0003}
+.satellite-page .gap-overlay strong{font-size:14px}
+.satellite-page .gap-overlay small{font-size:11px}
+.satellite-page .failure-copy{left:auto;right:16px;bottom:72px;max-width:360px;text-align:left;background:#101e32e6;border:1px solid #7289a4;padding:12px 14px}
+@media(max-width:800px){
+ .satellite-page #globe-stage[data-mode=concept]{height:380px;min-height:300px}
+ .satellite-page [data-mode=concept] .frame-badge{top:10px;left:10px}
+ .satellite-page [data-mode=concept] .globe-zoom{left:10px;bottom:78px}
+ .satellite-page .frame-overlay,.satellite-page .failure-copy{left:52px;right:10px;bottom:65px;max-width:none;font-size:10px;padding:7px 9px}
+ .satellite-page .gap-overlay strong{font-size:11px}
+ .satellite-page .gap-overlay small{font-size:9px}
+}
+
+.concept-vegetation{max-width:1440px;margin:18px auto;padding:16px 20px;border:1px solid var(--line);border-radius:14px;background:var(--card);font-size:12px;line-height:1.6}
+.concept-vegetation[hidden]{display:none}
+.concept-vegetation>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.concept-vegetation label{display:flex;align-items:center;gap:8px;font-weight:650}
+.concept-vegetation input{accent-color:var(--blue)}
+.concept-vegetation p{margin:8px 0;color:var(--muted)}
+.vegetation-legend{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.vegetation-legend img{width:min(100%,460px);height:auto;max-height:90px;object-fit:contain;background:#fff;border-radius:8px;padding:5px}
+.vegetation-legend span{max-width:520px;color:var(--muted)}
+
+.globe-content{max-width:1440px;margin:auto}
+.satellite-page[data-view-mode=concept] .globe-content{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:start;gap:18px}
+.satellite-page[data-view-mode=concept] .globe-visual{position:sticky;top:calc(var(--header-height,70px) + 12px);min-width:0}
+.satellite-page[data-view-mode=concept] #globe-stage{height:440px;min-height:360px}
+.satellite-page[data-view-mode=concept] .concept-vegetation{margin:12px 0 0;padding:12px 14px;font-size:11px}
+.satellite-page[data-view-mode=concept] .concept-timeline{margin:0;min-width:0}
+.satellite-page[data-view-mode=concept] .concept-evidence-values{grid-template-columns:repeat(2,minmax(0,1fr))}.satellite-page[data-view-mode=concept] .concept-evidence-values article:last-child{grid-column:1/-1}
+.satellite-page[data-view-mode=concept] .concept-time-heading{flex-wrap:wrap}
+@media(max-width:1000px){
+ .satellite-page[data-view-mode=concept] .globe-content{display:block}
+ .satellite-page[data-view-mode=concept] .globe-visual{position:static}
+ .satellite-page[data-view-mode=concept] .concept-timeline{margin-top:16px}
+}
+@media(max-width:800px){
+ .satellite-page[data-view-mode=satellite] .globe-content,.satellite-page[data-view-mode=satellite] .globe-visual{width:100%;height:100%;min-height:0}
+ .satellite-page[data-view-mode=concept] #globe-stage{height:340px;min-height:300px}
+}
+
+@media(max-width:600px){.satellite-page[data-view-mode=concept] .concept-evidence-values{grid-template-columns:1fr}}
+
+.satellite-page .sat-marker-layer .concept-selected-marker{width:auto;max-width:200px;min-height:44px;display:flex;gap:7px;text-align:left;border-radius:12px;white-space:nowrap;font-size:11px;padding:7px 9px;background:#0b1c30ed}
+.concept-selected-marker small{display:block;font-size:9px;font-weight:400}
+.satellite-page .sat-marker-layer .concept-selected-marker.drier{border-color:#f6a55c}
+.satellite-page .sat-marker-layer .concept-selected-marker.wetter{border-color:#53bbf2}
+@media(max-width:800px){
+ .satellite-page .frame-badge small{display:none}
+ .satellite-page[data-view-mode=concept] .globe-content{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+ .satellite-page[data-view-mode=concept] .globe-visual{display:contents}
+ .satellite-page[data-view-mode=concept] #globe-stage{position:sticky;top:calc(var(--header-height,94px) + 4px);z-index:7;height:260px;min-height:230px;order:1;width:100%}
+ .satellite-page[data-view-mode=concept] .concept-vegetation{order:2;margin:0}
+ .satellite-page[data-view-mode=concept] .concept-timeline{order:3;margin-top:0}
+ .satellite-page [data-mode=concept] .globe-zoom{bottom:56px}
+ .satellite-page .sat-marker-layer .concept-selected-marker{max-width:180px;font-size:10px}
+}

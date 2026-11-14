@@ -19,11 +19,12 @@ for(const site of data['sites.json']){
 }
 // Keep the complete date axis but embed only three authentic, lossless overview frames.
 const manifest=await read('globe/manifest.json');let embeddedImageBytes=previewImageBytes;
+const marbleURI='data:image/jpeg;base64,'+(await readFile('public/data/globe/blue-marble-offline.jpg')).toString('base64');assets['data/globe/blue-marble.jpg']=marbleURI;embeddedImageBytes+=Buffer.byteLength(marbleURI);
 for(const layer of Object.values(manifest.layers)){
  const real=layer.frames.filter(f=>f.image&&f.status==='ready');
  const picked=new Set([real[0]?.date,real[Math.floor(real.length/2)]?.date,real.at(-1)?.date]);
  layer.frames=await Promise.all(layer.frames.map(async f=>{
-  const out={date:f.date,layer:f.layer,status:f.status,maturity:f.maturity,maturityWindow:f.maturityWindow,focus:f.focus};
+  const out={date:f.date,layer:f.layer,status:f.status,maturity:f.maturity,maturityWindow:f.maturityWindow,focus:f.focus,nontransparentPixels:f.nontransparentPixels,totalPixels:f.totalPixels};
   if(picked.has(f.date)&&f.image){
    const uri='data:image/webp;base64,'+(await readFile(path.join('public',f.image))).toString('base64');assets[f.image]=uri;embeddedImageBytes+=Buffer.byteLength(uri);out.image=f.image;out.offlineEmbedded=true;
   }
@@ -31,6 +32,17 @@ for(const layer of Object.values(manifest.layers)){
  }));
 }
 data['globe/manifest.json']=manifest;
+const vegetation=await read('globe/vegetation.json');
+for(const frame of vegetation.frames){
+ if(!frame.offlineUrl)continue;
+ const uri='data:image/webp;base64,'+(await readFile(path.join('public',frame.offlineUrl))).toString('base64');
+ assets[frame.url]=uri;embeddedImageBytes+=Buffer.byteLength(uri);frame.offlineEmbedded=true;
+}
+const legendPath=vegetation.legend.pngUrl;
+const legendURI='data:image/png;base64,'+(await readFile(path.join('public',legendPath))).toString('base64');
+assets[legendPath]=legendURI;embeddedImageBytes+=Buffer.byteLength(legendURI);
+data['globe/vegetation.json']={layerId:vegetation.layerId,title:vegetation.title,legend:{url:legendPath,pngUrl:legendPath,sourceUrl:vegetation.legend.sourceUrl,colormapUrl:vegetation.legend.colormapUrl},frames:vegetation.frames.map(({date,label,status,url,sourceUrl,offlineEmbedded})=>({date,label,status,url,sourceUrl,offlineEmbedded}))};
+
 if(embeddedImageBytes>1000000)throw new Error('Embedded image budget exceeded: '+embeddedImageBytes);
 for(const entry of await readdir('public/data/demo'))if(entry.endsWith('.svg'))assets['data/demo/'+entry]='data:image/svg+xml;base64,'+(await readFile('public/data/demo/'+entry)).toString('base64');
 const bundled=await build({entryPoints:['src/main.tsx'],bundle:true,write:false,format:'iife',minify:true,target:'es2022',loader:{'.css':'empty'},plugins:[{name:'offline-heavy-views',setup(b){
@@ -41,7 +53,7 @@ const bundled=await build({entryPoints:['src/main.tsx'],bundle:true,write:false,
 }}]});
 const globe=await readFile('node_modules/globe.gl/dist/globe.gl.min.js','utf8');
 let css=await readFile('src/styles.css','utf8');css=css.replace("@import url('./map.css');",await readFile('src/map.css','utf8'));
-for(const name of ['story','globe','local-window','account','editorial','satellite'])css+='\n'+await readFile('src/'+name+'.css','utf8');
+for(const name of ['story','globe','local-window','account','editorial','satellite','concept-timeline'])css+='\n'+await readFile('src/'+name+'.css','utf8');
 const serialize=v=>JSON.stringify(v).replaceAll('<','\\u003c');
 const setup='globalThis.__PACIFIC_DEMO__=true;globalThis.__PACIFIC_DATA__='+serialize(data)+';globalThis.__PACIFIC_ASSETS__='+serialize(assets)+';for(const s of globalThis.__PACIFIC_DATA__["sites.json"]){globalThis.__PACIFIC_DATA__["sites/"+s.id+"/evidence.json"].inventory=globalThis.__PACIFIC_DATA__["inventory.json"].sites.find(r=>r.siteId===s.id||r.id===s.id);};';
 let html=await readFile('index.html','utf8');

@@ -1,0 +1,41 @@
+{
+  "id": "BlueMarble_NextGeneration",
+  "title": "NASA Blue Marble - historical MODIS reference",
+  "sourceUrl": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&LAYERS=BlueMarble_NextGeneration&STYLES=&FORMAT=image%2Fjpeg&SRS=EPSG%3A4326&BBOX=-180%2C-90%2C180%2C90&WIDTH=2048&HEIGHT=1024",
+  "retrievedAt": "2026-11-14T05:29:51.980120Z",
+  "sourceReferenceUrl": "https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/",
+  "credit": "NASA Earth Observatory",
+  "isStatic": true,
+  "sourceYear": 2004,
+  "observationDate": null,
+  "description": "Static Blue Marble Next Generation visual reference derived from the 2004 MODIS collection. The GIBS layer advertises no time dimension. No specific observation date or month is inferred.",
+  "notCurrentObservation": true,
+  "nativeSourceResolutionMeters": 500,
+  "projection": "EPSG:4326",
+  "bbox": [
+    -180,
+    -90,
+    180,
+    90
+  ],
+  "image": {
+    "path": "blue-marble.jpg",
+    "width": 2048,
+    "height": 1024,
+    "bytes": 209456,
+    "sha256": "7f1b66f435c3a21a3dce6a537818997a28c5a820dd218c45308054daf2eddabd"
+  },
+  "offlineImage": {
+    "path": "blue-marble-offline.jpg",
+    "width": 640,
+    "height": 320,
+    "bytes": 22534,
+    "quality": 75,
+    "resampling": "Lanczos",
+    "sha256": "dccf92075847c76444733085049f3ddf977838c230427554dcb014e78b90577a"
+  },
+  "displayResolutionNote": "Both textures are downsampled global visualizations. Their screen pixels do not preserve the source 500-meter spatial resolution.",
+  "httpStatus": 200,
+  "corsAllowOrigin": "*",
+  "contentType": "image/jpeg"
+}

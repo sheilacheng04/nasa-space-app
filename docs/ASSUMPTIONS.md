@@ -18,4 +18,6 @@
 - Release-window context is separate from unavailable pixel maturity, acquisition time and CRID.
 - Browse overviews preserve the existing Concept camera and offline budget; they are not full-resolution GCOV science.
 
-- The optional blue reference globe uses the existing Natural Earth geography. It is labeled as geographic context, not NISAR coverage or optical satellite imagery.
+- The default satellite base is the saved historical NASA Blue Marble optical composite; it is explicitly separate from dated NISAR coverage. Natural Earth outlines are a secondary fallback only if the saved optical base cannot decode.
+- Concept progression follows actual calendar months. MODIS NDVI is observed vegetation greenness; weather-driven soil/water drawings remain conceptual. Neither display establishes land damage or El Nino attribution.
+- Missing MODIS months and incomplete weather months remain unknown. The two modes keep independent observation dates and the same camera.

@@ -77,12 +77,14 @@ First-load budgets: hosted initial page <3 MB; offline file <3 MB; embedded real
 
 MIT covers the software only. Data retain their providers' terms. The exact accessible ASF guidance sentence is quoted in Data and method; the dataset-specific NASA citation is explicitly unavailable because the linked guidance returned 403. No attribution to El Niño is established by one season.
 
-## Satellite globe
+## Satellite globe and land through time
 
-Satellite plays actual daily NASA GIBS NISAR browse mosaics; Concept preserves the camera and date. Full dates come from DescribeDomains, with real gaps and release-window context. The rolling 12-day layer is currently unavailable. See [rendering choices and limits](docs/DATA_STATUS.md#satellite-globe-verified-layer-and-rendering-choice).
+Satellite opens with a bundled NASA Blue Marble optical Earth beneath exact-date NISAR radar strips. The background is a historical 2004 reference, not current imagery or extra NISAR coverage. Saved radar frames load first; the public NASA GIBS API is an exact-date recovery path. A missing radar day leaves Earth visible. Show more radar coverage selects a genuinely fuller recorded day.
 
-Refresh with python scripts/render_globe_frames.py, then npm run build and npm run demo. Existing frames are reused unless --refresh is passed. The hosted archive lives only in public/data/globe/; the standalone file embeds three real frames.
+Concept uses calendar months, with 21 real MODIS Terra monthly NDVI images between January 2025 and October 2026. April 2025 is explicitly unavailable. Its land vegetation display changes with the selected month. Local ERA5 rainfall and temperature departures, preceding NOAA ocean records, and separate conceptual soil/water/vegetation drawings help form hypotheses to test with SAR. They do not establish measured land damage or El Nino attribution. November 2026 remains manually selectable as incomplete weather context.
 
-Serve the built app with npx vite preview --host 127.0.0.1 --port 5175, then npm run test:satellite. For the live renderer comparison, serve Vite on 5174 and run node scripts/probe-globe-options.mjs. Real-device phone performance remains untested.
+Both modes retain the original fonts, rounded controls and light/dark themes. The camera and each mode's selected date persist. Global images are downsampled browse overviews; zooming does not add farm-scale detail. See [sources and interpretation](docs/DATA_STATUS.md#satellite-earth-and-dated-land-observations).
 
-The Globe page uses the original site's font and light/dark styling. Its optional Natural Earth reference map locates the real radar swaths without implying added satellite coverage. Use Find this frame to return to the selected image footprint. With Vite on port 5174, npm run test:globe-display checks font/theme restoration, unchanged radar colors, mode isolation and graphics recovery.
+Refresh radar with `python scripts/render_globe_frames.py` and vegetation with `python scripts/fetch_globe_vegetation.py`. Then run `npm run demo` and `npm run build`. Assets live under `public/data/globe/`. The standalone file embeds the optical Earth, three radar frames and two monthly vegetation frames within its 3 MB budget.
+
+With Vite on 5174, `npm run test:globe-display` checks the optical texture, unchanged radar colors, dated land changes, missing months, request races, graphics recovery and mobile layout. With the production preview on 5175, run `npm run test:satellite` and the existing browser suite. Physical phone performance remains untested.

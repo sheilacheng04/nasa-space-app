@@ -48,14 +48,14 @@ try{
   else await route.fulfill({status:200,contentType:'image/webp',body:await readFile(path.join('public',f.image))});
   inflight--;
  });
- await page.route('**/data/globe/frames/**',async route=>{if(failSaved)await route.fulfill({status:200,contentType:'image/webp',body:'invalid image'});else await route.continue();});
+ await page.route('**/data/globe/frames/**',async route=>{if(delayDate&&route.request().url().includes(delayDate))await new Promise(r=>setTimeout(r,1800));if(failSaved)await route.fulfill({status:200,contentType:'image/webp',body:'invalid image'});else await route.continue();});
  const scrub=page.locator('#satellite-scrubber');await scrub.focus();await page.keyboard.press('Home');await ready(page);
  await expect(scrub).toHaveValue('0');await page.keyboard.press('ArrowRight');await ready(page);await expect(scrub).toHaveValue('1');
  await page.keyboard.press('ArrowLeft');await ready(page);await expect(scrub).toHaveValue('0');
  await page.keyboard.press('End');await ready(page);await expect(scrub).toHaveValue(String(frames.length-1));
  pass('Keyboard Home, End and arrows select exact frames');
  await seek(page,'2026-08-01');await expect(page.locator('#globe-stage')).toHaveAttribute('data-frame-status','gap');
- await expect(page.locator('.gap-overlay')).toContainText('No data');
+ await expect(page.locator('.gap-overlay')).toContainText('No NISAR data');
  await expect(page.locator('.frame-badge')).toContainText('2026-08-01');
  await expect(page.locator('.mission-gap-label')).toContainText('No data');pass('Confirmed mission gap is empty with its date retained');
  const early=frames.find(f=>f.date>'2026-02-01'&&f.status==='ready');await seek(page,early.date);await ready(page);pass('Advertised January-June imagery is not replaced with an assumed long gap');
@@ -84,12 +84,12 @@ try{
  await expect(page.locator('.satellite-site-panel h2')).toContainText('Angat');assert.ok(page.url().endsWith('#globe'));pass('Command search flies to a study site and keeps the globe open');
  // Fresh uncached dates exercise exact-date fallbacks and terminal schematic.
  failLive=true;const fallback=frames.find(f=>f.date>'2026-05-05'&&f.status==='ready');await seek(page,fallback.date);await ready(page);
- await expect(page.locator('.frame-status')).toContainText('saved NASA GIBS');pass('Failed live imagery falls back to the same dated saved frame');
+ await expect(page.locator('.frame-status')).toContainText('Saved NASA GIBS');pass('Saved exact-date radar remains available when the public API fails');
  failSaved=true;const missing=frames.find(f=>f.date>'2026-06-05'&&f.status==='ready');await seek(page,missing.date);
- await expect(page.locator('.failure-copy')).toContainText('NISAR imagery could not be loaded. Showing a schematic of orbit coverage');
- await expect(page.locator('.orbit-schematic')).toContainText('Schematic, not data');
+ await expect(page.locator('.failure-copy')).toContainText('NISAR imagery unavailable for this date. The reference Earth stays visible.');
+ await expect(page.locator('#globe-stage')).toHaveAttribute('data-basemap','ready');await expect(page.locator('.orbit-schematic')).toHaveCount(0);
  await expect(page.locator('.frame-badge')).toContainText(missing.date);
- failLive=false;failSaved=false;await page.getByRole('button',{name:'Retry imagery'}).click();await ready(page);pass('Missing live and saved imagery shows a labeled schematic; retry recovers');
+ failLive=false;failSaved=false;await page.getByRole('button',{name:'Retry imagery'}).click();await ready(page);pass('Missing saved and live radar keeps the satellite Earth visible; retry recovers');
  // One real current-date site crop response is separately verified by the live network probe.
  report.maxConcurrentImageRequests=maxInflight;assert.ok(maxInflight<=3);pass('All image requests, including site crops, share a three-request limit');
  const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:2,reducedMotion:'reduce'});observe(mobile);
@@ -105,6 +105,11 @@ try{
  await embedded.first().click();await ready(offline);await expect(offline.locator('.frame-status')).toContainText('Offline NASA GIBS');
  assert.equal(network,0);pass('Single-file edition plays three real embedded dates without network requests');
  await offline.screenshot({path:'.artifacts/satellite-offline.png'});
+ await offline.locator('#concept-mode').click();await expect(offline.locator('#globe-stage')).toHaveAttribute('data-vegetation-date','2026-10-01');
+ await offline.locator('#concept-month-range').fill('20');await expect(offline.locator('#globe-stage')).toHaveAttribute('data-vegetation-date','2026-09-01');
+ await offline.locator('#concept-month-range').fill('19');await expect(offline.locator('.concept-vegetation')).toHaveAttribute('data-vegetation-status','offline');await expect(offline.locator('#globe-stage')).toHaveAttribute('data-vegetation-visible','false');
+ assert.equal(network,0);pass('Offline Concept displays two real monthly land images and clears unembedded months without network requests');
+
  await offline.close();
  // Force the existing CPU compatibility path and verify an actual dated texture loads.
  const canvas=await browser.newPage({viewport:{width:900,height:800},reducedMotion:'reduce'});observe(canvas);

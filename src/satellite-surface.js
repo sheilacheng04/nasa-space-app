@@ -1,8 +1,8 @@
 import {geoEquirectangular,geoPath} from 'd3-geo';
 
-// Geographic reference only. This base never establishes radar coverage.
+// Static optical or geographic reference. Neither establishes dated radar coverage.
 const referenceBases=new Map();
-let referenceCountries=null;
+let referenceCountries=null,referenceImage=null;
 
 function surface(width,height){
  const canvas=document.createElement('canvas');
@@ -12,10 +12,10 @@ function surface(width,height){
  return {canvas,context};
 }
 
-function referenceBase(countries,width,height){
- if(referenceCountries!==countries){
+function referenceBase(countries,width,height,baseImage){
+ if(referenceCountries!==countries||referenceImage!==baseImage){
   referenceBases.clear();
-  referenceCountries=countries;
+  referenceCountries=countries;referenceImage=baseImage;
  }
  const key=width+'x'+height;
  if(referenceBases.has(key)){
@@ -26,7 +26,10 @@ function referenceBase(countries,width,height){
  const {canvas,context}=surface(width,height);
  context.fillStyle='#173653';
  context.fillRect(0,0,width,height);
- if(countries?.features?.length){
+ if(baseImage){
+  context.imageSmoothingEnabled=true;
+  context.drawImage(baseImage,0,0,width,height);
+ }else if(countries?.features?.length){
   const projection=geoEquirectangular()
    .translate([width/2,height/2])
    .scale(width/(2*Math.PI))
@@ -44,20 +47,21 @@ function referenceBase(countries,width,height){
 }
 
 /**
- * Place an unmodified, dated radar image over optional geographic context.
+ * Place an unmodified, dated observation over optional static Earth imagery.
+ * The Blue Marble reference is never evidence of current observational coverage.
  * Native dimensions and nearest-neighbor drawing preserve opaque source pixels.
  * Only reference bases are cached; the caller owns each returned canvas.
  */
-export function composeSatelliteSurface(countries,radarImage=null,geographicContext=true){
- const width=radarImage?(radarImage.naturalWidth||radarImage.width):1024;
- const height=radarImage?(radarImage.naturalHeight||radarImage.height):512;
+export function composeSatelliteSurface(countries,radarImage=null,geographicContext=true,baseImage=null){
+ const width=radarImage?(radarImage.naturalWidth||radarImage.width):(baseImage?.naturalWidth||baseImage?.width||1024);
+ const height=radarImage?(radarImage.naturalHeight||radarImage.height):(baseImage?.naturalHeight||baseImage?.height||512);
  if(!Number.isInteger(width)||!Number.isInteger(height)||width<=0||height<=0){
   throw new Error('The radar image has no usable native dimensions.');
  }
  const {canvas,context}=surface(width,height);
  context.imageSmoothingEnabled=false;
  if(geographicContext){
-  context.drawImage(referenceBase(countries,width,height),0,0);
+  context.drawImage(referenceBase(countries,width,height,baseImage),0,0);
  }else{
   context.fillStyle='#101a2a';context.fillRect(0,0,width,height);
  }

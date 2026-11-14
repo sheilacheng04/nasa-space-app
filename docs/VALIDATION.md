@@ -2,7 +2,19 @@
 
 Checked on 14 November 2026 using Windows, Node 25.6.1, Python 3.13.4 and installed Chrome. The project requires Node >=22.12.
 
-## Globe design and display correction
+## Satellite Earth and calendar land correction
+
+Final checks passed: **15 globe display checks**, **19 satellite acceptance checks**, **14 existing browser checks**, **15 Node tests**, **15 Python science/data tests**, TypeScript, offline packaging and the production build. Browser reports contain zero application or console errors. Python emitted dependency deprecation warnings but all tests passed.
+
+The display checks exercise a full optical Earth with NASA GIBS unavailable, exact preservation of 1,057 opaque radar pixels, both original themes, genuine fuller-coverage selection, radar gaps, complete-month ERA5/NOAA alignment, actual monthly land-image changes, changing conceptual land drawings, April 2025's missing vegetation image, November's incomplete weather data, stale-request isolation, calendar playback, exact month-end radar routing, WebGL-to-Canvas recovery and 390px touch layouts. Desktop and mobile screenshots were visually inspected. HTML markers are readable and respect globe occlusion.
+
+Production Story resource bodies: **481,706 bytes**, with no globe engine/controller/manifest/frame requests on Story. Offline HTML: **2,992,384 bytes**; embedded image data URIs: **583,548 bytes**. The standalone edition displays three radar dates, two real monthly vegetation images and the historical optical Earth with **zero external requests**. Unembedded months clear their overlay explicitly.
+
+Reproduce with `npm run test:globe-display` against Vite on 5174, and `npm run test:satellite` against the production preview on 5175. Existing page regressions use `PREVIEW_URL=http://127.0.0.1:5175` and `CHECK_OFFLINE=1`. Reports/screenshots are ignored under `.artifacts/`.
+
+Physical phone frame rate/memory, Safari/Firefox and screen-reader speech remain untested. Mobile checks are Chrome emulation. Calibrated SAR land-change measurements and causal El Nino attribution remain unavailable; no such claim is made from these visualizations.
+
+## Previous revision: globe design and display correction
 
 The original system font, rounded controls and both color themes are restored on Globe. Satellite now includes optional, labeled Natural Earth geographic context beneath the actual dated radar strips.
 

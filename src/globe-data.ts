@@ -3,7 +3,7 @@ import { hosted } from './api/client';
 
 export interface GlobeFrame {
  date:string; layer:string; status:string; image?:string|null; sourceUrl?:string;
- maturity:string; maturityWindow:string; reason?:string; width?:number; height?:number;
+ maturity:string; maturityWindow:string; reason?:string; width?:number; height?:number; nontransparentPixels?:number; totalPixels?:number;
  focus?:{lng:number;lat:number}; offlineEmbedded?:boolean;
 }
 export interface GlobeLayer {id:string;title:string;kind:string;start:string;end:string;domain:string;domainUrl:string;frames:GlobeFrame[];advertisedDates:string[]}
@@ -75,13 +75,15 @@ export class FrameCache{
  private pump(){while(this.running<3&&this.queue.length)this.queue.shift()!.run();}
  private async retrieve(frame:GlobeFrame):Promise<LoadedFrame>{
   if(frame.status==='no-data'||frame.status==='empty')throw new Error('No imagery in this window');
-  if(hosted){
-   try{const result=await fetchImage(wmsURL(frame.layer,frame.date));if(!containsCoverage(result.image)){URL.revokeObjectURL(result.url);throw new Error('Empty live mosaic');}return {...result,date:frame.date,origin:'live GIBS'};}catch{/* Try the exact same date saved at build time. */}
-  }
   const path=frame.image?assetURL(frame.image):'';
-  if(!path||(!hosted&&!path.startsWith('data:')))throw new Error(hosted?'Live and saved imagery unavailable.':'This date is not embedded in the offline edition.');
-  const result=await fetchImage(path);if(!containsCoverage(result.image)){URL.revokeObjectURL(result.url);throw new Error('Saved mosaic is empty');}
-  return {...result,date:frame.date,origin:hosted?'saved GIBS frame':'offline GIBS frame'};
+  // Published exact-date snapshots start instantly and remain usable without GIBS.
+  if(path&&(hosted||path.startsWith('data:'))){
+   try{const result=await fetchImage(path);if(!containsCoverage(result.image)){URL.revokeObjectURL(result.url);throw new Error('Saved mosaic is empty');}return {...result,date:frame.date,origin:hosted?'saved GIBS frame':'offline GIBS frame'};}catch{/* Recover this exact date from the public API. */}
+  }
+  if(hosted){
+   try{const result=await fetchImage(wmsURL(frame.layer,frame.date));if(!containsCoverage(result.image)){URL.revokeObjectURL(result.url);throw new Error('Empty live mosaic');}return {...result,date:frame.date,origin:'live GIBS'};}catch{/* Keep the basemap visible and expose a retry. */}
+  }
+  throw new Error(hosted?'Saved and live NISAR imagery unavailable for this date.':'This NISAR date is not embedded in the offline edition.');
  }
 }
 export async function siteCrop(frame:GlobeFrame,bbox:number[],overview?:LoadedFrame){

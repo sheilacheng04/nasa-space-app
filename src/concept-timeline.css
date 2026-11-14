@@ -1,0 +1,132 @@
+/* Calendar-based concept controls use the existing site theme. */
+.concept-timeline{max-width:1440px;margin:18px auto 0;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:22px;font-family:inherit}
+.concept-time-heading{display:flex;align-items:start;justify-content:space-between;gap:22px;margin-bottom:20px}
+.concept-time-heading h2{font-size:25px;font-family:inherit;font-weight:700;line-height:1.2;margin:0 0 9px}
+.concept-time-heading p:not(.eyebrow){font-size:13px;line-height:1.6;color:var(--muted);max-width:750px}
+.concept-time-heading>label{min-width:200px;font-size:12px;font-weight:600}
+.concept-time-heading select{margin-top:6px}
+.concept-calendar-readout{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--line);margin-bottom:16px;font-size:12px;color:var(--muted)}
+.concept-calendar-readout>strong{font-size:22px;color:var(--ink);letter-spacing:-.02em}
+.concept-month-complete,.concept-month-incomplete{font-size:11px;padding:4px 9px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);color:var(--ink)}
+.concept-month-incomplete{border-style:dashed}
+.concept-time-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.concept-time-controls button,.concept-radar-links button,.concept-empty button{font-family:inherit;font-size:12px;font-weight:600;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:8px 14px;min-height:40px}
+.concept-time-controls button:hover,.concept-year-rows button:hover,.concept-radar-links button:hover{border-color:var(--orange)}
+.concept-time-controls #concept-play[aria-pressed=true]{background:var(--orange);border-color:var(--orange);color:#fff}
+:root[data-theme=dark] .concept-time-controls #concept-play[aria-pressed=true]{color:#111b2e}
+.concept-time-controls>label{font-size:12px;color:var(--muted);margin-left:auto}
+.concept-time-controls input[type=range]{flex:1 0 100%;width:100%;accent-color:var(--orange);margin:4px 0 10px;height:24px}
+.concept-year-rows{display:grid;gap:8px;margin:4px 0 10px}
+.concept-year-rows>div{display:flex;align-items:center;gap:14px}
+.concept-year-rows>div>strong{font-size:12px;font-family:var(--mono)}
+.concept-year-rows>div>div{display:flex;flex-wrap:wrap;gap:5px}
+.concept-year-rows button{font-size:11px;font-family:inherit;font-weight:600;min-width:46px;min-height:34px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);padding:5px 8px}
+.concept-year-rows button[aria-pressed=true]{background:var(--orange);border-color:var(--orange);color:#fff}
+:root[data-theme=dark] .concept-year-rows button[aria-pressed=true]{color:#111b2e}
+.concept-year-rows button.is-missing{border-style:dashed}
+.concept-source-note{font-size:11px;color:var(--muted);line-height:1.65;margin:10px 0}
+.concept-source-note a,.concept-evidence-values a{color:var(--blue)}
+.concept-evidence-values{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:18px 0}
+.concept-evidence-values article{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:15px;min-width:0}
+.concept-evidence-values h3{font-size:13px;font-weight:650;margin:0 0 10px}
+.concept-evidence-values article>strong{font:700 23px/1.3 var(--mono);color:var(--ink);display:block;margin:0 0 12px}
+.concept-evidence-values p{font-size:12px;margin:5px 0;color:var(--muted)}
+.concept-evidence-values b{font-family:var(--mono);font-weight:600;color:var(--ink)}
+.concept-evidence-values small{font-size:11px;line-height:1.6;color:var(--muted);display:block;margin-top:10px}
+.concept-evidence-values a{font-size:11px;display:inline-block;margin-top:8px}
+.concept-land-comparison{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.concept-land-card{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.concept-land-card figcaption{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:14px 16px 11px}
+.concept-land-card figcaption>span{font-size:11px;font-weight:650;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.concept-land-card figcaption>strong{font-size:13px;text-align:right}
+.concept-land-card figcaption>small{grid-column:1/-1;font-size:12px;color:var(--muted)}
+.concept-illustration-label{font-size:10px;font-weight:600;padding:6px 16px;color:var(--ink);background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.concept-land-card>svg{display:block;width:100%;max-height:260px;height:auto}
+.concept-land-card>p{padding:10px 16px;margin:0;font-size:12px;color:var(--muted)}
+.concept-land-card>p strong{font-family:var(--mono);color:var(--ink)}
+.concept-land-card.is-unknown{border-style:dashed}
+.concept-land-limit{padding:12px 14px;background:var(--bg2);border-radius:10px;color:var(--muted);font-size:12px;line-height:1.65;margin:12px 0 20px}
+.concept-land-limit strong{color:var(--ink)}
+.concept-rain-history{border-top:1px solid var(--line);padding-top:16px}
+.concept-rain-history>div:first-child{display:flex;justify-content:space-between;gap:8px 18px;flex-wrap:wrap;font-size:12px}
+.concept-rain-history>div:first-child>span{font-size:11px;color:var(--muted)}
+.concept-rain-history svg{width:100%;height:135px;overflow:visible;margin-top:12px}
+.concept-rain-history svg text{fill:var(--muted);font:10px system-ui,sans-serif}
+.concept-rain-history svg [role=button]{cursor:pointer}
+.concept-rain-history svg [role=button]:focus-visible{outline:2px solid var(--blue)}
+.concept-chart-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+.concept-hypothesis{border-top:1px solid var(--line);padding-top:20px;margin-top:20px}
+.concept-hypothesis h3{font-size:18px;margin:0 0 12px}
+.concept-hypothesis>p{font-size:13px;color:var(--muted);line-height:1.65;max-width:1000px}
+.concept-radar-links{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:16px 0 10px}
+.concept-radar-links button:disabled{cursor:not-allowed;opacity:.55}
+.concept-radar-links .button{font-size:12px}
+.concept-empty{padding:18px;background:var(--bg2);border:1px dashed var(--line);border-radius:10px;font-size:13px;margin:14px 0}
+.concept-empty p{color:var(--muted)}
+.concept-timeline :focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+@media(max-width:900px){
+ .concept-timeline{padding:18px}
+ .concept-evidence-values{grid-template-columns:1fr 1fr}
+ .concept-evidence-values article:last-child{grid-column:1/-1}
+ .concept-time-heading{gap:16px}
+ .concept-time-heading>label{min-width:170px}
+ .concept-year-rows button{min-width:43px}
+}
+@media(max-width:600px){
+ .concept-timeline{padding:16px 12px;margin-top:14px}
+ .concept-time-heading{display:block;margin-bottom:14px}
+ .concept-time-heading h2{font-size:23px}
+ .concept-time-heading>label{display:block;margin-top:14px}
+ .concept-time-heading select{max-width:100%}
+ .concept-calendar-readout{gap:8px;font-size:11px}
+ .concept-calendar-readout>strong{font-size:21px;flex-basis:100%}
+ .concept-time-controls{gap:5px}
+ .concept-time-controls button{font-size:11px;padding:8px 11px}
+ .concept-time-controls>label{font-size:10px}
+ .concept-year-rows>div{align-items:start;gap:9px}
+ .concept-year-rows>div>strong{padding-top:9px}
+ .concept-year-rows>div>div{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;flex:1}
+ .concept-year-rows button{min-width:0;font-size:10px;padding:5px 4px}
+ .concept-evidence-values{grid-template-columns:1fr;gap:10px}
+ .concept-evidence-values article:last-child{grid-column:auto}
+ .concept-evidence-values article{padding:13px}
+ .concept-land-comparison{grid-template-columns:1fr;gap:12px}
+ .concept-land-card figcaption{padding:12px}
+ .concept-land-card>svg{max-height:220px}
+ .concept-rain-history svg{height:110px}
+ .concept-chart-ends{font-size:10px}
+ .concept-radar-links{align-items:stretch;flex-direction:column}
+ .concept-radar-links button,.concept-radar-links .button{width:100%;text-align:center}
+}
+
+/* The timeline also works beside the globe in a narrow desktop column. */
+.concept-timeline{container-type:inline-size}
+.concept-month-loading{color:var(--blue);font-weight:600}
+@container(max-width:620px){
+ .concept-time-heading{display:block}
+ .concept-time-heading>label{display:block;margin-top:12px}
+ .concept-time-heading h2{font-size:23px}
+ .concept-evidence-values{grid-template-columns:1fr 1fr}
+ .concept-evidence-values article:last-child{grid-column:1/-1}
+ .concept-year-rows>div{align-items:start;gap:9px}
+ .concept-year-rows>div>strong{padding-top:9px}
+ .concept-year-rows>div>div{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;flex:1}
+ .concept-year-rows button{min-width:0;padding:5px}
+ .concept-land-card figcaption{display:block;padding:11px}
+ .concept-land-card figcaption>strong,.concept-land-card figcaption>small{display:block;text-align:left;margin-top:4px}
+ .concept-illustration-label{padding:6px 11px;font-size:9px}
+}
+@container(max-width:440px){
+ .concept-evidence-values{grid-template-columns:1fr}
+ .concept-evidence-values article:last-child{grid-column:auto}
+ .concept-land-comparison{grid-template-columns:1fr}
+ .concept-time-controls>label{font-size:10px}
+ .concept-calendar-readout>strong{flex-basis:100%}
+}
+
+.concept-site-picker{display:flex;align-items:end;gap:8px;flex-wrap:wrap;min-width:260px}
+.concept-site-picker>label{flex:1;min-width:170px;font-size:12px;font-weight:600}
+.concept-site-picker>button{font-family:inherit;font-size:12px;font-weight:600;min-height:42px;padding:8px 13px;border:1px solid var(--line);border-radius:99px;background:var(--card);color:var(--ink)}
+.concept-site-picker>button:hover{border-color:var(--orange)}
+@container(max-width:620px){.concept-site-picker{margin-top:12px;width:100%}}
+@media(max-width:600px){.concept-site-picker{margin-top:12px;width:100%;min-width:0}.concept-site-picker>button{font-size:11px}}
