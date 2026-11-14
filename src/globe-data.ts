@@ -1,4 +1,8 @@
 import { assetURL } from './core.js';
+import {dataFile} from './api/client';
+import {createJSONCache} from './json-cache.js';
+const globeJSON=createJSONCache();
+export function globeFile<T>(path:string,reload=false):Promise<T>{return globeJSON(path,()=>dataFile<T>(path,{reload}),reload);}
 import { hosted } from './api/client';
 
 export interface GlobeFrame {
@@ -53,12 +57,15 @@ export function containsCoverage(image:HTMLImageElement){
 /** Three in-flight requests maximum, deduplicated and bounded to eight decoded frames. */
 export class FrameCache{
  private cache=new Map<string,LoadedFrame>();private pending=new Map<string,Promise<LoadedFrame>>();
- private queue:{key:string;reject:(reason:Error)=>void;run:()=>void}[]=[];private running=0;private disposed=false;
+ private queue:{key:string;reject:(reason:Error)=>void;run:()=>void}[]=[];private running=0;private disposed=false;private paused=false;
+ pause(){this.paused=true;for(const q of this.queue){q.reject(new Error('Playback paused'));this.pending.delete(q.key);}this.queue=[];}
+ resume(){this.paused=false;this.pump();}
  get activeRequests(){return this.running;}
  clear(){this.disposed=true;for(const q of this.queue){q.reject(new Error('Playback closed'));this.pending.delete(q.key);}this.queue=[];for(const frame of this.cache.values())URL.revokeObjectURL(frame.url);this.cache.clear();}
  invalidate(frame:GlobeFrame){const key=frame.layer+'/'+frame.date;const hit=this.cache.get(key);if(hit)URL.revokeObjectURL(hit.url);this.cache.delete(key);}
  has(frame:GlobeFrame){return this.cache.has(frame.layer+'/'+frame.date);}
  load(frame:GlobeFrame,priority=false):Promise<LoadedFrame>{
+  if(this.disposed||this.paused)return Promise.reject(new Error(this.disposed?'Playback closed':'Playback paused'));
   const key=frame.layer+'/'+frame.date,hit=this.cache.get(key);
   if(priority){const keep=[];for(const q of this.queue){if(q.key===key)keep.push(q);else{q.reject(new Error('Frame superseded'));this.pending.delete(q.key);}}this.queue=keep;}
   if(hit){this.cache.delete(key);this.cache.set(key,hit);return Promise.resolve(hit);}
@@ -72,7 +79,7 @@ export class FrameCache{
   });
   this.pending.set(key,promise);this.pump();return promise;
  }
- private pump(){while(this.running<3&&this.queue.length)this.queue.shift()!.run();}
+ private pump(){while(!this.paused&&!this.disposed&&this.running<3&&this.queue.length)this.queue.shift()!.run();}
  private async retrieve(frame:GlobeFrame):Promise<LoadedFrame>{
   if(frame.status==='no-data'||frame.status==='empty')throw new Error('No imagery in this window');
   const path=frame.image?assetURL(frame.image):'';
@@ -80,7 +87,7 @@ export class FrameCache{
   if(path&&(hosted||path.startsWith('data:'))){
    try{const result=await fetchImage(path);if(!containsCoverage(result.image)){URL.revokeObjectURL(result.url);throw new Error('Saved mosaic is empty');}return {...result,date:frame.date,origin:hosted?'saved GIBS frame':'offline GIBS frame'};}catch{/* Recover this exact date from the public API. */}
   }
-  if(hosted){
+  if(hosted&&!this.paused&&!this.disposed){
    try{const result=await fetchImage(wmsURL(frame.layer,frame.date));if(!containsCoverage(result.image)){URL.revokeObjectURL(result.url);throw new Error('Empty live mosaic');}return {...result,date:frame.date,origin:'live GIBS'};}catch{/* Keep the basemap visible and expose a retry. */}
   }
   throw new Error(hosted?'Saved and live NISAR imagery unavailable for this date.':'This NISAR date is not embedded in the offline edition.');

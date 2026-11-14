@@ -189,3 +189,17 @@ The offline file embeds the optical Earth, three real NISAR frames, September/Oc
 The global Story and headlines introduce the ocean–rainfall–land connection in plain language. NISAR radar, MODIS optical vegetation, ocean-temperature indices and weather reanalysis have distinct roles. Data and method presents four steps—question, sources, fair comparison and conclusions—with the glossary, technical checks, provenance and citations expandable.
 
 Sites and Globe both expose dated image progression. Globe's radar calendar and monthly vegetation controls retain separate selections; monthly playback and annual comparisons use actual records. The original design remains. No new calibrated science products were generated in this interface revision: radar appearance does not measure land motion or water level, and NDVI changes alone establish neither damage nor an ENSO cause.
+
+## Additional verified acquisition metadata (14 November 2026)
+
+The separately hosted [supplemental index](../public/data/nisar/index.json) records a new Dadu descending track 92/frame 75 acquisition on 30 October 2026 at 14:13:40 UTC. GSLC and RSLC products are independently verified in ASF/CMR as VALIDATED P05036, but remain not downloaded/not analyzed. No new GCOV observations were found. Curated acquisition pairs and all science series remain unchanged; the supplement is not embedded in the offline edition. See [the acquisition report](NISAR_ACQUISITIONS.md) for exact product IDs, fractional UTC end time, footprint denominator, authorization failures, replay and next steps.
+
+## Prompt 1 Shared Data Contracts & Global Places Coverage (14 November 2026)
+
+1. **`public/data/places.json` (34 global study places across 6 regions)**:
+   - Contains 34 places spanning **Maritime Southeast Asia** (including 6 Philippine places: `luzon`, `angat`, `cagayan-valley`, `mindoro`, `cotabato-mindanao`, `iloilo-panay`, plus Indonesia, Malaysia, Vietnam, Thailand), **Oceania & South Asia** (Australia, Papua New Guinea, India, plus Pakistan's `dadu` explicitly labeled `regime: "la-nina-reference"`), **Southern & Eastern Africa** (Zimbabwe, Zambia, South Africa, Kenya, Somalia, Ethiopia), **Central America & Northern South America** (Panama, Honduras, Guatemala, Colombia, Brazil Amazon, Guyana), and **Western & Southern South America & Southern US** (Peru `piura` and `tumbes`, Ecuador, Chile, Southern Brazil, Uruguay, California, Texas).
+   - Only the 4 original study sites (`luzon`, `angat`, `dadu`, `piura`) set `hasRadarFrames: true` and carry `siteId` pointing to the 57 saved NASA GIBS WebP radar frames on disk. The remaining 30 global places set `hasRadarFrames: false` and display `"Radar frames not saved for this place"` with a direct ASF Vertex polygon search link (`public/data/nisar/places-coverage.json`) and zero placeholder imagery.
+2. **`public/data/news-by-place.json` (494 place-matched headline records)**:
+   - Built deterministically by `scripts/build_places_and_news.py` from the 293 real headlines in `public/data/news.json` using three explicit match tiers: `"place-name"` (title mentions place or alias), `"query"` (same country + basin/hazard query term), and `"country"` (country-level climate reporting).
+   - Preserves `tone: { vader, vaderAdjusted, ai: null }` and `aiAnalysis: null` as required by the Prompt 1 contract for Prompt 2 consumption.
+

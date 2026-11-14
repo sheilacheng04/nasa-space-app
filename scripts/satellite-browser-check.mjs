@@ -81,7 +81,7 @@ try{
  await page.locator('a[href="#globe"]').first().click();await ready(page);
  await page.locator('#open-search').click();await page.locator('#global-search').fill('Angat');
  await page.locator('#search-results a[href="#sites/angat"]').press('Enter');
- await expect(page.locator('.satellite-site-panel h2')).toContainText('Angat');assert.ok(page.url().endsWith('#globe'));pass('Command search flies to a study site and keeps the globe open');
+ await expect(page.locator('.satellite-site-panel h2')).toContainText('Angat');assert.equal(new URL(page.url()).hash.split('?')[0],'#globe');assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('site'),'angat');pass('Command search flies to a study site and keeps the globe open');
  // Fresh uncached dates exercise exact-date fallbacks and terminal schematic.
  failLive=true;const fallback=frames.find(f=>f.date>'2026-05-05'&&f.status==='ready');await seek(page,fallback.date);await ready(page);
  await expect(page.locator('.frame-status')).toContainText('Saved NASA GIBS');pass('Saved exact-date radar remains available when the public API fails');

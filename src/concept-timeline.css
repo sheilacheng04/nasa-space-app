@@ -130,3 +130,5 @@
 .concept-site-picker>button:hover{border-color:var(--orange)}
 @container(max-width:620px){.concept-site-picker{margin-top:12px;width:100%}}
 @media(max-width:600px){.concept-site-picker{margin-top:12px;width:100%;min-width:0}.concept-site-picker>button{font-size:11px}}
+
+.concept-year-rows button{min-height:44px}.concept-rain-history [role=button]:focus-visible{outline:3px solid var(--blue);outline-offset:2px}@media(max-width:600px){.concept-year-rows>div>div{grid-template-columns:repeat(4,minmax(0,1fr))}}

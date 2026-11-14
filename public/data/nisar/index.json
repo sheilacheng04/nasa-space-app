@@ -1,0 +1,54 @@
+{
+  "editionPolicy": "Supplemental hosted metadata only; curated evidence, images and offline payload are unchanged.",
+  "officialReleaseFacts": {
+    "checks": {
+      "2026-07-27T22:03:25Z": true,
+      "2026-08-10T00:55:27Z": true,
+      "2027": true,
+      "June 17, 2026": true,
+      "November 6, 2026": true,
+      "October 21, 2026": true,
+      "P05023": true,
+      "P05036": true
+    },
+    "receipt": "official-availability.json.gz",
+    "status": "retrieved"
+  },
+  "schemaVersion": 1,
+  "searchCutoff": "2026-11-14T12:13:39.598967Z",
+  "sites": [
+    {
+      "additionalAcquisitions": 0,
+      "additionalProducts": 0,
+      "baselineProducts": 95,
+      "ledger": "sites/luzon.json",
+      "newGcovProducts": 0,
+      "siteId": "luzon"
+    },
+    {
+      "additionalAcquisitions": 0,
+      "additionalProducts": 0,
+      "baselineProducts": 31,
+      "ledger": "sites/angat.json",
+      "newGcovProducts": 0,
+      "siteId": "angat"
+    },
+    {
+      "additionalAcquisitions": 1,
+      "additionalProducts": 2,
+      "baselineProducts": 63,
+      "ledger": "sites/dadu.json",
+      "newGcovProducts": 0,
+      "siteId": "dadu"
+    },
+    {
+      "additionalAcquisitions": 0,
+      "additionalProducts": 0,
+      "baselineProducts": 31,
+      "ledger": "sites/piura.json",
+      "newGcovProducts": 0,
+      "siteId": "piura"
+    }
+  ],
+  "snapshot": "snapshots/20261114T121339598967Z"
+}

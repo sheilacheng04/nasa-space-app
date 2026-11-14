@@ -23,7 +23,7 @@
 .pattern-country{fill:var(--pattern-land,#b8c8df);stroke:var(--pattern-border,#f4f6fb);stroke-width:.55;transition:fill .35s}
 .pattern-origin rect{fill:#ff8b45;fill-opacity:.2;stroke:#f07835;stroke-width:1.5}
 .pattern-origin text{font:700 10px system-ui,sans-serif;fill:var(--ink,#14203a)}
-.pattern-effects{opacity:0;transition:opacity .35s;pointer-events:none}
+.pattern-effects{opacity:.72;transition:opacity .35s;pointer-events:none}
 .is-elnino .pattern-effects{opacity:1}
 .is-elnino .pattern-country[data-tendency=dry]{fill:#bd7840}
 .is-elnino .pattern-country[data-tendency=wet]{fill:#2e9e99}

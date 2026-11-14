@@ -1,0 +1,240 @@
+{
+  "luzon": {
+    "placeId": "luzon",
+    "hasSavedFrames": true,
+    "asfApiReachable": false,
+    "asfProbeNote": "Saved GIBS + ASF granules verified on disk",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28120.5%2015.0%2C121.3%2015.0%2C121.3%2015.9%2C120.5%2015.9%2C120.5%2015.0%29%29"
+  },
+  "angat": {
+    "placeId": "angat",
+    "hasSavedFrames": true,
+    "asfApiReachable": false,
+    "asfProbeNote": "Saved GIBS + ASF granules verified on disk",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28120.95%2014.75%2C121.35%2014.75%2C121.35%2015.1%2C120.95%2015.1%2C120.95%2014.75%29%29"
+  },
+  "cagayan-valley": {
+    "placeId": "cagayan-valley",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28121.3%2016.6%2C122.0%2016.6%2C122.0%2017.3%2C121.3%2017.3%2C121.3%2016.6%29%29"
+  },
+  "mindoro": {
+    "placeId": "mindoro",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28120.7%2012.4%2C121.45%2012.4%2C121.45%2013.3%2C120.7%2013.3%2C120.7%2012.4%29%29"
+  },
+  "cotabato-mindanao": {
+    "placeId": "cotabato-mindanao",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28124.3%206.4%2C125.0%206.4%2C125.0%207.1%2C124.3%207.1%2C124.3%206.4%29%29"
+  },
+  "iloilo-panay": {
+    "placeId": "iloilo-panay",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28122.25%2010.65%2C122.85%2010.65%2C122.85%2011.2%2C122.25%2011.2%2C122.25%2010.65%29%29"
+  },
+  "west-java-citarum": {
+    "placeId": "west-java-citarum",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28107.0%20-6.95%2C107.8%20-6.95%2C107.8%20-6.15%2C107.0%20-6.15%2C107.0%20-6.95%29%29"
+  },
+  "central-kalimantan": {
+    "placeId": "central-kalimantan",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28113.5%20-2.7%2C114.4%20-2.7%2C114.4%20-1.8%2C113.5%20-1.8%2C113.5%20-2.7%29%29"
+  },
+  "south-sulawesi": {
+    "placeId": "south-sulawesi",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28119.55%20-4.95%2C120.35%20-4.95%2C120.35%20-4.15%2C119.55%20-4.15%2C119.55%20-4.95%29%29"
+  },
+  "mekong-delta": {
+    "placeId": "mekong-delta",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28105.3%209.6%2C106.2%209.6%2C106.2%2010.5%2C105.3%2010.5%2C105.3%209.6%29%29"
+  },
+  "murray-darling": {
+    "placeId": "murray-darling",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28148.0%20-30.0%2C149.0%20-30.0%2C149.0%20-29.0%2C148.0%20-29.0%2C148.0%20-30.0%29%29"
+  },
+  "burdekin-queensland": {
+    "placeId": "burdekin-queensland",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28146.85%20-20.15%2C147.75%20-20.15%2C147.75%20-19.25%2C146.85%20-19.25%2C146.85%20-20.15%29%29"
+  },
+  "papua-highlands": {
+    "placeId": "papua-highlands",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28146.05%20-6.95%2C146.95%20-6.95%2C146.95%20-6.05%2C146.05%20-6.05%2C146.05%20-6.95%29%29"
+  },
+  "dadu": {
+    "placeId": "dadu",
+    "hasSavedFrames": true,
+    "asfApiReachable": false,
+    "asfProbeNote": "Saved GIBS + ASF granules verified on disk",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%2867.35%2026.25%2C68.25%2026.25%2C68.25%2027.2%2C67.35%2027.2%2C67.35%2026.25%29%29"
+  },
+  "marathwada-godavari": {
+    "placeId": "marathwada-godavari",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%2875.75%2018.7%2C76.65%2018.7%2C76.65%2019.6%2C75.75%2019.6%2C75.75%2018.7%29%29"
+  },
+  "cauvery-delta": {
+    "placeId": "cauvery-delta",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%2878.7%2010.4%2C79.6%2010.4%2C79.6%2011.3%2C78.7%2011.3%2C78.7%2010.4%29%29"
+  },
+  "zambezi-kariba": {
+    "placeId": "zambezi-kariba",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%2827.55%20-17.3%2C28.55%20-17.3%2C28.55%20-16.4%2C27.55%20-16.4%2C27.55%20-17.3%29%29"
+  },
+  "limpopo-valley": {
+    "placeId": "limpopo-valley",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%2829.7%20-22.25%2C30.6%20-22.25%2C30.6%20-21.35%2C29.7%20-21.35%2C29.7%20-22.25%29%29"
+  },
+  "vaal-highveld": {
+    "placeId": "vaal-highveld",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%2827.65%20-27.35%2C28.55%20-27.35%2C28.55%20-26.45%2C27.65%20-26.45%2C27.65%20-27.35%29%29"
+  },
+  "tana-river-garissa": {
+    "placeId": "tana-river-garissa",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%2839.2%20-0.9%2C40.1%20-0.9%2C40.1%200.0%2C39.2%200.0%2C39.2%20-0.9%29%29"
+  },
+  "juba-shabelle": {
+    "placeId": "juba-shabelle",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%2844.65%201.65%2C45.55%201.65%2C45.55%202.55%2C44.65%202.55%2C44.65%201.65%29%29"
+  },
+  "lake-victoria-nyanza": {
+    "placeId": "lake-victoria-nyanza",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%2834.35%20-0.55%2C35.15%20-0.55%2C35.15%200.25%2C34.35%200.25%2C34.35%20-0.55%29%29"
+  },
+  "chagres-gatun": {
+    "placeId": "chagres-gatun",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-80.25%208.8%2C-79.45%208.8%2C-79.45%209.5%2C-80.25%209.5%2C-80.25%208.8%29%29"
+  },
+  "corredor-seco-choluteca": {
+    "placeId": "corredor-seco-choluteca",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-87.6%2012.9%2C-86.75%2012.9%2C-86.75%2013.7%2C-87.6%2013.7%2C-87.6%2012.9%29%29"
+  },
+  "magdalena-cauca": {
+    "placeId": "magdalena-cauca",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-75.25%204.4%2C-74.35%204.4%2C-74.35%205.3%2C-75.25%205.3%2C-75.25%204.4%29%29"
+  },
+  "rio-negro-manaus": {
+    "placeId": "rio-negro-manaus",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-60.65%20-3.55%2C-59.65%20-3.55%2C-59.65%20-2.65%2C-60.65%20-2.65%2C-60.65%20-3.55%29%29"
+  },
+  "piura": {
+    "placeId": "piura",
+    "hasSavedFrames": true,
+    "asfApiReachable": false,
+    "asfProbeNote": "Saved GIBS + ASF granules verified on disk",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-81.1%20-5.65%2C-80.2%20-5.65%2C-80.2%20-4.8%2C-81.1%20-4.8%2C-81.1%20-5.65%29%29"
+  },
+  "tumbes-zarumilla": {
+    "placeId": "tumbes-zarumilla",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-80.85%20-3.95%2C-80.05%20-3.95%2C-80.05%20-3.2%2C-80.85%20-3.2%2C-80.85%20-3.95%29%29"
+  },
+  "guayas-babahoyo": {
+    "placeId": "guayas-babahoyo",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-80.1%20-2.3%2C-79.2%20-2.3%2C-79.2%20-1.4%2C-80.1%20-1.4%2C-80.1%20-2.3%29%29"
+  },
+  "jacui-taquari-rs": {
+    "placeId": "jacui-taquari-rs",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-52.25%20-30.2%2C-51.25%20-30.2%2C-51.25%20-29.3%2C-52.25%20-29.3%2C-52.25%20-30.2%29%29"
+  },
+  "rio-uruguay-salto": {
+    "placeId": "rio-uruguay-salto",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-58.35%20-31.85%2C-57.55%20-31.85%2C-57.55%20-30.95%2C-58.35%20-30.95%2C-58.35%20-31.85%29%29"
+  },
+  "salinas-pajaro": {
+    "placeId": "salinas-pajaro",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-122.05%2036.35%2C-121.25%2036.35%2C-121.25%2037.15%2C-122.05%2037.15%2C-122.05%2036.35%29%29"
+  },
+  "apalachicola-suwannee": {
+    "placeId": "apalachicola-suwannee",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-85.45%2029.7%2C-84.55%2029.7%2C-84.55%2030.6%2C-85.45%2030.6%2C-85.45%2029.7%29%29"
+  },
+  "yaqui-sonora": {
+    "placeId": "yaqui-sonora",
+    "hasSavedFrames": false,
+    "asfApiReachable": false,
+    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-110.4%2027.0%2C-109.5%2027.0%2C-109.5%2027.9%2C-110.4%2027.9%2C-110.4%2027.0%29%29"
+  }
+}

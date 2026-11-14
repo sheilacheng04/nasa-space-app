@@ -1,0 +1,548 @@
+{
+  "additionalAcquisitions": [
+    {
+      "date": "2026-10-30T14:13:40Z",
+      "gcovCheck": {
+        "receipt": "cmr-gcov-check-352f71e75b181eb4.json.gz",
+        "retrievedAt": "2026-11-14T12:14:57.116376Z",
+        "sourceReceipts": "/data/nisar/snapshots/20261114T121339598967Z/sources/",
+        "status": "not_listed_in_query"
+      },
+      "key": "2026-10-30T14:13:40Z|92|75|DESCENDING",
+      "products": [
+        {
+          "absoluteOrbit": 6592,
+          "access": {
+            "receipt": "access-d3f74747ccb0d817.json.gz",
+            "status": "authentication_required"
+          },
+          "acquisitionMode": {
+            "beamMode": null,
+            "filenamePolarizationModeCode": "DHDH",
+            "frequencies": [
+              "A",
+              "B"
+            ],
+            "frequencyA": [
+              "HH",
+              "HV"
+            ],
+            "frequencyARangeBandwidthMHz": [
+              "40"
+            ],
+            "frequencyB": [
+              "HH",
+              "HV"
+            ],
+            "frequencyBRangeBandwidthMHz": [
+              "5"
+            ]
+          },
+          "bboxCoverageFraction": 0.89141731,
+          "browseUrls": [
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L1_RSLC_V1/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_LATLON.png",
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L1_RSLC_V1/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_LATLON_thumbnail.png",
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L1_RSLC_V1/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_NATIVE.png",
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L1_RSLC_V1/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_NATIVE_A_HH.png",
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L1_RSLC_V1/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_NATIVE_A_HV.png",
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L1_RSLC_V1/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_NATIVE_B_HH.png",
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L1_RSLC_V1/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_NATIVE_B_HV.png"
+          ],
+          "calibration": "Collection maturity only; individual HDF5 calibration and quality unreviewed",
+          "catalogInsertAt": "2026-11-14T06:28:08.966392Z",
+          "catalogStatus": "listed",
+          "cmrAcquisitionEndAt": "2026-10-30T14:14:15.999342Z",
+          "cmrAcquisitionStartAt": "2026-10-30T14:13:40Z",
+          "cmrCollectionId": "C3622236985-ASF",
+          "cmrGranuleId": "G4411378532-ASF",
+          "cmrPgeVersion": "R05.03.2",
+          "cmrReference": "https://cmr.earthdata.nasa.gov/search/concepts/G4411378532-ASF.umm_json",
+          "cmrRevisionAt": "2026-11-14T06:28:11.416Z",
+          "cmrVerification": {
+            "receipt": "cmr-granule-d3f74747ccb0d817.json.gz",
+            "status": "verified"
+          },
+          "collection": "NISAR_L1_RSLC_V1",
+          "collectionConceptId": "C3622236985-ASF",
+          "collectionDoi": "10.5067/NIL1RSLC-V1",
+          "collectionReceipt": "cmr-collection-NISAR_L1_RSLC_V1.json.gz",
+          "coverageMeaning": "Catalog footprint intersection / entire study bounding box in longitude/latitude coordinates; not equal-area ground coverage or valid radar pixels.",
+          "coversBox": false,
+          "coversCenter": true,
+          "crid": "P05036",
+          "date": "2026-10-30T14:13:40Z",
+          "direction": "DESCENDING",
+          "downloadStatus": "not_downloaded",
+          "endDate": "2026-10-30T14:14:15Z",
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  66.00344,
+                  28.1882
+                ],
+                [
+                  65.35371,
+                  26.06225
+                ],
+                [
+                  67.80056,
+                  25.45568
+                ],
+                [
+                  68.47374,
+                  27.57285
+                ],
+                [
+                  66.00344,
+                  28.1882
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "frame": 75,
+          "frequencyBand": "L",
+          "hdf5LayersVerified": false,
+          "id": "NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001",
+          "maturity": "VALIDATED",
+          "measurementUnits": null,
+          "pgeVersion": "R05.03.2",
+          "processedAt": "2026-11-14T04:24:01Z",
+          "processingCenter": "JPL",
+          "processingLevel": "L1",
+          "processingStatus": "not_analyzed",
+          "productType": "RSLC",
+          "productVersion": "1.0.20",
+          "productionPipeline": "PR",
+          "projection": null,
+          "quantitativeAnalysisAllowed": false,
+          "sensor": "L-SAR",
+          "sizeBytes": 26411532288,
+          "sourceReceipts": "/data/nisar/snapshots/20261114T121339598967Z/sources/",
+          "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L1_RSLC_V1/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L1_PR_RSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001.h5",
+          "temporalPrecisionNote": "ASF whole-second values are checked against CMR without discarding CMR fractional seconds.",
+          "track": 92,
+          "validPixelMask": null
+        },
+        {
+          "absoluteOrbit": 6592,
+          "access": {
+            "receipt": "access-98c230c63570409a.json.gz",
+            "status": "authentication_required"
+          },
+          "acquisitionMode": {
+            "beamMode": null,
+            "filenamePolarizationModeCode": "DHDH",
+            "frequencies": [
+              "A",
+              "B"
+            ],
+            "frequencyA": [
+              "HH",
+              "HV"
+            ],
+            "frequencyARangeBandwidthMHz": [
+              "40"
+            ],
+            "frequencyB": [
+              "HH",
+              "HV"
+            ],
+            "frequencyBRangeBandwidthMHz": [
+              "5"
+            ]
+          },
+          "bboxCoverageFraction": 0.89141731,
+          "browseUrls": [
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GSLC_V1/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_LATLON.png",
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GSLC_V1/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_LATLON_thumbnail.png",
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GSLC_V1/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_NATIVE.png",
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GSLC_V1/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_NATIVE_A_HH.png",
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GSLC_V1/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_NATIVE_A_HV.png",
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GSLC_V1/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_NATIVE_B_HH.png",
+            "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GSLC_V1/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001_NATIVE_B_HV.png"
+          ],
+          "calibration": "Collection maturity only; individual HDF5 calibration and quality unreviewed",
+          "catalogInsertAt": "2026-11-14T07:46:52.897863Z",
+          "catalogStatus": "listed",
+          "cmrAcquisitionEndAt": "2026-10-30T14:14:15.999342Z",
+          "cmrAcquisitionStartAt": "2026-10-30T14:13:40Z",
+          "cmrCollectionId": "C3622244601-ASF",
+          "cmrGranuleId": "G4411422185-ASF",
+          "cmrPgeVersion": "R05.03.2",
+          "cmrReference": "https://cmr.earthdata.nasa.gov/search/concepts/G4411422185-ASF.umm_json",
+          "cmrRevisionAt": "2026-11-14T07:46:55.331Z",
+          "cmrVerification": {
+            "receipt": "cmr-granule-98c230c63570409a.json.gz",
+            "status": "verified"
+          },
+          "collection": "NISAR_L2_GSLC_V1",
+          "collectionConceptId": "C3622244601-ASF",
+          "collectionDoi": "10.5067/NIL2GSLC-V1",
+          "collectionReceipt": "cmr-collection-NISAR_L2_GSLC_V1.json.gz",
+          "coverageMeaning": "Catalog footprint intersection / entire study bounding box in longitude/latitude coordinates; not equal-area ground coverage or valid radar pixels.",
+          "coversBox": false,
+          "coversCenter": true,
+          "crid": "P05036",
+          "date": "2026-10-30T14:13:40Z",
+          "direction": "DESCENDING",
+          "downloadStatus": "not_downloaded",
+          "endDate": "2026-10-30T14:14:15Z",
+          "footprint": {
+            "coordinates": [
+              [
+                [
+                  66.00344,
+                  28.1882
+                ],
+                [
+                  65.35371,
+                  26.06225
+                ],
+                [
+                  67.80056,
+                  25.45568
+                ],
+                [
+                  68.47374,
+                  27.57285
+                ],
+                [
+                  66.00344,
+                  28.1882
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "frame": 75,
+          "frequencyBand": "L",
+          "hdf5LayersVerified": false,
+          "id": "NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001",
+          "maturity": "VALIDATED",
+          "measurementUnits": null,
+          "pgeVersion": "R05.03.2",
+          "processedAt": "2026-11-14T07:03:15Z",
+          "processingCenter": "JPL",
+          "processingLevel": "L2",
+          "processingStatus": "not_analyzed",
+          "productType": "GSLC",
+          "productVersion": "1.0.20",
+          "productionPipeline": "PR",
+          "projection": null,
+          "quantitativeAnalysisAllowed": false,
+          "sensor": "L-SAR",
+          "sizeBytes": 22481469440,
+          "sourceReceipts": "/data/nisar/snapshots/20261114T121339598967Z/sources/",
+          "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GSLC_V1/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001/NISAR_L2_PR_GSLC_034_092_D_075_4005_DHDH_A_20261030T141340_20261030T141415_P05036_N_F_J_001.h5",
+          "temporalPrecisionNote": "ASF whole-second values are checked against CMR without discarding CMR fractional seconds.",
+          "track": 92,
+          "validPixelMask": null
+        }
+      ]
+    }
+  ],
+  "baseline": {
+    "dateRange": [
+      "2025-11-20T00:53:40Z",
+      "2026-10-27T00:45:20Z"
+    ],
+    "inventory": "/data/inventory.json",
+    "maturityCounts": {
+      "BETA": 13,
+      "PROVISIONAL": 47,
+      "VALIDATED": 3
+    },
+    "productCount": 63,
+    "uniqueAcquisitionCount": 57
+  },
+  "baselineSha256": "b40ff3c3fa03b481e197a1fce747314034a182dc5b920f8311463f99ce74a6ed",
+  "bbox": [
+    67.3,
+    26.2,
+    68.3,
+    27.2
+  ],
+  "existingCandidateCompatibility": {
+    "catalogFieldsMatch": false,
+    "conflictsOrMissing": [
+      "track",
+      "frame",
+      "direction"
+    ],
+    "quantitativeAnalysisAllowed": false,
+    "reason": "Catalog matching does not verify calibration, common grid, masks or valid-pixel overlap."
+  },
+  "gcovNewProductIds": [],
+  "limitations": [
+    "No HDF5 science data downloaded or analyzed. Units, CRS, masks and calibration remain unreviewed.",
+    "An empty or failed query is not proof of permanent absence. Catalog overlaps are geometric only.",
+    "GSLC/RSLC are not GCOV gamma-0; no direct cross-type, CRID or maturity differencing is authorized."
+  ],
+  "rejectedRecords": [],
+  "retrievedAt": "2026-11-14T12:14:57.116376Z",
+  "reviewedExistingProducts": [
+    {
+      "absoluteOrbit": 6469,
+      "access": {
+        "receipt": "access-470b39d7f5672eed.json.gz",
+        "status": "authentication_required"
+      },
+      "acquisitionMode": {
+        "beamMode": null,
+        "filenamePolarizationModeCode": "DHDH",
+        "frequencies": [
+          "A",
+          "B"
+        ],
+        "frequencyA": [
+          "HH",
+          "HV"
+        ],
+        "frequencyARangeBandwidthMHz": [
+          "40"
+        ],
+        "frequencyB": [
+          "HH",
+          "HV"
+        ],
+        "frequencyBRangeBandwidthMHz": [
+          "5"
+        ]
+      },
+      "bboxCoverageFraction": 0.93691968,
+      "browseUrls": [
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001_LATLON.png",
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001_LATLON_thumbnail.png",
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001_NATIVE.png",
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001_NATIVE_A_HHHH.png",
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001_NATIVE_A_HVHV.png",
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001_NATIVE_B_HHHH.png",
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001_NATIVE_B_HVHV.png"
+      ],
+      "calibration": "Collection maturity only; individual HDF5 calibration and quality unreviewed",
+      "catalogInsertAt": "2026-11-10T01:27:16.161511Z",
+      "catalogStatus": "listed",
+      "cmrAcquisitionEndAt": "2026-10-22T00:54:14.999342Z",
+      "cmrAcquisitionStartAt": "2026-10-22T00:53:39Z",
+      "cmrCollectionId": "C3622241360-ASF",
+      "cmrGranuleId": "G4406992950-ASF",
+      "cmrPgeVersion": "R05.03.2",
+      "cmrReference": "https://cmr.earthdata.nasa.gov/search/concepts/G4406992950-ASF.umm_json",
+      "cmrRevisionAt": "2026-11-10T01:27:18.708Z",
+      "cmrVerification": {
+        "receipt": "cmr-granule-470b39d7f5672eed.json.gz",
+        "status": "verified"
+      },
+      "collection": "NISAR_L2_GCOV_V1",
+      "collectionConceptId": "C3622241360-ASF",
+      "collectionDoi": "10.5067/NIL2GCOV-V1",
+      "collectionReceipt": "cmr-collection-NISAR_L2_GCOV_V1.json.gz",
+      "coverageMeaning": "Catalog footprint intersection / entire study bounding box in longitude/latitude coordinates; not equal-area ground coverage or valid radar pixels.",
+      "coversBox": false,
+      "coversCenter": true,
+      "crid": "P05036",
+      "date": "2026-10-22T00:53:39Z",
+      "direction": "ASCENDING",
+      "downloadStatus": "not_downloaded",
+      "endDate": "2026-10-22T00:54:14Z",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              68.47005,
+              25.97125
+            ],
+            [
+              67.84037,
+              28.10186
+            ],
+            [
+              65.33025,
+              27.47664
+            ],
+            [
+              66.01679,
+              25.36316
+            ],
+            [
+              68.47005,
+              25.97125
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "frame": 15,
+      "frequencyBand": "L",
+      "hdf5LayersVerified": false,
+      "id": "NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001",
+      "maturity": "VALIDATED",
+      "measurementUnits": null,
+      "pgeVersion": "R05.03.2",
+      "processedAt": "2026-11-10T01:18:57Z",
+      "processingCenter": "JPL",
+      "processingLevel": "L2",
+      "processingStatus": "not_analyzed",
+      "productType": "GCOV",
+      "productVersion": "1.0.20",
+      "productionPipeline": "PR",
+      "projection": null,
+      "quantitativeAnalysisAllowed": false,
+      "sensor": "L-SAR",
+      "sizeBytes": 7075790848,
+      "sourceReceipts": "/data/nisar/snapshots/20261114T121339598967Z/sources/",
+      "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_142_A_015_4005_DHDH_A_20261022T005339_20261022T005414_P05036_N_F_J_001.h5",
+      "temporalPrecisionNote": "ASF whole-second values are checked against CMR without discarding CMR fractional seconds.",
+      "track": 142,
+      "validPixelMask": null
+    },
+    {
+      "absoluteOrbit": 6491,
+      "access": {
+        "receipt": "access-fa09dc3db7a40904.json.gz",
+        "status": "authentication_required"
+      },
+      "acquisitionMode": {
+        "beamMode": null,
+        "filenamePolarizationModeCode": "DHDH",
+        "frequencies": [
+          "A",
+          "B"
+        ],
+        "frequencyA": [
+          "HH",
+          "HV"
+        ],
+        "frequencyARangeBandwidthMHz": [
+          "40"
+        ],
+        "frequencyB": [
+          "HH",
+          "HV"
+        ],
+        "frequencyBRangeBandwidthMHz": [
+          "5"
+        ]
+      },
+      "bboxCoverageFraction": 0.69843704,
+      "browseUrls": [
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001_LATLON.png",
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001_LATLON_thumbnail.png",
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001_NATIVE.png",
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001_NATIVE_A_HHHH.png",
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001_NATIVE_A_HVHV.png",
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001_NATIVE_B_HHHH.png",
+        "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001_NATIVE_B_HVHV.png"
+      ],
+      "calibration": "Collection maturity only; individual HDF5 calibration and quality unreviewed",
+      "catalogInsertAt": "2026-11-11T05:27:02.735594Z",
+      "catalogStatus": "listed",
+      "cmrAcquisitionEndAt": "2026-10-23T14:05:55.999342Z",
+      "cmrAcquisitionStartAt": "2026-10-23T14:05:21Z",
+      "cmrCollectionId": "C3622241360-ASF",
+      "cmrGranuleId": "G4408143930-ASF",
+      "cmrPgeVersion": "R05.03.2",
+      "cmrReference": "https://cmr.earthdata.nasa.gov/search/concepts/G4408143930-ASF.umm_json",
+      "cmrRevisionAt": "2026-11-11T05:27:05.432Z",
+      "cmrVerification": {
+        "receipt": "cmr-granule-fa09dc3db7a40904.json.gz",
+        "status": "verified"
+      },
+      "collection": "NISAR_L2_GCOV_V1",
+      "collectionConceptId": "C3622241360-ASF",
+      "collectionDoi": "10.5067/NIL2GCOV-V1",
+      "collectionReceipt": "cmr-collection-NISAR_L2_GCOV_V1.json.gz",
+      "coverageMeaning": "Catalog footprint intersection / entire study bounding box in longitude/latitude coordinates; not equal-area ground coverage or valid radar pixels.",
+      "coversBox": false,
+      "coversCenter": true,
+      "crid": "P05036",
+      "date": "2026-10-23T14:05:21Z",
+      "direction": "DESCENDING",
+      "downloadStatus": "not_downloaded",
+      "endDate": "2026-10-23T14:05:55Z",
+      "footprint": {
+        "coordinates": [
+          [
+            [
+              68.02432,
+              28.14695
+            ],
+            [
+              67.41862,
+              26.07385
+            ],
+            [
+              69.89444,
+              25.46017
+            ],
+            [
+              70.55042,
+              27.51809
+            ],
+            [
+              68.02432,
+              28.14695
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "frame": 75,
+      "frequencyBand": "L",
+      "hdf5LayersVerified": false,
+      "id": "NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001",
+      "maturity": "VALIDATED",
+      "measurementUnits": null,
+      "pgeVersion": "R05.03.2",
+      "processedAt": "2026-11-11T05:17:43Z",
+      "processingCenter": "JPL",
+      "processingLevel": "L2",
+      "processingStatus": "not_analyzed",
+      "productType": "GCOV",
+      "productVersion": "1.0.20",
+      "productionPipeline": "PR",
+      "projection": null,
+      "quantitativeAnalysisAllowed": false,
+      "sensor": "L-SAR",
+      "sizeBytes": 6660554752,
+      "sourceReceipts": "/data/nisar/snapshots/20261114T121339598967Z/sources/",
+      "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001/NISAR_L2_PR_GCOV_033_164_D_075_4005_DHDH_A_20261023T140521_20261023T140555_P05036_N_F_J_001.h5",
+      "temporalPrecisionNote": "ASF whole-second values are checked against CMR without discarding CMR fractional seconds.",
+      "track": 164,
+      "validPixelMask": null
+    }
+  ],
+  "schemaVersion": 1,
+  "searches": [
+    {
+      "completeWithinBounds": true,
+      "count": 63,
+      "productType": "GCOV",
+      "receipt": "asf-dadu-GCOV.json.gz",
+      "status": "retrieved"
+    },
+    {
+      "completeWithinBounds": true,
+      "count": 64,
+      "productType": "GSLC",
+      "receipt": "asf-dadu-GSLC.json.gz",
+      "status": "retrieved"
+    },
+    {
+      "completeWithinBounds": true,
+      "count": 65,
+      "productType": "RSLC",
+      "receipt": "asf-dadu-RSLC.json.gz",
+      "status": "retrieved"
+    }
+  ],
+  "siteId": "dadu",
+  "sourceReceipts": "/data/nisar/snapshots/20261114T121339598967Z/sources/",
+  "studyWindow": {
+    "end": "2026-11-14T12:13:39.598967Z",
+    "start": "2025-10-17T00:00:00Z"
+  },
+  "unverifiedAdditionalProducts": []
+}
