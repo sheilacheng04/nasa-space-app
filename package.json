@@ -19,7 +19,8 @@
     "test:api": "node scripts/dev.mjs test",
     "test:fullstack": "node scripts/fullstack-check.mjs",
     "check": "npm test && npm run test:api && npm run build",
-    "test:satellite": "node scripts/satellite-browser-check.mjs"
+    "test:satellite": "node scripts/satellite-browser-check.mjs",
+    "test:globe-display": "node scripts/globe-display-check.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

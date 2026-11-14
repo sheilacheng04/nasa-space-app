@@ -2,7 +2,19 @@
 
 Checked on 14 November 2026 using Windows, Node 25.6.1, Python 3.13.4 and installed Chrome. The project requires Node >=22.12.
 
-## Satellite add-on acceptance
+## Globe design and display correction
+
+The original system font, rounded controls and both color themes are restored on Globe. Satellite now includes optional, labeled Natural Earth geographic context beneath the actual dated radar strips.
+
+Validation passed: **8 focused display checks**, **18 satellite acceptance checks**, **14 existing browser regression checks**, **8 Node tests**, TypeScript and the production build. Browser reports contain **zero application/console errors**. The offline edition also passed with zero external requests.
+
+The focused checks verify inherited typography and themes, unchanged RGB for all 1,057 opaque pixels in the latest real frame, independent geographic-context controls, Find this frame camera positioning, isolation of a delayed Concept optical image, normal graphics recovery, and recovery during initialization. The optical race screenshot comparison permits only one-channel-level raster quantization; the observed difference was six pixels out of 756,327, with no meaningful color shift.
+
+Updated sizes: production Story resource bodies 486,211 bytes; offline HTML 2,864,625 bytes; embedded real image data URIs 508,469 bytes. No geographic base image download was added: the reference globe is drawn from the existing local outlines. Physical phone performance and screen-reader speech remain untested.
+
+Run npm run test:globe-display with Vite on port 5174. The targeted report and light/dark/recovery screenshots are in ignored .artifacts/. Satellite and existing browser acceptance suites use the production preview on port 5175.
+
+## Earlier satellite add-on acceptance
 
 The add-on passed **18 browser checks**, plus **14 existing browser regression checks**, against the production build. Eight Node tests and 15 Python tests passed, including six new checks for domains, partial gap boundaries, overlapping release windows, provenance and image budgets. TypeScript and Vite builds passed. Optional API behavior was unchanged; earlier API results below are from the cleanup revision.
 

@@ -128,7 +128,7 @@ Angat location: National Power Corporation telemetry specification, PDF page 34,
 
 ## Satellite globe: verified layer and rendering choice
 
-Checked 14 November 2026. Satellite is the default; Concept keeps the same camera and selected date. The Globe-only dark editorial treatment follows the add-on. Other pages retain the restored design.
+Checked 14 November 2026. Satellite is the default; Concept keeps the same camera and selected date. The latest user correction restores the original system fonts, colors and rounded controls on the Globe page as well.
 
 The production [full DescribeDomains response](https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?SERVICE=WMTS&REQUEST=DescribeDomains&VERSION=1.0.0&LAYER=NISAR_L2_Geocoded_Polarimetric_Covariance&TILEMATRIXSET=15.625m&TIME=all) advertises **2025-10-29 through 2026-11-11**. The saved calendar has 379 dates: **361 real images and 18 unadvertised dates**. Every advertised date returned nontransparent pixels at overview resolution. This is not a coverage-area statistic. The first date is the first in this production layer, not a claim about the first mission acquisition worldwide.
 
@@ -165,3 +165,13 @@ Overview resolution is approximately 39 km/pixel at 1024 pixels across the world
 The NOAA strip uses real saved CPC weekly anomalies and the latest preceding observation, without interpolation. News markers link to reporting, not independently confirmed events. No calibrated measurements, water classification, scene-level acquisition time or El Nino attribution are derived from browse mosaics.
 
 Live GIBS, CORS and desktop rendering were tested. Real mid-range phone frame rate, memory pressure, Safari/Firefox and screen-reader speech output were **not** tested; Chrome touch emulation and DOM accessibility behavior were checked.
+
+## Globe display correction
+
+The latest daily image has sparse real swaths; hiding all geography made the view look broken. Satellite now offers a default-on, explicitly labeled Natural Earth reference map beneath the original radar pixels. The existing local geography supplies this map without another image request. It is not additional NISAR coverage. The Geographic context control hides it; Find this frame returns the camera to that frame's actual footprint.
+
+The pinned globe.gl image loader asynchronously resets material properties. The renderer now initializes that loader only once, then owns separate textures/materials for radar and Concept optical imagery. New radar frames have independent texture sources, are unlit, and dispose their previous GPU textures. Mode changes immediately remove Concept overlays. Date changes clear the old radar before the new badge can paint. Graphics recovery preserves the same date and rejects obsolete initialization work.
+
+The reference-map compositor was checked against the saved latest frame: all 1,057 opaque radar pixels retained exactly the source RGB values. Uncovered pixels receive only the labeled geographic reference. This image-pixel count is not an Earth-area measurement.
+
+The corrected UI inherits the original sans-serif fonts, light/dark themes, blue/orange accents and rounded controls. No image data, chronology, maturity metadata or scientific conclusions changed.

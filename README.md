@@ -84,3 +84,5 @@ Satellite plays actual daily NASA GIBS NISAR browse mosaics; Concept preserves t
 Refresh with python scripts/render_globe_frames.py, then npm run build and npm run demo. Existing frames are reused unless --refresh is passed. The hosted archive lives only in public/data/globe/; the standalone file embeds three real frames.
 
 Serve the built app with npx vite preview --host 127.0.0.1 --port 5175, then npm run test:satellite. For the live renderer comparison, serve Vite on 5174 and run node scripts/probe-globe-options.mjs. Real-device phone performance remains untested.
+
+The Globe page uses the original site's font and light/dark styling. Its optional Natural Earth reference map locates the real radar swaths without implying added satellite coverage. Use Find this frame to return to the selected image footprint. With Vite on port 5174, npm run test:globe-display checks font/theme restoration, unchanged radar colors, mode isolation and graphics recovery.

@@ -78,6 +78,12 @@ export function createCanvasGlobe(element){
    texture={w:c.width,h:c.height,data:g.getImageData(0,0,c.width,c.height).data};invalidate();
   })();textureReady.catch(()=>{});return api;
  };
+
+ api.globeSurfaceImage=function(image){
+  ++textureSequence;textureKey='surface-'+textureSequence;rasterKey='';material.visible=true;sea='#101a2a';
+  texture=image?{w:image.width,h:image.height,data:image.getContext('2d').getImageData(0,0,image.width,image.height).data}:null;
+  textureReady=Promise.resolve();invalidate();return api;
+ };
  api.whenTextureReady=()=>textureReady;
  api.getScreenCoords=(lat,lng)=>{projection.rotate([-view.lng,-view.lat]).translate([width/2,height/2]).scale(radius());const p=projection([lng,lat]);return{x:p[0],y:p[1]};};
  resize();return api;

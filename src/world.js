@@ -5,9 +5,11 @@ import {HOSTED,REVIEW_DATE} from './config.js';
 import './globe.css';
 import {loadGlobe} from './globe-loader.js';
 import {createCanvasGlobe} from './canvas-globe.js';
+import {composeSatelliteSurface} from './satellite-surface.js';
 import {esc,safeURL,finite} from './core.js';
 let countries,world,observer,geographyPromise;
-let globeMode='satellite',satelliteURL=null,textureVersion=0,lastRadarTexture=null;
+let globeMode='satellite',satelliteURL=null,satelliteImage=null,satelliteDate='',geographicContext=true,textureVersion=0;
+let surfaceOwner=null,surfaceReady=null,surfaceMaterial=null,conceptMaterial=null,TextureType=null,textureOptions=null,lastRadarTexture=null;
 export async function geography(){if(!geographyPromise)geographyPromise=dataFile('world.topo.json').then(topo=>countries=feature(topo,topo.objects.countries)).catch(error=>{geographyPromise=null;throw error;});return geographyPromise;}
 export async function drawPacific(){const data=await geography(),projection=geoOrthographic().rotate([160,-10]).translate([280,270]).scale(222),path=geoPath(projection);const g=path(geoGraticule10());const band={type:'Polygon',coordinates:[[[-175,-5],[-175,5],[-115,5],[-115,-5],[-175,-5]]]};
  document.getElementById('pacific-map').innerHTML=`<svg viewBox="0 0 560 540" role="img" aria-label="Pacific-centered globe. Orange arrows illustrate an eastward shift of warm surface water, not measured temperatures."><defs><marker id="warm-arrow" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#da8c59" stroke-width="1"/></marker></defs><circle cx="280" cy="270" r="233" fill="none" stroke="#b6c3ba" stroke-width=".7"/><circle cx="280" cy="270" r="222" fill="#17313b"/><path d="${g}" fill="none" stroke="#65848b" stroke-opacity=".35" stroke-width=".6"/><path d="${path(data)}" fill="#7d9490" stroke="#a4b8ad" stroke-width=".5"/><path d="${path(band)}" fill="#d78a52" fill-opacity=".2"/><path d="M133 282Q268 249 403 286" fill="none" stroke="#da8c59" stroke-width="2" marker-end="url(#warm-arrow)"/><path d="M150 299Q278 276 388 303" fill="none" stroke="#da8c59" stroke-width="1" stroke-opacity=".6"/><text x="280" y="248" text-anchor="middle" fill="#d9e5de" font-size="10" letter-spacing="4">PACIFIC OCEAN</text><text x="278" y="331" text-anchor="middle" fill="#e5a171" font-size="8" letter-spacing="2">EQUATORIAL WARM POOL</text><path d="M80 270H480" stroke="#b8cac0" stroke-dasharray="2 5" opacity=".3"/><text x="280" y="509" text-anchor="middle" font-size="8" fill="#5f6867" letter-spacing="3">A CONNECTED OCEAN · A CHANGING LANDSCAPE</text></svg>`;
@@ -50,72 +52,165 @@ if(!all)return;const data=[...(globeState.towers?globeSites.map(s=>({...s,lat:s.
 function selectLocation(place){if(globeMode==='satellite'&&place.site){dispatchEvent(new CustomEvent('globe:select-site',{detail:{id:place.id}}));return;}selected=place;globeState.tab='place';el('globe-search-results').hidden=true;flyTo(place.lng,place.lat,place.feature?.9:place.site?.55:.4);refreshGlobe();note(`${place.name} · ${place.user?'user-supplied observation':place.site?'study area':'geographic locator'}`);}
 function searchResults(matches){const results=el('globe-search-results');results.replaceChildren();results.hidden=matches.length===0;matches.forEach((place,index)=>{const button=document.createElement('button');button.type='button';button.dataset.placeIndex=String(index);button.textContent=place.name;const detail=document.createElement('small');detail.textContent=place.site?'Study area':place.feature?'Country':place.user?'Your observation':place.country||'Place';button.append(detail);button.onclick=()=>{el('globe-query').value=place.name;selectLocation(place);};results.append(button);});}
 async function searchPlaces(submit){const query=el('globe-query').value.trim(),normalized=normalize(query),token=++searchSequence;if(!query){searchResults([]);return;}const coordinate=query.match(/^(-?\d+(?:\.\d+)?)\s*[, ]\s*(-?\d+(?:\.\d+)?)$/);if(coordinate&&submit){const lat=Number(coordinate[1]),lng=Number(coordinate[2]);if(Math.abs(lat)>90||Math.abs(lng)>180){note('Use latitude from -90 to 90 and longitude from -180 to 180.');return;}selectLocation({name:`${lat.toFixed(3)}°, ${lng.toFixed(3)}°`,lat,lng});return;}const index=[...globeSites.map(s=>({...s,site:true,lat:s.coordinates[1],lng:s.coordinates[0]})),...globePoints.map(p=>({...p,user:true})),...placeIndex],exact=index.find(p=>normalize(p.name)===normalized);const matches=index.filter(p=>normalize(p.name).includes(normalized)).sort((a,b)=>(normalize(a.name)===normalized?-1:normalize(b.name)===normalized?1:0)).slice(0,8);if(submit&&exact){selectLocation(exact);return;}if(matches.length){searchResults(matches);if(submit)note('Choose a matching place below the search field.');return;}searchResults([]);if(!submit)return;el('globe-search-submit').disabled=true;note('Searching Photon / OpenStreetMap…');try{const found=await geocode(query);if(token!==searchSequence)return;const results=found.map(f=>({name:[f.properties.name,f.properties.state,f.properties.country].filter(Boolean).join(', '),lng:f.geometry.coordinates[0],lat:f.geometry.coordinates[1],country:'Photon / OpenStreetMap'}));searchResults(results);note(results.length?'Choose a place from the results. Source: Photon / OpenStreetMap.':'No matching place found. Try a country, city or latitude, longitude.');}catch{if(token===searchSequence)note('Online search is unavailable. Built-in countries, 909 places and coordinates still work.');}finally{el('globe-search-submit').disabled=false;}}
-async function toggleImagery(reload=false){if(!HOSTED){note('Satellite imagery needs the hosted app. Built-in globe, search and controls work offline.');return;}if(!world)return;const button=el('globe-imagery'),dateInput=el('globe-imagery-date');if(stage().dataset.imagery==='ready'&&!reload){imageController?.abort();world.globeImageUrl(null);world.globeMaterial().color?.set('#9fc3ea');stage().dataset.imagery='off';delete stage().dataset.imageryDate;setPressed('globe-imagery',false);button.textContent='Load satellite imagery';if(imageObjectURL){URL.revokeObjectURL(imageObjectURL);imageObjectURL=null;}refreshGlobe();note('Satellite imagery off. Conceptual overlays remain labeled.');return;}const date=dateInput.value;if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||date>REVIEW_DATE){note('Choose a valid image date no later than the project review date.');return;}imageController?.abort();const controller=new AbortController();imageController=controller;button.disabled=true;dateInput.disabled=true;stage().dataset.imagery='loading';note('Loading dated NASA GIBS true-color imagery…');const timer=setTimeout(()=>controller.abort(),12000);let pendingURL;try{const params=new URLSearchParams({SERVICE:'WMS',REQUEST:'GetMap',VERSION:'1.1.1',LAYERS:'MODIS_Terra_CorrectedReflectance_TrueColor',STYLES:'',FORMAT:'image/jpeg',SRS:'EPSG:4326',BBOX:'-180,-90,180,90',WIDTH:'2048',HEIGHT:'1024',TIME:date});const response=await fetch('https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?'+params,{signal:controller.signal});if(!response.ok||!response.headers.get('content-type')?.startsWith('image/'))throw new Error('No imagery returned');const blob=await response.blob();if(controller!==imageController||controller.signal.aborted)return;pendingURL=URL.createObjectURL(blob);const check=new Image();check.src=pendingURL;await check.decode();if(controller!==imageController||controller.signal.aborted||dateInput.value!==date)return;const previous=imageObjectURL;world.globeMaterial().color?.set('#ffffff');world.globeImageUrl(pendingURL);imageObjectURL=pendingURL;pendingURL=null;if(previous)URL.revokeObjectURL(previous);stage().dataset.imagery='ready';stage().dataset.imageryDate=date;setPressed('globe-imagery',true);button.textContent='Hide satellite imagery';refreshGlobe();note(`NASA GIBS / MODIS true color · ${date}. Clouds and missing swaths are not surface change.`);}catch{if(controller===imageController){stage().dataset.imagery=imageObjectURL?'ready':'error';if(imageObjectURL&&stage().dataset.imageryDate)dateInput.value=stage().dataset.imageryDate;note(`Satellite imagery unavailable. ${imageObjectURL?'Previous image retained.':'The geographic globe is still usable.'} Choose another date or retry.`);}}finally{clearTimeout(timer);if(pendingURL)URL.revokeObjectURL(pendingURL);if(controller===imageController){button.disabled=false;dateInput.disabled=false;if(stage().dataset.imagery==='loading')stage().dataset.imagery=imageObjectURL?'ready':'error';}}}
-let forceCanvas=false,recovering=false;
+
+async function toggleImagery(reload=false){
+ if(!HOSTED){note('Satellite imagery needs the hosted app. Built-in globe, search and controls work offline.');return;}
+ if(!world||globeMode!=='concept'||!TextureType)return;
+ const requestWorld=world,targetMaterial=conceptMaterial,button=el('globe-imagery'),dateInput=el('globe-imagery-date');
+ if(stage().dataset.imagery==='ready'&&!reload){
+  imageController?.abort();targetMaterial.map?.dispose();targetMaterial.map=null;targetMaterial.color.set('#9fc3ea');targetMaterial.needsUpdate=true;
+  stage().dataset.imagery='off';delete stage().dataset.imageryDate;setPressed('globe-imagery',false);button.textContent='Load satellite imagery';
+  if(imageObjectURL){URL.revokeObjectURL(imageObjectURL);imageObjectURL=null;}
+  refreshGlobe();note('Satellite imagery off. Conceptual overlays remain labeled.');return;
+ }
+ const date=dateInput.value;
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||date>REVIEW_DATE){note('Choose a valid image date no later than the project review date.');return;}
+ imageController?.abort();const controller=new AbortController();imageController=controller;
+ button.disabled=true;dateInput.disabled=true;stage().dataset.imagery='loading';
+ note('Loading dated NASA GIBS true-color imagery...');
+ const timer=setTimeout(()=>controller.abort(),12000);let pendingURL;
+ try{
+  const params=new URLSearchParams({SERVICE:'WMS',REQUEST:'GetMap',VERSION:'1.1.1',LAYERS:'MODIS_Terra_CorrectedReflectance_TrueColor',STYLES:'',FORMAT:'image/jpeg',SRS:'EPSG:4326',BBOX:'-180,-90,180,90',WIDTH:'2048',HEIGHT:'1024',TIME:date});
+  const response=await fetch('https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?'+params,{signal:controller.signal});
+  if(!response.ok||!response.headers.get('content-type')?.startsWith('image/'))throw new Error('No imagery returned');
+  const blob=await response.blob();if(controller!==imageController||controller.signal.aborted||world!==requestWorld)return;
+  pendingURL=URL.createObjectURL(blob);const image=new Image();image.src=pendingURL;
+  await Promise.race([image.decode(),new Promise((_,reject)=>controller.signal.addEventListener('abort',()=>reject(new Error('Image decoding timed out')),{once:true}))]);
+  if(controller!==imageController||controller.signal.aborted||world!==requestWorld||dateInput.value!==date)return;
+  // Update only the captured Concept material. Satellite owns a different surface.
+  const texture=new TextureType(image);Object.assign(texture,textureOptions);texture.needsUpdate=true;
+  const previousTexture=targetMaterial.map,previousURL=imageObjectURL;
+  targetMaterial.map=texture;targetMaterial.color.set('#ffffff');targetMaterial.needsUpdate=true;previousTexture?.dispose();
+  imageObjectURL=pendingURL;pendingURL=null;if(previousURL)URL.revokeObjectURL(previousURL);
+  stage().dataset.imagery='ready';stage().dataset.imageryDate=date;setPressed('globe-imagery',true);button.textContent='Hide satellite imagery';
+  if(globeMode==='concept'){refreshGlobe();note('NASA GIBS / MODIS true color / '+date+'. Clouds and missing swaths are not surface change.');}
+ }catch{
+  if(controller===imageController&&world===requestWorld){
+   stage().dataset.imagery=imageObjectURL?'ready':'error';
+   if(imageObjectURL&&stage().dataset.imageryDate)dateInput.value=stage().dataset.imageryDate;
+   if(globeMode==='concept')note('Optical imagery unavailable. Choose another date or retry.');
+  }
+ }finally{
+  clearTimeout(timer);if(pendingURL)URL.revokeObjectURL(pendingURL);
+  if(controller===imageController&&world===requestWorld){button.disabled=false;dateInput.disabled=false;if(stage().dataset.imagery==='loading')stage().dataset.imagery=imageObjectURL?'ready':'error';}
+ }
+}
+
+let forceCanvas=false,recovering=false,rendererGeneration=0;
 function graphicsContext(){
  const canvas=document.createElement('canvas');if(forceCanvas)return {canvas,context:null,type:'canvas'};
  for(const type of ['webgl2','webgl','experimental-webgl']){try{const context=canvas.getContext(type,{alpha:true,antialias:false,powerPreference:'default'});if(context)return{canvas,context,type:type==='webgl2'?'webgl2':'webgl1'};}catch{}}
  return {canvas,context:null,type:'canvas'};
 }
 function createWorld(Globe,element,graphics){
- if(Globe&&graphics.context){try{const instance=Globe({rendererConfig:{canvas:graphics.canvas,context:graphics.context,antialias:false,alpha:true,powerPreference:'default'}})(element);stage().dataset.renderer=graphics.type;graphics.canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();if(world?.renderer().domElement===graphics.canvas)recoverGlobe(true);});return instance;}catch(error){console.warn('Using the compatible globe renderer.',error.message);try{graphics.context.getExtension('WEBGL_lose_context')?.loseContext();}catch{}element.replaceChildren();}}
+ if(Globe&&graphics.context&&!graphics.context.isContextLost()){try{const instance=Globe({rendererConfig:{canvas:graphics.canvas,context:graphics.context,antialias:false,alpha:true,powerPreference:'default'}})(element);stage().dataset.renderer=graphics.type;graphics.canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();if(world?.renderer().domElement===graphics.canvas)recoverGlobe(true);});return instance;}catch(error){console.warn('Using the compatible globe renderer.',error.message);try{graphics.context.getExtension('WEBGL_lose_context')?.loseContext();}catch{}element.replaceChildren();}}
  stage().dataset.renderer='canvas';return createCanvasGlobe(element);
 }
 async function recoverGlobe(compatibility){
- if(recovering)return;recovering=true;forceCanvas=compatibility;const previous=world?.pointOfView(),wasActive=routeActive,old=world;world=null;globePromise=null;rendering=false;stopPlayback();cancelCameraMove();observer?.disconnect();intersector?.disconnect();imageController?.abort();if(imageObjectURL){URL.revokeObjectURL(imageObjectURL);imageObjectURL=null;}
+ if(recovering)return;recovering=true;forceCanvas=compatibility;const previous=world?.pointOfView(),wasActive=routeActive,old=world;++rendererGeneration;disposeSatelliteRenderer(old);world=null;globePromise=null;rendering=false;stopPlayback();cancelCameraMove();observer?.disconnect();intersector?.disconnect();imageController?.abort();if(imageObjectURL){URL.revokeObjectURL(imageObjectURL);imageObjectURL=null;}
  try{old?.pauseAnimation();old?._destructor?.();old?.renderer()?.dispose();}catch{}
  el('globe-canvas')?.replaceChildren();stage().dataset.ready='false';stage().dataset.rendering='loading';stage().dataset.imagery='off';delete stage().dataset.imageryDate;
  try{const restored=await initGlobe(globeSites,globePoints,selectSite);if(restored&&previous)restored.pointOfView(previous,0);if(!wasActive)pauseGlobe();}finally{recovering=false;}
 }
-export async function initGlobe(sites,points,onSelect){globeSites=sites;globePoints=points;selectSite=onSelect;routeActive=true;if(world){refreshGlobe();resumeGlobe();return world;}if(globePromise)return globePromise;mountGlobeUI();stage().setAttribute('aria-busy','true');stage().dataset.ready='false';stage().querySelectorAll('button,input').forEach(control=>control.disabled=true);note('Loading the interactive globe…');globePromise=(async()=>{try{const graphics=graphicsContext();const [Globe,data,placeData,newsData]=await Promise.all([graphics.context?loadGlobe().catch(()=>null):Promise.resolve(null),geography(),dataFile('places.json').catch(()=>({places:[]})),dataFile('news.json').catch(()=>({items:[]}))]);const element=el('globe-canvas');data.features.forEach(f=>{f.center=geoCentroid(f);f.pattern=pattern(f.center);});placeIndex=[...data.features.map(f=>({name:f.properties.name,feature:f,lng:f.center[0],lat:f.center[1]})),...(placeData.places||[]).map(p=>({name:p[0],country:p[1],lat:p[2],lng:p[3]}))];headlines=newsData.items||[];world=createWorld(Globe,element,graphics);world.width(Math.max(1,element.clientWidth)).height(Math.max(1,element.clientHeight)).backgroundColor('rgba(0,0,0,0)').showAtmosphere(false).atmosphereColor('#5aaaff').atmosphereAltitude(.18).polygonsData(data.features).polygonsTransitionDuration(reduced()?0:180).polygonCapCurvatureResolution(5).polygonSideColor(()=>'#a9bfd7').polygonLabel(f=>`<div class="globe-tooltip"><strong>${esc(f.properties.name)}</strong><br>Click to explore · ${globeState.layer==='geography'?'geographic outline':'simulated climate pattern'}</div>`).onPolygonClick(f=>selectLocation({name:f.properties.name,feature:f,lng:f.center[0],lat:f.center[1]})).pointLat('lat').pointLng('lng').pointRadius(d=>d.user?.25:.38).pointResolution(6).pointLabel(d=>`<div class="globe-tooltip"><strong>${esc(d.name)}</strong><br>${d.user?`${finite(d.value)?esc(d.value):'No value'} ${esc(d.category||'')} · user supplied`:'Study area · open site evidence'}</div>`).onPointClick(selectLocation).labelsData([]).labelLat('lat').labelLng('lng').labelText('name').labelColor(d=>d.pin?'#ffe1a0':'#eaf2ff').labelSize(d=>d.pin?.65:.48).labelAltitude(.018).labelDotRadius(.22).labelResolution(2).onLabelClick(d=>selectLocation(d)).arcStartLat('startLat').arcStartLng('startLng').arcEndLat('endLat').arcEndLng('endLng').arcColor('color').arcAltitudeAutoScale(.36).arcCurveResolution(32).arcDashLength(.4).arcDashGap(.25).arcDashAnimateTime(reduced()?0:2600).ringLat('lat').ringLng('lng').ringMaxRadius('radius').ringPropagationSpeed(2).ringRepeatPeriod(1600).ringColor(d=>t=>`rgba(${d.color},${1-t})`).onGlobeClick(({lat,lng})=>selectLocation({name:`${lat.toFixed(3)}°, ${lng.toFixed(3)}°`,lat,lng}));rendering=true;world.renderer().setPixelRatio(Math.min(devicePixelRatio||1,innerWidth<700?1.25:1.5));world.globeMaterial().color?.set('#9fc3ea');const controls=world.controls();globeState.rotate=false;controls.autoRotate=globeState.rotate;controls.autoRotateSpeed=.38;controls.enableDamping=true;controls.dampingFactor=.09;controls.minDistance=108;controls.maxDistance=600;controls.addEventListener('start',()=>{stopRotation();cancelCameraMove();});controls.addEventListener('change',()=>{const altitude=world.pointOfView().altitude;recordCamera();controls.rotateSpeed=Math.max(.06,Math.min(.8,altitude*.55));controls.zoomSpeed=Math.max(.35,Math.min(1,altitude));});world.pointOfView({lat:5,lng:-160,altitude:2.3},0);setPressed('globe-rotate',globeState.rotate);let previousWidth=0,previousHeight=0;observer=new ResizeObserver(()=>{const w=element.clientWidth,h=element.clientHeight;if(w&&h&&(w!==previousWidth||h!==previousHeight)){previousWidth=w;previousHeight=h;world.width(w).height(h);recordCamera();}syncRendering();});observer.observe(element);intersector=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;syncRendering();},{threshold:.05});intersector.observe(element);document.addEventListener('visibilitychange',syncRendering);matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',()=>{stopPlayback();stopRotation();cancelCameraMove();world.arcDashAnimateTime(reduced()?0:2600);refreshGlobe();});visible=element.getBoundingClientRect().bottom>0&&element.getBoundingClientRect().top<innerHeight;refreshGlobe();renderPanel();stage().querySelectorAll('button,input').forEach(control=>control.disabled=false);stage().setAttribute('aria-busy','false');stage().dataset.ready='true';if(!HOSTED||world.__compatibility){el('globe-imagery').disabled=true;el('globe-imagery-date').disabled=true;el('globe-imagery').textContent=world.__compatibility?'Use satellite window':'Hosted imagery only';}else{el('globe-imagery').textContent='Load satellite imagery';}syncRendering();if(globeMode==='satellite'){setGlobeMode('satellite');if(satelliteURL)await setSatelliteTexture(satelliteURL);}recordCamera();note('Drag to rotate · scroll or pinch to zoom · select a country or study area');dataFile('context/luzon.json').then(snapshot=>{const date=snapshot.daily?.at(-1)?.date;if(date&&!imageObjectURL)el('globe-imagery-date').value=date;}).catch(()=>{});return world;}catch(error){console.error('Globe initialization failed',error);observer?.disconnect();intersector?.disconnect();try{world?.pauseAnimation();world?.renderer()?.dispose();world?._destructor?.();}catch{}world=null;rendering=false;el('globe-canvas')?.replaceChildren();stage().setAttribute('aria-busy','false');note('The globe could not start. Use Retry globe to try again.');stage().dataset.ready='false';globePromise=null;if(!el('globe-retry')){const button=document.createElement('button');button.id='globe-retry';button.className='globe-retry';button.textContent='Retry globe';button.onclick=()=>{button.remove();recoverGlobe(true);};stage().append(button);}return null;}})();return globePromise;}
+export async function initGlobe(sites,points,onSelect){globeSites=sites;globePoints=points;selectSite=onSelect;routeActive=true;if(world){refreshGlobe();resumeGlobe();return world;}if(globePromise)return globePromise;const generation=++rendererGeneration;mountGlobeUI();stage().setAttribute('aria-busy','true');stage().dataset.ready='false';stage().querySelectorAll('button,input').forEach(control=>control.disabled=true);note('Loading the interactive globe…');globePromise=(async()=>{try{const graphics=graphicsContext();const [Globe,data,placeData,newsData]=await Promise.all([graphics.context?loadGlobe().catch(()=>null):Promise.resolve(null),geography(),dataFile('places.json').catch(()=>({places:[]})),dataFile('news.json').catch(()=>({items:[]}))]);if(generation!==rendererGeneration)return globePromise;const element=el('globe-canvas');data.features.forEach(f=>{f.center=geoCentroid(f);f.pattern=pattern(f.center);});placeIndex=[...data.features.map(f=>({name:f.properties.name,feature:f,lng:f.center[0],lat:f.center[1]})),...(placeData.places||[]).map(p=>({name:p[0],country:p[1],lat:p[2],lng:p[3]}))];headlines=newsData.items||[];world=createWorld(Globe,element,graphics);world.width(Math.max(1,element.clientWidth)).height(Math.max(1,element.clientHeight)).backgroundColor('rgba(0,0,0,0)').showAtmosphere(false).atmosphereColor('#5aaaff').atmosphereAltitude(.18).polygonsData(data.features).polygonsTransitionDuration(reduced()?0:180).polygonCapCurvatureResolution(5).polygonSideColor(()=>'#a9bfd7').polygonLabel(f=>`<div class="globe-tooltip"><strong>${esc(f.properties.name)}</strong><br>Click to explore · ${globeState.layer==='geography'?'geographic outline':'simulated climate pattern'}</div>`).onPolygonClick(f=>selectLocation({name:f.properties.name,feature:f,lng:f.center[0],lat:f.center[1]})).pointLat('lat').pointLng('lng').pointRadius(d=>d.user?.25:.38).pointResolution(6).pointLabel(d=>`<div class="globe-tooltip"><strong>${esc(d.name)}</strong><br>${d.user?`${finite(d.value)?esc(d.value):'No value'} ${esc(d.category||'')} · user supplied`:'Study area · open site evidence'}</div>`).onPointClick(selectLocation).labelsData([]).labelLat('lat').labelLng('lng').labelText('name').labelColor(d=>d.pin?'#ffe1a0':'#eaf2ff').labelSize(d=>d.pin?.65:.48).labelAltitude(.018).labelDotRadius(.22).labelResolution(2).onLabelClick(d=>selectLocation(d)).arcStartLat('startLat').arcStartLng('startLng').arcEndLat('endLat').arcEndLng('endLng').arcColor('color').arcAltitudeAutoScale(.36).arcCurveResolution(32).arcDashLength(.4).arcDashGap(.25).arcDashAnimateTime(reduced()?0:2600).ringLat('lat').ringLng('lng').ringMaxRadius('radius').ringPropagationSpeed(2).ringRepeatPeriod(1600).ringColor(d=>t=>`rgba(${d.color},${1-t})`).onGlobeClick(({lat,lng})=>selectLocation({name:`${lat.toFixed(3)}°, ${lng.toFixed(3)}°`,lat,lng}));rendering=true;world.renderer().setPixelRatio(Math.min(devicePixelRatio||1,innerWidth<700?1.25:1.5));world.globeMaterial().color?.set('#9fc3ea');await prepareSatelliteRenderer(world);if(generation!==rendererGeneration)return globePromise;const controls=world.controls();globeState.rotate=false;controls.autoRotate=globeState.rotate;controls.autoRotateSpeed=.38;controls.enableDamping=true;controls.dampingFactor=.09;controls.minDistance=108;controls.maxDistance=600;controls.addEventListener('start',()=>{stopRotation();cancelCameraMove();});controls.addEventListener('change',()=>{const altitude=world.pointOfView().altitude;recordCamera();controls.rotateSpeed=Math.max(.06,Math.min(.8,altitude*.55));controls.zoomSpeed=Math.max(.35,Math.min(1,altitude));});world.pointOfView({lat:5,lng:-160,altitude:2.3},0);setPressed('globe-rotate',globeState.rotate);let previousWidth=0,previousHeight=0;observer=new ResizeObserver(()=>{const w=element.clientWidth,h=element.clientHeight;if(w&&h&&(w!==previousWidth||h!==previousHeight)){previousWidth=w;previousHeight=h;world.width(w).height(h);recordCamera();}syncRendering();});observer.observe(element);intersector=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;syncRendering();},{threshold:.05});intersector.observe(element);document.addEventListener('visibilitychange',syncRendering);matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',()=>{stopPlayback();stopRotation();cancelCameraMove();world.arcDashAnimateTime(reduced()?0:2600);refreshGlobe();});visible=element.getBoundingClientRect().bottom>0&&element.getBoundingClientRect().top<innerHeight;refreshGlobe();renderPanel();stage().querySelectorAll('button,input').forEach(control=>control.disabled=false);stage().setAttribute('aria-busy','false');stage().dataset.ready='true';if(!HOSTED||world.__compatibility){el('globe-imagery').disabled=true;el('globe-imagery-date').disabled=true;el('globe-imagery').textContent=world.__compatibility?'Use satellite window':'Hosted imagery only';}else{el('globe-imagery').textContent='Load satellite imagery';}syncRendering();if(globeMode==='satellite'){setGlobeMode('satellite');if(satelliteURL)await setSatelliteTexture(satelliteURL,satelliteImage);}recordCamera();note('Drag to rotate · scroll or pinch to zoom · select a country or study area');dataFile('context/luzon.json').then(snapshot=>{const date=snapshot.daily?.at(-1)?.date;if(date&&!imageObjectURL)el('globe-imagery-date').value=date;}).catch(()=>{});return world;}catch(error){if(generation!==rendererGeneration)return globePromise;disposeSatelliteRenderer(world);console.error('Globe initialization failed',error);observer?.disconnect();intersector?.disconnect();try{world?.pauseAnimation();world?.renderer()?.dispose();world?._destructor?.();}catch{}world=null;rendering=false;el('globe-canvas')?.replaceChildren();stage().setAttribute('aria-busy','false');note('The globe could not start. Use Retry globe to try again.');stage().dataset.ready='false';globePromise=null;if(!el('globe-retry')){const button=document.createElement('button');button.id='globe-retry';button.className='globe-retry';button.textContent='Retry globe';button.onclick=()=>{button.remove();recoverGlobe(true);};stage().append(button);}return null;}})();return globePromise;}
 export function setGlobePoints(sites,points){globeSites=sites;globePoints=points;if(world)refreshGlobe();}
 export function flyTo(lng,lat,altitude=.65){if(!world)return;stopRotation();moveCamera({lat,lng,altitude},reduced()?0:350);}
 function syncRendering(){if(!world)return;const active=routeActive&&!document.hidden&&visible&&el('globe-canvas').getClientRects().length>0;stage().dataset.rendering=active?'active':'paused';if(active===rendering)return;rendering=active;if(active)world.resumeAnimation();else{world.pauseAnimation();stopPlayback();cancelCameraMove();}}
 export function resumeGlobe(){routeActive=true;syncRendering();}
 export function pauseGlobe(){routeActive=false;syncRendering();}
 
-// One renderer and camera serve both modes. Radar frames are replaced atomically.
+
+function disposeSatelliteRenderer(instance){
+ if(!instance||surfaceOwner!==instance)return;
+ if(!instance.__compatibility){
+  const seedOrCurrent=instance.globeMaterial();
+  for(const texture of new Set([lastRadarTexture,surfaceMaterial?.map,surfaceMaterial?.emissiveMap,conceptMaterial?.map,seedOrCurrent?.map]))texture?.dispose();
+  for(const material of new Set([surfaceMaterial,conceptMaterial,seedOrCurrent]))material?.dispose();
+ }
+ surfaceOwner=null;surfaceReady=null;surfaceMaterial=null;conceptMaterial=null;TextureType=null;textureOptions=null;lastRadarTexture=null;
+}
+// Bootstrap the pinned renderer once, then own all texture assignments ourselves.
+// Its globeImageUrl callback resets material.color and cannot cancel old loads.
+async function prepareSatelliteRenderer(instance){
+ if(surfaceOwner===instance&&surfaceReady)return surfaceReady;
+ surfaceOwner=instance;conceptMaterial=instance.globeMaterial();TextureType=null;lastRadarTexture=null;
+ if(instance.__compatibility){surfaceMaterial=conceptMaterial;surfaceReady=Promise.resolve();return surfaceReady;}
+ const Material=conceptMaterial.constructor,seedMaterial=new Material({color:0x000000});
+ seedMaterial.visible=false;instance.globeMaterial(seedMaterial);
+ const seed=document.createElement('canvas');seed.width=seed.height=1;
+ const seedURL=seed.toDataURL();instance.globeImageUrl(seedURL);
+ surfaceReady=(async()=>{
+  try{await new Promise((resolve,reject)=>{
+   const started=performance.now();
+   function check(){
+    if(instance!==world)return reject(new Error('Globe renderer changed'));
+    if(seedMaterial.map?.image?.src===seedURL)return resolve();
+    if(performance.now()-started>5000)return reject(new Error('Texture renderer initialization timed out'));
+    setTimeout(check,20);
+   }check();
+  });
+  if(instance!==world)return;
+  const texture=seedMaterial.map;TextureType=texture.constructor;
+  textureOptions={colorSpace:texture.colorSpace,flipY:texture.flipY,minFilter:texture.minFilter,magFilter:texture.magFilter};
+  surfaceMaterial=new Material({color:0x000000,emissive:0xffffff,emissiveIntensity:1,specular:0x000000,shininess:0,toneMapped:false});
+  instance.globeImageUrl(null);
+  instance.globeMaterial(globeMode==='satellite'?surfaceMaterial:conceptMaterial);
+  seedMaterial.map=null;texture.dispose();
+  }finally{seedMaterial.map?.dispose();seedMaterial.dispose();}
+ })();
+ return surfaceReady;
+}
+function drawSatelliteSurface(image=satelliteImage){
+ if(!world||surfaceOwner!==world||globeMode!=='satellite')return;
+ const canvas=composeSatelliteSurface(countries,image,geographicContext);
+ if(world.__compatibility){world.globeSurfaceImage(canvas);}
+ else{
+  if(!TextureType||!surfaceMaterial)return;
+  // Texture.clone() shares its Source in this Three version; use a fresh Source.
+  const texture=new TextureType(canvas);Object.assign(texture,textureOptions);texture.needsUpdate=true;
+  surfaceMaterial.map=texture;surfaceMaterial.emissiveMap=texture;surfaceMaterial.needsUpdate=true;
+  surfaceMaterial.visible=true;world.globeMaterial(surfaceMaterial);
+  lastRadarTexture?.dispose();lastRadarTexture=texture;
+ }
+ stage().dataset.geographicContext=String(geographicContext);
+ stage().dataset.radarVisible=String(Boolean(image));stage().dataset.radarDate=image?satelliteDate:'';
+ stage().dataset.radarWidth=String(image?.naturalWidth||0);
+ if(routeActive)world.resumeAnimation();
+}
+export function setGeographicContext(enabled){
+ geographicContext=Boolean(enabled);drawSatelliteSurface();
+}
 export function setGlobeMode(mode){
- const changed=globeMode!==mode;globeMode=mode;if(stage())stage().dataset.mode=mode;
+ if(globeMode!==mode)++textureVersion;globeMode=mode;if(stage())stage().dataset.mode=mode;
  if(!world)return;stopPlayback();stopRotation();world.showAtmosphere(false);
- const material=world.globeMaterial();
  if(mode==='satellite'){
+  world.scene?.().traverse(object=>{if(object.__globeObjType==='ring')object.visible=false;});
+  world.polygonsTransitionDuration(0);world.pointsTransitionDuration?.(0);world.arcsTransitionDuration?.(0);world.labelsTransitionDuration?.(0);
   world.polygonsData([]).pointsData([]).labelsData([]).arcsData([]).ringsData([]);
-  if(changed||!satelliteURL){material.visible=false;world.globeImageUrl(null);}
+  drawSatelliteSurface();note('Drag to rotate / scroll or pinch to zoom / select a study area');
  }else{
-  ++textureVersion;material.visible=true;material.emissive?.set('#000000');material.emissiveMap=null;material.specular?.set('#111111');
-  if(!material.color&&material.emissive)material.color=material.emissive.clone();material.map=null;material.needsUpdate=true;
-  material.color.set(imageObjectURL?'#ffffff':'#9fc3ea');world.globeImageUrl(imageObjectURL||null);
-  world.polygonsData(countries?.features||[]);refreshGlobe();
+  if(world.__compatibility){world.globeSurfaceImage(null);world.globeMaterial().visible=true;world.globeMaterial().color.set('#9fc3ea');}
+  else if(conceptMaterial){world.globeMaterial(conceptMaterial);}
+  world.polygonsTransitionDuration(reduced()?0:180);world.polygonsData(countries?.features||[]);refreshGlobe();
  }
  recordCamera();
 }
 export function hideSatelliteTexture(){
- satelliteURL=null;++textureVersion;if(globeMode==='satellite'&&world){world.globeMaterial().visible=false;world.globeImageUrl(null);}
+ satelliteURL=null;satelliteImage=null;satelliteDate='';++textureVersion;
+ drawSatelliteSurface(null);
 }
-export async function setSatelliteTexture(url){
- satelliteURL=url;if(!world||globeMode!=='satellite')return;
- const version=++textureVersion,instance=world,material=world.globeMaterial();material.visible=false;
- const textureURL=url+'#frame='+version;world.globeImageUrl(textureURL);
- if(world.whenTextureReady)await world.whenTextureReady();
- else await new Promise((resolve,reject)=>{
-  const started=performance.now();
-  function check(){
-   if(version!==textureVersion||instance!==world)return resolve();
-   if(material.map?.image?.src===textureURL)return resolve();
-   if(performance.now()-started>5000)return reject(new Error('The radar texture could not be displayed.'));
-   setTimeout(check,20);
-  }check();
- });
+export async function setSatelliteTexture(url,decodedImage,date=satelliteDate){
+ const instance=world,version=++textureVersion;
+ if(!instance)return;
+ await prepareSatelliteRenderer(instance);
+ const image=decodedImage||new Image();
+ if(!decodedImage){image.src=url;await image.decode();}
  if(version!==textureVersion||instance!==world||globeMode!=='satellite')return;
- // Emission avoids lighting-driven recoloring of the browse mosaic.
- if(material.emissive){if(!material.color)material.color=material.emissive.clone();material.color.set('#000000');material.emissive.set('#ffffff');material.emissiveMap=material.map;material.specular?.set('#000000');material.needsUpdate=true;if(lastRadarTexture&&lastRadarTexture!==material.map)lastRadarTexture.dispose();lastRadarTexture=material.map;}
- else material.color.set('#0b1014');
- material.visible=true;if(routeActive)world.resumeAnimation();recordCamera();
+ satelliteURL=url;satelliteImage=image;satelliteDate=date;drawSatelliteSurface(image);recordCamera();
 }
 export function getGlobeMarkers(){
  if(!world||globeMode!=='satellite'||!stage())return[];
- world.camera?.().updateMatrixWorld();
+ const camera=world.camera?.();if(camera){camera.aspect=world.width()/world.height();camera.updateProjectionMatrix();camera.updateMatrixWorld();}
  const view=world.pointOfView(),box=el('globe-canvas').getBoundingClientRect(),parent=stage().getBoundingClientRect();
  return globeSites.map(site=>{
   const [lng,lat]=site.coordinates,p=world.getScreenCoords?.(lat,lng,.012);
