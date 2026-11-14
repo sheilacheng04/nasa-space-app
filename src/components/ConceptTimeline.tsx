@@ -1,4 +1,5 @@
-import {useEffect,useId,useMemo,useRef,useState} from 'react';
+import type {HistoryMode} from '../selection-url.js';
+import {useEffect,useLayoutEffect,useId,useMemo,useRef,useState} from 'react';
 import {dataFile} from '../api/client';
 import {calendarMonths,conceptSnapshot,illustrativeRainSignal,latestCompleteMonth,monthEnd,oceanAtMonthEnd,previousMonth,readConceptMonth} from '../concept-data';
 import type {ClimateContext,ClimateContexts,ConceptMonthReading,ConceptSnapshot} from '../concept-data';
@@ -7,7 +8,7 @@ import '../concept-timeline.css';
 
 export interface ConceptPlayback {month:string;months:string[];playing:boolean;canPlay:boolean;step:(delta:number)=>void;seek:(month:string)=>void;toggle:()=>void}
 interface Props {
- active:boolean;sites:Site[];enso:Enso;
+ active:boolean;sites:Site[];enso:Enso;requestedMonth?:string;onMonthChange:(month:string,history?:HistoryMode)=>void;navigationKey:number;
  onSnapshot:(snapshot:ConceptSnapshot)=>void;onSelectSite:(site:Site)=>void;onOpenRadar:(date:string)=>void;
  selectedSiteId?:string;radarDates?:string[];waiting?:boolean;onPlaybackChange?:(state:ConceptPlayback|null)=>void;
 }
@@ -60,44 +61,46 @@ function RainfallHistory({site,contexts,months,selected,onSeek}:{site:Site;conte
   </svg><div className="concept-chart-ends"><span>{months[0]&&displayMonth(months[0])}</span><span>{months.at(-1)&&displayMonth(months.at(-1)!)}</span></div>
  </div>;
 }
-export default function ConceptTimeline({active,sites,enso,onSnapshot,onSelectSite,onOpenRadar,selectedSiteId,radarDates=[],waiting=false,onPlaybackChange}:Props){
+export default function ConceptTimeline({active,sites,enso,onSnapshot,onSelectSite,onOpenRadar,selectedSiteId,radarDates=[],waiting=false,onPlaybackChange,requestedMonth,onMonthChange,navigationKey}:Props){
  const [contexts,setContexts]=useState<ClimateContexts|null>(null),[loading,setLoading]=useState(false),[failed,setFailed]=useState<string[]>([]),[attempt,setAttempt]=useState(0);
- const [month,setMonth]=useState(''),[playing,setPlaying]=useState(false),[selection,setSelection]=useState(()=>sites.find(s=>s.id==='angat')?.id||sites.find(s=>s.id==='luzon')?.id||sites[0]?.id||''),[announcement,setAnnouncement]=useState('');
+ const [playing,setPlaying]=useState(false),[announcement,setAnnouncement]=useState('');
+ const setMonth=onMonthChange;
  const callbacks=useRef({onSnapshot,onSelectSite});callbacks.current={onSnapshot,onSelectSite};
- const monthRef=useRef(month);monthRef.current=month;
+ const loadedKey=useRef('');
  const siteKey=sites.map(site=>site.id).join(',');
  useEffect(()=>{
-  if(!active)return;let live=true;setLoading(true);
+  if(!active||loadedKey.current===siteKey+'|'+attempt)return;let live=true;setLoading(true);
   Promise.allSettled(sites.map(site=>dataFile<ClimateContext>('context/'+site.id+'.json'))).then(results=>{
    if(!live)return;
    const next:ClimateContexts={},errors:string[]=[];results.forEach((result,i)=>{next[sites[i].id]=result.status==='fulfilled'?result.value:null;if(result.status==='rejected')errors.push(sites[i].name);});
-   const axis=calendarMonths(next);setContexts(next);setFailed(errors);setLoading(false);
-   if(!axis.includes(monthRef.current))setMonth(latestCompleteMonth(next)||axis.at(-1)||'');
+   loadedKey.current=siteKey+'|'+attempt;setContexts(next);setFailed(errors);setLoading(false);
   });
   return()=>{live=false;};
  },[active,siteKey,attempt]);
- useEffect(()=>{if(selectedSiteId&&sites.some(site=>site.id===selectedSiteId))setSelection(selectedSiteId);},[selectedSiteId,siteKey]);
- const months=useMemo(()=>calendarMonths(contexts||{}),[contexts]),index=months.indexOf(month),site=sites.find(item=>item.id===selection)||sites[0];
+ const months=useMemo(()=>{const axis=calendarMonths(contexts||{});return requestedMonth&&!axis.includes(requestedMonth)?[...axis,requestedMonth].sort():axis;},[contexts,requestedMonth]);
+ const month=requestedMonth||latestCompleteMonth(contexts||{})||months.at(-1)||'',index=months.indexOf(month);
+ const site=sites.find(item=>item.id===selectedSiteId)||sites.find(item=>item.id==='angat')||sites[0];
  const playbackEnd=months.indexOf(latestCompleteMonth(contexts||{})||'');
  const snapshot=useMemo(()=>month&&contexts?conceptSnapshot(sites,contexts,month):null,[month,contexts,sites]);
  const current=useMemo(()=>site&&month?readConceptMonth(site,contexts?.[site.id],month):null,[site,month,contexts]);
  const previous=useMemo(()=>site&&month?readConceptMonth(site,contexts?.[site.id],previousMonth(month)):null,[site,month,contexts]);
  const ocean=useMemo(()=>month?oceanAtMonthEnd(enso.weekly,month):null,[enso.weekly,month]);
- useEffect(()=>{if(active&&snapshot)callbacks.current.onSnapshot(snapshot);},[active,snapshot]);
+ useLayoutEffect(()=>{if(active&&snapshot)callbacks.current.onSnapshot(snapshot);},[active,snapshot]);
  useEffect(()=>{if(!active)setPlaying(false);},[active]);
  useEffect(()=>{
   if(!active||!playing||!months.length||loading||waiting||playbackEnd<0)return;
-  const timer=setTimeout(()=>{if(index>=playbackEnd)setPlaying(false);else setMonth(months[index+1]);},1800);
+  const timer=setTimeout(()=>{if(index>=playbackEnd)setPlaying(false);else setMonth(months[index+1],'replace');},1800);
   return()=>clearTimeout(timer);
  },[active,playing,index,months,loading,waiting,playbackEnd]);
  useEffect(()=>{if(!playing&&month&&current)setAnnouncement(displayMonth(month)+'. '+site.name+'. '+(current.complete?'Complete month. ':'Incomplete or missing month. ')+signalLabel(current)+'.');},[month,current,site,playing]);
  useEffect(()=>{const media=matchMedia('(prefers-reduced-motion: reduce)'),stop=()=>setPlaying(false);media.addEventListener('change',stop);return()=>media.removeEventListener('change',stop);},[]);
- function chooseMonth(next:string){setPlaying(false);setMonth(next);}
+ useEffect(()=>setPlaying(false),[navigationKey]);
+ function chooseMonth(next:string,history:HistoryMode='push'){setPlaying(false);setMonth(next,history);}
  function step(delta:number){if(months.length)chooseMonth(months[Math.max(0,Math.min(months.length-1,index+delta))]);}
- function togglePlay(){if(!months.length||playbackEnd<0)return;if(!playing&&index>=playbackEnd)setMonth(months[0]);setPlaying(value=>!value);}
+ function togglePlay(){if(!months.length||playbackEnd<0)return;if(!playing&&index>=playbackEnd)setMonth(months[0],'replace');setPlaying(value=>!value);}
  useEffect(()=>{onPlaybackChange?.(active&&month?{month,months,playing,canPlay:playbackEnd>=0&&!loading,step,seek:chooseMonth,toggle:togglePlay}:null);},[active,month,months,playing,playbackEnd,loading,onPlaybackChange]);
  const previousYear=(Number(month.slice(0,4))-1)+month.slice(4),nextYear=(Number(month.slice(0,4))+1)+month.slice(4);
- function pickSite(id:string){setSelection(id);const picked=sites.find(item=>item.id===id);if(picked)callbacks.current.onSelectSite(picked);}
+ function pickSite(id:string){const picked=sites.find(item=>item.id===id);if(picked)callbacks.current.onSelectSite(picked);}
  function key(event:React.KeyboardEvent){
   if((event.target as HTMLElement).closest('input:not([type=range]),select,textarea,a,button:not(#concept-play),[role=button]'))return;
   if(event.key===' '){event.preventDefault();event.stopPropagation();togglePlay();}
@@ -112,7 +115,7 @@ export default function ConceptTimeline({active,sites,enso,onSnapshot,onSelectSi
   <div className="concept-time-heading"><div><p className="eyebrow">Land through time / local context</p><h2>Choose a month. Follow the changes.</h2><p>The globe shows real monthly vegetation images. Compare the weather below to explore possible reasons for a change.</p></div><div className="concept-site-picker"><label>Study area<select id="concept-site" value={site?.id||''} onChange={event=>pickSite(event.target.value)}>{sites.map(item=><option key={item.id} value={item.id}>{item.name}</option>)}</select></label><button type="button" onClick={()=>site&&callbacks.current.onSelectSite(site)} aria-label={'Focus '+(site?.name||'study area')+' on globe'}>Focus study area</button></div></div>
   {loading&&!contexts?<p role="status">Loading monthly weather estimates…</p>:!months.length?<div className="concept-empty" role="status"><p>Monthly climate context could not be loaded. No land response has been inferred.</p><button onClick={()=>setAttempt(value=>value+1)}>Retry monthly context</button></div>:current&&previous&&site&&<>
    <div className="concept-calendar-readout"><strong data-testid="concept-date">{displayMonth(month)}</strong><span className={current.complete?'concept-month-complete':'concept-month-incomplete'}>{current.complete?'Complete month':current.availableRainDays===null?'Monthly context unavailable':'Incomplete month · '+current.availableRainDays+' of '+current.expectedDays+' rain days'}</span><span>Monthly window ends {monthEnd(month)}</span>{waiting&&<span className="concept-month-loading" aria-live={playing?'off':'polite'}>Loading vegetation frame...</span>}</div>
-   <div className="concept-time-controls"><button aria-label="Previous concept month" disabled={index<=0} onClick={()=>step(-1)}>← Previous</button><button id="concept-play" aria-pressed={playing} disabled={playbackEnd<0} onClick={togglePlay}>{playing?'Pause months':'Play months'}</button><button aria-label="Next concept month" disabled={index>=months.length-1} onClick={()=>step(1)}>Next →</button><label htmlFor="concept-month-range">Month {index+1} of {months.length}</label><input id="concept-month-range" type="range" min="0" max={Math.max(0,months.length-1)} value={Math.max(0,index)} aria-label="Concept calendar month" aria-valuetext={displayMonth(month)+(current.complete?' complete':' incomplete or unavailable')} onChange={event=>chooseMonth(months[Number(event.target.value)])}/></div>
+   <div className="concept-time-controls"><button aria-label="Previous concept month" disabled={index<=0} onClick={()=>step(-1)}>← Previous</button><button id="concept-play" aria-pressed={playing} disabled={playbackEnd<0} onClick={togglePlay}>{playing?'Pause months':'Play months'}</button><button aria-label="Next concept month" disabled={index>=months.length-1} onClick={()=>step(1)}>Next →</button><label htmlFor="concept-month-range">Month {index+1} of {months.length}</label><input id="concept-month-range" type="range" min="0" max={Math.max(0,months.length-1)} value={Math.max(0,index)} aria-label="Concept calendar month" aria-valuetext={displayMonth(month)+(current.complete?' complete':' incomplete or unavailable')} onChange={event=>chooseMonth(months[Number(event.target.value)],'replace')}/></div>
    <div className="concept-year-rows" aria-label="Choose a calendar month">{[...new Set(months.map(value=>value.slice(0,4)))].map(year=><div key={year}><strong>{year}</strong><div>{months.filter(value=>value.startsWith(year)).map(value=>{const reading=readConceptMonth(site,contexts?.[site.id],value);return <button key={value} aria-pressed={month===value} className={reading.complete?'':'is-missing'} onClick={()=>chooseMonth(value)} title={displayMonth(value)+(reading.complete?'':' · incomplete or unavailable')}>{new Date(value+'-01T00:00:00Z').toLocaleDateString('en',{month:'short',timeZone:'UTC'})}{!reading.complete&&<span aria-hidden="true"> *</span>}</button>;})}</div></div>)}</div>
    <div className="concept-season-compare"><button disabled={!months.includes(previousYear)} onClick={()=>chooseMonth(previousYear)}>← Same month last year</button><button disabled={!months.includes(nextYear)} onClick={()=>chooseMonth(nextYear)}>Same month next year →</button></div>
    <p className="concept-source-note">Greening and browning follow seasonal cycles. Compare the same month across years. Weather estimates (ERA5) combine observations with a weather model; the baseline is the 1991–2020 average for that month. * Incomplete or missing months remain unknown. Playback stops at the latest complete month.</p>

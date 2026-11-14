@@ -24,7 +24,8 @@
     "test:site-timeline": "node scripts/site-timeline-check.mjs",
     "test:weather": "node scripts/weather-browser-check.mjs",
     "test:radar-evidence": "node scripts/radar-evidence-browser-check.mjs",
-    "test:site-map": "node scripts/site-map-browser-check.mjs"
+    "test:site-map": "node scripts/site-map-browser-check.mjs",
+    "test:selections": "node scripts/selection-browser-check.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

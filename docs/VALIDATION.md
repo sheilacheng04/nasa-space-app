@@ -2,6 +2,20 @@
 
 Checked on 14 November 2026 using Windows, Node 25.6.1, Python 3.13.4 and installed Chrome. The project requires Node >=22.12.
 
+## Shareable Sites and Globe selections
+
+Verified on 14 November 2026. **37 Node tests**, TypeScript and the production build passed. The new selection suite passed **9 browser groups including offline**. Existing suites passed **15 general page groups**, **9 site-map groups**, **8 radar-evidence groups**, **6 weather groups**, **12 site-timeline groups**, **17 globe-display groups**, and **19 satellite groups**. Globe-display runs on Vite port 5174 because it imports source modules; other suites ran against production preview on 5175. The satellite route assertion now verifies the globe route and selected-site parameter rather than requiring a parameter-free hash.
+
+URL selection state stays inside existing hash routes. Sites saves source, supported channel, comparison display, selected date or before/after dates. Globe saves mode, selected site, radar date and vegetation month independently. Exact UTC acquisition timestamps are retained when copied from regional views. Legacy aliases remain supported. See [the sharing guide](SHARING.md) for examples and parameter rules.
+
+Focused checks cover direct links, refresh, Back/Forward, invalid/default values, unavailable acquisition dates, missing vegetation months, out-of-archive radar dates, copied Sites/Globe URLs, clipboard failure/manual fallback, same-source no-op clicks, and page navigation. Date changes do not refetch site evidence/weather JSON. Sliders/playback replace history entries, discrete changes add entries, and external navigation pauses playback. Locating a place while already on Globe preserves its mode and dates. Valid absent records remain selected without substitute imagery; unsupported source/view combinations retain requested dates.
+
+Both themes and 390px layouts were checked by existing suites. The share action stays within the globe heading, with feedback outside the fixed grid flow. A focused spacing/viewport assertion and the original satellite bottom-sheet bound both pass. Screenshots were reviewed after correcting the initial grid displacement. Radar pixel preservation, graphics recovery, map synchronization, exact-day optical rules and weather Retry remain covered by their existing suites. No saved scientific data changed.
+
+The regenerated offline edition is **2,984,982 bytes**, below the unchanged 3 MB limit. Embedded real-image data URIs remain **583,548 bytes**. Offline selection, general, radar, weather and satellite checks passed with zero external requests. Offline fragments restore local selections within the embedded subset; Copy link is disabled for the local edition and does not claim file paths are transferable.
+
+Reproduce with PREVIEW_URL=http://127.0.0.1:5175 and CHECK_OFFLINE=1: npm run test:selections. Reports/screenshots are under ignored .artifacts/. Clipboard success and denial were controlled in automation; actual deployed-browser clipboard permissions, physical phones, Safari/Firefox and screen-reader speech still need manual checks. Links identify selections in the current edition, not immutable dataset versions. Camera orientation, imported/private observations, detailed-map controls and playback state are not shared. Backend/Python tests were not rerun because those implementations were unchanged.
+
 ## Detailed site map synchronization
 
 Verified on 14 November 2026 against the production preview in installed Chrome. **31 Node tests**, TypeScript checking and the production build passed. **9 focused site-map browser groups**, **15 general page groups including offline**, **8 radar-evidence groups**, **6 weather groups**, and **12 site-timeline groups** passed. The general browser suite recorded zero console/application errors. Focused map checks recorded zero uncaught application errors and explicitly check MapLibre source errors; intentional request failures exercise recovery.

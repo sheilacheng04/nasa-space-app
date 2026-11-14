@@ -51,6 +51,10 @@ To regenerate the downloadable offline edition, run `npm run demo`. This extra s
 
 Browser checks, setup details and recorded results are in the [validation report](docs/VALIDATION.md).
 
+## Share an evidence view
+
+Choose a view on Sites or Globe, then press **Copy link**. The link restores its relevant source, channel, site and date selections. Missing imagery remains unavailable. If copying is blocked, a selectable link appears. Local offline-file links cannot be shared across devices. See the [sharing guide](docs/SHARING.md) for URL examples and navigation behavior.
+
 ## Understand the images
 
 - **Radar:** real NISAR preview images from NASA/ISRO, distributed through ASF and NASA GIBS. Sites includes 57 saved images across the four study areas. Their colors represent radar reflections, not natural-color photographs.

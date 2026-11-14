@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { bootstrap, errorMessage, hosted } from './api/client';
 import { loadSaved } from './core.js';
 import { initLocalWindow } from './local-window.js';
@@ -11,22 +11,18 @@ import { NewsPage } from './pages/NewsPage';
 import { DataPage } from './pages/DataPage';
 import { MethodPage } from './pages/MethodPage';
 import { EvidenceLead } from './components/EvidenceLead';
-import type { Bootstrap, Observation, Page, Place } from './types';
-const pages:Page[]=['story','sites','globe','media','method'];
-function currentRoute():{page:Page;sub:string;date?:string}{
- const [path,query='']=location.hash.slice(1).split('?');const requested=new URLSearchParams(query).get('date')||'';
- let [page,sub='']=path.split('/');
- if(page==='observatory'&&sub==='globe'){page='globe';sub='';}
- else if(page==='observatory')page='sites';
- else if(page==='news')page='media';
- else if(page==='local'){page='story';sub='local';}
- else if(page==='data'){page='method';sub='my-data';}
- return {page:pages.includes(page as Page)?page as Page:'story',sub,date:/^\d{4}-\d{2}-\d{2}$/.test(requested)?requested:undefined};
-}
+import {readRoute,siteHash,globeHash} from './selection-url.js';
+import type {SiteSelection,GlobeSelection,HistoryMode} from './selection-url.js';
+import type { Bootstrap, Observation, Place } from './types';
+const currentRoute=()=>readRoute(location.hash);
 export function App(){
  const [route,setRoute]=useState(currentRoute),[data,setData]=useState<Bootstrap|null>(null),[failure,setFailure]=useState(''),[attempt,setAttempt]=useState(0);
  const [points,setPoints]=useState<Observation[]>(loadSaved),[search,setSearch]=useState(false),[place,setPlace]=useState<Place|null>(null);
- useEffect(()=>{const changed=()=>setRoute(currentRoute());addEventListener('hashchange',changed);return()=>removeEventListener('hashchange',changed);},[]);
+ const lastHash=useRef(location.hash),[navigationKey,setNavigationKey]=useState(0);
+ useEffect(()=>{const changed=()=>{if(lastHash.current===location.hash)return;lastHash.current=location.hash;setRoute(currentRoute());setNavigationKey(n=>n+1);};addEventListener('hashchange',changed);addEventListener('popstate',changed);return()=>{removeEventListener('hashchange',changed);removeEventListener('popstate',changed);};},[]);
+ const writeHash=useCallback((hash:string,mode:HistoryMode='push')=>{if(location.hash===hash)return;history[mode==='replace'?'replaceState':'pushState'](null,'',hash);lastHash.current=hash;setRoute(currentRoute());},[]);
+ const selectSite=useCallback((siteId:string,selection:SiteSelection,mode:HistoryMode='push')=>{if(currentRoute().page==='sites')writeHash(siteHash(siteId,selection),mode);},[writeHash]);
+ const selectGlobe=useCallback((selection:GlobeSelection,mode:HistoryMode='push')=>{if(currentRoute().page==='globe')writeHash(globeHash(selection),mode);},[writeHash]);
  useEffect(()=>{let live=true;bootstrap().then(d=>{if(live)setData(d);}).catch(e=>{if(live)setFailure(errorMessage(e));});return()=>{live=false;};},[attempt]);
  useEffect(()=>{if(data)initLocalWindow();},[data]);
  useEffect(()=>{
@@ -43,15 +39,15 @@ export function App(){
  <main id="main" tabIndex={-1}>
  {!data?<div className="wrap" role="status"><p>{failure||'Loading the field journal…'}</p>{failure&&<button onClick={()=>setAttempt(n=>n+1)}>Retry</button>}</div>:<>
  <StoryPage active={route.page==='story'} data={data}/>
- <SitesPage active={route.page==='sites'} site={site!} sites={data.sites} requestedDate={route.date}/>
+ <SitesPage active={route.page==='sites'} site={site!} sites={data.sites} selection={route.siteSelection} onSelection={selectSite} navigationKey={navigationKey}/>
  <div hidden={route.page!=='globe'} className="globe-evidence"><EvidenceLead evidence={data.evidence?.[0]}/></div>
- <GlobePage active={route.page==='globe'} sites={data.sites} points={points} place={place} enso={data.enso} news={data.news}/>
+ <GlobePage active={route.page==='globe'} sites={data.sites} points={points} place={place} enso={data.enso} news={data.news} selection={route.globeSelection} onSelection={selectGlobe} navigationKey={navigationKey}/>
  <div hidden={route.page!=='media'} className="wrap compact"><EvidenceLead evidence={data.evidence?.[0]}/></div>
  <NewsPage active={route.page==='media'} news={data.news}/>
  <MethodPage active={route.page==='method'} data={data}/>
  <div hidden={route.page!=='method'} className="wrap"><details id="my-data" className="optional-data"><summary>Optional: add your own observations</summary><DataPage active={route.page==='method'} points={points} update={update}/></details></div>
  </>}
  </main><footer className="site-footer wrap"><a className="footer-brand" href="#story">The Two-Faced Pacific</a><p>A changing ocean. A closer look at life on land.</p><a href="#story/local">Community perspectives</a><a href="#method">Sources and limits ↗</a><span className="mono">NASA Space Apps / 2026</span></footer>
- {data&&<Search open={search} close={()=>setSearch(false)} data={data} locate={found=>{setPlace(found);location.hash='globe';}}/>}
+ {data&&<Search open={search} close={()=>setSearch(false)} data={data} locate={found=>{setPlace(found);if(currentRoute().page!=='globe')location.hash='globe';}}/>}
  </>;
 }

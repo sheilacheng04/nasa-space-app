@@ -9,6 +9,9 @@ import '../satellite.css';
 import ConceptTimeline from './ConceptTimeline';
 import type { ConceptPlayback } from './ConceptTimeline';
 import ConceptVegetation from './ConceptVegetation';
+import {globeHash,frameIndex,includeDates} from '../selection-url.js';
+import type {GlobeSelection,HistoryMode} from '../selection-url.js';
+import {ShareLink} from './ShareLink';
 import type { ConceptSnapshot } from '../concept-data';
 
 const marker=<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v5m0 12v5M1 12h5m12 0h5"/></svg>;
@@ -28,23 +31,34 @@ function OceanStrip({enso,news,frame,start,end}:{enso:Enso;news:News;frame?:Glob
  {events.map(n=><a key={n.id} href={n.url} target="_blank" rel="noopener" aria-label={'Reporting on '+n.date+': '+n.title}><circle cx={x(n.date)} cy="66" r="3" fill="var(--muted)"/><title>{n.date+' · '+n.title+' · '+n.source}</title></a>)}
  </svg><p className="strip-note"><a href={enso.url} target="_blank" rel="noopener">Source: NOAA CPC</a> · Niño 3.4 ocean region. News dots link to reporting, not independently confirmed events. Latest preceding weekly reading; no interpolation.</p></div>;
 }
-export default function GlobeExperience({active,sites,points,place,enso,news}:{active:boolean;sites:Site[];points:Observation[];place:Place|null;enso:Enso;news:News}){
+export default function GlobeExperience({active,sites,points,place,enso,news,selection,onSelection,navigationKey}:{active:boolean;sites:Site[];points:Observation[];place:Place|null;enso:Enso;news:News;selection:GlobeSelection;onSelection:(selection:GlobeSelection,history?:HistoryMode)=>void;navigationKey:number}){
  const [manifest,setManifest]=useState<GlobeManifest|null>(null),[manifestError,setManifestError]=useState(''),[retryManifest,setRetryManifest]=useState(0);
- const [mode,setMode]=useState<'satellite'|'concept'>('satellite'),[layerId,setLayerId]=useState(''),[index,setIndex]=useState(0),[playing,setPlaying]=useState(false),[speed,setSpeed]=useState(1),[loop,setLoop]=useState(false);
+ const mode=selection.mode||'satellite',selected=sites.find(site=>site.id===selection.site)||null;
+ const latestSelection=useRef(selection);latestSelection.current=selection;
+ const change=useCallback((patch:GlobeSelection,history:HistoryMode='push')=>{if(Object.entries(patch).some(([key,value])=>latestSelection.current[key as keyof GlobeSelection]!==value))onSelection({...latestSelection.current,...patch},history);},[onSelection]);
+ const setMode=(mode:GlobeSelection['mode'])=>change({mode});
+ const setSelected=useCallback((site:Site)=>change({site:site.id}),[change]);
+ const [layerId,setLayerId]=useState(''),[playing,setPlaying]=useState(false),[speed,setSpeed]=useState(1),[loop,setLoop]=useState(false);
  const [context,setContext]=useState(true),[basemap,setBasemap]=useState('loading');
  const [concept,setConcept]=useState<ConceptSnapshot|null>(null),[vegetationStatus,setVegetationStatus]=useState('loading');
  const [monthPlayback,setMonthPlayback]=useState<ConceptPlayback|null>(null);
  const receiveConcept=useCallback((snapshot:ConceptSnapshot)=>{setConcept(snapshot);setConceptSnapshot(snapshot);},[]);
- const focusConceptSite=useCallback((site:Site)=>{setSelected(site);flyTo(...site.coordinates,1.2);},[]);
+ const focusConceptSite=useCallback((site:Site)=>{setSelected(site);flyTo(...site.coordinates,1.2);},[setSelected]);
  const [ready,setReady]=useState(false),[status,setStatus]=useState('loading'),[message,setMessage]=useState('Loading the real GIBS date record…'),[retry,setRetry]=useState(0),[announcement,setAnnouncement]=useState('');
- const [loaded,setLoaded]=useState<LoadedFrame|null>(null),[selected,setSelected]=useState<Site|null>(null),[crop,setCrop]=useState({url:'',note:''}),[cropRetry,setCropRetry]=useState(0),[pins,setPins]=useState<{id:string;x:number;y:number;visible:boolean}[]>([]);
+ const [loaded,setLoaded]=useState<LoadedFrame|null>(null),[crop,setCrop]=useState({url:'',note:''}),[cropRetry,setCropRetry]=useState(0),[pins,setPins]=useState<{id:string;x:number;y:number;visible:boolean}[]>([]);
  const cache=useRef(new FrameCache()),playingRef=useRef(playing),modeRef=useRef(mode);playingRef.current=playing;modeRef.current=mode;
  const section=useRef<HTMLDivElement>(null),initialFocus=useRef(false);
- const layer=manifest?.layers[layerId],frames=layer?.frames||[],frame=frames[index];
+ const layer=manifest?.layers[layerId];
+ const frames=useMemo(()=>includeDates<GlobeFrame>(layer?.frames||[],[selection.date],date=>({date,layer:layerId,status:'no-data',maturity:'not available',maturityWindow:'not available',reason:'This requested date is not in the saved date record; live availability is unverified.'})),[layer,layerId,selection.date]);
+ const requestedOutside=Boolean(selection.date&&layer&&frameIndex(layer.frames,selection.date)<0);
+ const found=frameIndex(frames,selection.date),index=found>=0?found:Math.max(0,frames.length-1),frame=frames[index];
+ latestSelection.current={...selection,mode,date:selection.date||frame?.date,month:selection.month||concept?.month};
+ function setIndex(next:number|((index:number)=>number),history:HistoryMode='replace'){const target=frames[typeof next==='function'?next(index):next];if(target)change({date:target.date},history);}
+ const setMonth=useCallback((month:string,history:HistoryMode='push')=>change({month},history),[change]);
  const currentFrame=useRef(frame);currentFrame.current=frame;
  const bestIndex=useMemo(()=>frames.reduce((best,f,i)=>(f.nontransparentPixels||0)>(frames[best]?.nontransparentPixels||0)?i:best,0),[frames]);
  const dates=useMemo(()=>frames.map(f=>time(f.date)),[frames]),range=dates.length?dates.at(-1)!-dates[0]:1;
- useEffect(()=>{let live=true;setManifestError('');dataFile<GlobeManifest>('globe/manifest.json').then(m=>{if(!live)return;setManifest(m);setLayerId(m.defaultLayer);setIndex(m.layers[m.defaultLayer].frames.length-1);}).catch(()=>{if(live){setManifestError('The NISAR date manifest could not be loaded.');setStatus('error');}});return()=>{live=false;};},[retryManifest]);
+ useEffect(()=>{let live=true;setManifestError('');dataFile<GlobeManifest>('globe/manifest.json').then(m=>{if(!live)return;setManifest(m);setLayerId(m.defaultLayer);}).catch(()=>{if(live){setManifestError('The NISAR date manifest could not be loaded.');setStatus('error');}});return()=>{live=false;};},[retryManifest]);
  useEffect(()=>{setGlobePoints(sites,points);},[sites,points]);
  useEffect(()=>{
   let current=true;
@@ -53,22 +67,22 @@ export default function GlobeExperience({active,sites,points,place,enso,news}:{a
   return()=>{current=false;pauseGlobe();closeLocalWindow();};
  },[active,sites]);
  useEffect(()=>{if(ready&&active&&place)flyTo(...place.geometry.coordinates);},[ready,active,place]);
- useEffect(()=>{setPlaying(false);if(ready){setGlobeMode(mode);if(mode==='satellite'&&loaded)void setSatelliteTexture(loaded.url,loaded.image,loaded.date).catch(()=>{setStatus('error');setMessage('The radar texture could not be displayed.');});}},[mode,ready]);
+ useEffect(()=>{setPlaying(false);if(ready){setGlobeMode(mode);if(mode==='satellite'&&loaded&&loaded.date===frame?.date)void setSatelliteTexture(loaded.url,loaded.image,loaded.date).catch(()=>{setStatus('error');setMessage('The radar texture could not be displayed.');});}},[mode,ready]);
  useEffect(()=>{
   let pinTick=0;const update=()=>{cancelAnimationFrame(pinTick);pinTick=requestAnimationFrame(()=>setPins(getGlobeMarkers()));};
   const select=(e:Event)=>{const id=(e as CustomEvent).detail?.id;const site=sites.find(s=>s.id===id);if(site){setSelected(site);flyTo(...site.coordinates,.65);}};
   addEventListener('globe:camera',update);addEventListener('globe:select-site',select);
   if(ready)update();return()=>{cancelAnimationFrame(pinTick);removeEventListener('globe:camera',update);removeEventListener('globe:select-site',select);};
- },[ready,sites,mode]);
+ },[ready,sites,mode,setSelected]);
  useLayoutEffect(()=>{
   if(!ready||!active||!frame)return;let live=true;hideSatelliteTexture();setLoaded(null);setStatus('loading');setMessage('Loading '+frame.date+'…');
   if(frame.status==='no-data'||frame.status==='empty'){
-   setStatus('gap');setMessage(frame.status==='no-data'?'No data. GIBS does not advertise this date.':'No coverage in this global mosaic.');if(!playingRef.current)setAnnouncement(frame.date+'. No data.');return;
+   setStatus('gap');setMessage(frame.reason||(frame.status==='no-data'?'No data. GIBS does not advertise this date.':'No coverage in this global mosaic.'));if(!playingRef.current)setAnnouncement(frame.date+'. No data.');return;
   }
   cache.current.load(frame,true).then(async result=>{
    if(!live)return;if(modeRef.current==='satellite')await setSatelliteTexture(result.url,result.image,result.date);
    if(!live)return;setLoaded(result);setStatus('ready');setMessage((result.origin==='live GIBS'?'Live NASA GIBS':result.origin==='saved GIBS frame'?'Saved NASA GIBS frame':'Offline NASA GIBS frame')+' · false color, not calibrated');
-   if(modeRef.current==='satellite'&&!initialFocus.current&&!place){initialFocus.current=true;if(frame.focus)flyTo(frame.focus.lng,frame.focus.lat,1.5);}
+   if(modeRef.current==='satellite'&&!initialFocus.current&&!place&&!selected){initialFocus.current=true;if(frame.focus)flyTo(frame.focus.lng,frame.focus.lat,1.5);}
    if(!playingRef.current)setAnnouncement(frame.date+'. '+frame.maturityWindow+'. Pixel maturity not available.');
   }).catch(error=>{if(live){setStatus('error');setMessage(error.message);setPlaying(false);setAnnouncement(frame.date+'. Imagery unavailable.');}});
   return()=>{live=false;};
@@ -86,14 +100,14 @@ export default function GlobeExperience({active,sites,points,place,enso,news}:{a
   const media=matchMedia('(prefers-reduced-motion: reduce)'),stop=()=>setPlaying(false);
   media.addEventListener('change',stop);return()=>media.removeEventListener('change',stop);
  },[]);
- useEffect(()=>{
+ useLayoutEffect(()=>{
   if(!selected||!frame||status!=='ready'){setCrop({url:'',note:status==='gap'?'No NISAR image for this date.':'Select a loaded frame to view the current-date crop.'});return;}
   let live=true,objectURL='';setCrop({url:'',note:'Loading current-date site crop…'});
   void siteCrop(frame,selected.bbox,loaded||undefined).then(result=>{if(result.url.startsWith('blob:'))objectURL=result.url;if(live)setCrop(result);else if(objectURL)URL.revokeObjectURL(objectURL);}).catch(()=>{if(live)setCrop({url:'',note:'Current-date crop unavailable. Retry or open Sites.'});});
   return()=>{live=false;if(objectURL)URL.revokeObjectURL(objectURL);};
  },[selected,frame,status,loaded,cropRetry]);
  useEffect(()=>()=>cache.current.clear(),[]);
- function seek(next:number){setPlaying(false);setIndex(Math.max(0,Math.min(frames.length-1,next)));}
+ function seek(next:number,history:HistoryMode='push'){setPlaying(false);setIndex(Math.max(0,Math.min(frames.length-1,next)),history);}
  function togglePlay(){if(!frames.length||status==='error')return;if(!playing&&index===frames.length-1)setIndex(0);setPlaying(!playing);}
  function selectSite(site:Site){setSelected(site);flyTo(...site.coordinates,.65);}
  function key(e:React.KeyboardEvent){
@@ -105,21 +119,23 @@ export default function GlobeExperience({active,sites,points,place,enso,news}:{a
  }
  useEffect(()=>{setGeographicContext(context);},[context,ready]);
  useEffect(()=>{const update=()=>setBasemap(document.getElementById('globe-stage')?.dataset.basemap||'loading');addEventListener('globe:basemap',update);update();return()=>removeEventListener('globe:basemap',update);},[ready]);
- const openConceptRadar=useCallback((date:string)=>{const found=frames.findIndex(f=>f.date===date);if(found>=0){setPlaying(false);setIndex(found);setMode('satellite');}},[frames]);
+ const openConceptRadar=useCallback((date:string)=>{setPlaying(false);change({date,mode:'satellite'});},[change]);
+ useEffect(()=>setPlaying(false),[navigationKey]);
+ useEffect(()=>{if(active&&ready&&selected)flyTo(...selected.coordinates,mode==='concept'?1.2:.65);},[active,ready,selected?.id]);
  const gap=manifest?.gap;
  const conceptPin=pins.find(p=>p.id===(selected?.id||'angat')&&p.visible),conceptReading=concept?.sites.find(s=>s.id===conceptPin?.id);
  return <div className="satellite-page" data-view-mode={mode} ref={section} onKeyDownCapture={key}>
- <div className="satellite-heading"><div><p className="eyebrow">Earth / a record through time</p><h1>{mode==='satellite'?'Earth through time':'Seasons seen from space'}</h1></div><div className="mode-switch" role="group" aria-label="Globe mode"><button id="satellite-mode" aria-pressed={mode==='satellite'} onClick={()=>setMode('satellite')}>Radar observations</button><button id="concept-mode" aria-pressed={mode==='concept'} onClick={()=>setMode('concept')}>Land through time</button></div></div>
+ <div className="satellite-heading"><div><p className="eyebrow">Earth / a record through time</p><h1>{mode==='satellite'?'Earth through time':'Seasons seen from space'}</h1></div><div className="globe-heading-controls"><div className="mode-switch" role="group" aria-label="Globe mode"><button id="satellite-mode" aria-pressed={mode==='satellite'} onClick={()=>setMode('satellite')}>Radar observations</button><button id="concept-mode" aria-pressed={mode==='concept'} onClick={()=>setMode('concept')}>Land through time</button></div><ShareLink hash={globeHash({mode,site:selected?.id||(mode==='concept'?(sites.find(s=>s.id==='angat')||sites[0])?.id:undefined),date:frame?.date,month:selection.month||concept?.month})}/>{selection.site&&!selected&&<p role="status">Requested study site is not in this edition. {mode==='concept'?'The default study area is shown.':'No site crop is selected.'}</p>}</div></div>
  <p className="coverage-note">{mode==='satellite'?"Play dated radar images. Colored strips show where the satellite observed Earth; coverage changes with each date.":'Play real monthly satellite images to follow vegetation greening and browning. Compare seasons and local weather, then explore possible explanations.'}</p>
  <div className="globe-content"><div className="globe-visual">
  <div id="globe-stage" data-mode={mode} data-frame-status={status} className="satellite-stage">
  <div id="globe-canvas"/><p id="globe-status" className="globe-status" role="status">Loading globe…</p>
- <div className="frame-badge" data-testid="frame-badge">{mode==='satellite'?<><span>{frame?.date||'Date not available'} | radar image date</span><strong>Colored strips show radar coverage</strong><small>NASA–ISRO NISAR · image and processing details below</small></>:<><span>{concept?.month||'Loading monthly record...'} | monthly satellite image</span><strong>Vegetation greenness</strong><small>Site markers show rainfall compared with usual</small></>}</div>
+ <div className="frame-badge" data-testid="frame-badge">{mode==='satellite'?<><span>{frame?.date||'Date not available'} | radar image date</span><strong>Colored strips show radar coverage</strong><small>NASA–ISRO NISAR · image and processing details below</small></>:<><span>{selection.month||concept?.month||'Loading monthly record...'} | monthly satellite image</span><strong>Vegetation greenness</strong><small>Site markers show rainfall compared with usual</small></>}</div>
  <p className="satellite-context-source">{context||mode==='concept'?basemap==='ready'?<><a href="https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/" target="_blank" rel="noopener">NASA Earth Observatory / Blue Marble</a> | historical 2004 optical reference | not the selected date</>:basemap==='loading'?'Loading saved satellite basemap...':'Natural Earth geographic fallback | satellite basemap unavailable':'Satellite basemap hidden'}</p>
  {mode==='concept'&&conceptPin&&conceptReading&&<div className="sat-marker-layer concept-marker-layer"><button className={'concept-selected-marker '+conceptReading.signal} style={{left:conceptPin.x,top:conceptPin.y}} aria-label={'Focus '+conceptReading.name} onClick={()=>{const site=sites.find(s=>s.id===conceptPin.id);if(site)focusConceptSite(site);}}>{marker}<span>{conceptReading.name}<small>{conceptReading.rainAnomaly===null?'Rainfall unavailable':(conceptReading.rainAnomaly>0?'+':'')+conceptReading.rainAnomaly.toFixed(1)+' mm rainfall departure'}</small></span></button></div>}
  {mode==='satellite'&&<><div className="sat-marker-layer">{pins.filter(p=>p.visible).map(p=>{const site=sites.find(s=>s.id===p.id)!;return <button key={p.id} style={{left:p.x,top:p.y}} title={site.name} aria-label={'Explore '+site.name} onClick={()=>selectSite(site)}>{marker}</button>;})}</div>
  {status==='loading'&&<div className="frame-overlay">Loading NISAR for {frame?.date}... Satellite basemap remains visible.</div>}
- {status==='gap'&&<div className="frame-overlay gap-overlay"><strong>No NISAR data | {frame?.date}</strong><small>Showing the historical satellite basemap. No radar is carried across this gap.</small></div>}
+ {status==='gap'&&<div className="frame-overlay gap-overlay"><strong>{requestedOutside?'No saved NISAR image':'No NISAR data'} | {frame?.date}</strong><small>Showing the historical satellite basemap. No radar is carried across this gap.</small></div>}
  {(status==='error'||manifestError)&&<div className="failure-copy">NISAR imagery unavailable for this date. The reference Earth stays visible.<br/><button onClick={()=>{if(manifestError)setRetryManifest(n=>n+1);else{if(frame)cache.current.invalidate(frame);setRetry(n=>n+1);}}}>Retry imagery</button></div>}
  </>}
  </div>
@@ -127,23 +143,23 @@ export default function GlobeExperience({active,sites,points,place,enso,news}:{a
  {mode==='satellite'?<>
   <div className="globe-time-actions"><button aria-label="Previous frame" disabled={!frames.length||index===0} onClick={()=>seek(index-1)}>←</button><button id="sat-play" aria-pressed={playing} disabled={!frames.length||status==='error'} onClick={togglePlay}>{playing?'Pause radar dates':'Play radar dates'}</button><button aria-label="Next frame" disabled={!frames.length||index===frames.length-1} onClick={()=>seek(index+1)}>→</button><label>Go to date<input id="radar-calendar-date" type="date" min={frames[0]?.date} max={frames.at(-1)?.date} value={frame?.date||''} disabled={!frames.length} onChange={e=>{const next=frames.findIndex(f=>f.date===e.target.value);if(next>=0)seek(next);}}/></label></div>
   <label className="scrubber-label" htmlFor="satellite-scrubber">Radar date {frames.length?index+1:0} of {frames.length}<span>{status==='loading'?'Loading selected image…':frame?.date}</span></label>
-  <input id="satellite-scrubber" type="range" min="0" max={Math.max(0,frames.length-1)} value={index} disabled={!frames.length} aria-valuetext={frame?frame.date+' '+frame.maturityWindow+' '+status:'Not available'} onChange={e=>seek(Number(e.target.value))}/>
+  <input id="satellite-scrubber" type="range" min="0" max={Math.max(0,frames.length-1)} value={index} disabled={!frames.length} aria-valuetext={frame?frame.date+' '+frame.maturityWindow+' '+status:'Not available'} onChange={e=>seek(Number(e.target.value),'replace')}/>
   <p>{frames[0]?.date} → {frames.at(-1)?.date} · Missing dates stay empty.</p>
  </>:<>
   <div className="globe-time-actions"><button aria-label="Previous vegetation month" disabled={!monthPlayback||monthPlayback.month===monthPlayback.months[0]} onClick={()=>monthPlayback?.step(-1)}>←</button><button id="land-play" aria-pressed={!!monthPlayback?.playing} disabled={!monthPlayback?.canPlay} onClick={()=>monthPlayback?.toggle()}>{monthPlayback?.playing?'Pause months':'Play months'}</button><button aria-label="Next vegetation month" disabled={!monthPlayback||monthPlayback.month===monthPlayback.months.at(-1)} onClick={()=>monthPlayback?.step(1)}>→</button><label>Go to month<input id="vegetation-calendar-month" type="month" min={monthPlayback?.months[0]} max={monthPlayback?.months.at(-1)} value={monthPlayback?.month||''} disabled={!monthPlayback} onChange={e=>{if(monthPlayback?.months.includes(e.target.value))monthPlayback.seek(e.target.value);}}/></label></div>
   <p>{monthPlayback?.months[0]} → {monthPlayback?.months.at(-1)} · {vegetationStatus==='loading'?'Waiting for the selected image…':'Monthly images reveal seasonal greening and browning.'}</p>
  </>}
  </div>
- <ConceptVegetation active={active&&mode==='concept'} month={concept?.month||''} onStatus={setVegetationStatus}/>
+ <ConceptVegetation active={active&&mode==='concept'} month={selection.month||concept?.month||''} onStatus={setVegetationStatus}/>
  </div>
- <ConceptTimeline onPlaybackChange={setMonthPlayback} waiting={vegetationStatus==='loading'} active={active&&mode==='concept'} sites={sites} enso={enso} selectedSiteId={selected?.id} radarDates={frames.filter(f=>f.status==='ready').map(f=>f.date)} onSnapshot={receiveConcept} onSelectSite={focusConceptSite} onOpenRadar={openConceptRadar}/>
+ <ConceptTimeline requestedMonth={selection.month} onMonthChange={setMonth} navigationKey={navigationKey} onPlaybackChange={setMonthPlayback} waiting={vegetationStatus==='loading'} active={active&&mode==='concept'} sites={sites} enso={enso} selectedSiteId={selected?.id} radarDates={frames.filter(f=>f.status==='ready').map(f=>f.date)} onSnapshot={receiveConcept} onSelectSite={focusConceptSite} onOpenRadar={openConceptRadar}/>
  </div>
  <div className="satellite-workspace" hidden={mode!=='satellite'}>
  <section className="playback-sheet" aria-label="Radar playback options and evidence">
  <div className="satellite-map-options"><label><input type="checkbox" checked={context} onChange={e=>setContext(e.target.checked)}/>Satellite basemap</label><button disabled={!frame?.focus||status!=='ready'} onClick={()=>{if(frame?.focus)flyTo(frame.focus.lng,frame.focus.lat,1.6);}}>Find this frame</button><button onClick={()=>{seek(bestIndex);const focus=frames[bestIndex]?.focus;if(focus)flyTo(focus.lng,focus.lat,1.5);}}>Show more radar coverage</button><button onClick={()=>seek(frames.length-1)}>Latest date</button></div>
  <p className="satellite-coverage-info">{context?'The natural-color Earth is a saved NASA satellite composite. Colored strips are the selected NISAR date only.':'Satellite basemap hidden. Only dated NISAR radar strips are shown.'} Daily radar coverage is partial; use Show more radar coverage to explore a fuller recorded day.</p>
  <div className="frame-readout" data-testid="frame-readout"><strong>{frame?.date||'Date not available'}</strong><span>Radar image {frames.length?index+1:0} of {frames.length}</span><span>Compare coverage, then inspect a place.</span></div>
- <div className="playback-controls"><label>Speed<select aria-label="Playback speed" value={speed} onChange={e=>setSpeed(Number(e.target.value))}>{[1,2,4].map(s=><option value={s} key={s}>{s}×</option>)}</select></label><label><input type="checkbox" checked={loop} onChange={e=>setLoop(e.target.checked)}/>Loop</label><label>Mosaic<select aria-label="NISAR mosaic layer" value={layerId} onChange={e=>{const next=manifest!.layers[e.target.value];setPlaying(false);setLayerId(e.target.value);const exact=next.frames.findIndex(f=>f.date===frame?.date);setIndex(exact>=0?exact:next.frames.length-1);}}><option value={manifest?.defaultLayer.endsWith('_12Day')?manifest?.defaultLayer.replace('_12Day',''):manifest?.defaultLayer||''}>Daily mosaic</option><option value="NISAR_L2_Geocoded_Polarimetric_Covariance_12Day" disabled={!manifest?.rollingAvailable}>12-day rolling{manifest?.rollingAvailable?'':' · not available'}</option></select></label></div>
+ <div className="playback-controls"><label>Speed<select aria-label="Playback speed" value={speed} onChange={e=>setSpeed(Number(e.target.value))}>{[1,2,4].map(s=><option value={s} key={s}>{s}×</option>)}</select></label><label><input type="checkbox" checked={loop} onChange={e=>setLoop(e.target.checked)}/>Loop</label><label>Mosaic<select aria-label="NISAR mosaic layer" value={layerId} onChange={e=>{const next=manifest!.layers[e.target.value];setPlaying(false);setLayerId(e.target.value);const exact=next.frames.findIndex(f=>f.date===frame?.date);change({date:next.frames[exact>=0?exact:next.frames.length-1]?.date});}}><option value={manifest?.defaultLayer.endsWith('_12Day')?manifest?.defaultLayer.replace('_12Day',''):manifest?.defaultLayer||''}>Daily mosaic</option><option value="NISAR_L2_Geocoded_Polarimetric_Covariance_12Day" disabled={!manifest?.rollingAvailable}>12-day rolling{manifest?.rollingAvailable?'':' · not available'}</option></select></label></div>
  <div className={'loading-line '+(status==='loading'?'is-loading':'')} aria-hidden="true"/>
  {layer&&<><div className="maturity-timeline" aria-label="Documented release windows and date availability">
  {manifest!.maturityWindows.map((w,i)=>{const lo=Math.max(time(w.start),dates[0]),hi=Math.min(time(w.end||layer.end),dates.at(-1)!);return hi>=lo?<a key={w.label} href={w.source} target="_blank" rel="noopener" className={'maturity-segment maturity-'+i} style={{left:(lo-dates[0])/range*100+'%',width:Math.max(.4,(hi-lo)/range*100)+'%'}} title={w.label+' release window; not pixel lineage'}>{w.label}</a>:null;})}

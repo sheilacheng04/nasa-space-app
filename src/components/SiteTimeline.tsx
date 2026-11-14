@@ -1,3 +1,4 @@
+import type {HistoryMode} from '../selection-url.js';
 import {useEffect,useLayoutEffect,useMemo,useState} from 'react';
 import type {KeyboardEvent} from 'react';
 import {assetURL,safeURL} from '../core.js';
@@ -9,8 +10,8 @@ import '../site-timeline.css';
 export interface SiteTimelineFrame {
  date:string;image?:string;url?:string;status?:string;reason?:string;parameters?:{BBOX?:string};
 }
-export function SiteTimeline({siteName,frames,index,onIndexChange,active,scenes}:{
- siteName:string;frames:SiteTimelineFrame[];index:number;onIndexChange:(index:number)=>void;active:boolean;scenes?:RadarRecord[];
+export function SiteTimeline({siteName,frames,index,onIndexChange,active,scenes,navigationKey}:{
+ siteName:string;frames:SiteTimelineFrame[];index:number;onIndexChange:(index:number,history?:HistoryMode)=>void;active:boolean;navigationKey:number;scenes?:RadarRecord[];
 }){
  const [playing,setPlaying]=useState(false),[speed,setSpeed]=useState(1),[availableOnly,setAvailableOnly]=useState(true),[retry,setRetry]=useState(0);
  const [loaded,setLoaded]=useState<{key:string;url:string}|null>(null),[load,setLoad]=useState<{key:string;status:string}>({key:'',status:'loading'});
@@ -37,6 +38,7 @@ export function SiteTimeline({siteName,frames,index,onIndexChange,active,scenes}
   return()=>{current=false;clearTimeout(timer);image.removeAttribute('src');};
  },[key,frame,active,retry,url]);
  useEffect(()=>{if(!active)setPlaying(false);},[active]);
+ useEffect(()=>setPlaying(false),[navigationKey]);
  useEffect(()=>{
   const media=matchMedia('(prefers-reduced-motion: reduce)');
   const pause=()=>setPlaying(false),visibility=()=>{if(document.hidden)pause();};
@@ -46,10 +48,10 @@ export function SiteTimeline({siteName,frames,index,onIndexChange,active,scenes}
  useEffect(()=>{
   if(!playing||!active||status==='loading'||status==='error')return;
   if(next===undefined){setPlaying(false);return;}
-  const timer=setTimeout(()=>onIndexChange(next),1800/speed);
+  const timer=setTimeout(()=>onIndexChange(next,'replace'),1800/speed);
   return()=>clearTimeout(timer);
  },[playing,active,status,next,index,speed,onIndexChange]);
- function seek(i:number){setPlaying(false);onIndexChange(Math.max(0,Math.min(frames.length-1,i)));}
+ function seek(i:number,history:HistoryMode='push'){setPlaying(false);onIndexChange(Math.max(0,Math.min(frames.length-1,i)),history);}
  function play(){
   if(playing){setPlaying(false);return;}
   if(!steps.length)return;
@@ -78,7 +80,7 @@ export function SiteTimeline({siteName,frames,index,onIndexChange,active,scenes}
    <label>Speed<select aria-label="Site playback speed" value={speed} onChange={e=>setSpeed(Number(e.target.value))}>{[1,2,4].map(v=><option key={v} value={v}>{v}x</option>)}</select></label>
    <label><input type="checkbox" checked={availableOnly} onChange={e=>{setPlaying(false);setAvailableOnly(e.target.checked);}}/>Available images only</label>
   </div>
-  <label className="timeline-control" htmlFor="site-date-slider">Choose a sampled date <output>{frame?.date||'Unavailable'}</output><input id="site-date-slider" type="range" min="0" max={Math.max(0,frames.length-1)} value={index} disabled={!frames.length} aria-valuetext={(frame?.date||'No date')+' / '+status} onChange={e=>seek(Number(e.target.value))}/></label>
+  <label className="timeline-control" htmlFor="site-date-slider">Choose a sampled date <output>{frame?.date||'Unavailable'}</output><input id="site-date-slider" type="range" min="0" max={Math.max(0,frames.length-1)} value={index} disabled={!frames.length} aria-valuetext={(frame?.date||'No date')+' / '+status} onChange={e=>seek(Number(e.target.value),'replace')}/></label>
   <div className="acquisition-strip site-time-dates" aria-label="Sampled image dates">{frames.map((f,i)=><button key={f.date} className={usable(f)?'has-data':'no-data'} aria-pressed={index===i} title={f.date+(usable(f)?' / available':' / unavailable')} aria-label={'Select '+f.date+(usable(f)?', available image':', no image available')} onClick={()=>seek(i)}/>)}</div>
   <div className="site-time-readout"><span>{frames[0]?.date}</span><span>{frames.at(-1)?.date}</span></div>
   <p className="source-line">{availableOnly?'Playback steps through available images; gaps remain marked in gray.':'Playback includes unavailable sampled dates as gap cards.'} {available.length} images available{!hosted?' in this offline edition':''}. Steps are observations, not equal intervals of time.</p>

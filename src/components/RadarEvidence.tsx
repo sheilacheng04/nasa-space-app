@@ -8,35 +8,42 @@ import { SiteTimeline } from './SiteTimeline';
 import {knownMetadata,footprintOverlap,coverageExplanation,radarMetadata,radarUnavailable,comparisonGuidance} from '../radar-data.js';
 import '../radar-evidence.css';
 import type { Site } from '../types';
+import {siteHash,frameIndex,includeDates} from '../selection-url.js';
+import type {SiteSelection,HistoryMode} from '../selection-url.js';
+import {ShareLink} from './ShareLink';
 import type {SiteMapController} from '../local-map.js';
 type Frame={id?:string;date:string;url?:string;parameters?:{BBOX?:string};maturity:string;crid?:string;image?:string;channels?:Record<string,{image?:string;meanDb?:number;waterAreaKm2?:number;reason?:string}>;status?:string;reason?:string;track?:number|string;frame?:number|string;direction?:string;kind?:string;hdf5LayersVerified?:boolean;processingVersion?:string};
 function FrameMetadata({frame,mode,pol,label}:{frame:Frame|undefined;mode:string;pol:string;label:string}){
  return <div className="radar-record"><strong>{label}: {frame?.date||'Date not available'}{mode==='gibs'?' (mosaic date)':' (UTC)'}</strong><dl>{mode!=='gibs'&&mode!=='simulated'&&<div><dt>Channel</dt><dd>{pol}</dd></div>}{radarMetadata(frame,mode).map(([key,value])=><div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}{mode==='browse'&&<div><dt>Catalog footprint overlap of study box</dt><dd>{footprintOverlap((frame as Frame&{bboxCoverageFraction?:number})?.bboxCoverageFraction)}</dd></div>}</dl></div>;
 }
-export function RadarEvidence({site,evidence,requestedDate,active,mapOpen,setMapOpen}:{site:Site;evidence:any;requestedDate?:string;active:boolean;mapOpen:boolean;setMapOpen:(value:boolean)=>void}){
- const availableGibs:Frame[]=useMemo(()=>{
-  const saved:Frame[]=evidence.gibs?.frames||[];
-  if(!requestedDate||saved.some(f=>f.date.slice(0,10)===requestedDate))return saved;
-  const source=saved.find(f=>f.url)?.url;
-  let url:string|undefined;if(source){const u=new URL(source);u.searchParams.set('TIME',requestedDate);url=u.href;}
-  return [...saved,{date:requestedDate,url,parameters:saved[0]?.parameters,maturity:'not available',status:'not available',reason:'The exact globe date is not saved in this site sequence.'}].sort((a,b)=>a.date.localeCompare(b.date));
- },[evidence,requestedDate]);
- const browse:Frame[]=evidence.browse?.frames||[], processed:Frame[]=(evidence.processed?.acquisitions||[]).map((f:any)=>({...f,crid:f.processingVersion}));
- const [display,setDisplay]=useState('timeline');
- const [mode,setMode]=useState('gibs'),[pol,setPol]=useState('HH'),[before,setBefore]=useState(0),[after,setAfter]=useState(0),[swipe,setSwipe]=useState(50);
- const mapRef=useRef<HTMLDivElement>(null);
- const simulated=mode==='simulated',calibrated=mode==='processed';
- const frames:Frame[]=simulated?demoPackage.acquisitions.map((a:any)=>({...a,maturity:'SIMULATED',crid:'not applicable'})):calibrated?processed:mode==='gibs'?availableGibs:browse;
+export function RadarEvidence({site,evidence,selection,onSelection,navigationKey,active,mapOpen,setMapOpen}:{site:Site;evidence:any;selection:SiteSelection;onSelection:(siteId:string,selection:SiteSelection,history?:HistoryMode)=>void;navigationKey:number;active:boolean;mapOpen:boolean;setMapOpen:(value:boolean)=>void}){
+ const processed:Frame[]=(evidence.processed?.acquisitions||[]).map((f:any)=>({...f,crid:f.processingVersion}));
+ const mode=selection.source==='processed'&&!processed.length?'gibs':selection.source||'gibs';
+ const baseFrames:Frame[]=useMemo(()=>mode==='simulated'?demoPackage.acquisitions.map((f:any)=>({...f,maturity:'SIMULATED',crid:'not applicable'})):mode==='processed'?processed:mode==='gibs'?evidence.gibs?.frames||[]:evidence.browse?.frames||[],[mode,evidence]);
+ const pol=mode==='gibs'?'HH':selection.channel&&baseFrames.some(f=>f.channels?.[selection.channel!]?.image)?selection.channel:'HH';
+ const frames=useMemo(()=>includeDates(baseFrames,[selection.date,selection.before,selection.after],date=>{
+  const sample=baseFrames.find(f=>f.url);let url:string|undefined;
+  if(mode==='gibs'&&sample?.url){const parsed=new URL(sample.url);parsed.searchParams.set('TIME',date);url=parsed.href;}
+  return {date,url,parameters:sample?.parameters,maturity:mode==='simulated'?'SIMULATED':'not available',reason:'This exact date is not saved in the selected evidence sequence.'};
+ }),[baseFrames,selection.date,selection.before,selection.after,mode]);
+ const availableGibs:Frame[]=mode==='gibs'?frames:evidence.gibs?.frames||[];
  const image=(f?:Frame)=>f?(mode==='gibs'?f.image:f.channels?.[pol]?.image):undefined;
- useEffect(()=>{setMode('gibs');},[site.id,evidence]);
- useEffect(()=>{
-  const valid=frames.map((f,i)=>image(f)&&(hosted||assetURL(image(f)).startsWith('data:'))?i:-1).filter(i=>i>=0);
-  setBefore(valid[0]??0);setAfter(mode==='gibs'&&requestedDate?Math.max(0,frames.findIndex(f=>f.date.slice(0,10)===requestedDate)):valid.at(-1)??0);setSwipe(50);
- },[mode,pol,evidence,requestedDate]);
+ const available=frames.map((f,i)=>image(f)&&(hosted||assetURL(image(f)).startsWith('data:'))?i:-1).filter(i=>i>=0);
+ const before=selection.before?Math.max(0,frameIndex(frames,selection.before)):available[0]??0;
+ const after=selection.after||selection.date?Math.max(0,frameIndex(frames,selection.after||selection.date)):available.at(-1)??0;
  const a=frames[before],b=frames[after];
- const change=calibrated?evidence.processed?.comparisons?.find((c:any)=>c.before===a?.id&&c.after===b?.id&&c.channel===pol):null;
- useEffect(()=>{setDisplay(mode==='gibs'?'timeline':'swipe');},[mode]);
- useEffect(()=>{if(display==='change'&&!change)setDisplay('swipe');},[change,display]);
+ const change=mode==='processed'?evidence.processed?.comparisons?.find((c:any)=>c.before===a?.id&&c.after===b?.id&&c.channel===pol):null;
+ const display=selection.view==='change'&&!change?'swipe':selection.view==='timeline'&&mode!=='gibs'?'swipe':selection.view||(mode==='gibs'?'timeline':'swipe');
+ const simulated=mode==='simulated',calibrated=mode==='processed',requestedDate=selection.after||selection.date;
+ const [swipe,setSwipe]=useState(50);const mapRef=useRef<HTMLDivElement>(null);
+ function publish(patch:SiteSelection,history:HistoryMode='push'){
+  onSelection(site.id,{source:mode,channel:pol,view:display,date:b?.date,before:a?.date,after:b?.date,...patch},history);
+ }
+ function setMode(source:SiteSelection['source']){if(source===mode){if(selection.source&&selection.source!==source)publish({source});return;}onSelection(site.id,{source,channel:pol,view:source==='gibs'?'timeline':'swipe'});}
+ const setPol=(channel:string)=>{if(channel!==pol)publish({channel});};
+ const setDisplay=(view:SiteSelection['view'])=>{if(view!==display)publish({view});};
+ const setBefore=(index:number)=>{if(index!==before)publish({before:frames[index]?.date});};
+ const setAfter=(index:number,history:HistoryMode='push')=>{if(index!==after)publish({date:frames[index]?.date,after:frames[index]?.date},history);};
  const mixed=['maturity','crid'].some(key=>{const first=knownMetadata(a?.[key as 'maturity'|'crid']),last=knownMetadata(b?.[key as 'maturity'|'crid']);return first!==null&&last!==null&&first!==last;});
  const chronological=!!a&&!!b&&a.date<b.date;
  const ready=!!image(a)&&!!image(b)&&chronological&&(!calibrated||!mixed);
@@ -81,8 +88,11 @@ export function RadarEvidence({site,evidence,requestedDate,active,mapOpen,setMap
  const series=calibrated?evidence.series?.rows||[]:simulated?demoPackage.acquisitions.map((f:any)=>({date:f.date,HH:f.channels.HH.meanDb,HV:f.channels.HV.meanDb})):[]; 
  return <div className="radar-evidence">
  <div className="section-title"><div><p className="eyebrow">{site.name} / radar evidence</p><h2>{title}</h2></div><span className="mono">{simulated?'Simulated / no real observations':mode==='gibs'?availableGibs.filter(f=>f.image).length+' saved image dates':n+' catalog scenes'}</span></div>
- {requestedDate&&<p className="source-line">Globe date: {requestedDate}. The exact date is selected; an unsaved site image stays unavailable.</p>}
- <div className="radar-tabs" role="group" aria-label="Evidence source">{[['gibs','Radar images'],['browse','Regional radar views'],['processed','Measured change'],['simulated','Practice with simulated data']].map(([id,label])=><button key={id} onClick={()=>setMode(id)} aria-pressed={mode===id} disabled={id==='processed'&&!processed.length}>{label}</button>)}</div>
+ {requestedDate&&<p className="source-line">Requested date: {requestedDate}. The exact date is selected; an unsaved site image stays unavailable.</p>}
+ <ShareLink hash={siteHash(site.id,{source:mode,channel:pol,view:display,date:b?.date,before:a?.date,after:b?.date})}/>
+ {selection.source==='processed'&&!processed.length&&<p role="status">Requested measured products are unavailable. Showing browse evidence with the requested dates retained.</p>}
+ {selection.channel&&selection.channel!==pol&&mode!=='gibs'&&<p role="status">Requested channel is unavailable in this source. Showing HH with the requested dates retained.</p>}
+ <div className="radar-tabs" role="group" aria-label="Evidence source">{[['gibs','Radar images'],['browse','Regional radar views'],['processed','Measured change'],['simulated','Practice with simulated data']].map(([id,label])=><button key={id} onClick={()=>setMode(id as SiteSelection['source'])} aria-pressed={mode===id} disabled={id==='processed'&&!processed.length}>{label}</button>)}</div>
  <p id="radar-status" className="source-line" role="status">{simulated?'SIMULATED: invented images and values for practice.':mode==='gibs'?'Follow the same place through dated satellite radar images, or compare two dates side by side.':mode==='browse'?'These real radar images show a broader region around the site. Their display brightness can differ.':'Measured products derived from radar data. Check processing details before comparing.'}</p>
  <div className="radar-context" id="radar-interpretation"><p><strong>{site.name}, {site.country}</strong> / {simulated?'Invented practice images':calibrated?'Processed radar products':mode==='gibs'?'NASA GIBS daily false-color browse':'ASF regional '+pol+' quicklooks; not a study-box clip'}.</p><p>Study box (west, south, east, north; longitude/latitude degrees): {site.bbox.join(', ')}.</p><p>{mode==='browse'?'The regional image extends beyond this box; its catalog footprint overlap is listed below.':mode==='gibs'?'Mosaic request bounds are listed below; transparent areas have no displayed radar pixels.':'Check the source bounds for this view.'} {simulated?'No real observations.':calibrated?'Check processing and validation records.':'Browse is for visual inspection, not calibrated backscatter measurement.'}</p>{mode==='gibs'&&<p>Saved sequence: {availableGibs.filter(f=>f.image).length} image dates across {evidence.gibs?.frames?.length??0} sampled dates. This is not a complete acquisition archive; unavailable dates remain visible.</p>}</div>
  {!simulated&&!processed.length&&<p className="source-line" id="radar-measurement-status">Calibrated measurements unavailable: backscatter change and water area have not been calculated. Browse colors cannot supply these values.</p>}
@@ -91,7 +101,7 @@ export function RadarEvidence({site,evidence,requestedDate,active,mapOpen,setMap
  <button onClick={()=>setDisplay('swipe')} aria-pressed={display==='swipe'}>Before / after</button>
  {calibrated&&<button disabled={!change||mixed} onClick={()=>setDisplay('change')} aria-pressed={display==='change'}>Measured change layer</button>}
  </div>
- {mode==='gibs'&&<div hidden={display!=='timeline'}><SiteTimeline siteName={site.name} frames={availableGibs} index={after} onIndexChange={setAfter} active={active&&display==='timeline'} scenes={evidence.inventory?.scenes}/></div>}
+ {mode==='gibs'&&<div hidden={display!=='timeline'}><SiteTimeline siteName={site.name} frames={availableGibs} index={after} onIndexChange={setAfter} navigationKey={navigationKey} active={active&&display==='timeline'} scenes={evidence.inventory?.scenes}/></div>}
  {display==='timeline'&&<div className="radar-records"><FrameMetadata frame={b} mode={mode} pol={pol} label="Selected"/></div>}
  <details className="reading-notes"><summary>Radar channels and processing details</summary>
  <div className="radar-tabs" role="group" aria-label="Radar polarization">
@@ -111,7 +121,7 @@ export function RadarEvidence({site,evidence,requestedDate,active,mapOpen,setMap
  </div>
  <p className="source-line">{simulated?'Source: team simulation, no satellite measurements':'Source: NASA / ISRO NISAR via '+(mode==='gibs'?'NASA GIBS':'ASF DAAC')}. Dates: {a?.date.slice(0,10)||'unavailable'} to {b?.date.slice(0,10)||'unavailable'}.{mode==='gibs'&&b?.url&&<> <a href={safeURL(b.url)} target="_blank" rel="noopener">Open the later image at NASA</a></>}</p>
  <details className="reading-notes"><summary>Comparison metadata</summary><p>{a?.maturity||'Maturity unavailable'} / processing version {a?.crid||'unavailable'}. {a?.track?'Track '+a.track+', frame '+a.frame+'.':''} Downsampled images. Different maturity or processing versions cannot support quantitative comparison.</p></details>
- <label className="timeline-control">Date sequence <output>{b?.date.slice(0,10)||'not available'}</output><input id="date-slider" aria-label="Radar date sequence" type="range" min="0" max={Math.max(0,frames.length-1)} value={after} onChange={e=>setAfter(Number(e.target.value))} disabled={!frames.length}/></label>
+ <label className="timeline-control">Date sequence <output>{b?.date.slice(0,10)||'not available'}</output><input id="date-slider" aria-label="Radar date sequence" type="range" min="0" max={Math.max(0,frames.length-1)} value={after} onChange={e=>setAfter(Number(e.target.value),'replace')} disabled={!frames.length}/></label>
  <div className="acquisition-strip" aria-label="Date availability">{frames.map((f,i)=><button key={i} aria-label={f.date.slice(0,10)+(image(f)?' available':' not available')} title={f.date.slice(0,10)+(image(f)?' available':' not available')} aria-pressed={i===after} className={image(f)?'has-data':'no-data'} onClick={()=>setAfter(i)}/>)}</div>
  <p className="source-line">12-day sampling plus actual acquisition dates. Missing dates stay visible. Permanent mission gap: 27 July 22:03 UTC–10 August 00:55 UTC, 2026.</p>
  </div>}
