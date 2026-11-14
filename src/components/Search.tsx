@@ -4,7 +4,7 @@ import { safeURL } from '../core.js';
 import type {ReactNode} from 'react';
 import type { Bootstrap, Place } from '../types';
 
-export function Search({ open, close, data, locate, newsNotice,sitesNotice }: { sitesNotice:ReactNode;newsNotice:ReactNode; open: boolean; close: () => void; data: Pick<Bootstrap,'news'>&{sites?:Bootstrap['sites']}; locate: (place: Place) => void }) {
+export function Search({ open, close, data, locate, newsNotice,sitesNotice }: { sitesNotice:ReactNode;newsNotice:ReactNode; open: boolean; close: () => void; data: Pick<Bootstrap,'news'>&{sites?:Bootstrap['sites'];places?:Bootstrap['places']}; locate: (place: Place) => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [query, setQuery] = useState('');
   const [remote, setRemote] = useState<Place[] | null>(null);
@@ -16,7 +16,7 @@ export function Search({ open, close, data, locate, newsNotice,sitesNotice }: { 
     else if (dialog.current?.open) dialog.current.close();
   }, [open]);
   const [places,setPlaces]=useState<[string,string,number,number][]>([]);
-  useEffect(()=>{if(open&&!places.length)dataFile<{places:[string,string,number,number][]}>('places.json').then(p=>setPlaces(p.places)).catch(()=>{});},[open]);
+  useEffect(()=>{if(open&&!places.length){Promise.all([dataFile<any>('places.json').catch(()=>[]),dataFile<{places:[string,string,number,number][]}>('gazetteer.json').catch(()=>({places:[]}))]).then(([studyPlaces,gaz])=>{const studyList:[string,string,number,number][]=Array.isArray(studyPlaces)?studyPlaces.map((p:any)=>[p.name,p.country,p.lat,p.lng]):(studyPlaces?.places||[]);setPlaces([...studyList,...(gaz?.places||[])]);});}},[open]);
   const q = query.trim().toLowerCase();
   const matches: {title:string;detail:string;href:string;place?:Place}[] = [
     ...(data.sites||[]).filter(s => (s.name + ' ' + s.country + ' ' + s.type).toLowerCase().includes(q)).map(s => ({title: s.name, detail: s.country + ' · study area', href: '#sites/' + s.id})),

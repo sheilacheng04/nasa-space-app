@@ -16,12 +16,16 @@ export function siteSelection(input){
 }
 export function globeSelection(input){
  const get=key=>input instanceof URLSearchParams?input.get(key):input?.[key];
- return {mode:oneOf(get('mode'),['satellite','concept']),site:/^[a-z][a-z0-9-]{0,39}$/.test(get('site')||'')?get('site'):undefined,date:validDay(get('date'))?get('date'):undefined,month:/^\d{4}-(0[1-9]|1[0-2])$/.test(get('month')||'')&&validDay(get('month')+'-01')?get('month'):undefined};
+ const rawSite=get('site')||get('place');
+ return {mode:oneOf(get('mode'),['satellite','concept','illustrative']),site:/^[a-z][a-z0-9-]{0,39}$/.test(rawSite||'')?rawSite:undefined,date:validDay(get('date'))?get('date'):undefined,month:/^\d{4}-(0[1-9]|1[0-2])$/.test(get('month')||'')&&validDay(get('month')+'-01')?get('month'):undefined};
 }
 export function readRoute(hash){
- const [path,query='']=hash.replace(/^#/,'').split('?');let [page,sub='']=path.split('/');
+ const [path,query='']=hash.replace(/^#\/?/,'').split('?');let [page,sub='']=path.split('/');
+ const params=new URLSearchParams(query);
  if(page==='observatory'&&sub==='globe'){page='globe';sub='';}else if(page==='observatory')page='sites';else if(page==='news')page='media';else if(page==='local'){page='story';sub='local';}else if(page==='data'){page='method';sub='my-data';}
- return {page:pages.includes(page)?page:'story',sub,siteSelection:siteSelection(new URLSearchParams(query)),globeSelection:globeSelection(new URLSearchParams(query))};
+ const qPlace=params.get('place')||params.get('site')||'';
+ if(!sub&&/^[a-z][a-z0-9-]{0,39}$/.test(qPlace)&&(page==='sites'||page==='media'||page==='story'))sub=qPlace;
+ return {page:pages.includes(page)?page:'story',sub,siteSelection:siteSelection(params),globeSelection:globeSelection(params)};
 }
 function query(values){const params=new URLSearchParams();for(const [key,value]of Object.entries(values))if(value!==undefined&&value!=='')params.set(key,value);return params.size?'?'+params.toString():'';}
 export function siteHash(site,input={}){

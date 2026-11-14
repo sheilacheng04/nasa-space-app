@@ -46,9 +46,9 @@ try{
  {
   let finishSites;const {page}=await setup(async(route,key)=>{if(key!=='sites')return serve(route,key);await new Promise(resolve=>finishSites=async()=>{await route.fulfill({status:503,json:{error:'No site catalog'}});resolve();});});
   await page.goto(base+'/#media',{waitUntil:'domcontentloaded'});await expect(page.locator('#news-search')).toBeVisible();await page.locator('#news-search').focus();await finishSites();await expect(page.locator('#news-search')).toBeFocused();
-  await page.getByRole('link',{name:/5.*Data and method/}).click();await expect(page.locator('#page-method')).toBeVisible();await page.locator('#my-data summary').click();await expect(page.locator('#csv-input')).toBeVisible();
+  await page.getByRole('link',{name:/5.*Data and method/}).click();await expect(page.locator('#page-method')).toBeVisible();
   await page.locator('#open-search').click();await expect(page.getByRole('dialog').getByRole('button',{name:'Retry study sites'})).toBeVisible();await page.keyboard.press('Escape');
-  pass('Media, method, CSV import and search remain usable while the essential site catalog is pending or failed');await page.close();
+  pass('Media, method and search remain usable while the essential site catalog is pending or failed');await page.close();
  }
  {
   const {page}=await setup((route,key)=>key==='sites'?route.fulfill({json:[]}):serve(route,key));await page.goto(base+'/#sites/angat');await expect(page.locator('main > .wrap:visible > .dataset-notice')).toHaveAttribute('data-dataset-status','empty');await expect(page.locator('#site-select')).toHaveCount(0);pass('An empty essential site catalog is explicit and never invents a default site');await page.close();

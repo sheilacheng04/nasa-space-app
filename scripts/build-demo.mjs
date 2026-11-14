@@ -1,4 +1,4 @@
-import {build} from 'esbuild';
+import {build,transform} from 'esbuild';
 import assert from 'node:assert/strict';
 import {readFile,writeFile,readdir,mkdir} from 'node:fs/promises';
 import path from 'node:path';
@@ -9,7 +9,9 @@ execFileSync(existsSync(python)?python:'python',['scripts/prepare_preview_assets
 const root=process.cwd(),data={};
 const {assets,bytes:previewImageBytes}=JSON.parse(await readFile('.artifacts/preview-assets.json','utf8'));
 const read=async p=>JSON.parse(await readFile(path.join('public/data',p),'utf8'));
-for(const name of ['sites.json','news.json','enso.json','sources.json','evidence.json','method.json','inventory.json','network-status.json','world.topo.json','places.json'])data[name]=await read(name);
+for(const name of ['sites.json','news.json','enso.json','sources.json','evidence.json','method.json','inventory.json','network-status.json','world.topo.json','places.json','gazetteer.json'])data[name]=await read(name);
+const rawNewsByPlace=await read('news-by-place.json');
+data['news-by-place.json']={updatedAt:rawNewsByPlace.updatedAt,source:rawNewsByPlace.source,tuples:rawNewsByPlace.items.map(i=>[i.id.slice(0,-(i.placeId.length+1)),i.placeId,i.matchedBy])};
 const compactInventory=r=>({...r,scenes:r.scenes.map(({browseUrls,footprint,...s})=>s)});
 data['inventory.json'].sites=data['inventory.json'].sites.map(compactInventory);
 for(const site of data['sites.json']){
@@ -56,21 +58,23 @@ const bundled=await build({entryPoints:['src/main.tsx'],bundle:true,write:false,
 }}]});
 const globe=await readFile('node_modules/globe.gl/dist/globe.gl.min.js','utf8');
 let css=await readFile('src/styles.css','utf8');css=css.replace("@import url('./map.css');",await readFile('src/map.css','utf8'));
-for(const name of ['story','globe','local-window','account','editorial','satellite','concept-timeline','site-timeline','weather','radar-evidence'])css+='\n'+await readFile('src/'+name+'.css','utf8');
+for(const name of ['story','globe','local-window','account','editorial','satellite','concept-timeline','site-timeline','weather','radar-evidence','illustrative-globe'])css+='\n'+await readFile('src/'+name+'.css','utf8');
+css=(await transform(css,{loader:'css',minify:true})).code;
 const serialize=v=>JSON.stringify(v).replaceAll('<','\\u003c');
 // Store repeated long provenance strings once; reconstruct the exact records offline.
 const counts=new Map();
-JSON.stringify(data,(_,v)=>{if(typeof v==='string'&&v.length>=80)counts.set(v,(counts.get(v)||0)+1);return v;});
-const strings=[...counts].filter(([,n])=>n>1).map(([value])=>value),indices=new Map(strings.map((v,i)=>[v,i]));
+JSON.stringify(data,(_,v)=>{if(typeof v==='string'&&v.length>=4&&!v.startsWith('~'))counts.set(v,(counts.get(v)||0)+1);return v;});
+// Include repeated strings when base36 references actually save bytes.
+const strings=[...counts].filter(([value,n])=>(n-1)*Buffer.byteLength(serialize(value))>n*5+2).map(([value])=>value),indices=new Map(strings.map((v,i)=>[v,i]));
 const packed=JSON.parse(JSON.stringify(data,(_,v)=>{
- if(v&&typeof v==='object'&&Object.hasOwn(v,'$pacificText'))throw new Error('Reserved offline encoding key');
- return typeof v==='string'&&indices.has(v)?{$pacificText:indices.get(v)}:v;
+ if(typeof v==='string'&&v.startsWith('~'))throw new Error('Reserved offline encoding prefix');
+ return typeof v==='string'&&indices.has(v)?'~'+indices.get(v).toString(36):v;
 }));
 function unpack(payload){
  const restore=value=>{
+  if(typeof value==='string'&&value.charCodeAt(0)===126)return payload.strings[parseInt(value.slice(1),36)];
   if(Array.isArray(value))return value.map(restore);
   if(value&&typeof value==='object'){
-   if(Object.hasOwn(value,'$pacificText'))return payload.strings[value.$pacificText];
    return Object.fromEntries(Object.entries(value).map(([key,item])=>[key,restore(item)]));
   }
   return value;
@@ -78,7 +82,7 @@ function unpack(payload){
  return restore(payload.records);
 }
 assert.ok(JSON.stringify(unpack({strings,records:packed}))===JSON.stringify(data),'Offline JSON provenance must round-trip exactly');
-const setup='globalThis.__PACIFIC_DEMO__=true;globalThis.__PACIFIC_DATA__='+'('+unpack.toString()+')('+serialize({strings,records:packed})+')'+';globalThis.__PACIFIC_ASSETS__='+serialize(assets)+';for(const s of globalThis.__PACIFIC_DATA__["sites.json"]){globalThis.__PACIFIC_DATA__["sites/"+s.id+"/evidence.json"].inventory=globalThis.__PACIFIC_DATA__["inventory.json"].sites.find(r=>r.siteId===s.id||r.id===s.id);};';
+const setup='globalThis.__PACIFIC_DEMO__=true;globalThis.__PACIFIC_DATA__='+'('+unpack.toString()+')('+serialize({strings,records:packed})+')'+';globalThis.__PACIFIC_ASSETS__='+serialize(assets)+';for(const s of globalThis.__PACIFIC_DATA__["sites.json"]){globalThis.__PACIFIC_DATA__["sites/"+s.id+"/evidence.json"].inventory=globalThis.__PACIFIC_DATA__["inventory.json"].sites.find(r=>r.siteId===s.id||r.id===s.id);};{const nbp=globalThis.__PACIFIC_DATA__["news-by-place.json"],byId=new Map(globalThis.__PACIFIC_DATA__["news.json"].items.map(n=>[n.id,n]));nbp.items=nbp.tuples.map(([nid,pid,m])=>{const n=byId.get(nid)||{};return{id:nid+"-"+pid,placeId:pid,title:n.title||"",source:n.source||"",url:n.url||"",date:n.date||"",matchedBy:m,tone:{vader:n.vader??0,vaderAdjusted:n.vaderAdjusted??0,ai:null},aiAnalysis:null};});delete nbp.tuples;};';
 let html=await readFile('index.html','utf8');
 html=html.replace('</head>',()=>'<style>'+css+'</style></head>').replace('<script type="module" src="/src/main.tsx"></script>',()=>'<script>'+setup+(globe+';\n'+bundled.outputFiles[0].text).replaceAll('</script','<\\/script')+'</script>');
 const size=Buffer.byteLength(html);

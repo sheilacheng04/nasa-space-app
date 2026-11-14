@@ -17,7 +17,7 @@ export function initLocalWindow(){
 function openLocalWindow(location){
  if(!location||!Number.isFinite(location.lng)||!Number.isFinite(location.lat)||Math.abs(location.lng)>180||Math.abs(location.lat)>90)return;
  selected={name:String(location.name||'Selected place').slice(0,160),lng:location.lng,lat:location.lat,siteId:typeof location.siteId==='string'&&/^[a-z0-9-]+$/.test(location.siteId)?location.siteId:null};
- returnFocus=document.activeElement;mode='optical';refs.title.textContent=selected.name;refs.coordinates.textContent=`${selected.lat.toFixed(3)}°, ${selected.lng.toFixed(3)}°`;refs.radar.hidden=!selected.siteId;refs.study.hidden=!selected.siteId;if(selected.siteId)refs.study.href='#observatory/'+selected.siteId;windowElement.hidden=false;windowElement.dataset.open='true';syncMode();refs.close.focus({preventScroll:true});loadImage();
+ returnFocus=document.activeElement;mode='optical';refs.title.textContent=selected.name;refs.coordinates.textContent=`${selected.lat.toFixed(3)}°, ${selected.lng.toFixed(3)}°`;refs.radar.hidden=!selected.siteId;refs.study.hidden=!selected.siteId;if(selected.siteId)refs.study.href='#sites/'+selected.siteId;windowElement.hidden=false;windowElement.dataset.open='true';syncMode();refs.close.focus({preventScroll:true});loadImage();
 }
 function syncMode(){windowElement.dataset.mode=mode;windowElement.querySelectorAll('[data-local-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.localMode===mode)));refs.controls.hidden=mode!=='optical';refs.badge.textContent=mode==='optical'?'OPTICAL · NOT SAR':'NISAR HH · REGIONAL BROWSE';refs.refresh.textContent='Load image';}
 export function closeLocalWindow(){

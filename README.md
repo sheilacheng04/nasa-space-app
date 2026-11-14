@@ -17,7 +17,7 @@ SAR means **synthetic aperture radar**: a way of making images using microwave e
 | --- | --- |
 | **Story** | Learn how ocean conditions can affect rainfall and why radar helps us observe land. |
 | **Sites** | Choose a study area, play dated radar images, or compare two dates. Explore rainfall and possible explanations. |
-| **Globe** | Rotate Earth, play radar observations by date, or follow monthly vegetation changes. |
+| **Globe** | Switch between dated radar observations, monthly vegetation changes, and the animated concept globe. |
 | **Media** | Read source-linked headlines about climate and its human impacts. |
 | **Data and method** | Learn where the evidence comes from, how to compare it fairly, and what it can tell us. |
 
@@ -59,6 +59,7 @@ Choose a view on Sites or Globe, then press **Copy link**. The link restores its
 
 - **Radar:** real NISAR preview images from NASA/ISRO, distributed through ASF and NASA GIBS. Sites includes 57 saved images across the four study areas. Their colors represent radar reflections, not natural-color photographs.
 - **Vegetation:** 21 saved monthly MODIS images show vegetation greenness between January 2025 and October 2026. These are a separate satellite record, not NISAR measurements.
+- **Concept globe:** illustrative Heat, Rain, Combined and Places layers, animated Pacific links and rings, phase playback, site towers, search and a guided tour. These patterns are not measurements or forecasts. Optional dated MODIS imagery requires an internet connection; the concept globe works offline.
 - **Weather and ocean context:** NOAA ocean records and ERA5 weather estimates help explore possible explanations for changes on land.
 - **Earth background:** the natural-color globe uses historical Blue Marble imagery from 2004 as a reference. It is not a live satellite feed.
 

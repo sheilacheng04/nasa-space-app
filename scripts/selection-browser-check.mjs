@@ -41,7 +41,8 @@ try{
  await page.getByRole('button',{name:'Copy link',exact:true}).click();await expect(page.locator('.share-view:visible')).toContainText('Link copied.');const copied=await page.evaluate(()=>window.__copiedLink);assert.equal(new URL(copied).hash,siteHash('angat',{date:'2026-11-11'}));
  await page.evaluate(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async()=>{throw new Error('Clipboard denied');}}}));await page.getByRole('button',{name:'Copy link',exact:true}).click();await expect(page.getByLabel('Link to copy manually')).toHaveValue(copied);
  pass('Site changes create restorable routes; Copy link reports success and provides manual-copy fallback on failure');
- const placeName=JSON.parse(await readFile('public/data/places.json','utf8')).places.find(p=>p[0].length>2)[0];
+ const rawPlaces=JSON.parse(await readFile('public/data/gazetteer.json','utf8').catch(()=>readFile('public/data/places.json','utf8')));
+ const placeName=Array.isArray(rawPlaces)?rawPlaces[0].name:rawPlaces.places.find(p=>p[0].length>2)[0];
  const globeLink=globeHash({mode:'concept',site:'dadu',date:'2026-10-31',month:'2026-09'});
  await page.goto(base+'/'+globeLink);await expect(page.locator('#concept-mode')).toHaveAttribute('aria-pressed','true');await expect(page.locator('#concept-site')).toHaveValue('dadu');await expect(page.locator('#vegetation-calendar-month')).toHaveValue('2026-09');await expect(page.locator('#globe-stage')).toHaveAttribute('data-vegetation-date','2026-09-01',{timeout:25000});
  await page.reload();await expect(page.locator('#globe-stage')).toHaveAttribute('data-vegetation-date','2026-09-01',{timeout:25000});await expect(page.locator('#concept-site')).toHaveValue('dadu');

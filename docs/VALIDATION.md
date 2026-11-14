@@ -1,5 +1,17 @@
 # Validation record
 
+## Prompt 1 UX, Shared Data Contracts, Blank-Page Guardrails & Task Flows (14 November 2026)
+
+1. **Unit & Data Contract Tests (`npm test` & Python unittest)**:
+   - **47 Node unit tests (`fail 0`)**: Includes `tests/places-and-news.test.js` (verifies `public/data/places.json` schema with 34 global places, 6 Philippine places, and `dadu` as `"la-nina-reference"`, plus `public/data/news-by-place.json` with 494 matched items) and `tests/readability.test.js` (verifies Flesch reading ease >= 60 and average sentence length < 20 words across all 5 pages, plus all 14 `GlossaryTerm` definitions).
+   - **15 Python science/acquisition tests (`OK`)**: Curated file hashes (`inventory.json`, `sites.json`, and all 4 `evidence.json` files) remain 100% intact.
+2. **Permanent Blank-Page Browser Suite (`node scripts/blank-page-check.mjs`)**:
+   - **8 check groups (`findings: 0`)**: Verifies all 5 routes (`Story`, `Sites`, `Globe`, `Media`, `Method`) in Light and Dark themes at `1280px` and `390px`, plus slow network + 4x CPU throttling + `prefers-reduced-motion: reduce`, WebGL disabled (`2D Canvas compatibility globe`), hidden-then-shown tab visibility lifecycle, and the standalone offline `el-nino-app.html` bundle (`0` external requests).
+3. **Automated Usability & Task Flows (`node scripts/ux-task-flows-check.mjs`)**:
+   - Verifies the dismissable 3-step first-visit guide (`localStorage` + `#open-guide` header `?` button), all **6 user task flows in <= 5 clicks/actions**, the `"Radar frames not saved for this place"` + ASF Vertex link banner for non-radar global places, the `"No saved headlines for this place yet"` + disabled `"Search live"` state, the Globe status strip + Philippines preset + Local GIBS Map handoff, the Media & Regional Overview Dashboard, and captures all 20 after-screenshots in `docs/ux/after/`.
+4. **Offline Bundle Size (`npm run demo`)**:
+   - `el-nino-app.html` is **2,969,768 bytes** (< `3,000,000` byte cap), embedding `places.json`, `gazetteer.json`, and tuple-packed `news-by-place.json` with **zero external network requests**.
+
 ## Verified NISAR acquisition metadata extension
 
 On 14 November 2026, bounded ASF/CMR queries verified one additional Dadu acquisition (2026-10-30T14:13:40Z), with VALIDATED P05036 GSLC/RSLC products. No new GCOV products were found. No full science product was downloaded or analyzed; seven active unique product probes required authentication and one timed out. See [NISAR_ACQUISITIONS.md](NISAR_ACQUISITIONS.md) for provenance, gaps, complete metadata, the reproducible script and the recommended next calibrated GCOV subset.

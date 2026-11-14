@@ -56,11 +56,7 @@ try{
  await page.locator('.news-item').first().getByRole('button').click();
  await expect(page.locator('.news-item').first().locator('.ai-result')).toContainText('Simulated');
  check('Media filtering and explicitly simulated Claude fallback work');
- await page.goto(base+'/#method',{waitUntil:'networkidle'});await expect(page.locator('#page-method h1')).toHaveCount(1);await expect(page.locator('#my-data')).not.toHaveAttribute('open','');await expect(page.getByText('Advanced: radar processing and quality checks',{exact:true}).locator('..')).not.toHaveAttribute('open','');check('Data and method follows a plain-language path with advanced records and optional imports collapsed');
- await page.goto(base+'/#method/my-data',{waitUntil:'networkidle'});
- await page.locator('#csv-input').fill('name,lat,lng,value,category,date\n"Rice, north",15.5,120.9,0,mm,2026-11-01');
- await page.locator('#import-csv').click();await expect(page.locator('#csv-status')).toContainText('Imported 1');
- check('CSV import preserves zero and quoted place names');
+ await page.goto(base+'/#method',{waitUntil:'networkidle'});await expect(page.locator('#page-method h1')).toHaveCount(1);await expect(page.getByText('Advanced: radar processing and quality checks',{exact:true}).locator('..')).not.toHaveAttribute('open','');check('Data and method follows a plain-language path with advanced records collapsed');
  await page.locator('#open-search').click();await page.locator('#global-search').fill('Angat');
  await page.keyboard.press('ArrowDown');await page.keyboard.press('Enter');
  await expect(page.locator('#search-dialog')).not.toBeVisible();
@@ -68,7 +64,7 @@ try{
  check('Command search supports keyboard selection and focus return');
  await page.goto(base+'/#globe',{waitUntil:'networkidle'});
  await expect(page.locator('#globe-stage')).toHaveAttribute('data-ready','true',{timeout:25000});
- await expect(page.locator('#globe-stage')).toHaveAttribute('data-user-point-count','1');check('Lazy globe renders and retains clearly labeled imported observation points');
+ check('Lazy globe renders cleanly');
  for(const route of ['story','sites/angat','media','method']){
   await page.setViewportSize({width:390,height:844});
   await page.goto(base+'/#'+route,{waitUntil:'networkidle'});

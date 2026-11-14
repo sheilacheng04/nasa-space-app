@@ -6,11 +6,13 @@ import {loadGlobe} from './globe-loader.js';
 import {createCanvasGlobe} from './canvas-globe.js';
 import {composeSatelliteSurface} from './satellite-surface.js';
 import {esc,finite,assetURL} from './core.js';
+import {illustrationDefaults,renderIllustration,clearIllustration} from './illustrative-globe.js';
 let countries,world,observer,geographyPromise;
 let globeMode='satellite',satelliteURL=null,satelliteImage=null,satelliteDate='',geographicContext=true,textureVersion=0;
 let surfaceOwner=null,surfaceReady=null,surfaceMaterial=null,originalMaterial=null,TextureType=null,textureOptions=null,lastSurfaceTexture=null;
 let lastSurface=null,lastMarkers=null,motionQuery;
 let baseImage=null,basePromise=null,conceptImage=null,conceptImageDate='';
+let illustration={...illustrationDefaults},illustrativeSelection=null,illustrativeImage=null,illustrativeDate='',illustrativeVisited=false;
 export async function geography(){if(!geographyPromise)geographyPromise=dataFile('world.topo.json').then(topo=>countries=feature(topo,topo.objects.countries)).catch(error=>{geographyPromise=null;throw error;});return geographyPromise;}
 export async function drawPacific(){const data=await geography(),projection=geoOrthographic().rotate([160,-10]).translate([280,270]).scale(222),path=geoPath(projection);const g=path(geoGraticule10());const band={type:'Polygon',coordinates:[[[-175,-5],[-175,5],[-115,5],[-115,-5],[-175,-5]]]};
  document.getElementById('pacific-map').innerHTML=`<svg viewBox="0 0 560 540" role="img" aria-label="Pacific-centered globe. Orange arrows illustrate an eastward shift of warm surface water, not measured temperatures."><defs><marker id="warm-arrow" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#da8c59" stroke-width="1"/></marker></defs><circle cx="280" cy="270" r="233" fill="none" stroke="#b6c3ba" stroke-width=".7"/><circle cx="280" cy="270" r="222" fill="#17313b"/><path d="${g}" fill="none" stroke="#65848b" stroke-opacity=".35" stroke-width=".6"/><path d="${path(data)}" fill="#7d9490" stroke="#a4b8ad" stroke-width=".5"/><path d="${path(band)}" fill="#d78a52" fill-opacity=".2"/><path d="M133 282Q268 249 403 286" fill="none" stroke="#da8c59" stroke-width="2" marker-end="url(#warm-arrow)"/><path d="M150 299Q278 276 388 303" fill="none" stroke="#da8c59" stroke-width="1" stroke-opacity=".6"/><text x="280" y="248" text-anchor="middle" fill="#d9e5de" font-size="10" letter-spacing="4">PACIFIC OCEAN</text><text x="278" y="331" text-anchor="middle" fill="#e5a171" font-size="8" letter-spacing="2">EQUATORIAL WARM POOL</text><path d="M80 270H480" stroke="#b8cac0" stroke-dasharray="2 5" opacity=".3"/><text x="280" y="509" text-anchor="middle" font-size="8" fill="#5f6867" letter-spacing="3">A CONNECTED OCEAN · A CHANGING LANDSCAPE</text></svg>`;
@@ -18,7 +20,7 @@ export async function drawPacific(){const data=await geography(),projection=geoO
 export async function miniMap(site,{large=false}={}){const data=await geography(),w=large?500:360,h=large?500:170,projection=geoMercator().center(site.coordinates).scale(large?3200:1100).translate([w/2,h/2]),path=geoPath(projection);return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Locator map for ${esc(site.name)}"><rect width="${w}" height="${h}" fill="#dce5df"/><path d="${path(data)}" fill="#b3c3b5" stroke="#f5f3ed" stroke-width="1"/><path d="${path(geoGraticule10())}" fill="none" stroke="#9bac9f" stroke-width=".5"/><circle cx="${w/2}" cy="${h/2}" r="20" fill="none" stroke="#226987" stroke-opacity=".3"/><circle cx="${w/2}" cy="${h/2}" r="5" fill="#226987" stroke="#f5f3ed" stroke-width="2"/>${large?`<text x="${w/2+17}" y="${h/2+5}" font-size="14" fill="#202b2e">${esc(site.name)}</text><text x="20" y="${h-25}" font-size="11" fill="#5f6867">Philippines · locator, not a radar map</text>`:''}</svg>`;}
 export function oceanDiagram(value){const t=value/100,warmEnd=220+t*285,windEnd=150+t*125;document.getElementById('phase-label').textContent=t<.35?'Typical conditions':t<.7?'Trade winds weakening':'El Niño conditions';document.getElementById('ocean-diagram').innerHTML=`<svg viewBox="0 0 600 220" role="img" aria-label="Conceptual ocean cross-section. The warm surface layer extends east as the trade winds weaken."><defs><marker id="wind-arrow" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="none" stroke="#5f6867"/></marker></defs><rect x="25" y="85" width="550" height="110" fill="#c1d3d6"/><path d="M25 85H575V${100+t*25}Q${warmEnd} ${125+t*20} 25 175Z" fill="#d4976c"/><path d="M${420-t*30} 47H${windEnd}" stroke="#5f6867" stroke-width="${3-t*1.5}" marker-end="url(#wind-arrow)"/><text x="300" y="25" text-anchor="middle" font-size="11" fill="#5f6867">${t<.5?'Trade winds push west':'Weaker westward trade winds'}</text><text x="40" y="115" font-size="12" fill="#573b28">Warm surface water</text><text x="400" y="178" font-size="11" fill="#325763">Cooler deep water</text><text x="25" y="215" font-size="10" fill="#5f6867">Western Pacific</text><text x="575" y="215" text-anchor="end" font-size="10" fill="#5f6867">Eastern Pacific</text></svg>`;}
 
-// Both modes share a static optical reference; observational overlays have their own dates.
+// Observational modes share a static optical reference; the illustration has its own layers.
 let globeSites=[],globePoints=[],placeIndex=[],selectSite=()=>{},globePromise=null;
 let intersector,visible=false,routeActive=false,rendering=false,cameraFrame=0,searchSequence=0;
 let forceCanvas=false,recovering=false,rendererGeneration=0,rotating=false,listenersBound=false;
@@ -56,7 +58,7 @@ function mountGlobeUI(){
  stage().insertAdjacentHTML('beforeend','<div class="globe-toolbar"><form id="globe-search" role="search"><label class="sr-only" for="globe-query">Find a place or enter latitude, longitude</label><input id="globe-query" type="search" placeholder="Search a place or lat, lng..." autocomplete="off"><button id="globe-search-submit" type="submit">Find</button><div id="globe-search-results" hidden></div></form></div><div class="globe-zoom" aria-label="Globe controls"><button id="globe-zoom-in" title="Zoom in" aria-label="Zoom in">+</button><button id="globe-zoom-out" title="Zoom out" aria-label="Zoom out">&#8722;</button><button id="globe-reset" title="Reset Earth view" aria-label="Reset Earth view">&#8962;</button><button id="globe-rotate" aria-pressed="false" title="Auto-rotate" aria-label="Auto-rotate">&#8635;</button></div>');
  el('globe-zoom-in').onclick=()=>zoom(.8);
  el('globe-zoom-out').onclick=()=>zoom(1.25);
- el('globe-reset').onclick=()=>flyTo(115,15,1.5);
+ el('globe-reset').onclick=()=>globeMode==='illustrative'?flyTo(-160,5,2.3,850):flyTo(115,15,1.5);
  el('globe-rotate').onclick=()=>{
   if(!world)return;
   rotating=!rotating;world.controls().autoRotate=rotating;setPressed('globe-rotate',rotating);
@@ -96,7 +98,7 @@ function moveCamera(target,duration=0){
 }
 function zoom(factor){
  if(!world)return;const current=world.pointOfView();stopRotation();
- moveCamera({...current,altitude:Math.max(.08,Math.min(5,current.altitude*factor))},reduced()?0:300);
+ moveCamera({...current,altitude:Math.max(.02,Math.min(5,current.altitude*factor))},reduced()?0:300);
 }
 function stopRotation(){rotating=false;if(world)world.controls().autoRotate=false;setPressed('globe-rotate',false);}
 function conceptMarkers(){
@@ -109,12 +111,19 @@ function conceptMarkers(){
 }
 function refreshGlobe(){
  if(!world||!routeActive||document.hidden)return;
- const inputs=[world,globeMode,globePoints,conceptSnapshot];if(lastMarkers&&inputs.every((value,i)=>value===lastMarkers[i]))return;lastMarkers=inputs;
+ const inputs=[world,globeMode,globeSites,globePoints,conceptSnapshot,illustration,illustrativeSelection,reduced(),illustrativeImage];if(lastMarkers&&inputs.every((value,i)=>value===lastMarkers[i]))return;lastMarkers=inputs;
+ if(globeMode==='illustrative'){
+  const counts=renderIllustration(world,countries,globeSites,globePoints,illustration,illustrativeSelection,reduced(),Boolean(illustrativeImage));
+  if(stage()){Object.assign(stage().dataset,{layer:illustration.layer,phase:String(Math.round(illustration.phase)),visiblePoints:String(counts.points),arcCount:String(counts.arcs),ringCount:String(counts.rings),labelCount:String(counts.labels)});}
+  return;
+ }
+ clearIllustration(world);
  world.polygonsData([]).arcsData([]).ringsData([]).showAtmosphere(false);
+ if(stage())stage().dataset.ringCount='0';
  const userMarkers=globePoints.filter(p=>finite(p.lat)&&finite(p.lng)).map(p=>({...p,user:true,signal:'user'}));
  const markers=[...(globeMode==='concept'?conceptMarkers():[]),...userMarkers];
  world.pointsMerge(false).pointsData(markers).pointRadius(.48).pointAltitude(.003)
-  .pointColor(d=>d.user?'#d2dce8':signalColor[d.signal]).labelsData([]);
+  .pointColor(d=>d.user?'#d2dce8':signalColor[d.signal]).labelSize(.5).labelColor('#eaf2ff').labelsData([]);
  if(stage()){
   stage().dataset.conceptDate=conceptSnapshot.date||'';
   stage().dataset.conceptSignals=JSON.stringify((conceptSnapshot.sites||[]).map(s=>({id:s.id,signal:s.signal||'unknown',rainAnomaly:finite(s.rainAnomaly)?s.rainAnomaly:null})));
@@ -132,8 +141,23 @@ export function setConceptTexture(image=null,date=''){
  conceptImage=image;conceptImageDate=image?date:'';
  if(globeMode==='concept')drawSurface();
 }
+export function setIllustration(next){illustration={...illustration,...next};if(globeMode==='illustrative')refreshGlobe();}
+/** @param {HTMLImageElement|null} image @param {string} date */
+export function setIllustrativeTexture(image=null,date=''){
+ if(illustrativeImage===image&&illustrativeDate===(image?date:''))return;
+ illustrativeImage=image;illustrativeDate=image?date:'';
+ if(globeMode==='illustrative'){refreshGlobe();drawSurface();}
+}
+export function focusIllustrativePlace(place){if(globeMode==='illustrative')selectLocation(place);}
 function selectLocation(place){
  el('globe-search-results').hidden=true;
+ if(globeMode==='illustrative'){
+  illustrativeSelection=place;refreshGlobe();flyTo(place.lng,place.lat,place.feature?1.1:place.site?.8:.65,850);
+  dispatchEvent(new CustomEvent('globe:illustrative-select',{detail:place}));
+  if(place.site)dispatchEvent(new CustomEvent('globe:select-site',{detail:{id:place.id}}));
+  if(stage())stage().dataset.selected=place.name;
+  note(place.name+' / '+(place.user?'user-supplied observation':'geographic locator'));return;
+ }
  if(place.site){dispatchEvent(new CustomEvent('globe:select-site',{detail:{id:place.id}}));return;}
  flyTo(place.lng,place.lat,place.feature?1.1:.8);
  if(stage())stage().dataset.selected=place.siteName||place.name;
@@ -216,14 +240,16 @@ export async function initGlobe(sites,points,onSelect){
   let instance;
   try{
    const graphics=graphicsContext();
-   const [Globe,data,placeData]=await Promise.all([graphics.context?loadGlobe().catch(()=>null):Promise.resolve(null),geography(),dataFile('places.json').catch(()=>({places:[]}))]);
+   const [Globe,data,placeData,gazData]=await Promise.all([graphics.context?loadGlobe().catch(()=>null):Promise.resolve(null),geography(),dataFile('places.json').catch(()=>[]),dataFile('gazetteer.json').catch(()=>({places:[]}))]);
    if(generation!==rendererGeneration)return globePromise;
    const element=el('globe-canvas');
-   placeIndex=[...data.features.map(f=>{const center=geoCentroid(f);return{name:f.properties.name,feature:f,lng:center[0],lat:center[1]};}),...(placeData.places||[]).map(p=>({name:p[0],country:p[1],lat:p[2],lng:p[3]}))];
+   const studyEntries=Array.isArray(placeData)?placeData.map(p=>({name:p.name,country:p.country,lat:p.lat,lng:p.lng,placeId:p.id,site:Boolean(p.siteId),id:p.siteId||p.id})):(placeData.places||[]).map(p=>({name:p[0],country:p[1],lat:p[2],lng:p[3]}));
+   const gazEntries=(gazData?.places||[]).map(p=>({name:p[0],country:p[1],lat:p[2],lng:p[3]}));
+   placeIndex=[...data.features.map(f=>{const center=geoCentroid(f);return{name:f.properties.name,feature:f,lng:center[0],lat:center[1]};}),...studyEntries,...gazEntries];
    instance=createWorld(Globe,element,graphics);world=instance;
    instance.width(Math.max(1,element.clientWidth)).height(Math.max(1,element.clientHeight)).backgroundColor('rgba(0,0,0,0)').showAtmosphere(false)
-    .polygonsData([]).polygonsTransitionDuration(0).pointsData([]).pointLat('lat').pointLng('lng').pointRadius(.48).pointResolution(12)
-    .pointLabel(d=>'<div class="globe-tooltip"><strong>'+esc(d.siteName||d.name)+'</strong><br>'+(d.user?'Your observation / '+esc(d.date||'Date not supplied')+' / '+esc(d.value??'No value')+' '+esc(d.category||''):esc(conceptSnapshot.month||conceptSnapshot.date)+' / '+esc(d.name))+'</div>')
+    .polygonsData([]).polygonsTransitionDuration(0).polygonLabel(f=>'<div class="globe-tooltip"><strong>'+esc(f.properties.name)+'</strong><br>Illustrative climate pattern / click to explore</div>').onPolygonClick(f=>{const [lng,lat]=geoCentroid(f);selectLocation({name:f.properties.name,feature:f,lng,lat});}).pointsData([]).pointLat('lat').pointLng('lng').pointRadius(.48).pointResolution(12)
+    .pointLabel(d=>'<div class="globe-tooltip"><strong>'+esc(d.siteName||d.name)+'</strong><br>'+(d.user?'Your observation / '+esc(d.date||'Date not supplied')+' / '+esc(d.value??'No value')+' '+esc(d.category||''):globeMode==='illustrative'?'Study area / illustrative climate pattern':esc(conceptSnapshot.month||conceptSnapshot.date)+' / '+esc(d.name))+'</div>')
     .onPointClick(selectLocation).labelsData([]).labelLat('lat').labelLng('lng').labelText('name').labelColor(()=>'#f2f6fb')
     .labelSize(.5).labelAltitude(.018).labelDotRadius(.22).labelResolution(2).onLabelClick(selectLocation)
     .arcsData([]).ringsData([]).onGlobeClick(({lat,lng})=>selectLocation({name:lat.toFixed(3)+', '+lng.toFixed(3),lat,lng}));
@@ -232,11 +258,12 @@ export async function initGlobe(sites,points,onSelect){
    await prepareSatelliteRenderer(instance);
    if(generation!==rendererGeneration)return globePromise;
    const controls=instance.controls();rotating=false;controls.autoRotate=false;controls.autoRotateSpeed=.38;
-   controls.enableDamping=true;controls.dampingFactor=.09;controls.minDistance=108;controls.maxDistance=600;
+   controls.enableDamping=true;controls.dampingFactor=.09;controls.minDistance=102;controls.maxDistance=600;
    controls.addEventListener('start',()=>{if(instance!==world)return;stopRotation();cancelCameraMove();});
    controls.addEventListener('change',()=>{
     if(instance!==world)return;
-    const altitude=instance.pointOfView().altitude;recordCamera();controls.rotateSpeed=Math.max(.06,Math.min(.8,altitude*.55));controls.zoomSpeed=Math.max(.35,Math.min(1,altitude));
+    const pov=instance.pointOfView(),altitude=pov.altitude;recordCamera();controls.rotateSpeed=Math.max(.06,Math.min(.8,altitude*.55));controls.zoomSpeed=Math.max(.35,Math.min(1,altitude));
+    if(altitude<=.05)dispatchEvent(new CustomEvent('globe:deep-zoom',{detail:{lat:pov.lat,lng:pov.lng,altitude}}));
    });
    instance.pointOfView({lat:15,lng:115,altitude:1.5},0);setPressed('globe-rotate',false);
    let previousWidth=0,previousHeight=0;
@@ -251,7 +278,7 @@ export async function initGlobe(sites,points,onSelect){
     listenersBound=true;document.addEventListener('visibilitychange',syncRendering);
     motionQuery=matchMedia('(prefers-reduced-motion: reduce)');motionQuery.addEventListener('change',motionChanged);
    }
-   visible=element.getBoundingClientRect().bottom>0&&element.getBoundingClientRect().top<innerHeight;
+   visible=true;
    setGlobeMode(globeMode);
    stage().querySelectorAll('.globe-toolbar button,.globe-toolbar input,.globe-zoom button').forEach(control=>control.disabled=false);
    stage().setAttribute('aria-busy','false');stage().dataset.ready='true';
@@ -275,23 +302,24 @@ export async function initGlobe(sites,points,onSelect){
  return globePromise;
 }
 export function setGlobePoints(sites,points){globeSites=sites;globePoints=points;refreshGlobe();}
-export function flyTo(lng,lat,altitude=.8){if(!world)return;stopRotation();moveCamera({lat,lng,altitude},reduced()?0:350);}
+export function flyTo(lng,lat,altitude=.8,duration=350){if(!world)return;stopRotation();moveCamera({lat,lng,altitude},reduced()?0:duration);}
 function syncRendering(){
  if(!world||!stage())return;
  const active=routeActive&&!document.hidden&&visible&&el('globe-canvas').getClientRects().length>0;
  stage().dataset.rendering=active?'active':'paused';
  if(active){refreshGlobe();drawSurface();}
+ dispatchEvent(new Event('globe:rendering'));
  if(active===rendering)return;rendering=active;
  if(active)world.resumeAnimation();else{world.pauseAnimation();cancelCameraMove();}
 }
-function motionChanged(){stopRotation();cancelCameraMove();refreshGlobe();}
+function motionChanged(){stopRotation();cancelCameraMove();if(world)world.polygonsTransitionDuration(globeMode==='illustrative'&&!reduced()?180:0);refreshGlobe();}
 export function resumeGlobe(){routeActive=true;syncRendering();}
 export function pauseGlobe(){routeActive=false;syncRendering();}
 export function disposeGlobe(){
  pauseGlobe();++rendererGeneration;observer?.disconnect();intersector?.disconnect();observer=intersector=null;
  document.removeEventListener('visibilitychange',syncRendering);motionQuery?.removeEventListener('change',motionChanged);listenersBound=false;
  const old=world;disposeSatelliteRenderer(old);world=null;globePromise=null;rendering=false;visible=false;lastMarkers=null;
- satelliteImage=conceptImage=null;satelliteURL=null;satelliteDate=conceptImageDate='';
+ satelliteImage=conceptImage=illustrativeImage=null;illustrativeDate='';illustrativeVisited=false;illustrativeSelection=null;satelliteURL=null;satelliteDate=conceptImageDate='';
  try{old?.pauseAnimation();old?._destructor?.();old?.renderer()?.dispose();}catch{}
  el('globe-canvas')?.replaceChildren();
  if(stage()){stage().dataset.ready='false';stage().dataset.rendering='paused';}
@@ -336,8 +364,18 @@ async function prepareSatelliteRenderer(instance){
 }
 function drawSurface(){
  if(!world||surfaceOwner!==world)return;
+ // Do not replace the seed material before its asynchronous texture has loaded.
+ if(!world.__compatibility&&(!TextureType||!surfaceMaterial))return;
  const radar=globeMode==='satellite'?satelliteImage:null,vegetation=globeMode==='concept'?conceptImage:null;
- const context=globeMode==='concept'||geographicContext;
+ const illustrated=globeMode==='illustrative',optical=illustrated?illustrativeImage:null;
+ const context=!illustrated&&(globeMode==='concept'||geographicContext);
+ if(stage()){stage().dataset.illustrativeImageDate=optical?illustrativeDate:'';}
+ if(illustrated&&!optical){
+  if(stage())Object.assign(stage().dataset,{radarVisible:'false',radarDate:'',vegetationVisible:'false',vegetationDate:'',geographicContext:'false'});
+  if(world.__compatibility){world.globeSurfaceImage(null);world.globeMaterial().color.set('#9fc3ea');}
+  else if(originalMaterial){world.globeMaterial(originalMaterial);originalMaterial.color.set('#9fc3ea');originalMaterial.visible=true;}
+  lastSurface=null;return;
+ }
  if(stage()){
   stage().dataset.geographicContext=String(context);stage().dataset.basemap=baseImage?'ready':'reference';
   stage().dataset.radarVisible=String(Boolean(radar));stage().dataset.radarDate=radar?satelliteDate:'';stage().dataset.radarWidth=String(radar?.naturalWidth||0);
@@ -345,9 +383,9 @@ function drawSurface(){
  }
  if(!routeActive||document.hidden||!visible)return;
  if(!world.__compatibility&&(!TextureType||!surfaceMaterial))return;
- const inputs=[world,countries,globeMode,radar||vegetation,context,baseImage,radar?satelliteDate:conceptImageDate];
+ const inputs=[world,countries,globeMode,radar||vegetation||optical,context,baseImage,radar?satelliteDate:optical?illustrativeDate:conceptImageDate];
  if(lastSurface&&inputs.every((value,i)=>value===lastSurface[i]))return;
- const canvas=composeSatelliteSurface(countries,radar||vegetation,context,baseImage);lastSurface=inputs;
+ const canvas=composeSatelliteSurface(countries,radar||vegetation||optical,context,illustrated?null:baseImage);lastSurface=inputs;
  if(stage())stage().dataset.surfaceRevision=String(Number(stage().dataset.surfaceRevision||0)+1);
  if(world.__compatibility)world.globeSurfaceImage(canvas);
  else{
@@ -361,9 +399,10 @@ function drawSurface(){
 }
 export function setGeographicContext(enabled){geographicContext=Boolean(enabled);drawSurface();}
 export function setGlobeMode(mode){
- const next=mode==='concept'?'concept':'satellite';if(globeMode!==next)++textureVersion;globeMode=next;
+ const next=['concept','illustrative'].includes(mode)?mode:'satellite',changed=globeMode!==next;if(changed)++textureVersion;globeMode=next;
  if(stage())stage().dataset.mode=next;if(!world)return;
- stopRotation();world.showAtmosphere(false);world.polygonsTransitionDuration(0);
+ if(changed)stopRotation();world.showAtmosphere(next==='illustrative');world.polygonsTransitionDuration(next==='illustrative'&&!reduced()?180:0);
+ if(next==='illustrative'&&!illustrativeVisited){illustrativeVisited=true;world.pointOfView({lat:5,lng:-160,altitude:2.3},0);rotating=!reduced();world.controls().autoRotate=rotating;setPressed('globe-rotate',rotating);}
  world.pointsTransitionDuration?.(0);world.arcsTransitionDuration?.(0);world.labelsTransitionDuration?.(0);
  refreshGlobe();drawSurface();recordCamera();
 }

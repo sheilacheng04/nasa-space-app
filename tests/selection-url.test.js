@@ -6,6 +6,8 @@ test('Hash routes retain legacy aliases and parse fragment queries without treat
   const route=readRoute(hash);assert.equal(route.page,page);assert.equal(route.sub,sub);
  }
  assert.equal(readRoute('#sites/angat?date=2026-11-11').siteSelection.date,'2026-11-11');
+ const slashRoute=readRoute('#/sites?place=angat&date=2026-10-09');
+ assert.equal(slashRoute.page,'sites');assert.equal(slashRoute.sub,'angat');assert.equal(slashRoute.siteSelection.date,'2026-10-09');
 });
 test('Site links round-trip source, channel, comparison view and exact acquisition timestamps',()=>{
  const selection={source:'browse',channel:'HV',view:'swipe',before:'2026-06-23T21:30:35Z',after:'2026-10-09T21:30:31Z'};
@@ -28,6 +30,7 @@ test('Globe links retain independent radar date, vegetation month, mode and sele
  const selection={mode:'concept',site:'piura',date:'2026-10-31',month:'2025-04'};
  assert.deepEqual(readRoute(globeHash(selection)).globeSelection,selection);
  assert.equal(globeHash({...selection,playing:true,dialog:'search',speed:4}),globeHash(selection));
+ for(const mode of ['satellite','concept','illustrative'])assert.deepEqual(readRoute(globeHash({...selection,mode})).globeSelection,{...selection,mode});
 });
 test('Unavailable dates remain exact placeholders rather than selecting a different saved frame',()=>{
  const frames=[{date:'2026-10-01',image:'first'},{date:'2026-10-09T21:30:31Z',image:'second'}];
