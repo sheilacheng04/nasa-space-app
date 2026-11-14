@@ -1,0 +1,41 @@
+/* The original interactive ocean, rebuilt with persistent SVG nodes. */
+#ocean-diagram{width:100%;margin:16px 0 12px}
+.ocean-visual{position:relative;border-radius:13px;overflow:hidden;background:#153b65;border:1px solid #29496b}
+#animated-ocean{display:block;width:100%;height:auto;min-height:0}
+.ocean-model-label{position:absolute;z-index:1;bottom:11px;left:50%;transform:translateX(-50%);color:#d6e9ff;background:#103354d9;border:1px solid #8db5d638;padding:3px 9px;border-radius:99px;font:9px/1.4 system-ui,sans-serif;letter-spacing:.07em;white-space:nowrap;pointer-events:none}
+.ocean-labels{font:12px system-ui,sans-serif;letter-spacing:.02em}
+.ocean-labels #wind-label{font-size:11px;letter-spacing:.14em;font-weight:600}
+.ocean-stage-controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:15px 0 10px}
+.ocean-stage-controls button,.pattern-switch button{appearance:none;border:1px solid var(--line,#d6ddee);border-radius:99px;background:var(--card,#fff);color:var(--ink,#14203a);padding:7px 14px;font:600 12px/1.5 system-ui,sans-serif;min-height:36px;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.ocean-stage-controls button:hover,.pattern-switch button:hover{border-color:var(--hot,#e8590c)}
+.ocean-stage-controls [aria-pressed=true],.pattern-switch [aria-pressed=true]{background:var(--hot,#e8590c);border-color:var(--hot,#e8590c);color:#fff}
+.ocean-stage-controls #ocean-play{margin-left:auto;min-width:92px;border-color:var(--hot,#e8590c)}
+.ocean-stage-controls #ocean-play span{display:inline-block;width:15px;text-align:center;margin-right:3px}
+.ocean-caption{display:flex;align-items:flex-start;gap:14px;padding:12px 0 6px;min-height:88px}
+.ocean-caption p{margin:0;color:var(--mute,var(--muted,#566384));font:14px/1.7 system-ui,sans-serif;max-width:none}
+.ocean-step{font:600 10px/1.8 ui-monospace,monospace;white-space:nowrap;color:var(--hot,#e8590c);padding-top:3px}
+#ocean-phase{width:100%;accent-color:var(--hot,#e8590c);cursor:pointer;min-height:30px}
+.pattern-toolbar{display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap;margin:20px 0 13px}
+.pattern-switch{display:flex;gap:6px}
+.pattern-kind{font:10px/1.5 ui-monospace,monospace;color:var(--mute,var(--muted,#566384));letter-spacing:.04em}
+.pattern-canvas{overflow:hidden;border:1px solid var(--line,#d6ddee);border-radius:14px;background:var(--card,#fff);padding:10px}
+.pattern-canvas svg{display:block;width:100%;height:auto}
+.pattern-country{fill:var(--pattern-land,#b8c8df);stroke:var(--pattern-border,#f4f6fb);stroke-width:.55;transition:fill .35s}
+.pattern-origin rect{fill:#ff8b45;fill-opacity:.2;stroke:#f07835;stroke-width:1.5}
+.pattern-origin text{font:700 10px system-ui,sans-serif;fill:var(--ink,#14203a)}
+.pattern-effects{opacity:0;transition:opacity .35s;pointer-events:none}
+.is-elnino .pattern-effects{opacity:1}
+.is-elnino .pattern-country[data-tendency=dry]{fill:#bd7840}
+.is-elnino .pattern-country[data-tendency=wet]{fill:#2e9e99}
+.pattern-connection{fill:none;stroke-width:2;stroke-dasharray:8 6;animation:pattern-flow 5s linear infinite}
+.pattern-connection.dry{stroke:#ad6933}.pattern-connection.wet{stroke:#168e8b}
+.pattern-impact.dry{fill:#b66a2f;stroke:#e8ba92;stroke-width:4}.pattern-impact.wet{fill:#238c87;stroke:#83d0cb;stroke-width:4}
+.pattern-effects text{font:600 12px system-ui,sans-serif}.pattern-effects .dry-label{fill:var(--pattern-dry-text,#945521)}.pattern-effects .wet-label{fill:var(--pattern-wet-text,#137774)}
+.pattern-key{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin:12px 0;font:12px/1.5 system-ui,sans-serif;color:var(--mute,var(--muted,#566384))}
+.pattern-key span{display:inline-flex;align-items:center;gap:7px}.pattern-key i{display:inline-block;width:11px;height:11px;border-radius:3px}.pattern-neutral{background:#b8c8df}.pattern-dry{background:#bd7840}.pattern-wet{background:#2e9e99}
+.pattern-note{font:13px/1.7 system-ui,sans-serif;color:var(--mute,var(--muted,#566384));margin:10px 0;min-height:44px}
+.pattern-paused .pattern-connection,.pattern-offscreen .pattern-connection,.pattern-hidden .pattern-connection,#teleconnection-map:not(.is-elnino) .pattern-connection{animation-play-state:paused}
+:root[data-theme=dark] #teleconnection-map{--pattern-sea:#162b48;--pattern-grid:#29435f;--pattern-land:#455e7d;--pattern-border:#17283f;--pattern-dry-text:#eeb779;--pattern-wet-text:#6bd4cd}
+@keyframes pattern-flow{to{stroke-dashoffset:-140}}
+@media(max-width:600px){.ocean-stage-controls{gap:6px}.ocean-stage-controls button{padding:7px 11px;font-size:11px;flex:1 1 calc(50% - 6px)}.ocean-stage-controls #ocean-play{margin-left:0;flex:1 1 100%;min-height:40px}.ocean-caption{gap:9px;min-height:130px}.ocean-caption p{font-size:12px}.ocean-model-label{font-size:6px;bottom:4px;padding:2px 5px}.pattern-key{font-size:10px;gap:13px}.pattern-kind{font-size:9px}.pattern-canvas{padding:3px}.pattern-note{font-size:12px}.pattern-switch button{font-size:11px}.ocean-visual{border-radius:10px}}
+@media(prefers-reduced-motion:reduce){.pattern-connection{animation:none}.pattern-country,.pattern-effects,.ocean-stage-controls button,.pattern-switch button{transition:none}}

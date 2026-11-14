@@ -1,0 +1,34 @@
+{
+  "siteId": "angat",
+  "resolution_m": 30,
+  "acquisitions": [
+    {
+      "id": "angat-before",
+      "date": "2026-10-21",
+      "sensor": "NISAR",
+      "track": "REPLACE_FROM_METADATA",
+      "direction": "ASCENDING",
+      "frequency": "A",
+      "maturity": "VALIDATED",
+      "processingVersion": "REPLACE_WITH_CRID",
+      "sourceUrl": "https://search.asf.alaska.edu/",
+      "kind": "gcov",
+      "path": "before.h5",
+      "validMaskValues": []
+    },
+    {
+      "id": "angat-after",
+      "date": "2026-11-02",
+      "sensor": "NISAR",
+      "track": "REPLACE_FROM_METADATA",
+      "direction": "ASCENDING",
+      "frequency": "A",
+      "maturity": "VALIDATED",
+      "processingVersion": "REPLACE_WITH_CRID",
+      "sourceUrl": "https://search.asf.alaska.edu/",
+      "kind": "gcov",
+      "path": "after.h5",
+      "validMaskValues": []
+    }
+  ]
+}

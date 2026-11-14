@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "siteId": "dadu",
+  "status": "pending",
+  "retrievedAt": null,
+  "message": "Awaiting the team dataset. No radar measurements are displayed.",
+  "acquisitions": [],
+  "comparisons": [],
+  "contextLayers": [],
+  "browse": {
+    "image": "data/browse/dadu-hh.png",
+    "date": "2026-10-27T00:45:20Z",
+    "sourceUrl": "https://api.daac.asf.alaska.edu/services/search/param?dataset=NISAR&processingLevel=GCOV&bbox=67.6%2C26.5%2C68.0%2C26.9&start=2026-10-21&end=2026-11-13&output=geojson&maxResults=3",
+    "imageSourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_041_A_015_4005_DHDH_A_20261027T004520_20261027T004554_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_041_A_015_4005_DHDH_A_20261027T004520_20261027T004554_P05036_N_F_J_001_NATIVE_A_HHHH.png",
+    "sceneId": "NISAR_L2_PR_GCOV_034_041_A_015_4005_DHDH_A_20261027T004520_20261027T004554_P05036_N_F_J_001",
+    "retrievedAt": "2026-11-13T15:10:15.947610+00:00",
+    "interpretation": "Regional contrast-stretched HH quicklook; not a clipped or quantitative site measurement."
+  }
+}

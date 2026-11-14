@@ -1,0 +1,30 @@
+{
+  "name": "two-faced-pacific",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "An open-source SAR observatory for the NASA Space Apps challenge",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --test tests/*.test.js",
+    "test:browser": "node scripts/browser-check.mjs",
+    "demo": "node scripts/build-demo.mjs",
+    "refresh": "python scripts/refresh_context.py"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "d3-geo": "3.1.1",
+    "globe.gl": "2.32.0",
+    "maplibre-gl": "6.18.0",
+    "topojson-client": "3.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "esbuild": "0.25.12",
+    "vite": "6.4.6"
+  }
+}

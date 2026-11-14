@@ -1,0 +1,181 @@
+{
+  "status": "verified-snapshot",
+  "retrievedAt": "2026-11-13",
+  "issuedAt": "2026-11-12",
+  "source": "NOAA Climate Prediction Center",
+  "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml",
+  "label": "El Niño advisory",
+  "nino34": 2.5,
+  "unit": "°C anomaly",
+  "measurement": "Weekly Niño 3.4 index reported in the 12 November advisory. Not ONI or RONI.",
+  "outlook": "Strong-to-very strong El Niño likely through January–March 2027; impacts vary by place.",
+  "oni": [
+    {
+      "season": "DJF",
+      "year": 2024,
+      "anomaly": 1.84
+    },
+    {
+      "season": "JFM",
+      "year": 2024,
+      "anomaly": 1.53
+    },
+    {
+      "season": "FMA",
+      "year": 2024,
+      "anomaly": 1.18
+    },
+    {
+      "season": "MAM",
+      "year": 2024,
+      "anomaly": 0.77
+    },
+    {
+      "season": "AMJ",
+      "year": 2024,
+      "anomaly": 0.43
+    },
+    {
+      "season": "MJJ",
+      "year": 2024,
+      "anomaly": 0.18
+    },
+    {
+      "season": "JJA",
+      "year": 2024,
+      "anomaly": 0.06
+    },
+    {
+      "season": "JAS",
+      "year": 2024,
+      "anomaly": -0.04
+    },
+    {
+      "season": "ASO",
+      "year": 2024,
+      "anomaly": -0.12
+    },
+    {
+      "season": "SON",
+      "year": 2024,
+      "anomaly": -0.19
+    },
+    {
+      "season": "OND",
+      "year": 2024,
+      "anomaly": -0.29
+    },
+    {
+      "season": "NDJ",
+      "year": 2024,
+      "anomaly": -0.43
+    },
+    {
+      "season": "DJF",
+      "year": 2025,
+      "anomaly": -0.46
+    },
+    {
+      "season": "JFM",
+      "year": 2025,
+      "anomaly": -0.22
+    },
+    {
+      "season": "FMA",
+      "year": 2025,
+      "anomaly": -0.08
+    },
+    {
+      "season": "MAM",
+      "year": 2025,
+      "anomaly": 0.02
+    },
+    {
+      "season": "AMJ",
+      "year": 2025,
+      "anomaly": -0.04
+    },
+    {
+      "season": "MJJ",
+      "year": 2025,
+      "anomaly": -0.02
+    },
+    {
+      "season": "JJA",
+      "year": 2025,
+      "anomaly": -0.11
+    },
+    {
+      "season": "JAS",
+      "year": 2025,
+      "anomaly": -0.26
+    },
+    {
+      "season": "ASO",
+      "year": 2025,
+      "anomaly": -0.43
+    },
+    {
+      "season": "SON",
+      "year": 2025,
+      "anomaly": -0.57
+    },
+    {
+      "season": "OND",
+      "year": 2025,
+      "anomaly": -0.61
+    },
+    {
+      "season": "NDJ",
+      "year": 2025,
+      "anomaly": -0.6
+    },
+    {
+      "season": "DJF",
+      "year": 2026,
+      "anomaly": -0.39
+    },
+    {
+      "season": "JFM",
+      "year": 2026,
+      "anomaly": -0.21
+    },
+    {
+      "season": "FMA",
+      "year": 2026,
+      "anomaly": 0.11
+    },
+    {
+      "season": "MAM",
+      "year": 2026,
+      "anomaly": 0.46
+    },
+    {
+      "season": "AMJ",
+      "year": 2026,
+      "anomaly": 0.95
+    },
+    {
+      "season": "MJJ",
+      "year": 2026,
+      "anomaly": 1.39
+    },
+    {
+      "season": "JJA",
+      "year": 2026,
+      "anomaly": 1.8
+    },
+    {
+      "season": "JAS",
+      "year": 2026,
+      "anomaly": 2.16
+    },
+    {
+      "season": "ASO",
+      "year": 2026,
+      "anomaly": 2.46
+    }
+  ],
+  "oniSource": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+  "oniRetrievedAt": "2026-11-13T15:24:48.171666+00:00"
+}

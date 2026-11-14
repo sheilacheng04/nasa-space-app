@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "siteId": "angat",
+  "status": "pending",
+  "retrievedAt": null,
+  "message": "Template only. Run prepare_radar.py with real inputs to populate acquisitions and comparisons.",
+  "acquisitions": [],
+  "comparisons": [],
+  "contextLayers": []
+}

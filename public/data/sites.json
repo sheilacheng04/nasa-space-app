@@ -1,0 +1,71 @@
+[
+  {
+    "id": "luzon",
+    "name": "Central Luzon",
+    "subtitle": "The rice belt",
+    "country": "Philippines",
+    "coordinates": [
+      120.9,
+      15.5
+    ],
+    "bbox": [
+      120.65,
+      15.2,
+      121.15,
+      15.8
+    ],
+    "type": "Crops & water",
+    "question": "When the rains shift, what happens to the rice fields?",
+    "description": "Follow the seasonal rhythm of flooded paddies, planting and crop growth across the Central Luzon plain.",
+    "hypothesis": "A rainfall deficit may delay field flooding or planting. A changing HH/HV signal could reveal a shift in the crop cycle.",
+    "evidence": "Compare same-track radar acquisitions with rainfall, crop calendars and field observations. A single dark pixel is not evidence of drought.",
+    "disprove": "Normal planting dates and irrigation deliveries, or changes explained by harvest, would weaken the rainfall explanation.",
+    "humanDrivers": "Irrigation schedules, crop choice, harvest and changes in land use also reshape the radar signal."
+  },
+  {
+    "id": "angat",
+    "name": "Angat reservoir",
+    "subtitle": "A changing shoreline",
+    "country": "Philippines",
+    "coordinates": [
+      121.16,
+      14.91
+    ],
+    "bbox": [
+      121.08,
+      14.84,
+      121.24,
+      15.0
+    ],
+    "type": "Reservoir",
+    "question": "How much of the shoreline moves between observations?",
+    "description": "Track the footprint of open water in the reservoir and compare it with rainfall in its catchment.",
+    "hypothesis": "Lower rainfall may reduce inflow and expose the shoreline. Reservoir operations may produce the same pattern.",
+    "evidence": "Look for persistent, spatially connected changes along the shoreline. Compare with official water levels and rainfall. Surface area is not water volume.",
+    "disprove": "Stable or rising water levels, or a documented release explaining the drawdown, would weaken a drought explanation.",
+    "humanDrivers": "Dam releases, water abstraction and irrigation allocations can outweigh the rainfall signal."
+  },
+  {
+    "id": "dadu",
+    "name": "Dadu, Sindh",
+    "subtitle": "Reading a floodplain",
+    "country": "Pakistan",
+    "coordinates": [
+      67.8,
+      26.7
+    ],
+    "bbox": [
+      67.6,
+      26.5,
+      68.0,
+      26.9
+    ],
+    "type": "Flood test case",
+    "question": "Can radar separate new floodwater from permanent water?",
+    "description": "Use historical flooding as a method test, then apply the same questions to new radar observations.",
+    "hypothesis": "New connected low-backscatter areas may indicate open floodwater, if rainfall and independent imagery support the interpretation.",
+    "evidence": "Compare pre-event and post-event Sentinel-1 or compatible NISAR scenes, permanent water, elevation and rainfall.",
+    "disprove": "Radar shadow, dry smooth soil or unchanged permanent water would contradict an open-floodwater interpretation.",
+    "humanDrivers": "Embankments, drainage, canal operations and settlement patterns influence where water collects. The 2022 flood is a historical test, not evidence for a 2026 El Niño impact."
+  }
+]

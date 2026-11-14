@@ -1,0 +1,128 @@
+[
+  {
+    "name": "NOAA CPC",
+    "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml",
+    "note": "Verified advisory dated 12 November 2026. Niño 3.4 weekly index is not ONI or RONI.",
+    "status": "Snapshot included",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "NISAR / ASF DAAC",
+    "url": "https://nisar-docs.asf.alaska.edu/availability-overview/",
+    "note": "Validated L0–L2 released 6 November for acquisitions from 21 October 2026. Provisional acquisitions begin 17 June; earlier beta data exist. Record maturity and processing version.",
+    "status": "Regional browse available; quantitative observations pending",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "NISAR GCOV",
+    "url": "https://nisar-docs.asf.alaska.edu/gcov/",
+    "note": "Terrain-corrected gamma-zero power. Read only the polarizations present. A diagonal covariance element is converted to dB with 10 log10(power).",
+    "status": "Pipeline prepared",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "NISAR known issues",
+    "url": "https://nisar-docs.asf.alaska.edu/nisar-known-issues/",
+    "note": "Review known issues for the exact maturity, processing version and acquisition period before interpreting change.",
+    "status": "Manual review required",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "ASF search",
+    "url": "https://nisar-docs.asf.alaska.edu/asf-search/",
+    "note": "Public metadata search. Scientific HDF5 downloads require Earthdata Login. Browse images are regional contrast-stretched quicklooks, not calibrated pixel values.",
+    "status": "API tested",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "Open-Meteo / ECMWF ERA5",
+    "url": "https://open-meteo.com/en/docs/historical-weather-api",
+    "note": "Daily temperature and precipitation reanalysis. Request models=era5, timezone=UTC and a seven-day publication buffer. CC BY 4.0 attribution; noncommercial free API limits apply.",
+    "status": "Browser refresh and build snapshot",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "Open-Meteo terms",
+    "url": "https://open-meteo.com/en/terms",
+    "note": "Free noncommercial API: fewer than 10,000 calls/day, 5,000/hour and 600/minute. Institutional or commercial deployments must review the service terms.",
+    "status": "Reviewed",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "NASA GIBS",
+    "url": "https://nasa-gibs.github.io/gibs-api-docs/access-basics/",
+    "note": "WMS 1.1.1 with EPSG:4326, longitude/latitude BBOX, dated MODIS Terra true color. Optical context, not a SAR product.",
+    "status": "Optional live imagery",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "Sentinel-1 / ASF",
+    "url": "https://www.earthdata.nasa.gov/centers/asf-daac/data-access-tools",
+    "note": "Use radiometrically terrain-corrected, comparable Sentinel-1 scenes for a longer baseline. Never subtract C-band and L-band observations as equivalent measurements.",
+    "status": "Prepared raster import",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "OPERA DSWx-S1",
+    "url": "https://podaac.jpl.nasa.gov/dataset/OPERA_L3_DSWX-S1_V1",
+    "note": "30 m categorical surface-water maps with confidence information. Use water classes as water classes, not as dB. Inspect product version and known anomalies.",
+    "status": "Separate categorical import path",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "ESA WorldCover",
+    "url": "https://esa-worldcover.org/en/data-access",
+    "note": "2020 and 2021 use different algorithms; a difference between them is not necessarily a land-cover change. CC BY 4.0.",
+    "status": "Local context raster pending",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "WorldPop",
+    "url": "https://www.worldpop.org/",
+    "note": "Population estimates are context, not observed counts of people affected. Record product, year and license with the downloaded layer.",
+    "status": "Local context raster pending",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "Copernicus DEM",
+    "url": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+    "note": "A digital surface model including vegetation and buildings. Keep the required product attribution and license.",
+    "status": "Local context raster pending",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "GDELT DOC 2.0",
+    "url": "https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/",
+    "note": "Build-time headline discovery with source links. A live probe returned HTTP 429; cached news is retained on errors. No article bodies are republished.",
+    "status": "Refresh script with cached fallback",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "VADER",
+    "url": "https://github.com/cjhutto/vaderSentiment",
+    "note": "Hutto & Gilbert (2014). Raw VADER plus a separately labeled climate-adjusted lexicon. The project override is a heuristic, not a validated climate classifier.",
+    "status": "Pipeline scoring",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "Photon / OpenStreetMap",
+    "url": "https://github.com/komoot/photon",
+    "note": "Explicit search only, maximum five results. Public demo service is best effort and may throttle. OpenStreetMap attribution applies.",
+    "status": "Optional place search",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "NASA POWER",
+    "url": "https://power.larc.nasa.gov/docs/services/api/temporal/daily/",
+    "note": "An alternative meteorological source, reviewed but not mixed into the ERA5 charts. At most 20 parameters per point request; preserve UTC/LST distinction.",
+    "status": "Not used in current charts",
+    "reviewedAt": "2026-11-13"
+  },
+  {
+    "name": "Natural Earth / world-atlas 2.0.2",
+    "url": "https://github.com/topojson/world-atlas",
+    "note": "Pinned small-scale locator boundaries. Natural Earth public-domain geography; world-atlas ISC license included. Not authoritative local geometry.",
+    "status": "Bundled locator data",
+    "reviewedAt": "2026-11-13"
+  }
+]
