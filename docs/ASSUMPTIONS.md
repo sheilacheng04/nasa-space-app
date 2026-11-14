@@ -1,6 +1,6 @@
 # Assumptions and outstanding inputs
 
-1. Vercel is the primary target, taking precedence over the older GitHub Pages brief. Static export remains supported without server AI.
+1. Vercel is the primary target, taking precedence over the older GitHub Pages brief. The full system requires the Python API and PostgreSQL in production; the offline preview remains available.
 2. The unreleased team dataset is not available yet. Real regional quicklooks cannot replace comparable calibrated acquisitions.
 3. Central Luzon and Angat are primary sites; Dadu is a flood-method test. Historical flooding is not attributed to a later El Niño.
 4. This is educational, noncommercial use under Open-Meteo's free API terms. Commercial deployment must revisit them.

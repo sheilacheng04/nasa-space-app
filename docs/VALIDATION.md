@@ -1,3 +1,5 @@
+> **14 November 2026 — Full-stack migration:** The active application is now React + TypeScript with a Python FastAPI backend and persistent account datasets. Read [the current architecture and validation record](FULLSTACK.md). Older references below to the vanilla controller, Node AI endpoint, static-only hosting and setup commands are historical.
+
 # Validation record
 
 Checked on 13 November 2026 using Windows, Node 25.6.1, Python 3.13.4 and installed Chrome. The project declares Node >=22.12.

@@ -1,5 +1,8 @@
 import { defineConfig } from 'vite';
-import { readFileSync } from 'node:fs';
-const deployment=JSON.parse(readFileSync(new URL('./vercel.json',import.meta.url),'utf8'));
-const headers=Object.fromEntries(deployment.headers[0].headers.map(h=>[h.key,h.value]));
-export default defineConfig({base:'./',build:{target:'es2022',chunkSizeWarningLimit:2000},server:{port:5173},preview:{headers}});
+import react from '@vitejs/plugin-react';
+export default defineConfig({
+  plugins: [react()],
+  base: './',
+  build: { target: 'es2022', chunkSizeWarningLimit: 2000 },
+  server: { port: 5173, strictPort: true, proxy: { '/api': { target: 'http://127.0.0.1:' + (process.env.API_PORT || '8000'), changeOrigin: false } } },
+});

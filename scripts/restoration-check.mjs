@@ -393,11 +393,11 @@ try {
     await route('observatory/angat');
     await expect(page.locator('#weather-charts')).toContainText('ERA5');
     expectedWeatherFailure = true;
-    await page.route('https://archive-api.open-meteo.com/**', request => request.abort());
+    await page.route('**/api/weather/**', request => request.abort());
     await page.locator('#refresh-weather').click();
     await expect(page.locator('#weather-status')).toContainText('Saved snapshot retained');
     await expect(page.locator('#weather-charts')).toContainText('ERA5');
-    await page.unroute('https://archive-api.open-meteo.com/**');
+    await page.unroute('**/api/weather/**');
   });
 
   await check('No uncaught JavaScript errors or unexpected console errors', async () => {

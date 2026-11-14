@@ -1,29 +1,42 @@
 # The Two-Faced Pacific
 
-A climate story and SAR observatory for NASA Space Apps 2026, **Dancing with the SARs**. Vite, vanilla JavaScript, MapLibre GL JS and globe.gl; prepared for Vercel.
+A climate story and SAR observatory for NASA Space Apps 2026, **Dancing with the SARs**. **React + TypeScript frontend, Python FastAPI backend, and SQLAlchemy database**. SQLite runs locally; PostgreSQL is required in production. MapLibre GL JS and globe.gl power the maps.
 
 **The app works now. Quantitative NISAR findings await the team's dataset.** Real regional NISAR HH quicklooks, NOAA context and ERA5 weather snapshots are included. Quicklooks are never used to invent backscatter or water-area measurements.
 
 ## Run locally
 
-Use Node 22.12 or later. On Windows PowerShell use `npm.cmd` if script execution policy blocks `npm.ps1`.
+Use Node 22.12+ and Python 3.13. On Windows:
 
-```sh
-npm ci
-npm run dev
-```
+~~~powershell
+npm.cmd ci
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r backend/requirements-dev.txt
+npm.cmd run dev
+~~~
 
-Open the URL printed by Vite. The source `index.html` uses modules and needs a server. For a double-click preview, open `demo/pacific-preview.html`.
+Open http://127.0.0.1:5173. One command starts React and the Python API. The local SQLite database is created at `.storage/pacific.db`. On macOS/Linux use `npm` and `.venv/bin/python`.
+
+`index.html` is the React entrypoint. The frontend is in `src/App.tsx`, `src/pages/` and `src/components/`; the backend is in `backend/`. The double-clickable `demo/pacific-preview.html` is an intentionally offline demonstration.
+
+For a compiled application served entirely by Python:
+
+~~~powershell
+npm.cmd run build
+npm.cmd start
+~~~
+
+Open http://127.0.0.1:4173. API docs: `/api/docs`. See **[docs/FULLSTACK.md](docs/FULLSTACK.md)** for architecture, endpoints, accounts and validation.
+
+## Accounts and persistence
+
+CSV imports remain browser-local until you choose **Save to account** in My data. Create a username/password account to save named datasets, reopen them across sessions, update them, export CSV or delete a server copy. Passwords use Argon2id; sessions use HttpOnly cookies. Accounts can access only their own datasets.
 
 ## Deploy to Vercel
 
-1. Push the project to GitHub and import it into Vercel.
-2. Use **Vite**, install command `npm ci`, build command `npm run build`, output `dist`. These are declared in `vercel.json`.
-3. Deploy. Environment variables are optional unless enabling AI.
+The tracked configuration uses the **FastAPI** preset, builds React with Vite and serves assets through the supported static-file integration. Configure persistent PostgreSQL `DATABASE_URL`, `APP_ENV=production` and the exact HTTPS `APP_ORIGIN`. Initialize the database once with `python -m backend.manage init-db` in the configured environment, then deploy.
 
-This implementation has not been published to Vercel. Hash routes need no catch-all rewrite. `/api/analyze` is a Vercel Node function, outside `public/`. Scientific preprocessing runs before deployment, not per visitor. Earthdata credentials do not belong in Vercel or browser code.
-
-For GitHub Pages, publish the contents of `dist/`. Relative paths are configured; AI falls back locally because Pages cannot execute the Vercel function.
+Deployment and a hosted PostgreSQL connection have not been performed. See [docs/FULLSTACK.md](docs/FULLSTACK.md#vercel-deployment). The full system requires its API; publishing `dist/` alone to static hosting does not run it. Scientific preprocessing runs before deployment, not per visitor.
 
 ## Included
 
@@ -34,7 +47,7 @@ For GitHub Pages, publish the contents of `dist/`. Relative paths are configured
 | Observatory | Data-driven radar swipe, polarizations, change layers, time series, geographic map, weather charts, hypotheses |
 | Local story | Philippine context; explicit slots for a genuine team account and credited photo |
 | News & signals | Original 43-item archive, source links and filters, raw VADER and separate climate-adjusted scores, optional AI |
-| My data | Validated CSV upload/paste, browser-local storage, table, globe points, template download |
+| My data | Local CSV import, globe points, optional login and persistent private datasets |
 | Data & method | Source register, availability, processing and scientific limits |
 
 The UI follows the supplied original HTML: compact navigation, system fonts, rounded panels, light/dark themes and a full-page Globe view. Ocean and globe colors are locally labeled conceptual; real climate and radar data stay separately sourced. Animations pause when hidden or offscreen.
@@ -63,7 +76,7 @@ Failures retain the last good snapshot. GDELT returned HTTP 429 during implement
 
 VADER uses the actual `vaderSentiment` package. The separately named climate adjustment neutralizes `warm`, `warming`, `positive`, `negative`, `record`, `records`, `anomaly`, and `anomalies`. This is a project heuristic; both scores stay visible. Imported scores remain only as `legacyScore`. Headline sentiment is not public opinion, scientific confidence or climate risk.
 
-Browser weather refresh explicitly requests ERA5. Every chart identifies model, units, dates and retrieval time. Missing values are not zero. Heat and rainfall are never derived from radar.
+The Python weather endpoint explicitly requests ERA5 and caches the last successful response. Every chart identifies model, units, dates and retrieval time. Missing values are not zero. Heat and rainfall are never derived from radar.
 
 ## Add tomorrow's radar data
 
@@ -98,17 +111,15 @@ Use `population` or `elevation` for other kinds, recording the real product/year
 
 ## Optional AI
 
-Local analysis always works. Hosted AI uses `api/analyze.js`. Configure these **server environment variables** in Vercel:
+Local keyword analysis always works. The Python `/api/analyze` endpoint uses these server-only variables:
 
-```text
+~~~text
 ANTHROPIC_API_KEY=<server-side key>
 ANTHROPIC_MODEL=claude-haiku-4-5-20251001
 AI_ENABLED=true
-```
+~~~
 
-Before enabling this paid endpoint publicly, configure Vercel Firewall rate limiting for `/api/analyze` and provider spending limits. It is disabled by default. It checks POST JSON, origin and input size, constrains output and times out upstream calls. Origin validation is not authentication or a global rate limiter. Never prefix a secret with `VITE_`.
-
-Only explicitly submitted text goes to AI. CSVs are never sent automatically. In compatible Claude previews the app attempts `claude.use('sample')`; that environment was unavailable for testing. Static hosting falls back locally. Vite does not emulate Vercel functions; use Vercel's development environment for a keyed endpoint test.
+AI is disabled by default. When enabled, callers must sign in; database-backed limits cap requests per account. Set provider spending limits and deployment-level abuse controls before a public rollout. Only explicitly submitted headline text goes to the provider. CSVs are never sent to AI automatically. Never prefix secrets with `VITE_`.
 
 ## Self-contained preview
 
@@ -116,19 +127,20 @@ Only explicitly submitted text goes to AI. CSVs are never sent automatically. In
 npm run demo
 ```
 
-Creates `demo/pacific-preview.html` with inline CSS, JavaScript, snapshots, outlines and illustrative SVGs. It makes zero network requests. `HOSTED` in `src/config.js` becomes false when the bootstrap sets `__PACIFIC_DEMO__`. The interactive 3D globe, built-in place search, story animation and comparison demo are bundled locally. Live satellite images, remote geocoding and detailed MapLibre maps need the hosted app. Source hyperlinks can still be opened deliberately.
+Creates `demo/pacific-preview.html` with inline CSS, JavaScript, snapshots, outlines and illustrative SVGs. It makes zero network requests. The shared API client and visualization config disable network services when the bootstrap sets `__PACIFIC_DEMO__`. The interactive 3D globe, built-in place search, story animation and comparison demo are bundled locally. Live satellite images, remote geocoding and detailed MapLibre maps need the hosted app. Source hyperlinks can still be opened deliberately.
 
 ## Verify
 
 ```powershell
-npm.cmd test
+npm.cmd run check
 .venv\Scripts\python.exe -m unittest discover -s tests -p test_pipeline.py -v
 npm.cmd run build
 npm.cmd run demo
-npm.cmd run preview -- --port 4173
+npm.cmd start
 # In another terminal:
 $env:TEST_URL = 'http://127.0.0.1:4173'
 npm.cmd run test:browser
+npm.cmd run test:fullstack
 # Additional restored-interaction checks, against the same preview:
 node scripts/restoration-check.mjs
 ```
@@ -141,7 +153,9 @@ Tests cover uploads, safe links, compatible comparisons, API configuration, nume
 
 - `archive/original-prototype.html`: original modeled prototype, preserved outside the deployment.
 - `public/data/`: snapshots, quicklooks, manifests and prepared rasters.
-- `src/`: UI/styles; `api/`: Vercel function; `scripts/`: reproducible workflows.
+- `src/`: React/TypeScript UI, API client, styles and visualization modules.
+- `backend/`: Python API, validation, authentication, database and integration tests.
+- `scripts/`: launcher, browser checks and scientific workflows.
 - `submission/`: 90-second demo, 200-word summary and six-slide outline.
 - [DATA_CREDITS.md](DATA_CREDITS.md): attribution and license boundaries.
 - [docs/ASSUMPTIONS.md](docs/ASSUMPTIONS.md): assumptions and outstanding inputs.

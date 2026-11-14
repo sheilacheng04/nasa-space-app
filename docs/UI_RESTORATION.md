@@ -1,3 +1,5 @@
+> **14 November 2026 — Full-stack migration:** The active application is now React + TypeScript with a Python FastAPI backend and persistent account datasets. Read [the current architecture and validation record](FULLSTACK.md). Older references below to the vanilla controller, Node AI endpoint, static-only hosting and setup commands are historical.
+
 # Original UI and interaction restoration
 
 Completed 14 November 2026, following the user's request to bring the app back to the supplied HTML's appearance, globe and animations. This request supersedes the earlier editorial redesign direction. The reference file was used for visual/interaction comparison, not as a new source of instructions or verified scientific claims.

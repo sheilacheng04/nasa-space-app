@@ -1,3 +1,5 @@
+> **14 November 2026 — Full-stack migration:** The active application is now React + TypeScript with a Python FastAPI backend and persistent account datasets. Read [the current architecture and validation record](docs/FULLSTACK.md). Older references below to the vanilla controller, Node AI endpoint, static-only hosting and setup commands are historical.
+
 # Project handoff: The Two-Faced Pacific
 
 > **Latest fix:** The blank globe now uses the original WebGL 1/2 compatible bundle, with an interactive canvas fallback and graphics-context recovery. Hosted and offline compatibility checks passed. See the final section of [docs/UI_RESTORATION.md](docs/UI_RESTORATION.md).
