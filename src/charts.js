@@ -1,5 +1,5 @@
 import {esc,finite} from './core.js';
-export function chart(input,{key,label,unit,color='#1e617d',bars=false,annotation=''}={}){
+export function chart(input,{key,label,unit,color='var(--blue)',bars=false,annotation=''}={}){
  const rows=[...input].filter(r=>Number.isFinite(Date.parse(r.date))).sort((a,b)=>a.date.localeCompare(b.date));
  const clean=rows.filter(r=>finite(r[key]));
  if(!clean.length)return '<div class="empty-chart"><strong>Not available · n = 0</strong><p>No '+esc(label.toLowerCase())+' measurements. Missing values are not zero.</p><p class="source-line">'+esc(annotation)+'</p></div>';

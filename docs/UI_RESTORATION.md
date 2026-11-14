@@ -1,4 +1,5 @@
-# Current interface
-The 14 November 2026 revision supersedes the earlier restoration report. The current interface is an editorial NISAR-first field journal with five sections: Story, Sites, Globe, Media, and Data and method. Local story and future applications finish Story; CSV tools live under Data and method.
+# Original design restored
 
-See [README](../README.md), [DATA_STATUS](DATA_STATUS.md), and [VALIDATION](VALIDATION.md).
+The previous blue-to-orange hero, system sans-serif typography, rounded controls and cards, numbered navigation, compact spacing, wave logo and persistent light/dark theme toggle are restored from the pre-revision design (ad79b36).
+
+The updated NISAR content, real imagery, source records, evidence labels, five sections and science safeguards are retained. New evidence components use the original theme tokens. Both the hosted application and standalone HTML use this styling.

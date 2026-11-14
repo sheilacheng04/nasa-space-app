@@ -2,12 +2,16 @@
 
 Checked on 14 November 2026 using Windows, Node 25.6.1, Python 3.13.4 and installed Chrome. The project requires Node >=22.12.
 
+## Design restoration
+
+The original gradient hero, sans-serif typography, rounded controls, compact navigation and light/dark theme toggle have been restored with the updated NISAR evidence retained. The production build, both themes at phone width, theme persistence, keyboard search and standalone HTML were checked after this change. The orange accent is slightly deeper in light mode for readable small text.
+
 ## Passed for this revision
 
 - TypeScript type checking and the production Vite build.
 - Eight Node tests covering CSV parsing/validation, safe assets and compatible observation data.
 - Nine Python tests covering power-to-dB conversion, invalid-pixel handling, a synthetic HDF5 fixture, raster preparation, missing water pixels, agreement metrics, incomplete weather months, news merging and real catalog pair compatibility.
-- Thirteen browser checks against the production build: real dated Story imagery; all text pages; HH/HV before/after swipe and unavailable computed channels; simulated mode and missing dates; Dadu's La Niña distinction; site switching; lazy MapLibre; Media filtering and the labeled local Claude-style fallback; CSV quoting and zero values; keyboard search and focus; lazy 3D globe; 390 px layouts; mobile search; numerical contrast; and the offline edition.
+- Fourteen browser checks against the production build: real dated Story imagery; all text pages; HH/HV before/after swipe and unavailable computed channels; simulated mode and missing dates; Dadu's La Niña distinction; site switching; lazy MapLibre; Media filtering and the labeled local Claude-style fallback; CSV quoting and zero values; keyboard search and focus; lazy 3D globe; 390 px layouts; mobile search; numerical contrast; persistent light/dark mode; and the offline edition.
 - Browser console errors: **0**. Uncaught page errors: **0**.
 - Standalone HTML opened from disk with real embedded thumbnails, all five pages and the 3D globe; external requests: **0**.
 - Python scripts compile. The submission summary contains exactly 200 whitespace-separated words, excluding its title.
@@ -18,8 +22,8 @@ Browser and size reports are written to ignored `.artifacts/` by the reproducibl
 
 | Check | Measured result |
 | --- | ---: |
-| Initial hosted page responses, uncompressed, 1440 × 1000 viewport | 893,075 bytes |
-| Standalone HTML | 2,890,477 bytes |
+| Initial hosted page responses, uncompressed, 1440 × 1000 viewport | 953,009 bytes |
+| Standalone HTML | 2,882,708 bytes |
 | Real embedded image data URIs, including encoding overhead | 495,940 bytes |
 | Initial globe/MapLibre requests | 0 |
 
@@ -27,14 +31,14 @@ The first-load measurement includes the visible Story images and bootstrap JSON;
 
 ## Contrast
 
-Computed foreground/background contrast against warm off-white:
+Computed foreground/background contrast against the restored light background:
 
 | Use | Ratio |
 | --- | ---: |
-| Body text | 13.33:1 |
-| Muted text | 5.60:1 |
-| Water blue | 6.14:1 |
-| Heat orange | 5.89:1 |
+| Body text | 14.97:1 |
+| Muted text | 5.53:1 |
+| Water blue | 4.97:1 |
+| Heat orange | 4.68:1 |
 
 These tested text colors exceed 4.5:1. This is a focused numerical and keyboard check, not a formal accessibility certification.
 

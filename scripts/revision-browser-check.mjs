@@ -74,7 +74,7 @@ try{
   if(route==='story'||route==='sites/angat')await page.screenshot({path:'.artifacts/revision-'+route.replace('/','-')+'-mobile.png',fullPage:true});
  }
  check('All text/image pages fit 390px phone width');
- await page.locator('#open-search').click();await expect(page.locator('#search-dialog')).toBeVisible();await page.keyboard.press('Escape');
+ await page.locator('#open-search').click();await expect(page.locator('#search-dialog')).toBeVisible();await page.keyboard.press('Escape');await expect(page.locator('#search-dialog')).not.toBeVisible();
  check('Mobile search bottom sheet closes with Escape');
  report.contrast=await page.evaluate(()=>{
   const c=getComputedStyle(document.documentElement);
@@ -84,6 +84,21 @@ try{
  });
  if(report.contrast.some(c=>c.ratio<4.5))throw new Error('AA palette contrast failed');
  check('Body, muted text, blue and orange exceed 4.5:1 contrast');
+ await page.locator('#toggle-theme').click();
+ await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
+ await page.reload({waitUntil:'networkidle'});
+ await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
+ for(const route of ['story','sites/angat','media','method']){
+  await page.goto(base+'/#'+route,{waitUntil:'networkidle'});
+  if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1))throw new Error('Dark theme phone overflow on '+route);
+ }
+ await page.goto(base+'/#story',{waitUntil:'networkidle'});
+ await page.screenshot({path:'.artifacts/restored-content-dark-mobile.png',fullPage:true});
+ await page.setViewportSize({width:1440,height:1000});
+ await page.screenshot({path:'.artifacts/restored-content-dark-desktop.png',fullPage:true});
+ await page.locator('#toggle-theme').click();
+ await expect(page.locator('html')).toHaveAttribute('data-theme','light');
+ check('Restored light/dark toggle persists and all text pages fit in dark mode');
  if(existsSync('demo/pacific-preview.html')&&process.env.CHECK_OFFLINE==='1'){
   const offline=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});const requests=[];
   offline.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
