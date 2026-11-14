@@ -189,3 +189,7 @@ The offline file embeds the optical Earth, three real NISAR frames, September/Oc
 The global Story and headlines introduce the ocean–rainfall–land connection in plain language. NISAR radar, MODIS optical vegetation, ocean-temperature indices and weather reanalysis have distinct roles. Data and method presents four steps—question, sources, fair comparison and conclusions—with the glossary, technical checks, provenance and citations expandable.
 
 Sites and Globe both expose dated image progression. Globe's radar calendar and monthly vegetation controls retain separate selections; monthly playback and annual comparisons use actual records. The original design remains. No new calibrated science products were generated in this interface revision: radar appearance does not measure land motion or water level, and NDVI changes alone establish neither damage nor an ENSO cause.
+
+## Additional verified acquisition metadata (14 November 2026)
+
+The separately hosted [supplemental index](../public/data/nisar/index.json) records a new Dadu descending track 92/frame 75 acquisition on 30 October 2026 at 14:13:40 UTC. GSLC and RSLC products are independently verified in ASF/CMR as VALIDATED P05036, but remain not downloaded/not analyzed. No new GCOV observations were found. Curated acquisition pairs and all science series remain unchanged; the supplement is not embedded in the offline edition. See [the acquisition report](NISAR_ACQUISITIONS.md) for exact product IDs, fractional UTC end time, footprint denominator, authorization failures, replay and next steps.

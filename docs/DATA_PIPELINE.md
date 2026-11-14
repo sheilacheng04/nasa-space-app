@@ -43,3 +43,7 @@ The processor uses a common metric grid, averages linear power before dB convers
 ## Refresh the globe images
 
 Run `python scripts/render_globe_frames.py` for radar and `python scripts/fetch_globe_vegetation.py` for vegetation. Saved assets live in `public/data/globe/`. Review the resulting records before running `npm run demo` and `npm run build`. The offline edition contains only a small selection of the hosted images.
+
+## Bounded acquisition expansion without refreshing other data
+
+Use `python scripts/expand_nisar_acquisitions.py --check-access` to investigate GCOV/GSLC/RSLC for the existing sites and publish independently checked acquisition metadata alongside the curated evidence. It does not download full science files or change the existing inventory, imagery, weather or news. See [the verified acquisition report](NISAR_ACQUISITIONS.md) for exact new products, access limitations, snapshot replay and the next calibrated-data candidate. Supplemental metadata remains separately hosted rather than embedded in the offline HTML.

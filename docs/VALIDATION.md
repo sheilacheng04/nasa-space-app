@@ -1,5 +1,11 @@
 # Validation record
 
+## Verified NISAR acquisition metadata extension
+
+On 14 November 2026, bounded ASF/CMR queries verified one additional Dadu acquisition (2026-10-30T14:13:40Z), with VALIDATED P05036 GSLC/RSLC products. No new GCOV products were found. No full science product was downloaded or analyzed; seven active unique product probes required authentication and one timed out. See [NISAR_ACQUISITIONS.md](NISAR_ACQUISITIONS.md) for provenance, gaps, complete metadata, the reproducible script and the recommended next calibrated GCOV subset.
+
+Validation: **31 Python tests** (16 new, 15 existing) passed in an isolated compatible Python environment; existing affine/rasterio deprecation warnings remain. **43 Node tests**, TypeScript/build and **123 Chrome browser groups** passed. The new hosted supplement does not change curated datasets or application behavior. Offline HTML remains **2,997,271 bytes**, unchanged; offline checks passed with zero external requests. The pre-existing optional-backend environment issue in the submission audit was not modified or claimed resolved.
+
 The final cross-browser submission audit, fixes, exact browser versions and manual checklist are recorded in [FINAL_AUDIT.md](FINAL_AUDIT.md). Frontend: **43 unit tests and 175 browser groups passed**, plus TypeScript/build. Optional backend test collection remains blocked by the local Python/pydantic-core binary mismatch; see the audit report. Final offline size: **2,997,271 bytes**.
 
 ## Globe performance and inactive views
