@@ -22,7 +22,7 @@ export function oceanDiagram(value){const t=value/100,warmEnd=220+t*285,windEnd=
 
 // Observational modes share a static optical reference; the illustration has its own layers.
 let globeSites=[],globePoints=[],placeIndex=[],selectSite=()=>{},globePromise=null;
-let intersector,visible=false,routeActive=false,rendering=false,cameraFrame=0,searchSequence=0;
+let intersector,visible=false,routeActive=false,rendering=false,cameraFrame=0,cameraTarget=null,searchSequence=0;
 let forceCanvas=false,recovering=false,rendererGeneration=0,rotating=false,listenersBound=false;
 let conceptSnapshot={date:'',month:'',sites:[]};
 let surfaceSnapshot={month:'',category:'vegetation',color:'#43b99b',sites:[]};
@@ -88,18 +88,28 @@ function recordCamera(){
   : box.height/(2*Math.tan((camera?.fov||50)*Math.PI/360)*Math.sqrt((1+view.altitude)**2-1));
  dispatchEvent(new CustomEvent('globe:camera',{detail:{...view,radius,x:box.left-parent.left+box.width/2,y:box.top-parent.top+box.height/2}}));
 }
-function cancelCameraMove(){cancelAnimationFrame(cameraFrame);cameraFrame=0;}
+function cancelCameraMove(){cancelAnimationFrame(cameraFrame);cameraFrame=0;cameraTarget=null;}
+function finishCameraMove(){
+ if(!cameraTarget)return;
+ if(cameraFrame)cancelAnimationFrame(cameraFrame);cameraFrame=0;
+ const target=cameraTarget;cameraTarget=null;
+ if(world){world.pointOfView(target,0);recordCamera();}
+}
 // The pinned wrapper does not advance globe.gl's camera tween; own one cancelable RAF.
 function moveCamera(target,duration=0){
  if(!world)return;cancelCameraMove();
  const instance=world,from=world.pointOfView(),to={...from,...target};
- if(duration<=0){world.pointOfView(to,0);recordCamera();return;}
+ // Camera motion is only animated while its stage is visible and rendering.
+ // An offscreen selection still records the requested destination so returning
+ // to the globe cannot leave it stranded at a cancelled intermediate point.
+ if(duration<=0||!rendering||document.hidden||!routeActive){world.pointOfView(to,0);recordCamera();return;}
+ cameraTarget=to;
  const longitudeDelta=((to.lng-from.lng+540)%360)-180,start=performance.now();
  const step=now=>{
   if(instance!==world||!routeActive||!rendering){cameraFrame=0;return;}
   const progress=Math.min(1,(now-start)/duration),eased=progress<.5?4*progress**3:1-(-2*progress+2)**3/2;
   instance.pointOfView({lat:from.lat+(to.lat-from.lat)*eased,lng:from.lng+longitudeDelta*eased,altitude:from.altitude+(to.altitude-from.altitude)*eased},0);
-  recordCamera();cameraFrame=progress<1?requestAnimationFrame(step):0;
+  recordCamera();cameraFrame=progress<1?requestAnimationFrame(step):0;if(progress===1)cameraTarget=null;
  };cameraFrame=requestAnimationFrame(step);
 }
 function zoom(factor){
@@ -318,9 +328,9 @@ function syncRendering(){
  if(active){refreshGlobe();drawSurface();}
  dispatchEvent(new Event('globe:rendering'));
  if(active===rendering)return;rendering=active;
- if(active)world.resumeAnimation();else{world.pauseAnimation();cancelCameraMove();}
+ if(active)world.resumeAnimation();else{world.pauseAnimation();finishCameraMove();}
 }
-function motionChanged(){stopRotation();cancelCameraMove();if(world)world.polygonsTransitionDuration(globeMode==='illustrative'&&!reduced()?180:0);refreshGlobe();}
+function motionChanged(){stopRotation();finishCameraMove();if(world)world.polygonsTransitionDuration(globeMode==='illustrative'&&!reduced()?180:0);refreshGlobe();}
 export function resumeGlobe(){routeActive=true;syncRendering();}
 export function pauseGlobe(){routeActive=false;syncRendering();}
 export function disposeGlobe(){

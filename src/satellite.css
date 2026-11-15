@@ -29,6 +29,7 @@ body[data-view=globe] .globe-evidence{display:none}
 .sat-marker-layer{position:absolute;inset:0;pointer-events:none;z-index:3}
 .satellite-page .sat-marker-layer button{position:absolute;transform:translate(-50%,-50%);display:grid;place-items:center;padding:7px;min-height:38px;width:38px;border:1px solid #b7d8ef;border-radius:50%;background:#10233de6;color:#fff;box-shadow:0 3px 12px #0004;pointer-events:auto}
 .satellite-page .sat-marker-layer button:hover{border-color:#ffb38a;background:#294565}
+.satellite-page .sat-marker-layer button.is-selected,.satellite-page .sat-marker-layer button[aria-pressed=true]{z-index:4;width:46px;height:46px;border:2px solid var(--orange);background:var(--orange);color:var(--ink);box-shadow:0 0 0 4px color-mix(in srgb,var(--orange) 35%,transparent),var(--shadow-raised)}
 .sat-marker-layer svg,.site-marker-list svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.5;flex-shrink:0}
 .frame-overlay{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;gap:8px;flex-direction:column;font-size:13px;font-weight:500;color:#f0f5ff;pointer-events:none;background:#07101c99}
 .gap-overlay strong{font-family:inherit;font-size:32px;font-weight:700}
@@ -85,6 +86,22 @@ body[data-view=globe] .globe-evidence{display:none}
 .satellite-page .site-marker-list button{display:flex;align-items:center;gap:9px;text-align:left;border-radius:10px;font-size:12px}
 .satellite-site-panel .mono{font-size:11px;line-height:1.7}
 .satellite-site-panel img{width:100%;height:170px;object-fit:contain;background:#0b152a;border:1px solid var(--line);border-radius:10px;image-rendering:pixelated}
+.site-evidence-previews{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}
+.site-evidence-preview{min-width:0;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--bg2)}
+.site-evidence-title{display:flex;align-items:flex-start;justify-content:space-between;gap:5px;min-height:34px}
+.site-evidence-title strong{font-size:11px;line-height:1.4}
+.site-evidence-title time{font:11px/1.4 var(--mono);white-space:nowrap}
+.site-evidence-source{margin:4px 0 7px;color:var(--muted);font-size:10px;line-height:1.4}
+.satellite-site-panel .site-evidence-preview img{height:112px;min-height:0;object-fit:contain;image-rendering:auto}
+.site-evidence-message{margin:6px 0;color:var(--muted);font-size:11px;line-height:1.5}
+.site-evidence-message p{margin:4px 0}
+.site-evidence-message button{min-height:34px;border:1px solid var(--line);border-radius:var(--radius-pill);background:var(--card);color:var(--ink);padding:6px 9px;font-size:10px}
+.site-evidence-source-link{display:block;margin-top:5px;font-size:11px;line-height:1.4}
+.site-evidence-preview .selected-image-heading{margin-top:0;min-height:48px}
+.site-evidence-preview .selected-image-heading strong{font-size:12px}
+.site-evidence-preview .site-crop-empty{min-height:112px;padding:14px 8px;font-size:10px}
+.site-evidence-preview>p.source-line{margin:6px 0 0;font-size:10px;line-height:1.45}
+.site-evidence-preview>p:not(.source-line){font-size:10px}
 .site-crop-empty{padding:26px 14px;min-height:150px;border:1px solid var(--line);border-radius:10px;background:var(--bg2);color:var(--muted)}
 .satellite-page .source-line{color:var(--muted);font-size:11px}
 .satellite-page .text-link{display:block;border:0;background:none;padding:8px 0;text-decoration:underline;color:var(--blue)}

@@ -1,9 +1,12 @@
 import { useCallback,useEffect,useLayoutEffect,useMemo,useRef,useState } from 'react';
-import { hosted } from '../api/client';
+import { dataFile,hosted } from '../api/client';
 import { initGlobe,pauseGlobe,resumeGlobe,setGlobePoints,flyTo,setGlobeMode,setSatelliteTexture,hideSatelliteTexture,disposeGlobe,getGlobeMarkers,setGeographicContext,setConceptSnapshot } from '../world.js';
 import { closeLocalWindow,initLocalWindow } from '../local-window.js';
 import { FrameCache,siteCrop,wmsURL,globeFile } from '../globe-data';
 import type { GlobeManifest,GlobeFrame,LoadedFrame } from '../globe-data';
+import { assetURL } from '../core.js';
+import { latestSavedSiteMosaic } from '../site-evidence';
+import type { SiteEvidenceManifest,SavedSiteMosaicFrame } from '../site-evidence';
 import type {ReactNode} from 'react';
 import type { Enso,News,NewsByPlaceData,Observation,Place,Site,StudyPlace } from '../types';
 import '../satellite.css';
@@ -20,6 +23,7 @@ import type { ConceptSnapshot } from '../concept-data';
 
 const marker=<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v5m0 12v5M1 12h5m12 0h5"/></svg>;
 const time=(date:string)=>Date.parse(date.slice(0,10)+'T00:00:00Z');
+type SiteEvidenceState={siteId:string;status:'idle'|'loading'|'metadata-error'|'unavailable'|'image-loading'|'image-ready'|'image-error';frame?:SavedSiteMosaicFrame;source?:string};
 function OceanStrip({enso,news,frame,start,end}:{enso:Enso;news?:News;frame?:GlobeFrame;start:string;end:string}){
  const rows=enso.weekly?.filter(r=>time(r.date)>=time(start)&&time(r.date)<=time(end)&&Number.isFinite(r.anomaly))||[];
  const x=(date:string)=>40+(time(date)-time(start))/Math.max(86400000,time(end)-time(start))*900;
@@ -51,9 +55,9 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
  const [concept,setConcept]=useState<ConceptSnapshot|null>(null),[vegetationStatus,setVegetationStatus]=useState('loading');
  const [monthPlayback,setMonthPlayback]=useState<ConceptPlayback|null>(null);
  const receiveConcept=useCallback((snapshot:ConceptSnapshot)=>{setConcept(snapshot);setConceptSnapshot(snapshot);},[]);
- const focusConceptSite=useCallback((site:Site)=>{setSelected(site);flyTo(...site.coordinates,1.2);},[setSelected]);
  const [ready,setReady]=useState(false),[status,setStatus]=useState('loading'),[message,setMessage]=useState('Loading the real GIBS date record…'),[retry,setRetry]=useState(0),[announcement,setAnnouncement]=useState('');
  const [loaded,setLoaded]=useState<LoadedFrame|null>(null),[crop,setCrop]=useState({url:'',note:''}),[cropRetry,setCropRetry]=useState(0),[pins,setPins]=useState<{id:string;x:number;y:number;visible:boolean}[]>([]);
+ const [siteEvidence,setSiteEvidence]=useState<SiteEvidenceState>({siteId:'',status:'idle'}),[siteEvidenceRetry,setSiteEvidenceRetry]=useState({siteId:'',attempt:0}),[siteImageRetry,setSiteImageRetry]=useState(0);
  const cache=useRef(new FrameCache()),playingRef=useRef(playing),modeRef=useRef(mode);playingRef.current=playing;modeRef.current=mode;
  const radarActive=active&&mode==='satellite';
  const crops=useRef(new Map<string,Promise<{url:string;note:string}>>());
@@ -67,10 +71,33 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
  latestSelection.current={...selection,mode,date:selection.date||(mode==='illustrative'?undefined:frame?.date),month:selection.month||concept?.month};
  function setIndex(next:number|((index:number)=>number),history:HistoryMode='replace'){const target=frames[typeof next==='function'?next(index):next];if(target)change({date:target.date},history);}
  const setMonth=useCallback((month:string,history:HistoryMode='push')=>{const liveMode=readRoute(location.hash).globeSelection.mode||'illustrative';if(liveMode!=='concept')return;change({month},history);},[change]);
+ const focusConceptSite=useCallback((site:Site)=>{const alreadySelected=latestSelection.current.site===site.id;setSelected(site);if(alreadySelected)flyTo(...site.coordinates,1.2);},[setSelected]);
+ const selectSite=useCallback((site:Site)=>{
+  setGuidedTour(false);setPhPresetActive(false);
+  const alreadySelected=latestSelection.current.site===site.id;
+  setSelected(site);
+  // A changed selection is animated by the selected-site effect below. Re-selecting
+  // the current site still flies there, without starting a competing second tween.
+  if(alreadySelected&&mode!=='illustrative')flyTo(...site.coordinates,mode==='concept'?1.2:.65);
+ },[mode,setSelected]);
+ const selectedEvidenceAttempt=selected&&siteEvidenceRetry.siteId===selected.id?siteEvidenceRetry.attempt:0;
+ const selectedEvidence=selected&&siteEvidence.siteId===selected.id?siteEvidence:null;
  const currentFrame=useRef(frame);currentFrame.current=frame;
  const bestIndex=useMemo(()=>frames.reduce((best,f,i)=>(f.nontransparentPixels||0)>(frames[best]?.nontransparentPixels||0)?i:best,0),[frames]);
  const dates=useMemo(()=>frames.map(f=>time(f.date)),[frames]),range=dates.length?dates.at(-1)!-dates[0]:1;
  useEffect(()=>{if(!active||manifest)return;let live=true;const reload=retryManifest>lastManifestAttempt.current;lastManifestAttempt.current=retryManifest;setManifestError('');globeFile<GlobeManifest>('globe/manifest.json',reload).then(m=>{if(!live)return;setManifest(m);setLayerId(m.defaultLayer);}).catch(()=>{if(live){setManifestError('The NISAR date manifest could not be loaded.');setStatus('error');}});return()=>{live=false;};},[active,manifest,retryManifest]);
+ useEffect(()=>{
+  if(!selected||!radarActive){setSiteEvidence({siteId:'',status:'idle'});return;}
+  let live=true;const siteId=selected.id;
+  setSiteEvidence({siteId,status:'loading'});
+  dataFile<SiteEvidenceManifest>('sites/'+siteId+'/evidence.json',{reload:selectedEvidenceAttempt>0}).then(evidence=>{
+   if(!live)return;
+   if(evidence.siteId!==siteId)throw new Error('The saved evidence record does not match the selected study site.');
+   const frame=latestSavedSiteMosaic(evidence);
+   setSiteEvidence(frame?{siteId,status:'image-loading',frame,source:evidence.gibs?.source}:{siteId,status:'unavailable',source:evidence.gibs?.source});
+  }).catch(()=>{if(live)setSiteEvidence({siteId,status:'metadata-error'});});
+  return()=>{live=false;};
+ },[radarActive,selected?.id,selectedEvidenceAttempt]);
  useEffect(()=>{setGlobePoints(sites,points);},[sites,points]);
  useEffect(()=>{
   let current=true;
@@ -83,10 +110,10 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
  useLayoutEffect(()=>{setPlaying(false);if(ready&&active){setGlobeMode(mode);if(mode==='satellite'&&loaded&&loaded.date===frame?.date)void setSatelliteTexture(loaded.url,loaded.image,loaded.date).catch(()=>{setStatus('error');setMessage('The radar texture could not be displayed.');});}},[mode,ready,active]);
  useEffect(()=>{
   if(!active)return;let pinTick=0;const update=()=>{cancelAnimationFrame(pinTick);pinTick=requestAnimationFrame(()=>setPins(getGlobeMarkers()));};
-  const select=(e:Event)=>{const id=(e as CustomEvent).detail?.id;const site=sites.find(s=>s.id===id);if(site){setSelected(site);if(modeRef.current!=='illustrative')flyTo(...site.coordinates,.65);}};
+  const select=(e:Event)=>{const id=(e as CustomEvent).detail?.id;const site=sites.find(s=>s.id===id);if(site)selectSite(site);};
   addEventListener('globe:camera',update);addEventListener('globe:select-site',select);
   if(ready)update();return()=>{cancelAnimationFrame(pinTick);removeEventListener('globe:camera',update);removeEventListener('globe:select-site',select);};
- },[ready,sites,mode,setSelected,active]);
+ },[ready,sites,mode,selectSite,active]);
  useLayoutEffect(()=>{if(radarActive)cache.current.resume();else cache.current.pause();},[radarActive]);
  useLayoutEffect(()=>{
   if(!ready||!radarActive||!frame)return;if(loaded?.date===frame.date&&status==='ready')return;let live=true;hideSatelliteTexture();setLoaded(null);setStatus('loading');setMessage('Loading '+frame.date+'…');
@@ -162,7 +189,8 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
  function retryCrop(){if(frame&&selected){const key=frame.layer+'/'+frame.date+'/'+selected.id,pending=crops.current.get(key);if(pending)releaseCrop(pending);crops.current.delete(key);}setCropRetry(n=>n+1);}
  function seek(next:number,history:HistoryMode='push'){setPlaying(false);setGuidedTour(false);setIndex(Math.max(0,Math.min(frames.length-1,next)),history);}
  function togglePlay(){if(!frames.length||status==='error')return;setGuidedTour(false);if(!playing&&index===frames.length-1)setIndex(0);setPlaying(!playing);}
- function selectSite(site:Site){setGuidedTour(false);setSelected(site);flyTo(...site.coordinates,.65);}
+ function retrySiteEvidence(){if(!selected)return;setSiteEvidenceRetry(previous=>({siteId:selected.id,attempt:previous.siteId===selected.id?previous.attempt+1:1}));}
+ function retrySiteImage(){if(!selected||!selectedEvidence?.frame)return;setSiteEvidence(previous=>previous.siteId===selected.id?{...previous,status:'image-loading'}:previous);setSiteImageRetry(attempt=>attempt+1);}
  function activatePhilippinesPreset(){
   setGuidedTour(false);
   setPhPresetActive(true);
@@ -203,7 +231,7 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
  <div className="frame-badge" data-testid="frame-badge">{mode==='illustrative'?<><span>CONCEPT / ILLUSTRATIVE</span><strong>A connected Pacific</strong><small>Animated patterns are not measured observations</small></>:mode==='satellite'?<><span>{frame?.date||'Date not available'} | radar image date</span><strong>Colored strips show radar coverage</strong><small>NASA–ISRO NISAR · image and processing details below</small></>:<><span>{selection.month||concept?.month||'Loading monthly record...'} | monthly satellite image</span><strong>Vegetation greenness</strong><small>Site markers show rainfall compared with usual</small></>}</div>
  <p className="satellite-context-source">{mode==='illustrative'?'Natural Earth outlines · illustrative climate layers':context||mode==='concept'?basemap==='ready'?<><a href="https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/" target="_blank" rel="noopener">NASA Earth Observatory / Blue Marble</a> | historical 2004 optical reference | not the selected date</>:basemap==='loading'?'Loading saved satellite basemap...':'Natural Earth geographic fallback | satellite basemap unavailable':'Satellite basemap hidden'}</p>
  {mode==='concept'&&<div className="sat-marker-layer concept-marker-layer">{readablePins.map(pin=>{const site=sites.find(item=>item.id===pin.id),reading=concept?.sites.find(item=>item.id===pin.id);if(!site||!reading)return null;return <button key={pin.id} className={'concept-selected-marker '+reading.signal} style={{left:pin.x,top:pin.y}} aria-label={'Focus '+site.name} onClick={()=>focusConceptSite(site)}>{marker}<span>{site.name}<small>{reading.rainAnomaly===null?'Rainfall unavailable':(reading.rainAnomaly>0?'+':'')+reading.rainAnomaly.toFixed(1)+' mm rainfall departure'}</small></span></button>;})}</div>}
- {mode==='satellite'&&<><div className="sat-marker-layer">{readablePins.map(p=>{const site=sites.find(s=>s.id===p.id)!;return <button key={p.id} style={{left:p.x,top:p.y}} title={site.name} aria-label={'Explore '+site.name} onClick={()=>selectSite(site)}>{marker}</button>;})}</div>
+ {mode==='satellite'&&<><div className="sat-marker-layer">{readablePins.map(p=>{const site=sites.find(s=>s.id===p.id)!;return <button key={p.id} className={selected?.id===site.id?'is-selected':''} style={{left:p.x,top:p.y}} title={site.name} aria-label={'Explore '+site.name} aria-pressed={selected?.id===site.id} onClick={()=>selectSite(site)}>{marker}</button>;})}</div>
  {status==='loading'&&<div className="frame-overlay">Loading NISAR for {frame?.date}... Satellite basemap remains visible.</div>}
  {status==='gap'&&<div className="frame-overlay gap-overlay"><strong>{requestedOutside?'No saved NISAR image':'No NISAR data'} | {frame?.date}</strong><small>Showing the historical satellite basemap. No radar is carried across this gap.</small></div>}
  {(status==='error'||manifestError)&&<div className="failure-copy">NISAR imagery unavailable for this date. The reference Earth stays visible.<br/><button onClick={()=>{if(manifestError)setRetryManifest(n=>n+1);else{if(frame)cache.current.invalidate(frame);setRetry(n=>n+1);}}}>Retry imagery</button></div>}
@@ -277,10 +305,34 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
   ]}
  />
  </section>
- <aside className="satellite-site-panel" aria-label="Study-site frame crop"><div className="site-panel-heading"><div><p className="eyebrow">Study areas</p><h2>{selected?.name||'Explore a study site'}</h2></div>{selected&&<button type="button" className="text-link site-overview" onClick={()=>{change({site:undefined});flyTo(0,0,2.3);}}>Clear selection</button>}</div>
- {selected&&<div className="selected-site-context"><strong>{selected.country}</strong><span>Location {selected.coordinates[1].toFixed(3)}° N, {selected.coordinates[0].toFixed(3)}° E</span><span>{selected.type} · {selected.savedFrameCount||0} saved radar frames</span><p>{selected.description}</p></div>}
+ <aside className="satellite-site-panel" aria-label="Selected study-site evidence"><div className="site-panel-heading"><div><p className="eyebrow">Study areas</p><h2>{selected?.name||'Explore a study site'}</h2></div>{selected&&<button type="button" className="text-link site-overview" onClick={()=>{change({site:undefined});flyTo(0,0,2.3);}}>Clear selection</button>}</div>
+ {selected&&<div className="selected-site-context"><strong>{selected.country}</strong><span>Location {Math.abs(selected.coordinates[1]).toFixed(3)}° {selected.coordinates[1]<0?'S':'N'}, {Math.abs(selected.coordinates[0]).toFixed(3)}° {selected.coordinates[0]<0?'W':'E'}</span><span>{selected.type} · {selected.savedFrameCount||0} saved radar frames</span><p>{selected.description}</p></div>}
  <div className="site-marker-list">{sites.map(site=><button key={site.id} aria-pressed={selected?.id===site.id} onClick={()=>selectSite(site)}>{marker}<span>{site.name}<small>{site.country}</small></span></button>)}</div>
- {selected?<><div className="selected-image-heading"><strong>{frame?.date||'Observation date unavailable'}</strong><span>NASA GIBS · NISAR daily false-color mosaic</span></div>{crop.url?<img src={crop.url} alt={'Current NISAR mosaic crop for '+selected.name+', '+frame?.date+'; false color; pixel maturity unconfirmed'}/>:<div className="site-crop-empty" role="status">{status==='loading'?'Loading the selected-date image…':crop.note||'No image is available for this site and date. The selected date is not replaced.'}</div>}{crop.url&&<p>{crop.note}</p>}<p className="source-line">Mosaic date {frame?.date||'not available'} · processing maturity and CRID are not available at pixel level · downsampled browse imagery, not calibrated measurements.</p><a className="button" href={'#sites/'+selected.id+(frame?'?date='+frame.date:'')}>Open {selected.name} in Sites →</a><button className="text-link" onClick={retryCrop}>Retry image</button><PlaceNewsPanel place={selectedStudyPlace} newsByPlace={newsByPlace} maxItems={3} compact/></>:<><p>Choose a site to see its location and the selected date’s available radar preview.</p><button className="text-link" onClick={()=>document.getElementById('open-search')?.click()}>Search places and sites</button><PlaceNewsPanel place={places.find(p=>p.id==='angat')||null} newsByPlace={newsByPlace} maxItems={2} compact/></>}
+ {selected?<>
+  <div className="site-evidence-previews">
+   <section className="site-evidence-preview" aria-label="Latest saved site-specific radar evidence" aria-busy={!selectedEvidence||selectedEvidence.status==='loading'||selectedEvidence.status==='image-loading'} data-testid="latest-site-evidence" data-site-evidence-status={selectedEvidence?.status||'loading'}>
+    <div className="site-evidence-title"><strong>Latest saved site-area mosaic</strong>{selectedEvidence?.frame&&<time dateTime={selectedEvidence.frame.date}>{selectedEvidence.frame.date}</time>}</div>
+   <p className="site-evidence-source">{selectedEvidence?.source||(!selectedEvidence?'Loading saved manifest source…':'Source not listed in saved manifest')}</p>
+    {!selectedEvidence||selectedEvidence.status==='loading'?<p className="site-evidence-message" role="status">Loading saved site evidence…</p>:selectedEvidence.status==='metadata-error'?<div className="site-evidence-message" role="status"><p>Saved site evidence metadata could not be loaded. This does not confirm that imagery is absent.</p><button type="button" onClick={retrySiteEvidence}>Retry saved site evidence</button></div>:selectedEvidence.status==='unavailable'?<p className="site-evidence-message" role="status">Site metadata is available, but this edition has no saved site-area mosaic image for this site.</p>:selectedEvidence.frame?<>
+     <div className="site-evidence-image-wrap">
+      {selectedEvidence.status!=='image-error'&&<img key={selectedEvidence.frame.image+'-'+siteImageRetry} src={assetURL(selectedEvidence.frame.image||'')} alt={'Latest saved site-area NISAR mosaic for '+selected.name+', mosaic date '+selectedEvidence.frame.date+'; false color, not calibrated'} onLoad={()=>setSiteEvidence(previous=>previous.siteId===selected.id&&previous.frame?.image===selectedEvidence.frame?.image?{...previous,status:'image-ready'}:previous)} onError={()=>setSiteEvidence(previous=>previous.siteId===selected.id&&previous.frame?.image===selectedEvidence.frame?.image?{...previous,status:'image-error'}:previous)}/>}
+      {selectedEvidence.status==='image-loading'&&<span role="status">Loading saved mosaic image…</span>}
+      {selectedEvidence.status==='image-error'&&<div className="site-evidence-message" role="status"><p>The saved image request failed. This does not confirm that the observation is absent.</p><button type="button" onClick={retrySiteImage}>Retry saved image</button></div>}
+     </div>
+     {selectedEvidence.frame.label&&<p className="site-evidence-message">{selectedEvidence.frame.label}</p>}
+     {typeof selectedEvidence.frame.nontransparentFraction==='number'&&selectedEvidence.frame.nontransparentFraction<.01&&<p className="site-evidence-message">This saved image has very little opaque content at this display scale. Transparency is not a site-coverage measurement.</p>}
+     {selectedEvidence.frame.url&&<a className="site-evidence-source-link" href={selectedEvidence.frame.url} target="_blank" rel="noopener">Open this saved-date GIBS request</a>}
+    </>:<p className="site-evidence-message" role="status">Saved site evidence is unavailable for this selection.</p>}
+   </section>
+   <section className="site-evidence-preview" aria-label="Currently selected global radar mosaic">
+    <div className="selected-image-heading"><strong>{frame?.date||'Observation date unavailable'}</strong><span>Currently selected global mosaic · NASA GIBS</span></div>
+    {crop.url?<img src={crop.url} alt={'Crop of the currently selected global NISAR mosaic for '+selected.name+', mosaic date '+frame?.date+'; false color; pixel maturity unconfirmed'}/>:<div className="site-crop-empty" role="status">{status==='loading'?'Loading selected global mosaic crop…':crop.note||'No image is available for this site and selected global date. The date is not replaced.'}</div>}
+    {crop.url&&<p>{crop.note}</p>}<p className="source-line">Selected global mosaic date {frame?.date||'not available'} · processing maturity and CRID are not available at pixel level · downsampled browse imagery, not calibrated measurements.</p>
+   </section>
+  </div>
+  <a className="button" href={'#sites/'+selected.id+(frame?'?date='+frame.date:'')}>Open {selected.name} in Sites →</a><button className="text-link" onClick={retryCrop}>Retry selected global crop</button>
+  {newsByPlace&&selectedStudyPlace?<PlaceNewsPanel place={selectedStudyPlace} newsByPlace={newsByPlace} maxItems={1} compact/>:<section className="place-news-empty" aria-label="Local headline availability"><h3>Local headline</h3><p className="source-line">Saved local headline data is not available in this view. No claim can be made about local reporting.</p></section>}
+  </>:<><p>Choose a site to see its saved site-area imagery, local context, and the currently selected global mosaic date.</p><button className="text-link" onClick={()=>document.getElementById('open-search')?.click()}>Search places and sites</button>{newsByPlace?<PlaceNewsPanel place={places.find(p=>p.id==='angat')||null} newsByPlace={newsByPlace} maxItems={1} compact/>:<p className="source-line">Saved local headline data is not available in this view.</p>}</>}
  </aside></div>
  <p className="sr-only" aria-live="polite" aria-atomic="true">{announcement}</p>
  </div>;

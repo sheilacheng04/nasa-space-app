@@ -9,9 +9,9 @@ const manifest=JSON.parse(await readFile('public/data/globe/manifest.json','utf8
 const layer=manifest.layers[manifest.defaultLayer],frames=layer.frames;
 const executablePath=['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'].find(existsSync);
 const browser=await chromium.launch({headless:true,executablePath});
-const report={checks:[],pageErrors:[],consoleErrors:[],liveStatus:'',mobile:{},firstLoadBytes:0,globeRequestsOnStory:[]};
+const report={checks:[],pageErrors:[],consoleErrors:[],expectedResourceErrors:[],liveStatus:'',mobile:{},firstLoadBytes:0,globeRequestsOnStory:[]};
 function pass(text){report.checks.push(text);console.log('PASS '+text);}
-function observe(page){page.on('pageerror',e=>report.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text());});}
+function observe(page){page.on('pageerror',e=>report.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error'){const url=m.location().url,controlled=url.endsWith('/data/sites/angat/evidence.json')||url.endsWith('/data/sites/angat/gibs/2026-11-02.png');if(controlled&&m.text().startsWith('Failed to load resource:'))report.expectedResourceErrors.push({text:m.text(),url});else report.consoleErrors.push(m.text());}});}
 async function waitForApp(){
  let last='no response';
  for(let attempt=0;attempt<60;attempt++){
@@ -88,24 +88,55 @@ try{
  await expect(scrub).toHaveValue(String(frames.length-1));await expect(page.locator('#sat-play')).toHaveAttribute('aria-pressed','false',{timeout:10000});
  await expect(page.getByLabel('Loop',{exact:true})).not.toBeChecked();pass('Loop defaults off and playback stops at the latest frame');
  // Keyboard-accessible marker and command search.
+ let daduEvidenceRequests=0,releaseDaduEvidence;
+ const daduEvidenceGate=new Promise(resolve=>{releaseDaduEvidence=resolve;});
+ await page.route('**/data/sites/dadu/evidence.json',async route=>{daduEvidenceRequests++;if(daduEvidenceRequests===1)await daduEvidenceGate;await route.continue();});
  const dadu=page.locator('.site-marker-list button').filter({hasText:'Dadu'});
  await dadu.focus();await expect(dadu).toBeFocused();await page.keyboard.press('Enter');
  await expect(page.locator('.satellite-site-panel h2')).toContainText('Dadu');
+ const latestDadu=page.getByTestId('latest-site-evidence');
+ await expect.poll(()=>daduEvidenceRequests).toBe(1);
+ await expect(latestDadu).toHaveAttribute('data-site-evidence-status','loading');
+ releaseDaduEvidence();
+ await expect(latestDadu).toHaveAttribute('data-site-evidence-status','image-ready',{timeout:10000});
  const openSelectedSite=page.locator('.satellite-site-panel a[href^="#sites/dadu"]');
  await expect(openSelectedSite).toHaveAccessibleName(/Open Dadu, Sindh in Sites/);
  await expect(openSelectedSite).toHaveAttribute('href','#sites/dadu?date='+layer.end);
  await expect(dadu).toHaveAttribute('aria-pressed','true');
+ await expect(dadu).toHaveCSS('outline-style','solid');
  await expect(page.locator('.selected-site-context')).toContainText('Pakistan');
+ await expect(page.locator('.selected-site-context')).toContainText('26.700');
+ await expect(page.locator('.selected-site-context')).toContainText('67.800');
+ await expect(page.locator('.selected-site-context')).toContainText('22 saved radar frames');
+ await expect(page.locator('.selected-site-context')).toContainText('These are 2026 views, not images of the 2022 flood.');
+ await expect(latestDadu.locator('time')).toHaveAttribute('datetime','2026-10-27');
+ await expect(latestDadu).toContainText('browse imagery, false color, not calibrated');
+ await expect(latestDadu.locator('img')).toHaveJSProperty('naturalWidth',768);
+ await expect(page.locator('.selected-image-heading')).toContainText(layer.end);
+ assert.notEqual(layer.end,'2026-10-27','global and latest site mosaic dates must stay distinct');
+ await expect(page.locator('.place-news-panel')).toHaveAttribute('data-place-id','dadu');
+ await expect(page.locator('.place-news-panel .place-news-title')).toHaveCount(1);
+ await expect(page.locator('.place-news-panel')).toContainText('Wording tone scores measure headline phrasing only');
+ await expect.poll(async()=>await page.locator('#globe-stage').getAttribute('data-latitude')).toBe('26.700');
+ await expect.poll(async()=>await page.locator('#globe-stage').getAttribute('data-longitude')).toBe('67.800');
+ const alternateGlobalDate=frames.find(f=>f.status==='ready'&&f.date!==layer.end).date;
+ await seek(page,alternateGlobalDate);await ready(page);
+ await expect(page.locator('.site-evidence-preview[aria-label="Currently selected global radar mosaic"]')).toContainText(alternateGlobalDate);
+ await expect(latestDadu.locator('time')).toHaveAttribute('datetime','2026-10-27');
+ assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('date'),alternateGlobalDate);
+ await seek(page,layer.end);await ready(page);
  await expect(page.locator('.selected-site-context')).toContainText('67.800\u00b0 E');
  await expect(page.locator('.selected-site-context')).toContainText('saved radar frames');
  await expect(page.locator('.selected-image-heading')).toContainText(layer.end);
- await expect(page.locator('.selected-image-heading')).toContainText('NASA GIBS');
- await expect(page.locator('.satellite-site-panel img, .satellite-site-panel .site-crop-empty')).toBeVisible();
+ await expect(page.locator('.site-evidence-source')).toContainText('NASA GIBS');
+ await expect(page.locator('.site-evidence-preview[aria-label="Currently selected global radar mosaic"] img')).toBeVisible();
  await openSelectedSite.click();
  await expect(page.locator('.site-timeline')).toHaveAttribute('data-frame-date',layer.end);await expect(page.locator('.site-timeline')).toHaveAttribute('data-frame-status','missing');pass('Enter selects a site; Open in Sites carries and selects the exact globe date');
  await page.evaluate(()=>{location.hash='globe?mode=satellite';});await ready(page);
  const daduPointer=page.locator('.site-marker-list button').filter({hasText:'Dadu'});await daduPointer.click();
- await expect(page.locator('.satellite-site-panel h2')).toContainText('Dadu');await expect(daduPointer).toHaveAttribute('aria-pressed','true');
+  await expect(page.locator('.satellite-site-panel h2')).toContainText('Dadu');await expect(daduPointer).toHaveAttribute('aria-pressed','true');
+  assert.equal(daduEvidenceRequests,1,'saved per-site JSON remains cached when navigating to and returning from Sites');
+  await expect.poll(async()=>await page.locator('#globe-stage').getAttribute('data-latitude')).toBe('26.700');
  await expect(page.locator('.satellite-site-panel a[href^="#sites/dadu"]')).toHaveAttribute('href','#sites/dadu?date='+layer.end);
  await page.getByRole('button',{name:'Clear selection'}).click();await expect(page.locator('.satellite-site-panel h2')).toContainText('Explore a study site');await expect(daduPointer).toHaveAttribute('aria-pressed','false');await expect(page).toHaveURL(/#globe\?mode=satellite/);pass('Pointer selection and clear restore the overview and remove selected-site URL state');
  const daduMarker=page.getByRole('button',{name:'Explore Dadu, Sindh'});
@@ -113,13 +144,29 @@ try{
  await expect(page.locator('.satellite-site-panel h2')).toContainText('Dadu, Sindh');
  await expect(page.locator('.site-marker-list button').filter({hasText:'Dadu'})).toHaveAttribute('aria-pressed','true');
  await expect(page.locator('.selected-site-context')).toContainText('Pakistan');
+  await expect(daduMarker).toHaveAttribute('aria-pressed','true');
+ await expect(daduMarker).toHaveClass(/is-selected/);
+  await expect.poll(async()=>await page.locator('#globe-stage').getAttribute('data-longitude')).toBe('67.800');
  await expect(page.locator('.satellite-site-panel a[href^="#sites/dadu"]')).toHaveAttribute('href','#sites/dadu?date='+layer.end);
  await page.getByRole('button',{name:'Clear selection'}).click();
  await expect(page.locator('.satellite-site-panel h2')).toContainText('Explore a study site');
  pass('Globe marker selects Dadu and synchronizes the selected-site panel, list, and date handoff');
- await page.locator('#open-search').click();await page.locator('#global-search').fill('Angat');
+  const piura=page.locator('.site-marker-list button').filter({hasText:'Lower Piura'});await piura.click();
+  await expect(piura).toHaveAttribute('aria-pressed','true');
+  await expect(page.locator('.selected-site-context')).toContainText('5.200° S, 80.630° W');
+  await page.getByRole('button',{name:'Clear selection'}).click();
+  pass('Southern and western study-site coordinates use the correct hemispheres');
+  await page.locator('#globe-status-reset').click();
+  await expect.poll(async()=>await page.locator('#globe-stage').getAttribute('data-latitude')).toBe('15.000');
+  await expect.poll(async()=>await page.locator('#globe-stage').getAttribute('data-longitude')).toBe('115.000');
+  pass('Reset view returns the camera to the established Pacific overview');
+  const beforeAngatSearch=page.url();
+  await page.locator('#open-search').click();await page.locator('#global-search').fill('Angat');
  await page.locator('#search-results a[href="#sites/angat"]').press('Enter');
  await expect(page.locator('.satellite-site-panel h2')).toContainText('Angat');assert.equal(new URL(page.url()).hash.split('?')[0],'#globe');assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('site'),'angat');pass('Command search flies to a study site and keeps the globe open');
+  await page.goBack();await expect(page).toHaveURL(beforeAngatSearch);await expect(page.locator('.satellite-site-panel h2')).toContainText('Explore a study site');
+  await page.goForward();await expect(page).toHaveURL(/site=angat/);await expect(page.locator('.satellite-site-panel h2')).toContainText('Angat');
+  pass('Browser Back and Forward restore the unselected and selected site state');
  // Fresh uncached dates exercise exact-date fallbacks and terminal schematic.
  failLive=true;const fallback=frames.find(f=>f.date>'2026-05-05'&&f.status==='ready');await seek(page,fallback.date);await ready(page);
  await expect(page.locator('.frame-status')).toContainText('Saved NASA GIBS');pass('Saved exact-date radar remains available when the public API fails');
@@ -130,12 +177,49 @@ try{
  failLive=false;failSaved=false;await page.getByRole('button',{name:'Retry imagery'}).click();await ready(page);pass('Missing saved and live radar keeps the satellite Earth visible; retry recovers');
  // One real current-date site crop response is separately verified by the live network probe.
  report.maxConcurrentImageRequests=maxInflight;assert.ok(maxInflight<=3);pass('All image requests, including site crops, share a three-request limit');
+  const failure=await browser.newPage({viewport:{width:1100,height:850},reducedMotion:'reduce'});observe(failure);
+  let angatEvidenceRequests=0,angatImageRequests=0;
+  await failure.route('**/data/sites/angat/evidence.json',async route=>{angatEvidenceRequests++;if(angatEvidenceRequests===1)await route.fulfill({status:503,contentType:'application/json',body:JSON.stringify({error:'controlled evidence request failure'})});else await route.continue();});
+  await failure.route('**/data/sites/angat/gibs/2026-11-02.png',async route=>{angatImageRequests++;if(angatImageRequests===1)await route.abort('failed');else await route.continue();});
+  await failure.goto(base+'/#globe?mode=satellite&site=angat');await ready(failure);
+  const latestAngat=failure.getByTestId('latest-site-evidence');
+  await expect(latestAngat).toHaveAttribute('data-site-evidence-status','metadata-error');
+  await expect(latestAngat).toContainText('This does not confirm that imagery is absent');
+  await latestAngat.getByRole('button',{name:'Retry saved site evidence'}).click();
+  await expect(latestAngat).toHaveAttribute('data-site-evidence-status','image-error',{timeout:10000});
+  await expect(latestAngat).toContainText('The saved image request failed');
+  assert.equal(angatEvidenceRequests,2,'metadata retry should make exactly one new manifest request');
+  assert.equal(angatImageRequests,1,'saved image request should fail once before retry');
+  await latestAngat.getByRole('button',{name:'Retry saved image'}).click();
+  await expect(latestAngat).toHaveAttribute('data-site-evidence-status','image-ready',{timeout:10000});
+  assert.equal(angatEvidenceRequests,2,'image retry must reuse the loaded metadata');assert.equal(angatImageRequests,2);
+  await expect(latestAngat.locator('time')).toHaveAttribute('datetime','2026-11-02');
+  await expect(latestAngat.locator('img')).toHaveJSProperty('naturalWidth',768);
+  pass('Manifest failure and image failure are distinct, retry independently, and never claim absence');
+  await failure.close();
  const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:2,reducedMotion:'reduce'});observe(mobile);
- await mobile.goto(base+'/#globe?mode=satellite');await ready(mobile);await mobile.waitForTimeout(300);
+ await mobile.goto(base+'/#globe?mode=satellite&site=dadu');await ready(mobile);
+ await expect(mobile.locator('.satellite-site-panel h2')).toContainText('Dadu');
+ await expect.poll(async()=>await mobile.locator('#globe-stage').getAttribute('data-latitude')).toBe('26.700');
+ await expect.poll(async()=>await mobile.locator('#globe-stage').getAttribute('data-longitude')).toBe('67.800');
+ await expect(mobile.getByTestId('latest-site-evidence')).toHaveAttribute('data-site-evidence-status','image-ready');
  const mobileMetrics=await mobile.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:innerWidth,sheet:document.querySelector('.satellite-workspace').getBoundingClientRect().toJSON(),stage:document.querySelector('#globe-stage').getBoundingClientRect().toJSON(),canvasWidth:document.querySelector('#globe-canvas canvas').width,canvasCSS:document.querySelector('#globe-canvas canvas').clientWidth}));
  assert.ok(mobileMetrics.page<=mobileMetrics.viewport);assert.ok(mobileMetrics.sheet.width<=mobileMetrics.viewport);await mobile.locator('#sat-play').scrollIntoViewIfNeeded();await expect(mobile.locator('#sat-play')).toBeInViewport();assert.ok(mobileMetrics.canvasWidth/mobileMetrics.canvasCSS<=1.26);report.mobile=mobileMetrics;
+ await mobile.getByTestId('latest-site-evidence').scrollIntoViewIfNeeded();await expect(mobile.getByTestId('latest-site-evidence')).toBeInViewport();
  await mobile.screenshot({path:'.artifacts/satellite-mobile.png',fullPage:true});pass('390px touch viewport has no horizontal overflow and renderer pixel ratio is capped');
  await mobile.close();
+ const flight=await browser.newPage({viewport:{width:1280,height:1600},reducedMotion:'no-preference'});observe(flight);
+ await flight.goto(base+'/#globe?mode=satellite');await ready(flight);
+ await flight.locator('#globe-stage').scrollIntoViewIfNeeded();await expect(flight.locator('#globe-stage')).toHaveAttribute('data-rendering','active');
+ const flightCamera=()=>flight.locator('#globe-stage').evaluate(el=>[el.dataset.latitude,el.dataset.longitude,el.dataset.altitude]);
+ const daduFlight=flight.locator('.site-marker-list button').filter({hasText:'Dadu'}),angatFlight=flight.locator('.site-marker-list button').filter({hasText:'Angat'});
+ await daduFlight.click();await expect(daduFlight).toHaveAttribute('aria-pressed','true');await expect(flight.locator('#globe-stage')).toHaveAttribute('data-rendering','active');
+ const inFlightCamera=await flightCamera();assert.notDeepEqual(inFlightCamera,['26.700','67.800','0.650'],'camera should animate rather than jump when reduced motion is not requested');
+ await angatFlight.click();await expect(angatFlight).toHaveAttribute('aria-pressed','true');await expect(flight.locator('#globe-stage')).toHaveAttribute('data-rendering','active');
+ await expect.poll(async()=>await flightCamera(),{timeout:10000}).toEqual(['14.910','121.160','0.650']);
+ await flight.locator('#globe-status-reset').click();await expect.poll(async()=>await flightCamera(),{timeout:10000}).toEqual(['15.000','115.000','1.500']);
+ pass('Normal-motion selection eases the camera; a new target cancels the previous flight and reset restores the overview');
+ await flight.close();
  const offline=await browser.newPage({viewport:{width:1200,height:900},reducedMotion:'reduce'});observe(offline);
  let network=0;offline.on('request',r=>{if(/^https?:/.test(r.url()))network++;});
  await offline.goto(pathToFileURL(path.resolve('el-nino-app.html')).href+'#globe');
@@ -147,6 +231,14 @@ try{
  await offline.locator('#concept-month-range').fill('20');await expect(offline.locator('#globe-stage')).toHaveAttribute('data-vegetation-date','2026-09-01');
  await offline.locator('#concept-month-range').fill('19');await expect(offline.locator('.concept-vegetation')).toHaveAttribute('data-vegetation-status','offline');await expect(offline.locator('#globe-stage')).toHaveAttribute('data-vegetation-visible','false');
  assert.equal(network,0);pass('Offline Concept displays two real monthly land images and clears unembedded months without network requests');
+ await offline.evaluate(()=>{location.hash='globe?mode=satellite&site=dadu';});await ready(offline);
+ await expect(offline.locator('#globe-stage')).toHaveAttribute('data-mode','satellite');
+ await expect(offline.locator('.satellite-site-panel h2')).toContainText('Dadu');
+ const offlineSiteEvidence=offline.getByTestId('latest-site-evidence');
+ await expect(offlineSiteEvidence).toHaveAttribute('data-site-evidence-status','image-ready');
+ await expect(offlineSiteEvidence.locator('time')).toHaveAttribute('datetime','2026-10-27');
+ await expect(offlineSiteEvidence.locator('img')).toHaveJSProperty('naturalWidth',224);
+ assert.equal(network,0);pass('Offline Satellite selection restores the latest embedded site mosaic and date with zero external requests');
 
  await offline.close();
  // Force the existing CPU compatibility path and verify an actual dated texture loads.
@@ -160,7 +252,7 @@ try{
  await expect(canvas.locator('#globe-stage')).toHaveAttribute('data-renderer','canvas');
  await canvas.screenshot({path:'.artifacts/satellite-canvas.png'});pass('Canvas compatibility renderer displays a real dated radar texture');
  await canvas.close();
- assert.deepEqual(report.pageErrors,[]);assert.deepEqual(report.consoleErrors,[]);pass('No browser console or uncaught application errors, including controlled loading failures');
+ assert.deepEqual(report.pageErrors,[]);assert.deepEqual(report.consoleErrors,[]);assert.ok(report.expectedResourceErrors.length>=2);pass('No uncaught application or console errors; controlled request failures are recorded as expected resource errors');
 }finally{
  await writeFile('.artifacts/satellite-check-report.json',JSON.stringify(report,null,2));await browser.close();
 }
