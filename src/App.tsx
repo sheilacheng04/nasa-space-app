@@ -69,13 +69,7 @@ export function App() {
   const [search, setSearch] = useState(false);
   const [place, setPlace] = useState<Place | null>(null);
 
-  const [guideOpen, setGuideOpen] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem(GUIDE_STORAGE_KEY) !== '1';
-    } catch {
-      return true;
-    }
-  });
+  const [guideOpen, setGuideOpen] = useState(false);
   const [guideManual, setGuideManual] = useState(false);
 
   const dismissGuide = useCallback(() => {
