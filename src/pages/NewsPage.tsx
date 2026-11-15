@@ -125,10 +125,16 @@ export function NewsPage({
       else neu++;
     }
     const total = Math.max(1, list.length);
+    const average = list.length
+      ? list.reduce((sum, item) => sum + (item.vaderAdjusted ?? item.vader ?? 0), 0) / list.length
+      : 0;
+    const dominant = neg >= neu && neg >= pos ? 'negative' : neu >= pos ? 'neutral' : 'positive';
     return {
       neg,
       neu,
       pos,
+      average,
+      dominant,
       negPct: Math.round((neg / total) * 100),
       neuPct: Math.round((neu / total) * 100),
       posPct: Math.max(0, 100 - Math.round((neg / total) * 100) - Math.round((neu / total) * 100))
@@ -214,24 +220,29 @@ export function NewsPage({
         {news && (
           <>
             <section id="media-dashboard" className="media-dashboard" aria-label="Media and regional overview dashboard" data-testid="media-dashboard">
+              <div className="media-dashboard-heading">
+                <p className="eyebrow">At a glance</p>
+                <h2>What this archive can tell you</h2>
+                <p>These counts describe the saved reporting and study coverage. The tone bar measures headline wording, not the severity of what happened on the ground.</p>
+              </div>
               <div className="media-kpi-grid">
                 <div className="card media-kpi-card">
-                  <p className="eyebrow">Saved Archive</p>
+                  <p className="eyebrow">Saved headlines</p>
                   <strong className="kpi-value">{news.items.length}</strong>
-                  <p className="source-line">Source-linked headlines across {regions.length} countries &amp; tags</p>
+                  <p className="source-line">Source-linked stories across {regions.length} countries and tags</p>
                 </div>
                 <div className="card media-kpi-card">
-                  <p className="eyebrow">Global Study Places</p>
+                  <p className="eyebrow">Study places</p>
                   <strong className="kpi-value">{places.length || 34}</strong>
                   <p className="source-line">{sites.reduce((sum,site)=>sum+(site.savedFrameCount||0),0)} real <GlossaryTerm termKey="NISAR" /> radar frames saved across {sites.length} sites</p>
                 </div>
                 <div className="card media-kpi-card">
-                  <p className="eyebrow">Place-Matched Links</p>
+                  <p className="eyebrow">Place-matched links</p>
                   <strong className="kpi-value">{newsByPlace?.items.length || 494}</strong>
-                  <p className="source-line">Matched by place name, basin query, or country</p>
+                  <p className="source-line">Stories connected by place name, basin, or country</p>
                 </div>
                 <div className="card media-kpi-card">
-                  <p className="eyebrow">Wording Tone Split</p>
+                  <p className="eyebrow">Headline tone split</p>
                   <strong className="kpi-value">
                     {toneBreakdown.negPct}% / {toneBreakdown.neuPct}% / {toneBreakdown.posPct}%
                   </strong>
@@ -242,15 +253,19 @@ export function NewsPage({
               <div className="card media-tone-bar-card">
                 <h3>Headline wording tone distribution (not physical severity)</h3>
                 <div className="tone-bar-visual" role="img" aria-label={`Headline tone split: ${toneBreakdown.neg} negative, ${toneBreakdown.neu} neutral, ${toneBreakdown.pos} positive`}>
-                  <div className="tone-seg tone-neg-seg" style={{ width: `${toneBreakdown.negPct}%` }} title={`Negative wording: ${toneBreakdown.neg}`} />
-                  <div className="tone-seg tone-neu-seg" style={{ width: `${toneBreakdown.neuPct}%` }} title={`Neutral wording: ${toneBreakdown.neu}`} />
-                  <div className="tone-seg tone-pos-seg" style={{ width: `${toneBreakdown.posPct}%` }} title={`Positive wording: ${toneBreakdown.pos}`} />
+                  <div className="tone-seg negative" style={{ width: `${toneBreakdown.negPct}%` }} title={`Negative wording: ${toneBreakdown.neg}`} />
+                  <div className="tone-seg neutral" style={{ width: `${toneBreakdown.neuPct}%` }} title={`Neutral wording: ${toneBreakdown.neu}`} />
+                  <div className="tone-seg positive" style={{ width: `${toneBreakdown.posPct}%` }} title={`Positive wording: ${toneBreakdown.pos}`} />
                 </div>
                 <div className="tone-bar-legend">
                   <span>Negative wording: <strong>{toneBreakdown.neg}</strong> ({toneBreakdown.negPct}%)</span>
                   <span>Neutral wording: <strong>{toneBreakdown.neu}</strong> ({toneBreakdown.neuPct}%)</span>
                   <span>Positive wording: <strong>{toneBreakdown.pos}</strong> ({toneBreakdown.posPct}%)</span>
                 </div>
+                <p className="tone-summary">
+                  The largest share uses <strong>{toneBreakdown.dominant}</strong> wording. The average score is{' '}
+                  <strong>{toneBreakdown.average >= 0 ? '+' : ''}{toneBreakdown.average.toFixed(2)}</strong> on a −1 to +1 scale.
+                </p>
                 <FigureCaption
                   whatWhere={`Distribution of VADER wording tone scores across all ${news.items.length} saved climate and water headlines.`}
                   dateSource={`Retrieved ${formatDate(news.retrievedAt)} · Source: Supplied 43-item archive + GDELT DOC 2.0 snapshot.`}
