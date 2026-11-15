@@ -36,6 +36,12 @@ export function createBackground(canvas, env = window) {
     const t=elapsed*.00005, quiet=scene==='media'||scene==='method';
     glow(width*.78,height*.85,width*.6,palette.blue,quiet?.025:.045);
     if(scene==='story')glow(width*.86,height*.65,width*.4,palette.orange,.09);
+    ctx.fillStyle=palette.star;
+    for(let i=0;i<32;i++){
+      const seed=i*83.17, x=(Math.sin(seed)*.5+.5)*width, y=(Math.sin(seed*1.7)*.5+.5)*height;
+      ctx.globalAlpha=(quiet?.025:.07)*(.65+.35*Math.sin(elapsed*.0007+seed));
+      ctx.beginPath();ctx.arc(x,y,.5+(i%3)*.35,0,Math.PI*2);ctx.fill();
+    }
     ctx.strokeStyle=palette.blue;ctx.lineWidth=.8;ctx.globalAlpha=quiet?.035:.075;
     const count=detail*4+5, gap=Math.max(11,height*.035);
     for(let j=0;j<count;j++){
