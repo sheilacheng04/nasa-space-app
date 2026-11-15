@@ -1,5 +1,11 @@
 # Validation record
 
+## Vercel missing FastAPI fix · 15 November 2026
+
+Added standard `[project]` metadata and all seven existing pinned runtime dependencies to `pyproject.toml`, which previously contained only Vercel configuration. The Python 3.13 requirement matches `.python-version`; the entrypoint remains `backend.main:app`. No backend behavior, frontend assets, scientific data or dependency versions changed. See [deployment and clean redeployment instructions](FULLSTACK.md#missing-fastapi-during-vercel-startup) and [Vercel's Python dependency documentation](https://vercel.com/docs/functions/runtimes/python#dependencies).
+
+Verified with an isolated Python 3.13 environment: fresh installation of the matching runtime/development requirements and `pip check` passed; **22 backend tests** and **2 deployment-manifest tests** passed. A separate process with `VERCEL=1`, production settings, a nonconnecting test PostgreSQL URL and the configured HTTPS origin imported `backend.main:app` and returned HTTP 200 for `/` and `/api/bootstrap`. This verifies import and saved/static routes without contacting a database. Real PostgreSQL connectivity and Vercel redeployment were not performed. The existing Starlette/httpx deprecation warning remains. Pytest used an isolated workspace temporary directory because the default Windows temporary test directory was inaccessible.
+
 ## Design refinement · 15 November 2026
 
 Presentation preserves the existing light/dark palette, fonts, rounded controls, five routes, scientific wording, image pixels and saved datasets. The Story headline is unchanged. The header mark and embedded favicon now share the blue/orange ocean split. Shared tokens standardize spacing, headings, radii, shadows and 150/300/600 ms transitions. Reading surfaces stay opaque; the default theme is applied before React renders.

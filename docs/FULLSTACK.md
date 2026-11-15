@@ -86,13 +86,21 @@ The repository uses the FastAPI framework preset with backend.main:app as its en
 1. Provision persistent PostgreSQL and set DATABASE_URL for the deployment.
 2. Set APP_ENV=production and APP_ORIGIN to the exact HTTPS origin visitors will use.
 3. Initialize the empty database once with .venv\Scripts\python.exe -m backend.manage init-db using those environment variables.
-4. Import the repository into Vercel. Tracked configuration selects FastAPI and builds React with npm ci --include=dev && npm run build. Python dependencies are in requirements.txt.
+4. Import the repository into Vercel with the repository root as Root Directory. Tracked configuration selects FastAPI and builds React with npm ci --include=dev && npm run build. Runtime dependencies are declared in `[project].dependencies` in `pyproject.toml`, with matching pins in `requirements.txt` for local installation. Keep both lists aligned; a configuration-only Python manifest can leave the function without FastAPI installed.
 5. Keep preview and production databases separate. Set APP_ORIGIN for each environment.
 6. Verify /api/health and exercise sign-in/save/reload on the deployed origin.
 
 The initial schema initializer creates missing tables idempotently. It does not perform schema updates; future changes need reviewed migrations. Production does not create tables during requests.
 
 This migration was verified locally with SQLite. No PostgreSQL service, deployment credentials or published environment were supplied. Hosted PostgreSQL behavior and Vercel publication have not been exercised.
+
+### Missing FastAPI during Vercel startup
+
+For `ModuleNotFoundError: No module named 'fastapi'`, deploy the version containing the runtime dependency declarations in `pyproject.toml`. Redeploy without reusing the existing build cache. Keep Framework Preset **FastAPI**, the repository root as Root Directory, and the tracked build command; do not add an npm-only Install Command override. See [Vercel's Python dependency configuration](https://vercel.com/docs/functions/runtimes/python#dependencies).
+
+The backend still requires the production environment described above: a persistent PostgreSQL `DATABASE_URL` and an HTTPS `APP_ORIGIN` (for example `https://nasa-space-app-rho.vercel.app`). These safeguards remain enabled. Dependency installation fixes the import error; it does not provision a database or initialize its schema.
+
+Run `python -m unittest discover -s tests -p test_vercel_manifest.py` to check that the deployment manifest contains FastAPI, matches the local runtime pins and retains the intended entrypoint and Python version.
 
 ## Verification recorded
 

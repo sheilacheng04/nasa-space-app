@@ -1,3 +1,18 @@
+[project]
+name = "two-faced-pacific"
+version = "3.0.0"
+requires-python = ">=3.13,<3.14"
+# Vercel discovers this manifest; keep runtime pins aligned with requirements.txt.
+dependencies = [
+    "fastapi==0.162.7",
+    "uvicorn==0.54.0",
+    "SQLAlchemy==2.0.57",
+    "psycopg[binary]==3.3.9",
+    "httpx==0.28.1",
+    "argon2-cffi==25.1.0",
+    "python-dotenv==1.2.4",
+]
+
 [tool.vercel]
 entrypoint = "backend.main:app"
 
