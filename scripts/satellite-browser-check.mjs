@@ -12,10 +12,25 @@ const browser=await chromium.launch({headless:true,executablePath});
 const report={checks:[],pageErrors:[],consoleErrors:[],liveStatus:'',mobile:{},firstLoadBytes:0,globeRequestsOnStory:[]};
 function pass(text){report.checks.push(text);console.log('PASS '+text);}
 function observe(page){page.on('pageerror',e=>report.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text());});}
+async function waitForApp(){
+ let last='no response';
+ for(let attempt=0;attempt<60;attempt++){
+  try{
+   const response=await fetch(base,{signal:AbortSignal.timeout(1500)});
+   const body=await response.text();
+   if(response.ok&&body.includes('id="root"'))return response.status;
+   last=`HTTP ${response.status} ${response.statusText}`;
+  }catch(error){last=error.message;}
+  await new Promise(resolve=>setTimeout(resolve,250));
+ }
+ throw new Error(`Application preview at ${base} did not become ready (last result: ${last})`);
+}
 async function ready(page){await expect(page.locator('#globe-stage')).toHaveAttribute('data-frame-status','ready',{timeout:25000});}
 async function seek(page,date){await page.locator('#satellite-scrubber').fill(String(frames.findIndex(f=>f.date===date)));}
 try{
  await mkdir('.artifacts',{recursive:true});
+ const startupStatus=await waitForApp();
+ pass(`Preview server is ready at ${base} (HTTP ${startupStatus})`);
  const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});observe(page);
  await page.goto(base,{waitUntil:'networkidle'});
  const resources=await page.evaluate(()=>performance.getEntriesByType('resource').map(r=>({name:r.name,bytes:r.encodedBodySize})));
@@ -93,6 +108,15 @@ try{
  await expect(page.locator('.satellite-site-panel h2')).toContainText('Dadu');await expect(daduPointer).toHaveAttribute('aria-pressed','true');
  await expect(page.locator('.satellite-site-panel a[href^="#sites/dadu"]')).toHaveAttribute('href','#sites/dadu?date='+layer.end);
  await page.getByRole('button',{name:'Clear selection'}).click();await expect(page.locator('.satellite-site-panel h2')).toContainText('Explore a study site');await expect(daduPointer).toHaveAttribute('aria-pressed','false');await expect(page).toHaveURL(/#globe\?mode=satellite/);pass('Pointer selection and clear restore the overview and remove selected-site URL state');
+ const daduMarker=page.getByRole('button',{name:'Explore Dadu, Sindh'});
+ await expect(daduMarker).toBeVisible();await daduMarker.click();
+ await expect(page.locator('.satellite-site-panel h2')).toContainText('Dadu, Sindh');
+ await expect(page.locator('.site-marker-list button').filter({hasText:'Dadu'})).toHaveAttribute('aria-pressed','true');
+ await expect(page.locator('.selected-site-context')).toContainText('Pakistan');
+ await expect(page.locator('.satellite-site-panel a[href^="#sites/dadu"]')).toHaveAttribute('href','#sites/dadu?date='+layer.end);
+ await page.getByRole('button',{name:'Clear selection'}).click();
+ await expect(page.locator('.satellite-site-panel h2')).toContainText('Explore a study site');
+ pass('Globe marker selects Dadu and synchronizes the selected-site panel, list, and date handoff');
  await page.locator('#open-search').click();await page.locator('#global-search').fill('Angat');
  await page.locator('#search-results a[href="#sites/angat"]').press('Enter');
  await expect(page.locator('.satellite-site-panel h2')).toContainText('Angat');assert.equal(new URL(page.url()).hash.split('?')[0],'#globe');assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('site'),'angat');pass('Command search flies to a study site and keeps the globe open');
@@ -128,7 +152,11 @@ try{
  // Force the existing CPU compatibility path and verify an actual dated texture loads.
  const canvas=await browser.newPage({viewport:{width:900,height:800},reducedMotion:'reduce'});observe(canvas);
  await canvas.addInitScript(()=>{const get=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...args){if(String(type).includes('webgl'))return null;return get.call(this,type,...args);};});
- await canvas.goto(base+'/#globe?mode=satellite');await ready(canvas);
+ const compatibilityStatus=await waitForApp();
+ const canvasResponse=await canvas.goto(base+'/#globe?mode=satellite',{waitUntil:'domcontentloaded'});
+ assert.ok(canvasResponse,`Canvas compatibility navigation returned no HTTP response after preview readiness (HTTP ${compatibilityStatus})`);
+ assert.equal(canvasResponse.status(),200,`Canvas compatibility route returned HTTP ${canvasResponse.status()}`);
+ await ready(canvas);
  await expect(canvas.locator('#globe-stage')).toHaveAttribute('data-renderer','canvas');
  await canvas.screenshot({path:'.artifacts/satellite-canvas.png'});pass('Canvas compatibility renderer displays a real dated radar texture');
  await canvas.close();
