@@ -40,11 +40,11 @@ body::before {
   z-index:-1;
   pointer-events:none;
   background:
-    radial-gradient(ellipse at 18% 22%,color-mix(in srgb,var(--blue) 13%,transparent),transparent 42%),
-    radial-gradient(ellipse at 82% 74%,color-mix(in srgb,var(--orange) 8%,transparent),transparent 38%),
-    linear-gradient(135deg,color-mix(in srgb,var(--space-bg) 12%,transparent),transparent 62%);
-  filter:blur(28px);
-  opacity:.8;
+    radial-gradient(ellipse at 18% 22%,color-mix(in srgb,var(--blue) 24%,transparent),transparent 46%),
+    radial-gradient(ellipse at 82% 74%,color-mix(in srgb,var(--orange) 13%,transparent),transparent 42%),
+    linear-gradient(135deg,color-mix(in srgb,var(--space-bg) 24%,transparent),transparent 68%);
+  filter:blur(24px);
+  opacity:.95;
   animation:space-gradient-drift 26s ease-in-out infinite alternate;
 }
 @keyframes space-gradient-drift {
