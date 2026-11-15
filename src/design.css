@@ -22,6 +22,15 @@
   --shadow-raised:0 6px 12px color-mix(in srgb,var(--space-bg) 40%,transparent),0 18px 48px color-mix(in srgb,var(--space-bg) 65%,transparent);
 }
 body {font-size:var(--text-base);line-height:var(--leading-body)}
+body {
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(circle at 12px 18px,color-mix(in srgb,var(--blue) 22%,transparent) 0 1px,transparent 1.6px),
+    radial-gradient(circle at 74px 96px,color-mix(in srgb,var(--space-star) 34%,transparent) 0 .8px,transparent 1.4px),
+    radial-gradient(circle at 152px 42px,color-mix(in srgb,var(--orange) 16%,transparent) 0 .7px,transparent 1.3px);
+  background-size:190px 170px,260px 230px,340px 310px;
+  background-attachment:fixed;
+}
 ::selection {background:color-mix(in srgb,var(--orange) 20%,var(--card));color:var(--ink)}
 h1,h2,h3 {font-weight:var(--weight-bold);letter-spacing:var(--tracking-heading);text-wrap:balance}
 h2 {font-size:var(--text-section);line-height:var(--leading-heading);margin-bottom:var(--space-3)}
