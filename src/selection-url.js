@@ -17,7 +17,7 @@ export function siteSelection(input){
 export function globeSelection(input){
  const get=key=>input instanceof URLSearchParams?input.get(key):input?.[key];
  const rawSite=get('site')||get('place');
- return {mode:oneOf(get('mode'),['concept','illustrative'])||'illustrative',site:/^[a-z][a-z0-9-]{0,39}$/.test(rawSite||'')?rawSite:undefined,date:validDay(get('date'))?get('date'):undefined,month:/^\d{4}-(0[1-9]|1[0-2])$/.test(get('month')||'')&&validDay(get('month')+'-01')?get('month'):undefined};
+ return {mode:oneOf(get('mode'),['satellite','concept','illustrative'])||'illustrative',site:/^[a-z][a-z0-9-]{0,39}$/.test(rawSite||'')?rawSite:undefined,date:validDay(get('date'))?get('date'):undefined,month:/^\d{4}-(0[1-9]|1[0-2])$/.test(get('month')||'')&&validDay(get('month')+'-01')?get('month'):undefined};
 }
 export function readRoute(hash){
  const [path,query='']=hash.replace(/^#\/?/,'').split('?');let [page,sub='']=path.split('/');
