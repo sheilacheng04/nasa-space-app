@@ -18,7 +18,7 @@ export default function IllustrativeGlobe({active,ready,sites,news,newsNotice,na
   addEventListener('globe:illustrative-select',select);addEventListener('globe:rendering',visibility);visibility();
   return()=>{removeEventListener('globe:illustrative-select',select);removeEventListener('globe:rendering',visibility);};
  },[ready]);
- useEffect(()=>{if(!active||!rendering)setPlaying(false);},[active,rendering]);
+ useEffect(()=>{if(!active)setPlaying(false);},[active]);
  useEffect(()=>setPlaying(false),[navigationKey]);
  useEffect(()=>{if(active&&ready&&selectedSiteId&&selected?.id!==selectedSiteId){const site=sites.find(s=>s.id===selectedSiteId);if(site)choose(site);}},[active,ready,selectedSiteId,sites]);
  useEffect(()=>{
@@ -26,7 +26,7 @@ export default function IllustrativeGlobe({active,ready,sites,news,newsNotice,na
   media.addEventListener('change',stop);return()=>media.removeEventListener('change',stop);
  },[]);
  useEffect(()=>{
-  if(!active||!rendering||!playing)return;
+  if(!active||!playing)return;
   let frame=0,last=performance.now();
   const tick=(now:number)=>{const elapsed=now-last;if(elapsed>=90){last=now;setState(previous=>({...previous,phase:Math.min(100,previous.phase+Math.min(elapsed,250)/150)}));}frame=requestAnimationFrame(tick);};
   frame=requestAnimationFrame(tick);return()=>cancelAnimationFrame(frame);
@@ -56,7 +56,7 @@ export default function IllustrativeGlobe({active,ready,sites,news,newsNotice,na
    <label htmlFor="illustrative-phase">Conceptual progression <output>{phaseLabel(state.phase)}</output></label>
    <input id="illustrative-phase" type="range" min="0" max="100" step="1" value={Math.round(state.phase)} aria-valuetext={Math.round(state.phase)+'% — '+phaseLabel(state.phase)} onChange={event=>seek(Number(event.target.value))}/>
    <div className="illustrative-phases">{[0,30,65,100].map(phase=><button key={phase} onClick={()=>seek(phase)}>{phaseLabel(phase)}</button>)}</div>
-   <div className="illustrative-play-action"><button id="illustrative-play" className="button primary" disabled={!ready||!rendering} aria-pressed={playing} onClick={toggle}><span aria-hidden="true">{playing?'Ⅱ':'▶'}</span>{playing?'Pause progression':'Play progression'}</button></div>
+   <div className="illustrative-play-action"><button id="illustrative-play" className="button primary" disabled={!ready} aria-pressed={playing} onClick={toggle}><span aria-hidden="true">{playing?'Ⅱ':'▶'}</span>{playing?'Pause progression':'Play progression'}</button></div>
   </div>
   <div className="illustrative-toggles" role="group" aria-label="Concept overlays">{(['links','towers','labels','userData'] as const).map((key,i)=><button key={key} aria-pressed={state[key]} onClick={()=>setState(previous=>({...previous,[key]:!previous[key]}))}>{['Pacific links','Site towers','Labels','My data'][i]}</button>)}</div>
   <div className="illustrative-tabs" role="tablist" aria-label="Explore the concept globe">{(['tour','place','events'] as const).map((value,i)=><button key={value} className={value==='tour'?'illustrative-tour-tab':''} role="tab" id={'illustrative-tab-'+value} aria-controls="illustrative-details" aria-selected={tab===value} tabIndex={tab===value?0:-1} onClick={()=>value==='tour'?goTour(tour):setTab(value)} onKeyDown={event=>{const values=['tour','place','events'] as const;let next=i;if(event.key==='ArrowRight')next=(i+1)%3;else if(event.key==='ArrowLeft')next=(i+2)%3;else if(event.key==='Home')next=0;else if(event.key==='End')next=2;else return;event.preventDefault();setTab(values[next]);document.getElementById('illustrative-tab-'+values[next])?.focus();}}>{['Guided tour','Place','News'][i]}</button>)}</div>
