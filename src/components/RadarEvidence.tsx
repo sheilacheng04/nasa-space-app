@@ -95,7 +95,7 @@ export function RadarEvidence({site,evidence,selection,onSelection,navigationKey
  <button onClick={()=>setDisplay('swipe')} aria-pressed={display==='swipe'}>Before / after</button>
  {calibrated&&<button disabled={!change||mixed} onClick={()=>setDisplay('change')} aria-pressed={display==='change'}>Measured change layer</button>}
  </div>
- {mode==='gibs'&&<div hidden={display!=='timeline'}><SiteTimeline siteName={site.name} frames={availableGibs} index={after} onIndexChange={setAfter} navigationKey={navigationKey} active={active&&display==='timeline'} scenes={evidence.inventory?.scenes}/></div>}
+ {mode==='gibs'&&<div hidden={display!=='timeline'}><SiteTimeline site={site} siteName={site.name} frames={availableGibs} index={after} onIndexChange={setAfter} navigationKey={navigationKey} active={active&&display==='timeline'} scenes={evidence.inventory?.scenes}/></div>}
  {display!=='timeline'&&<div>
  <div className="acquisition-controls"><label>Before<select id="before-date" value={before} onChange={e=>setBefore(Number(e.target.value))}>{frames.map((f,i)=><option key={i} value={i}>{f.date.slice(0,10)}{!image(f)?' · not available':''}</option>)}</select></label><label>After<select id="after-date" value={after} onChange={e=>setAfter(Number(e.target.value))}>{frames.map((f,i)=><option key={i} value={i}>{f.date.slice(0,10)}{!image(f)?' · not available':''}</option>)}</select></label></div>
 

@@ -5,6 +5,7 @@ import {assetURL,safeURL} from '../core.js';
 import {hosted} from '../api/client';
 import {radarUnavailable} from '../radar-data.js';
 import type {RadarRecord} from '../radar-data.js';
+import type {Site} from '../types';
 import '../site-timeline.css';
 
 const decodedFrameCache = new Map<string, string>();
@@ -12,8 +13,8 @@ const decodedFrameCache = new Map<string, string>();
 export interface SiteTimelineFrame {
  date:string;image?:string;url?:string;status?:string;reason?:string;maturity?:string;parameters?:{BBOX?:string};
 }
-export function SiteTimeline({siteName,frames,index,onIndexChange,active,scenes,navigationKey}:{
- siteName:string;frames:SiteTimelineFrame[];index:number;onIndexChange:(index:number,history?:HistoryMode)=>void;active:boolean;navigationKey:number;scenes?:RadarRecord[];
+export function SiteTimeline({site,siteName,frames,index,onIndexChange,active,scenes,navigationKey}:{
+ site:Pick<Site,'hypothesis'|'evidence'|'humanDrivers'>;siteName:string;frames:SiteTimelineFrame[];index:number;onIndexChange:(index:number,history?:HistoryMode)=>void;active:boolean;navigationKey:number;scenes?:RadarRecord[];
 }){
  const sectionRef=useRef<HTMLElement>(null);
  const [reducedMotion,setReducedMotion]=useState(()=>typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -155,6 +156,13 @@ export function SiteTimeline({siteName,frames,index,onIndexChange,active,scenes,
    {shown?<img src={shown.url} alt={'NISAR false-color radar image of '+siteName+', mosaic date '+frame?.date+'; saved NASA GIBS image, not calibrated'} data-image-date={frame?.date}/>:<div className="site-time-placeholder" role={playing?undefined:'status'}><strong>{status==='loading'?'Loading this date...':status==='error'?'This image could not load':status==='offline'?'This date is not included offline':absent.title}</strong><span>{frame?.date}</span><p>{status==='loading'?'The previous image is cleared while this one loads.':status==='offline'?'Choose a marked available image or open the hosted edition.':status==='error'?'Your date is preserved. Retry to load the same image.':absent.description}</p>{status==='error'&&<button onClick={()=>setRetry(n=>n+1)}>Retry image</button>}</div>}
   </div>
   <div className="site-time-readout"><span>{days===null?'No earlier step in this sequence':days+' days since the previous '+(availableOnly?'available image':'sampled date')}</span><span>Checkered areas: no displayed radar coverage</span></div>
+  <aside className="site-progression-interpretation" aria-label={'How to interpret the '+siteName+' progression'}>
+   <p className="eyebrow">Interpret the progression</p>
+   <h3>What could explain this change?</h3>
+   <p>{site.hypothesis}</p>
+   <p><strong>Check against:</strong> {site.evidence}</p>
+   <p><strong>Other drivers:</strong> {site.humanDrivers}</p>
+  </aside>
   <label className="timeline-control" htmlFor="site-date-slider">Choose a sampled date <output>{frame?.date||'Unavailable'}</output><input id="site-date-slider" type="range" min="0" max={Math.max(0,frames.length-1)} value={index} disabled={!frames.length} aria-valuetext={(frame?.date||'No date')+' / '+status} onChange={e=>seek(Number(e.target.value),'replace')}/></label>
   <details className="site-playback-options"><summary>Playback options and all dates</summary>
   <div className="site-time-controls">
