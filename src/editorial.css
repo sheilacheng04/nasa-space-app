@@ -169,6 +169,16 @@ pre{font:11px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;max-wi
 .method-source-card{padding:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-md);font-size:13px}
 .method-source-card h4{margin:4px 0 8px}
 
+/* Media headline pagination */
+.news-pagination-status{text-align:center;color:var(--muted);font-size:12px;margin:16px 0 8px}
+.news-pagination{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 24px}
+.news-pagination-pages{display:flex;align-items:center;justify-content:center;gap:4px}
+.news-pagination .button{min-height:44px;min-width:44px;padding:8px 12px}
+.news-pagination-number[aria-current=page]{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700}
+:root[data-theme=dark] .news-pagination-number[aria-current=page]{color:#111b2e}
+.news-pagination-ellipsis{min-width:20px;text-align:center;color:var(--muted)}
+@media(max-width:480px){.news-pagination{gap:5px}.news-pagination .button{min-width:44px;padding:7px 10px}.news-pagination-number:not([aria-current=page]),.news-pagination-ellipsis{display:none}.news-pagination-pages{min-width:44px}}
+
 @media(max-width:760px){.hero-observation{grid-template-columns:1fr;gap:16px}.hero-observation>img{height:280px}.radar-evidence{padding:14px}.site-picker{width:100%}.radar-stage{height:320px}.radar-tabs button{font-size:11px;padding:7px 10px}.image-label{font-size:8px;padding:6px;left:8px;top:8px}.image-label.right{right:8px}.acquisition-controls{gap:10px}.acquisition-controls select{font-size:12px}.swipe-control{flex-wrap:wrap;gap:10px;font-size:11px}.swipe-control input{min-width:130px}.chart-grid{grid-template-columns:1fr}.table-scroll table{min-width:620px}.evidence-list{grid-template-columns:1fr}.evidence-row{display:grid;grid-template-columns:100px minmax(0,1fr);gap:14px}.evidence-row figure{margin:0}.evidence-row img{height:120px}.evidence-row h3{font-size:17px}.evidence-row p{font-size:12px}.rain-departures>span{min-width:54px;margin-right:4px;font-size:10px;padding:8px}.caption-top{flex-wrap:wrap}.evidence-lead img{width:72px}.hero-observation figcaption{min-width:0}.first-visit-steps,.help-guide-science-grid{grid-template-columns:1fr}.help-guide-modal-panel{padding:16px}.first-visit-head h2{font-size:19px}.story-preview-stage{grid-template-columns:1fr}.story-date-views{grid-template-columns:1fr}.where-to-next-actions{align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){.evidence-row,.frame-progress-fill{transition:none}}
 

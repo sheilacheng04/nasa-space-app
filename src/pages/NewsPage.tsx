@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { analyzeAI, errorMessage } from '../api/client';
 import { finite, formatDate, localTone, safeURL } from '../core.js';
 import { FigureCaption } from '../components/FigureCaption';
 import { PlaceNewsPanel } from '../components/PlaceNewsPanel';
 import { WhereToNext } from '../components/FirstVisitGuide';
 import { GlossaryTerm } from '../components/GlossaryTerm';
+import { paginateItems, visiblePageNumbers } from '../media-pagination.js';
 import type { ReactNode } from 'react';
 import type { Analysis, Headline, News, NewsByPlaceData, StudyPlace, Site } from '../types';
 
@@ -80,6 +81,9 @@ export function NewsPage({
   const [region, setRegion] = useState('');
   const [sort, setSort] = useState('newest');
   const [selectedPlaceId, setSelectedPlaceId] = useState<string>('angat');
+  const [newsPage, setNewsPage] = useState(1);
+  const paginationNav = useRef<HTMLElement | null>(null);
+  const focusCurrentPage = useRef(false);
   const [text, setText] = useState('');
   const [output, setOutput] = useState('');
   const [busy, setBusy] = useState(false);
@@ -112,6 +116,38 @@ export function NewsPage({
         ),
     [query, region, sort, news]
   );
+
+  const pagination = useMemo(() => paginateItems(items, newsPage), [items, newsPage]);
+
+  useEffect(() => {
+    if (pagination.currentPage !== newsPage) setNewsPage(pagination.currentPage);
+  }, [newsPage, pagination.currentPage]);
+
+  useEffect(() => {
+    if (!focusCurrentPage.current) return;
+    focusCurrentPage.current = false;
+    paginationNav.current?.querySelector<HTMLButtonElement>('[aria-current="page"]')?.focus();
+  }, [newsPage]);
+
+  function changeNewsPage(page: number) {
+    focusCurrentPage.current = true;
+    setNewsPage(page);
+  }
+
+  function changeQuery(value: string) {
+    setQuery(value);
+    setNewsPage(1);
+  }
+
+  function changeRegion(value: string) {
+    setRegion(value);
+    setNewsPage(1);
+  }
+
+  function changeSort(value: string) {
+    setSort(value);
+    setNewsPage(1);
+  }
 
   const toneBreakdown = useMemo(() => {
     const list = news?.items || [];
@@ -282,7 +318,7 @@ export function NewsPage({
                       <h3>Regional study places, saved radar frames, and headlines</h3>
                     </div>
                     {region && (
-                      <button type="button" className="button secondary" onClick={() => setRegion('')}>
+                      <button type="button" className="button secondary" onClick={() => changeRegion('')}>
                         Clear country filter ({region}) ×
                       </button>
                     )}
@@ -302,7 +338,7 @@ export function NewsPage({
                               key={c}
                               type="button"
                               className={`chip-btn ${region === c ? 'is-active' : ''}`}
-                              onClick={() => setRegion((prev) => (prev === c ? '' : c))}
+                              onClick={() => changeRegion(region === c ? '' : c)}
                             >
                               {c}
                             </button>
@@ -348,12 +384,12 @@ export function NewsPage({
                   id="news-search"
                   placeholder="Rainfall, farming, water..."
                   value={query}
-                  onChange={(e) => setQuery(e.target.value)}
+                  onChange={(e) => changeQuery(e.target.value)}
                 />
               </label>
               <label>
                 Region
-                <select id="news-region" value={region} onChange={(e) => setRegion(e.target.value)}>
+                <select id="news-region" value={region} onChange={(e) => changeRegion(e.target.value)}>
                   <option value="">All regions</option>
                   {regions.map((r) => (
                     <option key={r}>{r}</option>
@@ -362,7 +398,7 @@ export function NewsPage({
               </label>
               <label>
                 Sort
-                <select id="news-sort" value={sort} onChange={(e) => setSort(e.target.value)}>
+                <select id="news-sort" value={sort} onChange={(e) => changeSort(e.target.value)}>
                   <option value="newest">Newest first</option>
                   <option value="oldest">Oldest first</option>
                   <option value="tone">Most negative wording first</option>
@@ -378,11 +414,56 @@ export function NewsPage({
             </p>
             <div id="news-list">
               {items.length ? (
-                items.map((n) => <NewsItem key={n.id} item={n} />)
+                pagination.items.map((n) => <NewsItem key={n.id} item={n} />)
               ) : (
                 <p className="empty-chart">No headlines match these filters.</p>
               )}
             </div>
+            <p id="news-pagination-status" className="news-pagination-status" role="status" aria-live="polite" aria-atomic="true">
+              {items.length
+                ? `Showing ${pagination.start}–${pagination.end} of ${pagination.totalItems} matching headlines · Page ${pagination.currentPage} of ${pagination.totalPages}.`
+                : 'No matching headlines.'}
+            </p>
+            {pagination.totalPages > 1 && (
+              <nav ref={paginationNav} className="news-pagination" aria-label="Headline pages">
+                <button
+                  type="button"
+                  className="button secondary news-pagination-step"
+                  aria-label="Previous page"
+                  onClick={() => changeNewsPage(pagination.currentPage - 1)}
+                  disabled={pagination.currentPage === 1}
+                >
+                  Previous
+                </button>
+                <div className="news-pagination-pages" role="group" aria-label={`Page ${pagination.currentPage} of ${pagination.totalPages}`}>
+                  {visiblePageNumbers(pagination.currentPage, pagination.totalPages).map((page) =>
+                    typeof page === 'number' ? (
+                      <button
+                        key={page}
+                        type="button"
+                        className="button secondary news-pagination-number"
+                        aria-label={`Go to page ${page}`}
+                        aria-current={pagination.currentPage === page ? 'page' : undefined}
+                        onClick={() => changeNewsPage(page)}
+                      >
+                        {page}
+                      </button>
+                    ) : (
+                      <span key={page} className="news-pagination-ellipsis" aria-hidden="true">…</span>
+                    )
+                  )}
+                </div>
+                <button
+                  type="button"
+                  className="button secondary news-pagination-step"
+                  aria-label="Next page"
+                  onClick={() => changeNewsPage(pagination.currentPage + 1)}
+                  disabled={pagination.currentPage === pagination.totalPages}
+                >
+                  Next
+                </button>
+              </nav>
+            )}
           </>
         )}
 

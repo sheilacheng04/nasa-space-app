@@ -20,6 +20,7 @@
     "test:fullstack": "node scripts/fullstack-check.mjs",
     "check": "npm test && npm run test:api && npm run build",
     "test:satellite": "node scripts/satellite-browser-check.mjs",
+    "test:media": "node scripts/media-pagination-check.mjs",
     "test:globe-display": "node scripts/globe-display-check.mjs",
     "test:illustrative-globe": "node scripts/illustrative-globe-check.mjs",
     "test:site-timeline": "node scripts/site-timeline-check.mjs",
