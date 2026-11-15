@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Two-Faced Pacific — UI/UX Reference for AI & Video Production</title>
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM TOKENS (EXACT VISUAL IDENTITY)
+       ========================================================================== */
+    :root {
+      --bg: #f4f6fa;
+      --bg2: #eaeff7;
+      --card: #ffffff;
+      --ink: #132038;
+      --muted: #4e5d78;
+      --line: #d5deec;
+      --blue: #0f5c8c;
+      --orange: #c34400;
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --radius: 14px;
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0b1320;
+      --bg2: #131f33;
+      --card: #16243a;
+      --ink: #eef3fb;
+      --muted: #9cb0cf;
+      --line: #263854;
+      --blue: #58b4ec;
+      --orange: #ff8547;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+    .mono { font-family: var(--mono); }
+    .eyebrow {
+      font: 700 11px/1.4 var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin: 0 0 6px;
+    }
+    h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.12; margin: 0 0 12px; letter-spacing: -0.02em; }
+    h2 { font-size: clamp(20px, 2.6vw, 28px); margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+    h3 { font-size: 18px; margin: 0 0 6px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    /* ==========================================================================
+       GLOBAL HEADER & WAYFINDING
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: color-mix(in srgb, var(--card) 92%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      height: 58px;
+    }
+    .brand { display: flex; flex-direction: column; text-decoration: none; color: var(--ink); }
+    .brand strong { font-size: 15px; }
+    .brand small { font-size: 10px; color: var(--muted); }
+    .main-nav { display: flex; gap: 6px; flex-wrap: wrap; }
+    .main-nav button {
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink);
+      font: 600 13px var(--sans);
+      padding: 7px 13px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .main-nav button[aria-current="page"] {
+      background: var(--orange);
+      color: #fff;
+    }
+    :root[data-theme="dark"] .main-nav button[aria-current="page"] { color: #111b2e; }
+    .header-actions { display: flex; gap: 8px; }
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Buttons & Pills */
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 16px;
+      border-radius: 99px;
+      font: 600 13px var(--sans);
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .button.primary {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+    }
+    :root[data-theme="dark"] .button.primary { color: #111b2e; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+
+    /* ==========================================================================
+       DISMISSABLE 3-STEP FIRST-VISIT GUIDE
+       ========================================================================== */
+    .first-visit-guide {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 0;
+    }
+    .first-visit-steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+    }
+    .first-visit-steps li {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 13px;
+    }
+
+    /* ==========================================================================
+       INLINE GLOSSARY TERM POPOVERS & STANDARD FIGURE CAPTIONS
+       ========================================================================== */
+    .glossary-term {
+      border: 0;
+      border-bottom: 1.5px dotted var(--blue);
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-weight: 600;
+      padding: 0 2px;
+      cursor: pointer;
+    }
+    .glossary-term::after { content: " ?"; font: 10px var(--mono); color: var(--blue); }
+    .std-figure-caption {
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: 12px;
+    }
+    .std-caption-line2 { font: 11px var(--mono); color: var(--muted); margin: 4px 0 0; }
+    .std-figure-caption details { margin-top: 6px; font-size: 11px; color: var(--blue); cursor: pointer; }
+
+    /* ==========================================================================
+       PAGE 1: STORY (HERO, STICKY CHAPTER BAR, OCEAN STAGE, PH FOCUS)
+       ========================================================================== */
+    .hero {
+      background: linear-gradient(115deg, #09203f 0%, #1c3b57 52%, #8d370c 100%);
+      color: #fff;
+      padding: 44px 0 38px;
+    }
+    .hero .eyebrow { color: #ff9c66; }
+    .hero p { color: rgba(255, 255, 255, 0.9); max-width: 740px; }
+    .story-chapter-bar {
+      position: sticky;
+      top: 58px;
+      z-index: 25;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      padding: 8px 0;
+    }
+    .story-chapter-bar-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .story-chapter-links { display: flex; gap: 6px; flex-wrap: wrap; }
+    .chapter-pill {
+      padding: 5px 11px;
+      border-radius: 99px;
+      font-size: 12px;
+      border: 1px solid var(--line);
+      background: var(--bg2);
+      color: var(--muted);
+    }
+    .chapter-pill.active { background: var(--card); color: var(--ink); border-color: var(--blue); font-weight: 600; }
+    .chapter-number {
+      display: inline-grid;
+      place-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .ocean-diagram {
+      height: 210px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #102a49 0%, #0d213a 65%, #163c66 100%);
+      color: #fff;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .ph-places-grid, .regional-cards-grid, .method-source-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    /* ==========================================================================
+       PAGE 2: SITES (BREADCRUMB, TIMELINE, BEFORE/AFTER SWIPE, WEATHER, NEWS)
+       ========================================================================== */
+    .sites-breadcrumb { font: 12px var(--mono); color: var(--muted); margin: 18px 0 8px; }
+    .site-header-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; align-items: start; margin-bottom: 18px; }
+    .radar-stage {
+      position: relative;
+      height: 340px;
+      background: #121c22;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .radar-mock-surface {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 38% 52%, #071018 0%, #071018 22%, transparent 23%),
+        repeating-conic-gradient(#1f4f3e 0% 25%, #2b6b53 0% 50%) 50% / 28px 28px;
+    }
+    .radar-mock-after {
+      position: absolute;
+      inset: 0;
+      width: 58%;
+      border-right: 2px solid #fff;
+      background:
+        radial-gradient(circle at 38% 52%, #050c12 0%, #050c12 31%, transparent 32%),
+        repeating-conic-gradient(#3b2f63 0% 25%, #256d4b 0% 50%) 50% / 28px 28px;
+    }
+    .image-label {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(244, 246, 251, 0.94);
+      color: #14203a;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font: 11px/1.4 var(--mono);
+    }
+    .image-label.right { left: auto; right: 12px; }
+    .frame-badge-pill {
+      font: 11px var(--mono);
+      padding: 4px 9px;
+      border-radius: 99px;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+    }
+    .progress-track { height: 6px; background: var(--bg2); border-radius: 99px; overflow: hidden; margin: 8px 0; }
+    .progress-fill { height: 100%; width: 50%; background: var(--blue); }
+
+    /* ==========================================================================
+       PAGE 3: GLOBE (3D STAGE, STATUS STRIP, NOAA OCEAN STRIP)
+       ========================================================================== */
+    .globe-stage {
+      position: relative;
+      height: 400px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 50% 50%, #163d5c 0%, #091526 52%, #030710 100%);
+      color: #fff;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+    .globe-sphere {
+      width: 270px;
+      height: 270px;
+      border-radius: 50%;
+      background:
+        linear-gradient(112deg, transparent 42%, rgba(46, 213, 115, 0.55) 45%, rgba(30, 144, 255, 0.55) 49%, transparent 52%),
+        radial-gradient(circle at 35% 35%, #2b5838, #0f2c4c 70%, #061325 100%);
+      box-shadow: inset -24px -24px 40px rgba(0,0,0,0.7), 0 0 50px rgba(15, 92, 140, 0.45);
+      position: relative;
+    }
+    .globe-status-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 10px 12px;
+      margin: 12px 0;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: 12px;
+    }
+
+    /* ==========================================================================
+       PAGE 4: MEDIA DASHBOARD & TONE DISTRIBUTION BAR
+       ========================================================================== */
+    .media-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .kpi-value { font-size: 26px; font-weight: 800; color: var(--blue); display: block; }
+    .tone-bar-visual {
+      display: flex;
+      height: 14px;
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+    .tone-neg { width: 27%; background: var(--orange); }
+    .tone-neu { width: 39%; background: var(--muted); opacity: 0.55; }
+    .tone-pos { width: 34%; background: var(--blue); }
+
+    /* Where to Next Footer Block */
+    .where-to-next {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: 24px 0 36px;
+    }
+    [hidden] { display: none !important; }
+    @media (max-width: 760px) {
+      .first-visit-steps, .site-header-grid, .media-kpi-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       GLOBAL HEADER (5-PAGE WAYFINDING + ? GUIDE + THEME + SEARCH)
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#story" onclick="showPage('story')">
+        <strong>The Two-Faced Pacific</strong>
+        <small>El Niño × NISAR radar · NASA Space Apps 2026</small>
+      </a>
+      <nav class="main-nav" aria-label="Primary pages">
+        <button id="nav-story" aria-current="page" onclick="showPage('story')">1 · Story</button>
+        <button id="nav-sites" onclick="showPage('sites')">2 · Sites</button>
+        <button id="nav-globe" onclick="showPage('globe')">3 · Globe</button>
+        <button id="nav-media" onclick="showPage('media')">4 · Media</button>
+        <button id="nav-method" onclick="showPage('method')">5 · Data and method</button>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" title="Open 3-step guide" onclick="toggleGuide()">?</button>
+        <button class="icon-btn" title="Toggle Light/Dark theme" onclick="toggleTheme()">◐</button>
+        <button class="icon-btn" title="Search 34 study places & 909 cities (Ctrl+K)">⌕</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- DISMISSABLE 3-STEP FIRST-VISIT GUIDE -->
+  <aside id="guide-banner" class="first-visit-guide" hidden>
+    <div class="wrap">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <p class="eyebrow">Welcome · Quick 3-Step Guide</p>
+          <strong>How to explore The Two-Faced Pacific</strong>
+        </div>
+        <button class="button" onclick="toggleGuide()">Got it, dismiss ×</button>
+      </div>
+      <ol class="first-visit-steps">
+        <li><strong>1. Follow the Pacific shift (Story)</strong><br/>See how warming Pacific water shifts rainfall between the Philippines and South America.</li>
+        <li><strong>2. Inspect dated radar frames (Sites)</strong><br/>Play 57 real NASA/ISRO NISAR observations across 4 radar sites and 34 global study places.</li>
+        <li><strong>3. Compare the Globe &amp; local news (Globe &amp; Media)</strong><br/>Watch global radar swaths, monthly NDVI greenness, and local headlines per place.</li>
+      </ol>
+    </div>
+  </aside>
+
+  <main>
+    <!-- ======================================================================
+         PAGE 1: STORY (#story)
+         ====================================================================== -->
+    <section id="page-story">
+      <div class="hero">
+        <div class="wrap">
+          <p class="eyebrow">NASA Space Apps 2026 · Dancing with the SARs · 57 Real Observations Across 4 Places</p>
+          <h1>When the Pacific warms, what changes on land?</h1>
+          <p><strong>What this page is for:</strong> Understand how Pacific ocean shifts connect to local rain, farms, and reservoirs, then inspect real satellite radar images before jumping to conclusions.</p>
+          <div class="hero-actions">
+            <button class="button primary" onclick="showPage('sites')">Inspect dated radar at Angat →</button>
+            <button class="button" onclick="showPage('globe')">Explore the 3D Globe</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky Chapter Progress Bar -->
+      <nav class="story-chapter-bar" aria-label="Story chapters">
+        <div class="wrap story-chapter-bar-inner">
+          <div class="story-chapter-links">
+            <span class="chapter-pill active">1 Pacific shift</span>
+            <span class="chapter-pill">2 Daily life</span>
+            <span class="chapter-pill">3 How radar works</span>
+            <span class="chapter-pill">4 Global &amp; PH places</span>
+            <span class="chapter-pill">5 Test the cause</span>
+            <span class="chapter-pill">6 Human stories</span>
+          </div>
+          <span class="mono" style="font-size:11px;color:var(--muted);">Chapter 1 / 6</span>
+        </div>
+      </nav>
+
+      <div class="wrap" style="padding-top:24px;">
+        <!-- Chapter 1: Ocean Shift -->
+        <div class="card" style="margin-bottom:18px;">
+          <h2><span class="chapter-number">1</span>An ocean shift changes where tropical rain falls</h2>
+          <p>During El Niño, warm surface water in the <button class="glossary-term">Niño 3.4</button> region spreads east. Trade winds weaken, and rain clouds shift from the western Pacific (Philippines, Indonesia) toward coastal Peru and Ecuador.</p>
+          <div class="ocean-diagram">
+            <div style="display:flex;justify-content:space-between;font:11px var(--mono);">
+              <span>WEST: ASIA / PHILIPPINES / AUSTRALIA (Drier during El Niño)</span>
+              <span>EAST: PERU / ECUADOR COAST (Wetter during El Niño)</span>
+            </div>
+            <div style="text-align:center;font:700 14px var(--mono);letter-spacing:0.08em;">
+              ⇄ TRADE WINDS WEAKEN · WARM WATER &amp; CONVECTION SHIFT EAST ⇄
+            </div>
+            <div style="display:flex;gap:8px;justify-content:center;">
+              <span class="frame-badge-pill" style="background:#0f5c8c;color:#fff;">Normal Trade Winds</span>
+              <span class="frame-badge-pill" style="background:#c34400;color:#fff;">El Niño Shift (+2.46 °C ONI)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chapter 3 & 4: Regional NISAR Autoplay + Philippines Focus -->
+        <div class="card" style="margin-bottom:18px;">
+          <p class="eyebrow">Regional Case Study · One example among many</p>
+          <h2><span class="chapter-number">4</span>Focus on the Philippines: reservoirs and rice plains</h2>
+          <p>Camera satellites cannot see through monsoon clouds. <button class="glossary-term">NISAR</button> uses active <button class="glossary-term">SAR</button> microwave pulses to measure surface <button class="glossary-term">backscatter</button> day or night.</p>
+          <div class="ph-places-grid">
+            <div class="card">
+              <span class="eyebrow">Water · 21 saved radar frames</span>
+              <h3>Angat &amp; Ipo Watershed</h3>
+              <p style="font-size:13px;color:var(--muted);">14.91°N, 121.15°E · Supplies Metro Manila water</p>
+              <button class="button primary" onclick="showPage('sites')">Play saved radar (21) →</button>
+            </div>
+            <div class="card">
+              <span class="eyebrow">Agriculture · 20 saved radar frames</span>
+              <h3>Central Luzon Rice Bowl</h3>
+              <p style="font-size:13px;color:var(--muted);">15.45°N, 120.90°E · Irrigated rice plains</p>
+              <button class="button primary" onclick="showPage('sites')">Play saved radar (20) →</button>
+            </div>
+            <div class="card">
+              <span class="eyebrow">Agriculture · ASF Vertex Link</span>
+              <h3>Cagayan Valley &amp; Mindoro</h3>
+              <p style="font-size:13px;color:var(--muted);">Radar frames not saved locally · Links to live ASF Vertex</p>
+              <button class="button" onclick="showPage('sites')">Inspect place &amp; local news →</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card where-to-next">
+          <div>
+            <p class="eyebrow">Where to next · Step 2 of 5</p>
+            <h3>Inspect Dated NISAR Radar on Sites</h3>
+            <p style="margin:0;color:var(--muted);font-size:13px;">Compare before/after radar dates, HH/HV polarizations, and ERA5 rainfall departures.</p>
+          </div>
+          <button class="button primary" onclick="showPage('sites')">Go to 2 · Sites →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAGE 2: SITES (#sites)
+         ====================================================================== -->
+    <section id="page-sites" hidden>
+      <div class="wrap">
+        <nav class="sites-breadcrumb">Sites &gt; Angat &amp; Ipo Watershed (Philippines) &gt; 2026-10-09</nav>
+        <div class="site-header-grid">
+          <div>
+            <p class="eyebrow">Step 2 · Local Radar Evidence · 57 Saved Observations Across 4 Radar Sites</p>
+            <h1>What happens when our water supply changes?</h1>
+            <p><strong>What this page is for:</strong> Compare real dated <button class="glossary-term">NISAR</button> <button class="glossary-term">SAR</button> radar images, local <button class="glossary-term">ERA5</button> weather departures, and local news for a single place before drawing conclusions.</p>
+            <div class="hero-actions">
+              <button class="button primary" onclick="showPage('globe')">See this place on the globe →</button>
+              <button class="button" onclick="showPage('method')">See its sources</button>
+              <button class="button" onclick="showPage('story')">← Back to the story</button>
+            </div>
+          </div>
+          <div class="card">
+            <label style="display:block;font-size:12px;margin-bottom:10px;">
+              <strong>Primary radar sites (with saved frames)</strong>
+              <select style="display:block;width:100%;padding:8px;margin-top:4px;border-radius:8px;border:1px solid var(--line);">
+                <option>Angat reservoir / Philippines (12 daily frames)</option>
+                <option>Central Luzon rice plains / Philippines (12 daily frames)</option>
+                <option>Lower Piura floodplain / Peru (11 daily frames)</option>
+                <option>Dadu floodplain / Pakistan (La Niña reference · 22 frames)</option>
+              </select>
+            </label>
+            <label style="display:block;font-size:12px;">
+              <strong>All 34 global study places</strong>
+              <select style="display:block;width:100%;padding:8px;margin-top:4px;border-radius:8px;border:1px solid var(--line);">
+                <option>★ Angat &amp; Ipo Watershed (Philippines · saved radar)</option>
+                <option>★ Central Luzon Rice Bowl (Philippines · saved radar)</option>
+                <option>Cagayan Valley &amp; Magat Basin (Philippines · ASF Vertex link)</option>
+                <option>Cotabato &amp; Allah Valley, Mindanao (Philippines · ASF Vertex link)</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- Radar Timeline & Before/After Swipe Comparator -->
+        <div class="card" style="margin-bottom:18px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+            <div>
+              <p class="eyebrow">57 real observations across 4 places · Dated NISAR sequence</p>
+              <h3>Before / After Radar &amp; Polarization Comparator</h3>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span class="frame-badge-pill">2026-06-23 → 2026-10-09</span>
+              <span class="frame-badge-pill">Frame 12 of 24</span>
+              <span class="frame-badge-pill">Maturity: PROVISIONAL · CRID P05023</span>
+            </div>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="demo-progress"></div></div>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;">
+            <button class="button primary">Before / after swipe</button>
+            <button class="button">HH polarization (water/surface)</button>
+            <button class="button">HV polarization (crop/canopy)</button>
+            <button class="button">Practice with simulated data</button>
+          </div>
+
+          <div class="radar-stage">
+            <div class="radar-mock-surface"></div>
+            <div class="radar-mock-after" id="swipe-layer"></div>
+            <div class="image-label">BEFORE · 2026-06-23 · Track 140/9 · HH</div>
+            <div class="image-label right">AFTER · 2026-10-09 · Track 140/9 · HH</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:14px;margin-top:12px;font-size:12px;">
+            <span>Drag Before/After split:</span>
+            <input type="range" min="10" max="90" value="58" style="flex:1;accent-color:var(--orange);" oninput="document.getElementById('swipe-layer').style.width=this.value+'%'" />
+            <button class="button">▶ Play timeline</button>
+          </div>
+
+          <div class="std-figure-caption">
+            <strong>What am I looking at?</strong> NISAR L-band radar browse preview of Angat Reservoir, Philippines (bbox 121.08°E–121.24°E, 14.84°N–15.00°N).
+            <p class="std-caption-line2">Dates: 2026-06-23 vs. 2026-10-09 · Source: NASA GIBS &amp; ASF DAAC Level-2 GCOV (Provisional P05023).</p>
+            <details>
+              <summary>How to read it &amp; what it can't tell you</summary>
+              <p style="color:var(--muted);margin:6px 0 0;">Dark areas show smooth open water or radar shadow; bright areas show rough terrain, trees, or structures. Visual browse previews are not calibrated water-level gauges.</p>
+            </details>
+          </div>
+        </div>
+
+        <!-- Local News Panel -->
+        <div class="card">
+          <p class="eyebrow">Local headline archive · Philippines</p>
+          <h3>News about Angat &amp; Ipo Watershed</h3>
+          <p style="font-size:12px;color:var(--muted);">Wording tone scores measure headline phrasing only, not physical drought or flood severity.</p>
+          <div class="card" style="background:var(--bg2);margin-top:8px;">
+            <span class="mono" style="font-size:11px;color:var(--muted);">Oct 2026 · Philippine Star · Matched by place name · Neutral wording (-0.02)</span>
+            <div><strong>Water allocation adjustments reviewed as Angat Dam monitors dry-season inflows ↗</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAGE 3: GLOBE (#globe)
+         ====================================================================== -->
+    <section id="page-globe" hidden>
+      <div class="wrap" style="padding-top:18px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:10px;">
+          <div>
+            <p class="eyebrow">Earth / a record through time · 57 real observations across 4 radar sites</p>
+            <h1>Earth through time</h1>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="button primary">Radar observations (361 dates)</button>
+            <button class="button">Land through time (MODIS NDVI)</button>
+            <button class="button">Concept globe</button>
+          </div>
+        </div>
+
+        <p style="margin-top:0;color:var(--muted);font-size:14px;">Play dated <button class="glossary-term">NISAR</button> radar images from NASA <button class="glossary-term">GIBS</button>. Colored strips show where the satellite observed Earth on that UTC date.</p>
+
+        <!-- Globe Status Strip -->
+        <div class="globe-status-strip">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <span><strong>Mode:</strong> Radar observations</span>
+            <span><strong>Layer:</strong> NISAR Daily Mosaic</span>
+            <span><strong>Date:</strong> 2026-10-09 (Frame 346 of 379)</span>
+            <span><strong>Place:</strong> Angat &amp; Ipo Watershed</span>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="button primary">Philippines focus (6 places)</button>
+            <button class="button">Guided tour</button>
+            <button class="button">Zoom to local GIBS map</button>
+            <button class="button">Reset view</button>
+          </div>
+        </div>
+
+        <div class="globe-stage">
+          <div style="position:absolute;top:14px;left:14px;background:rgba(255,255,255,0.94);color:#132038;padding:10px 14px;border-radius:10px;font-size:12px;">
+            <div class="mono" style="font-size:11px;">2026-10-09 | radar image date</div>
+            <strong>Colored strips show NISAR radar coverage</strong>
+            <div style="font-size:11px;color:#4e5d78;">NASA–ISRO NISAR · false color, not calibrated</div>
+          </div>
+          <div class="globe-sphere" title="Interactive 3D WebGL / 2D Canvas Globe"></div>
+          <div style="position:absolute;bottom:12px;font-size:11px;color:rgba(255,255,255,0.78);">
+            NASA Earth Observatory / Blue Marble | historical 2004 optical reference | not the selected date
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAGE 4: MEDIA (#media)
+         ====================================================================== -->
+    <section id="page-media" hidden>
+      <div class="wrap" style="padding-top:18px;">
+        <p class="eyebrow">Step 4 · People, places and reporting · 293 saved headlines</p>
+        <h1>The human side of a changing climate</h1>
+        <p><strong>What this page is for:</strong> Explore how water, farming, and climate stories are reported across regions and study places, while separating headline wording tone from physical event severity.</p>
+
+        <div class="card" style="margin:18px 0;">
+          <div class="media-kpi-grid">
+            <div class="card" style="background:var(--bg2);">
+              <span class="eyebrow">Saved Archive</span>
+              <strong class="kpi-value">293</strong>
+              <small style="color:var(--muted);">Source-linked headlines across 45 countries</small>
+            </div>
+            <div class="card" style="background:var(--bg2);">
+              <span class="eyebrow">Global Study Places</span>
+              <strong class="kpi-value">34</strong>
+              <small style="color:var(--muted);">57 real <button class="glossary-term">NISAR</button> frames across 4 sites</small>
+            </div>
+            <div class="card" style="background:var(--bg2);">
+              <span class="eyebrow">Place-Matched Links</span>
+              <strong class="kpi-value">494</strong>
+              <small style="color:var(--muted);">Matched by place name, basin query, or country</small>
+            </div>
+            <div class="card" style="background:var(--bg2);">
+              <span class="eyebrow">Wording Tone Split</span>
+              <strong class="kpi-value">27% / 39% / 34%</strong>
+              <small style="color:var(--muted);">Negative / Neutral / Positive phrasing</small>
+            </div>
+          </div>
+
+          <h3>Headline wording tone distribution (not physical severity)</h3>
+          <div class="tone-bar-visual">
+            <div class="tone-neg" title="Negative wording: 27%"></div>
+            <div class="tone-neu" title="Neutral wording: 39%"></div>
+            <div class="tone-pos" title="Positive wording: 34%"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);">
+            <span>Negative wording: <strong>79</strong> (27%)</span>
+            <span>Neutral wording: <strong>114</strong> (39%)</span>
+            <span>Positive wording: <strong>100</strong> (34%)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAGE 5: DATA AND METHOD (#method)
+         ====================================================================== -->
+    <section id="page-method" hidden>
+      <div class="wrap" style="padding-top:18px;">
+        <p class="eyebrow">Step 5 · Plain-language guide to our sources, rules, and limits</p>
+        <h1>Data and method</h1>
+        <p><strong>What this page is for:</strong> See where every map, chart, and headline comes from, how to compare dates fairly, and what satellite previews can and cannot prove.</p>
+
+        <h2><span class="chapter-number">2</span>Five data sources work together</h2>
+        <div class="method-source-cards">
+          <div class="card">
+            <p class="eyebrow">1 · Satellite Radar</p>
+            <h3>NISAR SAR Previews</h3>
+            <p style="font-size:13px;color:var(--muted);">57 real dated frames across 4 sites via NASA <button class="glossary-term">GIBS</button> and ASF. Penetrates clouds day or night to show surface <button class="glossary-term">backscatter</button>.</p>
+          </div>
+          <div class="card">
+            <p class="eyebrow">2 · Land Greenness</p>
+            <h3>MODIS Monthly NDVI</h3>
+            <p style="font-size:13px;color:var(--muted);">21 monthly global <button class="glossary-term">greenness</button> composites (Jan 2025 – Oct 2026) showing seasonal plant growth and dry-season browning.</p>
+          </div>
+          <div class="card">
+            <p class="eyebrow">3 · Ocean Context</p>
+            <h3>NOAA Niño 3.4 &amp; ONI</h3>
+            <p style="font-size:13px;color:var(--muted);">Weekly <button class="glossary-term">Niño 3.4</button> sea-surface temperatures and three-month <button class="glossary-term">ONI</button> averages tracking Pacific warm and cool phases.</p>
+          </div>
+          <div class="card">
+            <p class="eyebrow">4 · Local Weather</p>
+            <h3>ERA5 Climate Reanalysis</h3>
+            <p style="font-size:13px;color:var(--muted);">Daily and monthly rainfall and temperature estimates compared against the 1991–2020 average for each calendar month.</p>
+          </div>
+          <div class="card">
+            <p class="eyebrow">5 · Local Reporting</p>
+            <h3>GDELT &amp; News Archive</h3>
+            <p style="font-size:13px;color:var(--muted);">293 source-linked headlines matched across 34 study places to provide human context on water and crops.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function showPage(page) {
+      ['story', 'sites', 'globe', 'media', 'method'].forEach(id => {
+        document.getElementById('page-' + id).hidden = (id !== page);
+        const btn = document.getElementById('nav-' + id);
+        if (id === page) btn.setAttribute('aria-current', 'page');
+        else btn.removeAttribute('aria-current');
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function toggleTheme() {
+      const root = document.documentElement;
+      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    }
+    function toggleGuide() {
+      const el = document.getElementById('guide-banner');
+      el.hidden = !el.hidden;
+    }
+  </script>
+</body>
+</html>

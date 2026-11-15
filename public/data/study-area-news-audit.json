@@ -1,0 +1,55 @@
+{
+  "retrievedAt": "2026-11-15T04:55:39.500766+00:00",
+  "requests": [
+    {
+      "siteId": "cagayan-valley",
+      "url": "https://api.gdeltproject.org/api/v2/doc/doc",
+      "parameters": {
+        "query": "(\"Cagayan Valley\" OR Magat) (rain OR flood OR water OR rice) sourcelang:english",
+        "mode": "artlist",
+        "format": "json",
+        "startdatetime": "20260815000000",
+        "enddatetime": "20261114000000",
+        "maxrecords": 25,
+        "sort": "datedesc"
+      },
+      "retrievedAt": "2026-11-15T04:54:58.781370+00:00",
+      "status": "not available",
+      "reason": "HTTPError: 429 Client Error: Too Many Requests for url: https://api.gdeltproject.org/api/v2/doc/doc?query=%28%22Cagayan+Valley%22+OR+Magat%29+%28rain+OR+flood+OR+water+OR+rice%29+sourcelang%3"
+    },
+    {
+      "siteId": "mekong-delta",
+      "url": "https://api.gdeltproject.org/api/v2/doc/doc",
+      "parameters": {
+        "query": "\"Mekong Delta\" (rain OR flood OR water OR rice) sourcelang:english",
+        "mode": "artlist",
+        "format": "json",
+        "startdatetime": "20260815000000",
+        "enddatetime": "20261114000000",
+        "maxrecords": 25,
+        "sort": "datedesc"
+      },
+      "retrievedAt": "2026-11-15T04:55:10.566547+00:00",
+      "status": "not available",
+      "reason": "HTTPError: 429 Client Error: Too Many Requests for url: https://api.gdeltproject.org/api/v2/doc/doc?query=%22Mekong+Delta%22+%28rain+OR+flood+OR+water+OR+rice%29+sourcelang%3Aenglish&mode=art"
+    },
+    {
+      "siteId": "guayas-babahoyo",
+      "url": "https://api.gdeltproject.org/api/v2/doc/doc?query=%28Guayas+OR+Babahoyo%29+%28rain+OR+flood+OR+water+OR+agriculture%29+sourcelang%3Aenglish&mode=artlist&format=json&startdatetime=20260815000000&enddatetime=20261114000000&maxrecords=25&sort=datedesc",
+      "parameters": {
+        "query": "(Guayas OR Babahoyo) (rain OR flood OR water OR agriculture) sourcelang:english",
+        "mode": "artlist",
+        "format": "json",
+        "startdatetime": "20260815000000",
+        "enddatetime": "20261114000000",
+        "maxrecords": 25,
+        "sort": "datedesc"
+      },
+      "retrievedAt": "2026-11-15T04:55:23.888116+00:00",
+      "status": "ready",
+      "returned": 10
+    }
+  ],
+  "matchedRecords": 0,
+  "note": "No returned title matched both a local place alias and a climate/water topic. A general banana-industry event headline was excluded. Existing archive preserved."
+}

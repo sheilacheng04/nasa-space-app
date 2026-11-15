@@ -10,6 +10,11 @@
 .satellite-page [data-mode=illustrative] .frame-badge{top:auto;bottom:62px;left:16px;max-width:calc(100% - 32px)}
 .satellite-page [data-mode=illustrative] #globe-status{left:16px;right:16px;bottom:36px;font-size:11px}
 .illustrative-panel{padding:22px;border:1px solid var(--line);border-radius:14px;background:var(--card);min-width:0}
+.illustrative-satellite-action{display:grid;gap:var(--space-3);margin:var(--space-5) 0;padding:var(--space-4);border:1px solid color-mix(in srgb,var(--orange) 40%,var(--line));border-radius:var(--radius-md);background:color-mix(in srgb,var(--orange) 6%,var(--card))}
+.illustrative-satellite-action strong{font-size:var(--text-sm)}.illustrative-panel .illustrative-satellite-action p{margin:var(--space-1) 0 0;overflow-wrap:anywhere}
+.illustrative-panel .satellite-window-launch{display:flex;align-items:center;justify-content:center;gap:var(--space-2);width:100%;min-height:48px;background:var(--orange);border-color:var(--orange);color:var(--card);font-size:var(--text-sm)}
+:root[data-theme=dark] .illustrative-panel .satellite-window-launch{color:var(--bg)}
+.satellite-window-launch svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .illustrative-panel h2{font-size:26px;line-height:1.2;margin:0 0 12px}.illustrative-panel h3{font-size:19px;margin:12px 0}
 .illustrative-panel p{font-size:12px;line-height:1.65;color:var(--muted);margin:8px 0 14px}
 .illustrative-panel button,.illustrative-panel .button{font-family:inherit;font-size:12px;font-weight:600;line-height:1.4;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:8px 12px;min-height:38px}

@@ -46,5 +46,41 @@
     "source": "ASF DAAC",
     "label": "Grayscale regional browse, not a site clip, not calibrated",
     "image": "data/sites/piura/thumbnail.png"
+  },
+  {
+    "siteId": "cagayan-valley",
+    "name": "Cagayan Valley & Magat Basin",
+    "n": 31,
+    "date": "2026-10-14T10:23:24Z",
+    "maturity": "PROVISIONAL",
+    "crid": "P05023",
+    "channel": "HH / regional quicklook",
+    "source": "ASF DAAC",
+    "label": "Grayscale regional browse, not a site clip, not calibrated",
+    "image": "data/sites/cagayan-valley/thumbnail.png"
+  },
+  {
+    "siteId": "mekong-delta",
+    "name": "Mekong Delta Salinity & Rice Zone",
+    "n": 107,
+    "date": "2026-10-10T22:27:40Z",
+    "maturity": "PROVISIONAL",
+    "crid": "P05023",
+    "channel": "HH / regional quicklook",
+    "source": "ASF DAAC",
+    "label": "Grayscale regional browse, not a site clip, not calibrated",
+    "image": "data/sites/mekong-delta/thumbnail.png"
+  },
+  {
+    "siteId": "guayas-babahoyo",
+    "name": "Guayas & Babahoyo River Lowlands",
+    "n": 42,
+    "date": "2026-10-19T23:39:08Z",
+    "maturity": "PROVISIONAL",
+    "crid": "P05023",
+    "channel": "HH / regional quicklook",
+    "source": "ASF DAAC",
+    "label": "Grayscale regional browse, not a site clip, not calibrated",
+    "image": "data/sites/guayas-babahoyo/thumbnail.png"
   }
 ]

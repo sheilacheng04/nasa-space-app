@@ -1,6 +1,6 @@
 export type Page = 'story' | 'sites' | 'globe' | 'media' | 'method';
 export interface Observation { name: string; lat: number; lng: number; value: number | null; category: string; date: string }
-export interface Site { id: string; name: string; subtitle: string; country: string; coordinates: [number, number]; bbox: [number, number, number, number]; type: string; description: string; question: string; hypothesis: string; evidence: string; disprove: string; humanDrivers: string }
+export interface Site { savedFrameCount?: number; id: string; name: string; subtitle: string; country: string; coordinates: [number, number]; bbox: [number, number, number, number]; type: string; description: string; question: string; hypothesis: string; evidence: string; disprove: string; humanDrivers: string }
 export interface Analysis { score: number; summary: string; caveat: string; model?: string; scoredAt?: string }
 export interface Headline { id: string; title: string; source: string; url: string; date: string; theme: string; region: string; verification: string; vader: number | null; vaderAdjusted: number | null; ai: Analysis | null }
 export interface News { items: Headline[]; status: string; retrievedAt: string | null }

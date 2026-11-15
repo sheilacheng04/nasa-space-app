@@ -1,0 +1,77 @@
+{
+  "siteId": "guayas-babahoyo",
+  "retrievedAt": "2026-11-15T04:48:01.724122+00:00",
+  "n": 2,
+  "status": "browse only",
+  "frames": [
+    {
+      "id": "NISAR_L2_PR_GCOV_023_112_D_089_4005_DHDH_A_20260621T233911_20260621T233948_P05023_N_F_J_001",
+      "date": "2026-06-21T23:39:11Z",
+      "track": 112,
+      "frame": 89,
+      "direction": "DESCENDING",
+      "maturity": "PROVISIONAL",
+      "crid": "P05023",
+      "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+      "polarizations": [
+        "HH",
+        "HV"
+      ],
+      "hdf5LayersVerified": false,
+      "coversCenter": true,
+      "coversBox": false,
+      "bboxCoverageFraction": 0.8493,
+      "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_112_D_089_4005_DHDH_A_20260621T233911_20260621T233948_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_112_D_089_4005_DHDH_A_20260621T233911_20260621T233948_P05023_N_F_J_001.h5",
+      "matchesObservationPlan": true,
+      "channels": {
+        "HH": {
+          "image": "data/sites/guayas-babahoyo/browse/2026-06-21-HH.png",
+          "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_112_D_089_4005_DHDH_A_20260621T233911_20260621T233948_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_112_D_089_4005_DHDH_A_20260621T233911_20260621T233948_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "label": "downsampled regional HH quicklook; not calibrated; display stretch may differ"
+        },
+        "HV": {
+          "image": "data/sites/guayas-babahoyo/browse/2026-06-21-HV.png",
+          "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_112_D_089_4005_DHDH_A_20260621T233911_20260621T233948_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_112_D_089_4005_DHDH_A_20260621T233911_20260621T233948_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "label": "downsampled regional HV quicklook; not calibrated; display stretch may differ"
+        }
+      },
+      "kind": "regional quicklook",
+      "retrievedAt": "2026-11-15T04:47:48.050668+00:00"
+    },
+    {
+      "id": "NISAR_L2_PR_GCOV_033_112_D_089_4005_DHDH_A_20261019T233908_20261019T233945_P05023_N_F_J_001",
+      "date": "2026-10-19T23:39:08Z",
+      "track": 112,
+      "frame": 89,
+      "direction": "DESCENDING",
+      "maturity": "PROVISIONAL",
+      "crid": "P05023",
+      "collection": "NISAR_L2_GCOV_PROVISIONAL_V1",
+      "polarizations": [
+        "HH",
+        "HV"
+      ],
+      "hdf5LayersVerified": false,
+      "coversCenter": true,
+      "coversBox": false,
+      "bboxCoverageFraction": 0.8226,
+      "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_112_D_089_4005_DHDH_A_20261019T233908_20261019T233945_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_112_D_089_4005_DHDH_A_20261019T233908_20261019T233945_P05023_N_F_J_001.h5",
+      "matchesObservationPlan": true,
+      "channels": {
+        "HH": {
+          "image": "data/sites/guayas-babahoyo/browse/2026-10-19-HH.png",
+          "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_112_D_089_4005_DHDH_A_20261019T233908_20261019T233945_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_112_D_089_4005_DHDH_A_20261019T233908_20261019T233945_P05023_N_F_J_001_NATIVE_A_HHHH.png",
+          "label": "downsampled regional HH quicklook; not calibrated; display stretch may differ"
+        },
+        "HV": {
+          "image": "data/sites/guayas-babahoyo/browse/2026-10-19-HV.png",
+          "sourceUrl": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_112_D_089_4005_DHDH_A_20261019T233908_20261019T233945_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_112_D_089_4005_DHDH_A_20261019T233908_20261019T233945_P05023_N_F_J_001_NATIVE_A_HVHV.png",
+          "label": "downsampled regional HV quicklook; not calibrated; display stretch may differ"
+        }
+      },
+      "kind": "regional quicklook",
+      "retrievedAt": "2026-11-15T04:47:55.052908+00:00"
+    }
+  ],
+  "warning": "Same track/frame and maturity; regional native quicklooks are not site clips. Independent display stretches cannot establish backscatter change. HDF5 layers have not been inspected."
+}

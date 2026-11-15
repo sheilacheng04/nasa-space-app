@@ -88,7 +88,7 @@ export function MethodPage({
     [
       'NISAR radar',
       'NASA / ISRO, via ASF and GIBS',
-      'Microwave echoes returned from land and water (57 saved frames across 4 sites).',
+      `Microwave echoes returned from land and water (${data.sites.reduce((sum,site)=>sum+(site.savedFrameCount||0),0)} saved frames across ${data.sites.length} sites).`,
       'Works through clouds and at night. Smooth water looks dark; rough soil and crops look bright. Previews are not calibrated water-level gauges.'
     ],
     [
@@ -180,7 +180,7 @@ export function MethodPage({
             <div className="card">
               <p className="eyebrow">1 · Satellite Radar</p>
               <h3>NISAR SAR Previews</h3>
-              <p>57 real dated frames across 4 sites via NASA <GlossaryTerm termKey="GIBS" /> and ASF. Penetrates clouds day or night to show surface <GlossaryTerm termKey="backscatter" />.</p>
+              <p>{data.sites.reduce((sum,site)=>sum+(site.savedFrameCount||0),0)} real dated frames across {data.sites.length} sites via NASA <GlossaryTerm termKey="GIBS" /> and ASF. Penetrates clouds day or night to show surface <GlossaryTerm termKey="backscatter" />.</p>
             </div>
             <div className="card">
               <p className="eyebrow">2 · Land Greenness</p>
@@ -199,7 +199,7 @@ export function MethodPage({
             </div>
             <div className="card">
               <p className="eyebrow">5 · Local Reporting</p>
-              <h3>293 Saved Headlines</h3>
+              <h3>{data.news?.items.length||0} Saved Headlines</h3>
               <p>Matched across 34 study places by place name, basin query, and country, with VADER wording tone scores.</p>
             </div>
           </div>

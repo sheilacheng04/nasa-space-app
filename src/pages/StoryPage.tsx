@@ -65,7 +65,7 @@ export function StoryPage({
     <section id="page-story" className="page" hidden={!active}>
       <div className="hero">
         <div className="wrap">
-          <p className="eyebrow">NASA Space Apps 2026 · Dancing with the SARs · 57 Real Observations Across 4 Places</p>
+          <p className="eyebrow">NASA Space Apps 2026 · Dancing with the SARs · {data.sites.reduce((sum,site)=>sum+(site.savedFrameCount||0),0)} Saved Radar Frames Across {data.sites.length} Places</p>
           <h1>When the Pacific <span className="warm-accent">warms</span>, what changes on land?</h1>
           <p className="page-purpose-line">
             Follow a changing Pacific—and discover what satellites reveal about life on land.
@@ -313,7 +313,7 @@ export function StoryPage({
           stepNumber="Step 2 of 5 · Sites"
           nextHref="#sites/angat"
           nextLabel="Inspect Dated Radar at Study Sites"
-          whyText="Step through all 57 saved NISAR radar frames at Angat, Central Luzon, Piura, and Dadu, or browse 34 global places alongside local weather and news."
+          whyText="Step through saved NISAR radar frames across the study areas, or browse global places alongside local weather and news."
           secondaryLinks={[
             { href: '#globe', label: 'Or open the 3D Globe →' },
             { href: '#method', label: 'See sources & method →' }

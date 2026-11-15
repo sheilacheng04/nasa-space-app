@@ -233,6 +233,7 @@ export function App() {
           {notice('evidence')}
         </div>
         <NewsPage
+          sites={optionalData.sites}
           notice={notice('news')}
           active={route.page === 'media'}
           news={optionalData.news}

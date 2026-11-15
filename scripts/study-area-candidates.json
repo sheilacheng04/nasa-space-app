@@ -1,0 +1,35 @@
+[
+  {
+    "id": "cagayan-valley",
+    "subtitle": "A river and farming basin",
+    "type": "Crops & rivers",
+    "question": "How do changing rains affect a farming basin?",
+    "description": "Compare dated views of the Cagayan Valley and Magat Basin with rainfall and temperature context.",
+    "hypothesis": "Rainfall changes may alter field wetness and river conditions. Crop timing and water management must also be considered.",
+    "evidence": "Compare repeated radar images, same-month rainfall baselines and independent river or field observations. Image color alone does not measure crop health.",
+    "disprove": "Changes explained by planting, harvest or reservoir operations would weaken a rainfall explanation.",
+    "humanDrivers": "Irrigation, dam releases, planting schedules and land use can change the radar appearance."
+  },
+  {
+    "id": "mekong-delta",
+    "subtitle": "Water across a delta",
+    "type": "Delta & agriculture",
+    "question": "How does water move through a farmed delta?",
+    "description": "Follow dated views of the Mekong Delta alongside local rainfall and temperature estimates.",
+    "hypothesis": "Seasonal rainfall and upstream flows may change surface water and field conditions. These images do not measure salinity.",
+    "evidence": "Compare repeated radar views with seasonal rainfall, river gauges and field records. A local weather point does not describe the whole upstream basin.",
+    "disprove": "Tides, irrigation or crop cycles explaining the imagery would weaken an explanation based on local rainfall.",
+    "humanDrivers": "Canals, gates, upstream regulation, irrigation and planting schedules influence water and radar appearance."
+  },
+  {
+    "id": "guayas-babahoyo",
+    "subtitle": "A coastal river lowland",
+    "type": "Rivers & rainfall",
+    "question": "What changes when rain reaches a coastal floodplain?",
+    "description": "Explore dated radar views of the Guayas and Babahoyo lowlands with seasonal weather context.",
+    "hypothesis": "Rainfall and river flow may change connected surface-water patterns. A Pacific connection requires independent local evidence.",
+    "evidence": "Compare consistent radar dates with rainfall, river levels and the usual seasonal pattern. Dark pixels alone do not establish flooding.",
+    "disprove": "Stable river levels, seasonal farming or managed drainage explaining the image would weaken a flood interpretation.",
+    "humanDrivers": "Irrigation, drainage, levees and crop management influence where water collects."
+  }
+]

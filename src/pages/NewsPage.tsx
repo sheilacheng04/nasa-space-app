@@ -6,7 +6,7 @@ import { PlaceNewsPanel } from '../components/PlaceNewsPanel';
 import { WhereToNext } from '../components/FirstVisitGuide';
 import { GlossaryTerm } from '../components/GlossaryTerm';
 import type { ReactNode } from 'react';
-import type { Analysis, Headline, News, NewsByPlaceData, StudyPlace } from '../types';
+import type { Analysis, Headline, News, NewsByPlaceData, StudyPlace, Site } from '../types';
 
 function aiDescription(result: Analysis) {
   return 'AI tone: ' + result.score.toFixed(2) + '\n' + result.summary + '\n' + result.caveat;
@@ -59,17 +59,11 @@ function NewsItem({ item }: { item: Headline }) {
   );
 }
 
-const SITE_FRAME_COUNTS: Record<string, number> = {
-  angat: 21,
-  luzon: 20,
-  dadu: 8,
-  piura: 8
-};
-
 export function NewsPage({
   active,
   news,
   places = [],
+  sites = [],
   newsByPlace,
   requestedPlaceId,
   notice
@@ -77,6 +71,7 @@ export function NewsPage({
   active: boolean;
   news?: News;
   places?: StudyPlace[];
+  sites?: Site[];
   newsByPlace?: NewsByPlaceData;
   requestedPlaceId?: string;
   notice: ReactNode;
@@ -159,14 +154,14 @@ export function NewsPage({
       };
       row.placesCount += 1;
       if (p.hasRadarFrames && p.siteId) {
-        row.radarFrames += SITE_FRAME_COUNTS[p.siteId] || 0;
+        row.radarFrames += sites.find(site=>site.id===p.siteId)?.savedFrameCount || 0;
       }
       row.matchedHeadlines += countsByPlace.get(p.id) || 0;
       row.countries.add(p.country);
       map.set(p.region, row);
     }
     return [...map.values()];
-  }, [places, newsByPlace]);
+  }, [places, newsByPlace, sites]);
 
   const selectedPlace = useMemo(
     () => places.find((p) => p.id === selectedPlaceId) || places[0] || null,
@@ -206,7 +201,7 @@ export function NewsPage({
   return (
     <section id="page-news" className="page" hidden={!active}>
       <div className="wrap page-intro">
-        <p className="eyebrow">Step 4 · People, places and reporting · 293 saved headlines</p>
+        <p className="eyebrow">Step 4 · People, places and reporting · {news?.items.length||0} saved headlines</p>
         <h1>The human side of a changing climate</h1>
         <p className="page-purpose-line">
           <strong>What this page is for:</strong> Explore how water, farming, and climate stories are reported across regions and individual study places, while separating headline wording tone from physical event severity.
@@ -228,7 +223,7 @@ export function NewsPage({
                 <div className="card media-kpi-card">
                   <p className="eyebrow">Global Study Places</p>
                   <strong className="kpi-value">{places.length || 34}</strong>
-                  <p className="source-line">57 real <GlossaryTerm termKey="NISAR" /> radar frames saved across 4 sites</p>
+                  <p className="source-line">{sites.reduce((sum,site)=>sum+(site.savedFrameCount||0),0)} real <GlossaryTerm termKey="NISAR" /> radar frames saved across {sites.length} sites</p>
                 </div>
                 <div className="card media-kpi-card">
                   <p className="eyebrow">Place-Matched Links</p>
@@ -257,7 +252,7 @@ export function NewsPage({
                   <span>Positive wording: <strong>{toneBreakdown.pos}</strong> ({toneBreakdown.posPct}%)</span>
                 </div>
                 <FigureCaption
-                  whatWhere="Distribution of VADER wording tone scores across all 293 saved climate and water headlines."
+                  whatWhere={`Distribution of VADER wording tone scores across all ${news.items.length} saved climate and water headlines.`}
                   dateSource={`Retrieved ${formatDate(news.retrievedAt)} · Source: Supplied 43-item archive + GDELT DOC 2.0 snapshot.`}
                   howToRead="Scores below -0.05 indicate alarm or risk phrasing; scores above +0.05 indicate recovery or solution phrasing; scores near zero indicate neutral phrasing."
                   limitations="Tone scores measure only the words in a headline. They do not measure flood depth, drought severity, crop loss, or whether a claim is verified."

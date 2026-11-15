@@ -1,0 +1,1979 @@
+{
+  "source": "Open-Meteo / ECMWF ERA5 reanalysis",
+  "retrievedAt": "2026-11-15T04:48:01.730600+00:00",
+  "model": "ERA5",
+  "maturity": "reanalysis; subject to revision",
+  "crid": "not applicable",
+  "baseline": "1991–2020, same calendar month",
+  "temperatureDefinition": "Daily (temperature_2m_max + temperature_2m_min) / 2; monthly mean of complete daily pairs, not daily mean temperature.",
+  "daily": [
+    {
+      "date": "2026-01-01",
+      "temperature": 28.75,
+      "rain": 1.0
+    },
+    {
+      "date": "2026-01-02",
+      "temperature": 30.05,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-01-03",
+      "temperature": 29.7,
+      "rain": 0.3
+    },
+    {
+      "date": "2026-01-04",
+      "temperature": 28.6,
+      "rain": 0.9
+    },
+    {
+      "date": "2026-01-05",
+      "temperature": 28.25,
+      "rain": 1.2
+    },
+    {
+      "date": "2026-01-06",
+      "temperature": 29.15,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-01-07",
+      "temperature": 29.5,
+      "rain": 1.6
+    },
+    {
+      "date": "2026-01-08",
+      "temperature": 28.7,
+      "rain": 0.8
+    },
+    {
+      "date": "2026-01-09",
+      "temperature": 25.95,
+      "rain": 6.1
+    },
+    {
+      "date": "2026-01-10",
+      "temperature": 25.8,
+      "rain": 11.1
+    },
+    {
+      "date": "2026-01-11",
+      "temperature": 26.3,
+      "rain": 5.1
+    },
+    {
+      "date": "2026-01-12",
+      "temperature": 28.15,
+      "rain": 0.7
+    },
+    {
+      "date": "2026-01-13",
+      "temperature": 26.35,
+      "rain": 61.6
+    },
+    {
+      "date": "2026-01-14",
+      "temperature": 27.35,
+      "rain": 4.0
+    },
+    {
+      "date": "2026-01-15",
+      "temperature": 26.7,
+      "rain": 3.4
+    },
+    {
+      "date": "2026-01-16",
+      "temperature": 27.45,
+      "rain": 3.0
+    },
+    {
+      "date": "2026-01-17",
+      "temperature": 27.4,
+      "rain": 1.0
+    },
+    {
+      "date": "2026-01-18",
+      "temperature": 26.45,
+      "rain": 2.0
+    },
+    {
+      "date": "2026-01-19",
+      "temperature": 27.2,
+      "rain": 0.8
+    },
+    {
+      "date": "2026-01-20",
+      "temperature": 28.6,
+      "rain": 0.3
+    },
+    {
+      "date": "2026-01-21",
+      "temperature": 26.55,
+      "rain": 17.1
+    },
+    {
+      "date": "2026-01-22",
+      "temperature": 26.7,
+      "rain": 2.3
+    },
+    {
+      "date": "2026-01-23",
+      "temperature": 27.3,
+      "rain": 1.1
+    },
+    {
+      "date": "2026-01-24",
+      "temperature": 27.3,
+      "rain": 14.9
+    },
+    {
+      "date": "2026-01-25",
+      "temperature": 26.35,
+      "rain": 37.4
+    },
+    {
+      "date": "2026-01-26",
+      "temperature": 26.05,
+      "rain": 5.4
+    },
+    {
+      "date": "2026-01-27",
+      "temperature": 26.95,
+      "rain": 8.4
+    },
+    {
+      "date": "2026-01-28",
+      "temperature": 27.0,
+      "rain": 12.0
+    },
+    {
+      "date": "2026-01-29",
+      "temperature": 26.75,
+      "rain": 19.7
+    },
+    {
+      "date": "2026-01-30",
+      "temperature": 26.4,
+      "rain": 0.8
+    },
+    {
+      "date": "2026-01-31",
+      "temperature": 24.7,
+      "rain": 4.1
+    },
+    {
+      "date": "2026-02-01",
+      "temperature": 25.3,
+      "rain": 14.8
+    },
+    {
+      "date": "2026-02-02",
+      "temperature": 26.05,
+      "rain": 19.8
+    },
+    {
+      "date": "2026-02-03",
+      "temperature": 27.45,
+      "rain": 1.3
+    },
+    {
+      "date": "2026-02-04",
+      "temperature": 26.25,
+      "rain": 5.7
+    },
+    {
+      "date": "2026-02-05",
+      "temperature": 27.15,
+      "rain": 2.5
+    },
+    {
+      "date": "2026-02-06",
+      "temperature": 25.75,
+      "rain": 46.9
+    },
+    {
+      "date": "2026-02-07",
+      "temperature": 25.9,
+      "rain": 15.9
+    },
+    {
+      "date": "2026-02-08",
+      "temperature": 27.6,
+      "rain": 6.1
+    },
+    {
+      "date": "2026-02-09",
+      "temperature": 26.85,
+      "rain": 34.6
+    },
+    {
+      "date": "2026-02-10",
+      "temperature": 26.9,
+      "rain": 33.1
+    },
+    {
+      "date": "2026-02-11",
+      "temperature": 26.7,
+      "rain": 10.3
+    },
+    {
+      "date": "2026-02-12",
+      "temperature": 27.45,
+      "rain": 3.6
+    },
+    {
+      "date": "2026-02-13",
+      "temperature": 25.6,
+      "rain": 13.6
+    },
+    {
+      "date": "2026-02-14",
+      "temperature": 26.2,
+      "rain": 3.7
+    },
+    {
+      "date": "2026-02-15",
+      "temperature": 25.75,
+      "rain": 14.2
+    },
+    {
+      "date": "2026-02-16",
+      "temperature": 26.4,
+      "rain": 23.5
+    },
+    {
+      "date": "2026-02-17",
+      "temperature": 26.7,
+      "rain": 10.5
+    },
+    {
+      "date": "2026-02-18",
+      "temperature": 26.45,
+      "rain": 19.7
+    },
+    {
+      "date": "2026-02-19",
+      "temperature": 26.5,
+      "rain": 29.3
+    },
+    {
+      "date": "2026-02-20",
+      "temperature": 27.25,
+      "rain": 26.6
+    },
+    {
+      "date": "2026-02-21",
+      "temperature": 26.25,
+      "rain": 25.7
+    },
+    {
+      "date": "2026-02-22",
+      "temperature": 27.0,
+      "rain": 31.9
+    },
+    {
+      "date": "2026-02-23",
+      "temperature": 26.55,
+      "rain": 95.1
+    },
+    {
+      "date": "2026-02-24",
+      "temperature": 27.25,
+      "rain": 28.0
+    },
+    {
+      "date": "2026-02-25",
+      "temperature": 26.85,
+      "rain": 5.4
+    },
+    {
+      "date": "2026-02-26",
+      "temperature": 28.25,
+      "rain": 2.9
+    },
+    {
+      "date": "2026-02-27",
+      "temperature": 27.7,
+      "rain": 14.8
+    },
+    {
+      "date": "2026-02-28",
+      "temperature": 27.15,
+      "rain": 19.2
+    },
+    {
+      "date": "2026-03-01",
+      "temperature": 27.25,
+      "rain": 29.3
+    },
+    {
+      "date": "2026-03-02",
+      "temperature": 28.75,
+      "rain": 33.2
+    },
+    {
+      "date": "2026-03-03",
+      "temperature": 27.4,
+      "rain": 98.0
+    },
+    {
+      "date": "2026-03-04",
+      "temperature": 25.5,
+      "rain": 55.3
+    },
+    {
+      "date": "2026-03-05",
+      "temperature": 27.35,
+      "rain": 5.3
+    },
+    {
+      "date": "2026-03-06",
+      "temperature": 26.7,
+      "rain": 6.9
+    },
+    {
+      "date": "2026-03-07",
+      "temperature": 27.6,
+      "rain": 3.2
+    },
+    {
+      "date": "2026-03-08",
+      "temperature": 27.85,
+      "rain": 7.2
+    },
+    {
+      "date": "2026-03-09",
+      "temperature": 26.8,
+      "rain": 21.2
+    },
+    {
+      "date": "2026-03-10",
+      "temperature": 28.3,
+      "rain": 15.9
+    },
+    {
+      "date": "2026-03-11",
+      "temperature": 27.75,
+      "rain": 14.7
+    },
+    {
+      "date": "2026-03-12",
+      "temperature": 27.5,
+      "rain": 12.2
+    },
+    {
+      "date": "2026-03-13",
+      "temperature": 28.8,
+      "rain": 2.6
+    },
+    {
+      "date": "2026-03-14",
+      "temperature": 27.9,
+      "rain": 4.6
+    },
+    {
+      "date": "2026-03-15",
+      "temperature": 28.35,
+      "rain": 2.2
+    },
+    {
+      "date": "2026-03-16",
+      "temperature": 29.2,
+      "rain": 3.6
+    },
+    {
+      "date": "2026-03-17",
+      "temperature": 28.9,
+      "rain": 11.3
+    },
+    {
+      "date": "2026-03-18",
+      "temperature": 28.5,
+      "rain": 16.1
+    },
+    {
+      "date": "2026-03-19",
+      "temperature": 28.3,
+      "rain": 2.1
+    },
+    {
+      "date": "2026-03-20",
+      "temperature": 26.6,
+      "rain": 45.2
+    },
+    {
+      "date": "2026-03-21",
+      "temperature": 27.7,
+      "rain": 6.2
+    },
+    {
+      "date": "2026-03-22",
+      "temperature": 28.1,
+      "rain": 4.1
+    },
+    {
+      "date": "2026-03-23",
+      "temperature": 27.8,
+      "rain": 4.0
+    },
+    {
+      "date": "2026-03-24",
+      "temperature": 27.0,
+      "rain": 0.6
+    },
+    {
+      "date": "2026-03-25",
+      "temperature": 28.25,
+      "rain": 0.4
+    },
+    {
+      "date": "2026-03-26",
+      "temperature": 28.2,
+      "rain": 3.4
+    },
+    {
+      "date": "2026-03-27",
+      "temperature": 28.1,
+      "rain": 0.8
+    },
+    {
+      "date": "2026-03-28",
+      "temperature": 28.15,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-03-29",
+      "temperature": 28.35,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-03-30",
+      "temperature": 28.55,
+      "rain": 0.5
+    },
+    {
+      "date": "2026-03-31",
+      "temperature": 28.5,
+      "rain": 1.0
+    },
+    {
+      "date": "2026-04-01",
+      "temperature": 28.9,
+      "rain": 0.7
+    },
+    {
+      "date": "2026-04-02",
+      "temperature": 28.85,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-04-03",
+      "temperature": 28.25,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-04-04",
+      "temperature": 27.5,
+      "rain": 1.5
+    },
+    {
+      "date": "2026-04-05",
+      "temperature": 27.35,
+      "rain": 0.4
+    },
+    {
+      "date": "2026-04-06",
+      "temperature": 28.5,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-04-07",
+      "temperature": 28.65,
+      "rain": 0.3
+    },
+    {
+      "date": "2026-04-08",
+      "temperature": 27.8,
+      "rain": 0.6
+    },
+    {
+      "date": "2026-04-09",
+      "temperature": 27.6,
+      "rain": 3.8
+    },
+    {
+      "date": "2026-04-10",
+      "temperature": 28.75,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-04-11",
+      "temperature": 28.3,
+      "rain": 0.5
+    },
+    {
+      "date": "2026-04-12",
+      "temperature": 27.45,
+      "rain": 21.3
+    },
+    {
+      "date": "2026-04-13",
+      "temperature": 26.9,
+      "rain": 9.9
+    },
+    {
+      "date": "2026-04-14",
+      "temperature": 28.35,
+      "rain": 7.4
+    },
+    {
+      "date": "2026-04-15",
+      "temperature": 28.95,
+      "rain": 2.3
+    },
+    {
+      "date": "2026-04-16",
+      "temperature": 29.3,
+      "rain": 1.1
+    },
+    {
+      "date": "2026-04-17",
+      "temperature": 28.6,
+      "rain": 5.4
+    },
+    {
+      "date": "2026-04-18",
+      "temperature": 28.75,
+      "rain": 9.9
+    },
+    {
+      "date": "2026-04-19",
+      "temperature": 27.6,
+      "rain": 22.1
+    },
+    {
+      "date": "2026-04-20",
+      "temperature": 28.1,
+      "rain": 91.1
+    },
+    {
+      "date": "2026-04-21",
+      "temperature": 28.65,
+      "rain": 11.6
+    },
+    {
+      "date": "2026-04-22",
+      "temperature": 28.05,
+      "rain": 15.9
+    },
+    {
+      "date": "2026-04-23",
+      "temperature": 28.8,
+      "rain": 7.0
+    },
+    {
+      "date": "2026-04-24",
+      "temperature": 28.15,
+      "rain": 4.2
+    },
+    {
+      "date": "2026-04-25",
+      "temperature": 27.35,
+      "rain": 4.8
+    },
+    {
+      "date": "2026-04-26",
+      "temperature": 27.5,
+      "rain": 2.0
+    },
+    {
+      "date": "2026-04-27",
+      "temperature": 28.2,
+      "rain": 1.3
+    },
+    {
+      "date": "2026-04-28",
+      "temperature": 27.45,
+      "rain": 1.3
+    },
+    {
+      "date": "2026-04-29",
+      "temperature": 27.5,
+      "rain": 3.7
+    },
+    {
+      "date": "2026-04-30",
+      "temperature": 27.2,
+      "rain": 1.1
+    },
+    {
+      "date": "2026-05-01",
+      "temperature": 27.0,
+      "rain": 1.0
+    },
+    {
+      "date": "2026-05-02",
+      "temperature": 26.55,
+      "rain": 2.4
+    },
+    {
+      "date": "2026-05-03",
+      "temperature": 26.3,
+      "rain": 0.5
+    },
+    {
+      "date": "2026-05-04",
+      "temperature": 27.25,
+      "rain": 2.2
+    },
+    {
+      "date": "2026-05-05",
+      "temperature": 27.8,
+      "rain": 1.1
+    },
+    {
+      "date": "2026-05-06",
+      "temperature": 26.4,
+      "rain": 49.3
+    },
+    {
+      "date": "2026-05-07",
+      "temperature": 27.6,
+      "rain": 26.4
+    },
+    {
+      "date": "2026-05-08",
+      "temperature": 28.25,
+      "rain": 8.9
+    },
+    {
+      "date": "2026-05-09",
+      "temperature": 27.8,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-05-10",
+      "temperature": 27.05,
+      "rain": 1.9
+    },
+    {
+      "date": "2026-05-11",
+      "temperature": 28.0,
+      "rain": 4.6
+    },
+    {
+      "date": "2026-05-12",
+      "temperature": 27.35,
+      "rain": 20.0
+    },
+    {
+      "date": "2026-05-13",
+      "temperature": 27.85,
+      "rain": 0.6
+    },
+    {
+      "date": "2026-05-14",
+      "temperature": 28.2,
+      "rain": 1.0
+    },
+    {
+      "date": "2026-05-15",
+      "temperature": 27.8,
+      "rain": 0.6
+    },
+    {
+      "date": "2026-05-16",
+      "temperature": 27.35,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-05-17",
+      "temperature": 27.15,
+      "rain": 8.5
+    },
+    {
+      "date": "2026-05-18",
+      "temperature": 27.75,
+      "rain": 9.6
+    },
+    {
+      "date": "2026-05-19",
+      "temperature": 27.8,
+      "rain": 2.3
+    },
+    {
+      "date": "2026-05-20",
+      "temperature": 28.15,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-05-21",
+      "temperature": 28.3,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-05-22",
+      "temperature": 28.2,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-05-23",
+      "temperature": 27.8,
+      "rain": 0.3
+    },
+    {
+      "date": "2026-05-24",
+      "temperature": 27.3,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-05-25",
+      "temperature": 27.65,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-05-26",
+      "temperature": 27.6,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-05-27",
+      "temperature": 27.9,
+      "rain": 0.3
+    },
+    {
+      "date": "2026-05-28",
+      "temperature": 28.5,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-05-29",
+      "temperature": 28.5,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-05-30",
+      "temperature": 27.35,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-05-31",
+      "temperature": 27.3,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-06-01",
+      "temperature": 27.95,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-06-02",
+      "temperature": 27.65,
+      "rain": 1.9
+    },
+    {
+      "date": "2026-06-03",
+      "temperature": 27.2,
+      "rain": 12.7
+    },
+    {
+      "date": "2026-06-04",
+      "temperature": 26.15,
+      "rain": 7.7
+    },
+    {
+      "date": "2026-06-05",
+      "temperature": 27.4,
+      "rain": 3.4
+    },
+    {
+      "date": "2026-06-06",
+      "temperature": 27.5,
+      "rain": 8.6
+    },
+    {
+      "date": "2026-06-07",
+      "temperature": 27.85,
+      "rain": 0.9
+    },
+    {
+      "date": "2026-06-08",
+      "temperature": 26.95,
+      "rain": 7.8
+    },
+    {
+      "date": "2026-06-09",
+      "temperature": 26.35,
+      "rain": 48.5
+    },
+    {
+      "date": "2026-06-10",
+      "temperature": 28.75,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-06-11",
+      "temperature": 28.5,
+      "rain": 1.2
+    },
+    {
+      "date": "2026-06-12",
+      "temperature": 26.45,
+      "rain": 1.6
+    },
+    {
+      "date": "2026-06-13",
+      "temperature": 27.3,
+      "rain": 0.8
+    },
+    {
+      "date": "2026-06-14",
+      "temperature": 27.7,
+      "rain": 20.9
+    },
+    {
+      "date": "2026-06-15",
+      "temperature": 27.3,
+      "rain": 8.8
+    },
+    {
+      "date": "2026-06-16",
+      "temperature": 26.85,
+      "rain": 14.7
+    },
+    {
+      "date": "2026-06-17",
+      "temperature": 26.7,
+      "rain": 15.5
+    },
+    {
+      "date": "2026-06-18",
+      "temperature": 27.05,
+      "rain": 0.7
+    },
+    {
+      "date": "2026-06-19",
+      "temperature": 27.5,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-06-20",
+      "temperature": 26.8,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-06-21",
+      "temperature": 26.8,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-06-22",
+      "temperature": 27.3,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-06-23",
+      "temperature": 27.35,
+      "rain": 0.9
+    },
+    {
+      "date": "2026-06-24",
+      "temperature": 27.4,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-06-25",
+      "temperature": 27.6,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-06-26",
+      "temperature": 26.55,
+      "rain": 0.4
+    },
+    {
+      "date": "2026-06-27",
+      "temperature": 26.65,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-06-28",
+      "temperature": 27.45,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-06-29",
+      "temperature": 27.4,
+      "rain": 2.9
+    },
+    {
+      "date": "2026-06-30",
+      "temperature": 27.7,
+      "rain": 0.5
+    },
+    {
+      "date": "2026-07-01",
+      "temperature": 27.2,
+      "rain": 0.6
+    },
+    {
+      "date": "2026-07-02",
+      "temperature": 27.15,
+      "rain": 0.3
+    },
+    {
+      "date": "2026-07-03",
+      "temperature": 26.9,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-07-04",
+      "temperature": 26.75,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-07-05",
+      "temperature": 27.95,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-07-06",
+      "temperature": 27.9,
+      "rain": 0.8
+    },
+    {
+      "date": "2026-07-07",
+      "temperature": 27.85,
+      "rain": 1.3
+    },
+    {
+      "date": "2026-07-08",
+      "temperature": 27.7,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-07-09",
+      "temperature": 27.7,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-07-10",
+      "temperature": 28.0,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-07-11",
+      "temperature": 26.65,
+      "rain": 2.8
+    },
+    {
+      "date": "2026-07-12",
+      "temperature": 26.7,
+      "rain": 0.5
+    },
+    {
+      "date": "2026-07-13",
+      "temperature": 27.7,
+      "rain": 2.5
+    },
+    {
+      "date": "2026-07-14",
+      "temperature": 27.9,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-07-15",
+      "temperature": 28.15,
+      "rain": 0.3
+    },
+    {
+      "date": "2026-07-16",
+      "temperature": 28.25,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-07-17",
+      "temperature": 27.55,
+      "rain": 3.1
+    },
+    {
+      "date": "2026-07-18",
+      "temperature": 27.65,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-07-19",
+      "temperature": 27.85,
+      "rain": 0.8
+    },
+    {
+      "date": "2026-07-20",
+      "temperature": 27.4,
+      "rain": 0.9
+    },
+    {
+      "date": "2026-07-21",
+      "temperature": 27.75,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-07-22",
+      "temperature": 28.65,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-07-23",
+      "temperature": 27.25,
+      "rain": 0.4
+    },
+    {
+      "date": "2026-07-24",
+      "temperature": 26.55,
+      "rain": 12.3
+    },
+    {
+      "date": "2026-07-25",
+      "temperature": 27.4,
+      "rain": 0.9
+    },
+    {
+      "date": "2026-07-26",
+      "temperature": 28.2,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-07-27",
+      "temperature": 28.2,
+      "rain": 0.5
+    },
+    {
+      "date": "2026-07-28",
+      "temperature": 27.7,
+      "rain": 2.2
+    },
+    {
+      "date": "2026-07-29",
+      "temperature": 26.55,
+      "rain": 10.7
+    },
+    {
+      "date": "2026-07-30",
+      "temperature": 27.65,
+      "rain": 1.4
+    },
+    {
+      "date": "2026-07-31",
+      "temperature": 27.55,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-08-01",
+      "temperature": 27.7,
+      "rain": 1.3
+    },
+    {
+      "date": "2026-08-02",
+      "temperature": 27.35,
+      "rain": 0.5
+    },
+    {
+      "date": "2026-08-03",
+      "temperature": 27.95,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-08-04",
+      "temperature": 28.55,
+      "rain": 0.3
+    },
+    {
+      "date": "2026-08-05",
+      "temperature": 27.85,
+      "rain": 1.7
+    },
+    {
+      "date": "2026-08-06",
+      "temperature": 26.9,
+      "rain": 2.1
+    },
+    {
+      "date": "2026-08-07",
+      "temperature": 27.9,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-08-08",
+      "temperature": 28.85,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-08-09",
+      "temperature": 28.0,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-08-10",
+      "temperature": 27.95,
+      "rain": 0.6
+    },
+    {
+      "date": "2026-08-11",
+      "temperature": 28.55,
+      "rain": 0.4
+    },
+    {
+      "date": "2026-08-12",
+      "temperature": 27.4,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-08-13",
+      "temperature": 27.7,
+      "rain": 0.3
+    },
+    {
+      "date": "2026-08-14",
+      "temperature": 28.2,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-08-15",
+      "temperature": 28.35,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-08-16",
+      "temperature": 28.3,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-08-17",
+      "temperature": 28.45,
+      "rain": 1.1
+    },
+    {
+      "date": "2026-08-18",
+      "temperature": 28.5,
+      "rain": 1.1
+    },
+    {
+      "date": "2026-08-19",
+      "temperature": 27.95,
+      "rain": 1.5
+    },
+    {
+      "date": "2026-08-20",
+      "temperature": 27.8,
+      "rain": 1.2
+    },
+    {
+      "date": "2026-08-21",
+      "temperature": 28.5,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-08-22",
+      "temperature": 28.0,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-08-23",
+      "temperature": 28.2,
+      "rain": 2.2
+    },
+    {
+      "date": "2026-08-24",
+      "temperature": 28.55,
+      "rain": 0.4
+    },
+    {
+      "date": "2026-08-25",
+      "temperature": 27.65,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-08-26",
+      "temperature": 28.1,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-08-27",
+      "temperature": 27.95,
+      "rain": 0.4
+    },
+    {
+      "date": "2026-08-28",
+      "temperature": 29.5,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-08-29",
+      "temperature": 28.05,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-08-30",
+      "temperature": 28.65,
+      "rain": 1.0
+    },
+    {
+      "date": "2026-08-31",
+      "temperature": 29.35,
+      "rain": 1.4
+    },
+    {
+      "date": "2026-09-01",
+      "temperature": 28.45,
+      "rain": 0.6
+    },
+    {
+      "date": "2026-09-02",
+      "temperature": 28.9,
+      "rain": 0.1
+    },
+    {
+      "date": "2026-09-03",
+      "temperature": 29.3,
+      "rain": 0.2
+    },
+    {
+      "date": "2026-09-04",
+      "temperature": 29.8,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-09-05",
+      "temperature": 30.05,
+      "rain": 0.3
+    },
+    {
+      "date": "2026-09-06",
+      "temperature": 27.5,
+      "rain": 2.8
+    },
+    {
+      "date": "2026-09-07",
+      "temperature": 27.65,
+      "rain": 5.9
+    },
+    {
+      "date": "2026-09-08",
+      "temperature": 26.95,
+      "rain": 6.5
+    },
+    {
+      "date": "2026-09-09",
+      "temperature": 28.6,
+      "rain": 4.7
+    },
+    {
+      "date": "2026-09-10",
+      "temperature": 27.75,
+      "rain": 1.1
+    },
+    {
+      "date": "2026-09-11",
+      "temperature": 28.05,
+      "rain": 10.3
+    },
+    {
+      "date": "2026-09-12",
+      "temperature": 28.75,
+      "rain": 6.3
+    },
+    {
+      "date": "2026-09-13",
+      "temperature": 29.05,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-09-14",
+      "temperature": 28.05,
+      "rain": 2.0
+    },
+    {
+      "date": "2026-09-15",
+      "temperature": 28.5,
+      "rain": 21.5
+    },
+    {
+      "date": "2026-09-16",
+      "temperature": 27.95,
+      "rain": 6.0
+    },
+    {
+      "date": "2026-09-17",
+      "temperature": 28.5,
+      "rain": 4.4
+    },
+    {
+      "date": "2026-09-18",
+      "temperature": 28.15,
+      "rain": 3.7
+    },
+    {
+      "date": "2026-09-19",
+      "temperature": 28.7,
+      "rain": 0.5
+    },
+    {
+      "date": "2026-09-20",
+      "temperature": 28.2,
+      "rain": 8.4
+    },
+    {
+      "date": "2026-09-21",
+      "temperature": 28.65,
+      "rain": 7.3
+    },
+    {
+      "date": "2026-09-22",
+      "temperature": 28.15,
+      "rain": 10.0
+    },
+    {
+      "date": "2026-09-23",
+      "temperature": 27.35,
+      "rain": 23.1
+    },
+    {
+      "date": "2026-09-24",
+      "temperature": 27.65,
+      "rain": 21.2
+    },
+    {
+      "date": "2026-09-25",
+      "temperature": 28.3,
+      "rain": 19.8
+    },
+    {
+      "date": "2026-09-26",
+      "temperature": 27.45,
+      "rain": 33.2
+    },
+    {
+      "date": "2026-09-27",
+      "temperature": 27.1,
+      "rain": 25.8
+    },
+    {
+      "date": "2026-09-28",
+      "temperature": 27.7,
+      "rain": 9.2
+    },
+    {
+      "date": "2026-09-29",
+      "temperature": 27.0,
+      "rain": 4.3
+    },
+    {
+      "date": "2026-09-30",
+      "temperature": 28.65,
+      "rain": 0.3
+    },
+    {
+      "date": "2026-10-01",
+      "temperature": 28.25,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-10-02",
+      "temperature": 26.65,
+      "rain": 22.4
+    },
+    {
+      "date": "2026-10-03",
+      "temperature": 26.2,
+      "rain": 13.3
+    },
+    {
+      "date": "2026-10-04",
+      "temperature": 28.55,
+      "rain": 1.0
+    },
+    {
+      "date": "2026-10-05",
+      "temperature": 29.35,
+      "rain": 0.0
+    },
+    {
+      "date": "2026-10-06",
+      "temperature": 29.25,
+      "rain": 2.2
+    },
+    {
+      "date": "2026-10-07",
+      "temperature": 29.2,
+      "rain": 6.8
+    },
+    {
+      "date": "2026-10-08",
+      "temperature": 28.45,
+      "rain": 51.4
+    },
+    {
+      "date": "2026-10-09",
+      "temperature": 28.95,
+      "rain": 4.8
+    },
+    {
+      "date": "2026-10-10",
+      "temperature": 27.85,
+      "rain": 31.1
+    },
+    {
+      "date": "2026-10-11",
+      "temperature": 28.55,
+      "rain": 5.7
+    },
+    {
+      "date": "2026-10-12",
+      "temperature": 26.9,
+      "rain": 61.4
+    },
+    {
+      "date": "2026-10-13",
+      "temperature": 28.45,
+      "rain": 2.3
+    },
+    {
+      "date": "2026-10-14",
+      "temperature": 29.25,
+      "rain": 0.3
+    },
+    {
+      "date": "2026-10-15",
+      "temperature": 29.0,
+      "rain": 2.2
+    },
+    {
+      "date": "2026-10-16",
+      "temperature": 27.85,
+      "rain": 9.8
+    },
+    {
+      "date": "2026-10-17",
+      "temperature": 28.0,
+      "rain": 1.8
+    },
+    {
+      "date": "2026-10-18",
+      "temperature": 28.0,
+      "rain": 0.6
+    },
+    {
+      "date": "2026-10-19",
+      "temperature": 28.0,
+      "rain": 24.8
+    },
+    {
+      "date": "2026-10-20",
+      "temperature": 28.25,
+      "rain": 3.0
+    },
+    {
+      "date": "2026-10-21",
+      "temperature": 28.25,
+      "rain": 3.6
+    },
+    {
+      "date": "2026-10-22",
+      "temperature": 27.45,
+      "rain": 2.5
+    },
+    {
+      "date": "2026-10-23",
+      "temperature": 29.05,
+      "rain": 5.3
+    },
+    {
+      "date": "2026-10-24",
+      "temperature": 28.8,
+      "rain": 16.2
+    },
+    {
+      "date": "2026-10-25",
+      "temperature": 28.5,
+      "rain": 21.6
+    },
+    {
+      "date": "2026-10-26",
+      "temperature": 29.0,
+      "rain": 23.5
+    },
+    {
+      "date": "2026-10-27",
+      "temperature": 28.35,
+      "rain": 17.9
+    },
+    {
+      "date": "2026-10-28",
+      "temperature": 28.45,
+      "rain": 16.9
+    },
+    {
+      "date": "2026-10-29",
+      "temperature": 28.4,
+      "rain": 13.8
+    },
+    {
+      "date": "2026-10-30",
+      "temperature": 27.2,
+      "rain": 21.0
+    },
+    {
+      "date": "2026-10-31",
+      "temperature": 28.0,
+      "rain": 16.2
+    },
+    {
+      "date": "2026-11-01",
+      "temperature": 27.75,
+      "rain": 23.5
+    },
+    {
+      "date": "2026-11-02",
+      "temperature": 26.45,
+      "rain": 58.9
+    },
+    {
+      "date": "2026-11-03",
+      "temperature": 27.35,
+      "rain": 14.1
+    },
+    {
+      "date": "2026-11-04",
+      "temperature": 27.0,
+      "rain": 69.6
+    },
+    {
+      "date": "2026-11-05",
+      "temperature": 27.2,
+      "rain": 11.6
+    },
+    {
+      "date": "2026-11-06",
+      "temperature": 27.65,
+      "rain": 6.2
+    },
+    {
+      "date": "2026-11-07",
+      "temperature": 27.05,
+      "rain": 21.1
+    },
+    {
+      "date": "2026-11-08",
+      "temperature": 28.95,
+      "rain": 20.2
+    }
+  ],
+  "monthly": [
+    {
+      "date": "2025-01-01",
+      "year": 2025,
+      "month": 1,
+      "rain": 140.6,
+      "temperature": 27.11,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": -168.2,
+      "temperatureAnomaly": 1.22
+    },
+    {
+      "date": "2025-02-01",
+      "year": 2025,
+      "month": 2,
+      "rain": 459.2,
+      "temperature": 26.9,
+      "nRainDays": 28,
+      "nTemperatureDays": 28,
+      "expectedDays": 28,
+      "complete": true,
+      "rainAnomaly": 62.22,
+      "temperatureAnomaly": 0.82
+    },
+    {
+      "date": "2025-03-01",
+      "year": 2025,
+      "month": 3,
+      "rain": 519.2,
+      "temperature": 27.71,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": 122.62,
+      "temperatureAnomaly": 1.21
+    },
+    {
+      "date": "2025-04-01",
+      "year": 2025,
+      "month": 4,
+      "rain": 367.8,
+      "temperature": 27.56,
+      "nRainDays": 30,
+      "nTemperatureDays": 30,
+      "expectedDays": 30,
+      "complete": true,
+      "rainAnomaly": 24.41,
+      "temperatureAnomaly": 1.01
+    },
+    {
+      "date": "2025-05-01",
+      "year": 2025,
+      "month": 5,
+      "rain": 124.9,
+      "temperature": 26.63,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": -106.92,
+      "temperatureAnomaly": 0.51
+    },
+    {
+      "date": "2025-06-01",
+      "year": 2025,
+      "month": 6,
+      "rain": 59.9,
+      "temperature": 25.61,
+      "nRainDays": 30,
+      "nTemperatureDays": 30,
+      "expectedDays": 30,
+      "complete": true,
+      "rainAnomaly": -55.65,
+      "temperatureAnomaly": 0.5
+    },
+    {
+      "date": "2025-07-01",
+      "year": 2025,
+      "month": 7,
+      "rain": 6.4,
+      "temperature": 25.78,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": -71.28,
+      "temperatureAnomaly": 1.23
+    },
+    {
+      "date": "2025-08-01",
+      "year": 2025,
+      "month": 8,
+      "rain": 40.9,
+      "temperature": 25.87,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": -17.24,
+      "temperatureAnomaly": 1.28
+    },
+    {
+      "date": "2025-09-01",
+      "year": 2025,
+      "month": 9,
+      "rain": 79.6,
+      "temperature": 26.29,
+      "nRainDays": 30,
+      "nTemperatureDays": 30,
+      "expectedDays": 30,
+      "complete": true,
+      "rainAnomaly": -9.45,
+      "temperatureAnomaly": 1.48
+    },
+    {
+      "date": "2025-10-01",
+      "year": 2025,
+      "month": 10,
+      "rain": 93.8,
+      "temperature": 25.74,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": 24.19,
+      "temperatureAnomaly": 0.71
+    },
+    {
+      "date": "2025-11-01",
+      "year": 2025,
+      "month": 11,
+      "rain": 57.2,
+      "temperature": 26.11,
+      "nRainDays": 30,
+      "nTemperatureDays": 30,
+      "expectedDays": 30,
+      "complete": true,
+      "rainAnomaly": -8.47,
+      "temperatureAnomaly": 0.56
+    },
+    {
+      "date": "2025-12-01",
+      "year": 2025,
+      "month": 12,
+      "rain": 11.0,
+      "temperature": 28.04,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": -131.17,
+      "temperatureAnomaly": 1.9
+    },
+    {
+      "date": "2026-01-01",
+      "year": 2026,
+      "month": 1,
+      "rain": 228.4,
+      "temperature": 27.37,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": -80.4,
+      "temperatureAnomaly": 1.48
+    },
+    {
+      "date": "2026-02-01",
+      "year": 2026,
+      "month": 2,
+      "rain": 558.7,
+      "temperature": 26.69,
+      "nRainDays": 28,
+      "nTemperatureDays": 28,
+      "expectedDays": 28,
+      "complete": true,
+      "rainAnomaly": 161.72,
+      "temperatureAnomaly": 0.61
+    },
+    {
+      "date": "2026-03-01",
+      "year": 2026,
+      "month": 3,
+      "rain": 411.1,
+      "temperature": 27.87,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": 14.52,
+      "temperatureAnomaly": 1.37
+    },
+    {
+      "date": "2026-04-01",
+      "year": 2026,
+      "month": 4,
+      "rain": 231.5,
+      "temperature": 28.11,
+      "nRainDays": 30,
+      "nTemperatureDays": 30,
+      "expectedDays": 30,
+      "complete": true,
+      "rainAnomaly": -111.89,
+      "temperatureAnomaly": 1.56
+    },
+    {
+      "date": "2026-05-01",
+      "year": 2026,
+      "month": 5,
+      "rain": 142.0,
+      "temperature": 27.61,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": -89.82,
+      "temperatureAnomaly": 1.49
+    },
+    {
+      "date": "2026-06-01",
+      "year": 2026,
+      "month": 6,
+      "rain": 161.1,
+      "temperature": 27.27,
+      "nRainDays": 30,
+      "nTemperatureDays": 30,
+      "expectedDays": 30,
+      "complete": true,
+      "rainAnomaly": 45.55,
+      "temperatureAnomaly": 2.16
+    },
+    {
+      "date": "2026-07-01",
+      "year": 2026,
+      "month": 7,
+      "rain": 42.9,
+      "temperature": 27.56,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": -34.78,
+      "temperatureAnomaly": 3.01
+    },
+    {
+      "date": "2026-08-01",
+      "year": 2026,
+      "month": 8,
+      "rain": 18.9,
+      "temperature": 28.15,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": -39.24,
+      "temperatureAnomaly": 3.56
+    },
+    {
+      "date": "2026-09-01",
+      "year": 2026,
+      "month": 9,
+      "rain": 239.5,
+      "temperature": 28.23,
+      "nRainDays": 30,
+      "nTemperatureDays": 30,
+      "expectedDays": 30,
+      "complete": true,
+      "rainAnomaly": 150.45,
+      "temperatureAnomaly": 3.42
+    },
+    {
+      "date": "2026-10-01",
+      "year": 2026,
+      "month": 10,
+      "rain": 403.4,
+      "temperature": 28.27,
+      "nRainDays": 31,
+      "nTemperatureDays": 31,
+      "expectedDays": 31,
+      "complete": true,
+      "rainAnomaly": 333.79,
+      "temperatureAnomaly": 3.24
+    },
+    {
+      "date": "2026-11-01",
+      "year": 2026,
+      "month": 11,
+      "rain": null,
+      "temperature": null,
+      "nRainDays": 8,
+      "nTemperatureDays": 8,
+      "expectedDays": 30,
+      "complete": false,
+      "rainAnomaly": null,
+      "temperatureAnomaly": null
+    }
+  ],
+  "baselineMonthly": [
+    {
+      "month": 1,
+      "rain": 308.8,
+      "temperature": 25.89,
+      "nYears": 30
+    },
+    {
+      "month": 2,
+      "rain": 396.98,
+      "temperature": 26.08,
+      "nYears": 30
+    },
+    {
+      "month": 3,
+      "rain": 396.58,
+      "temperature": 26.5,
+      "nYears": 30
+    },
+    {
+      "month": 4,
+      "rain": 343.39,
+      "temperature": 26.55,
+      "nYears": 30
+    },
+    {
+      "month": 5,
+      "rain": 231.82,
+      "temperature": 26.12,
+      "nYears": 30
+    },
+    {
+      "month": 6,
+      "rain": 115.55,
+      "temperature": 25.11,
+      "nYears": 30
+    },
+    {
+      "month": 7,
+      "rain": 77.68,
+      "temperature": 24.55,
+      "nYears": 30
+    },
+    {
+      "month": 8,
+      "rain": 58.14,
+      "temperature": 24.59,
+      "nYears": 30
+    },
+    {
+      "month": 9,
+      "rain": 89.05,
+      "temperature": 24.81,
+      "nYears": 30
+    },
+    {
+      "month": 10,
+      "rain": 69.61,
+      "temperature": 25.03,
+      "nYears": 30
+    },
+    {
+      "month": 11,
+      "rain": 65.67,
+      "temperature": 25.55,
+      "nYears": 30
+    },
+    {
+      "month": 12,
+      "rain": 142.17,
+      "temperature": 26.14,
+      "nYears": 30
+    }
+  ],
+  "requests": [
+    {
+      "period": "recent",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-1.85&longitude=-79.65&start_date=2025-01-01&end_date=2026-11-08&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+      "parameters": {
+        "latitude": -1.85,
+        "longitude": -79.65,
+        "start_date": "2025-01-01",
+        "end_date": "2026-11-08",
+        "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
+        "models": "era5",
+        "timezone": "UTC"
+      },
+      "retrievedAt": "2026-11-15T04:48:01.730621+00:00",
+      "status": "ready"
+    },
+    {
+      "period": "baseline",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-1.85&longitude=-79.65&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+      "parameters": {
+        "latitude": -1.85,
+        "longitude": -79.65,
+        "start_date": "1991-01-01",
+        "end_date": "2020-12-31",
+        "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
+        "models": "era5",
+        "timezone": "UTC"
+      },
+      "retrievedAt": "2026-11-15T04:48:02.856268+00:00",
+      "status": "ready"
+    }
+  ],
+  "status": "ready"
+}

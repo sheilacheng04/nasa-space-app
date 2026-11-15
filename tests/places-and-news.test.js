@@ -48,7 +48,13 @@ test('public/data/places.json satisfies the shared data contract with >= 30 glob
   }
 
   assert.ok(philippinesCount >= 5, `Expected at least 5 Philippine places (Luzon, Angat + >=3 more), got ${philippinesCount}`);
-  assert.equal(radarCount, 4, 'Four curated sites have saved radar frames');
+  const sites = JSON.parse(await readFile('public/data/sites.json', 'utf8'));
+  assert.equal(radarCount, sites.length, 'Radar place links must match the curated study sites');
+  for (const site of sites) {
+    assert.ok(places.some(p => p.siteId === site.id && p.hasRadarFrames));
+    const evidence = JSON.parse(await readFile(`public/data/sites/${site.id}/evidence.json`, 'utf8'));
+    assert.equal(evidence.gibs.frames.filter(f => f.status === 'ready' && f.image).length, site.savedFrameCount);
+  }
   assert.ok(ids.has('luzon') && ids.has('angat') && ids.has('dadu') && ids.has('piura'), 'Must retain the 4 existing sites');
   const dadu = places.find((p) => p.id === 'dadu');
   assert.equal(dadu.regime, 'la-nina-reference', 'Dadu 2022 must be labeled as la-nina-reference');

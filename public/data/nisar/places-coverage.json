@@ -15,9 +15,9 @@
   },
   "cagayan-valley": {
     "placeId": "cagayan-valley",
-    "hasSavedFrames": false,
-    "asfApiReachable": false,
-    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "hasSavedFrames": true,
+    "asfApiReachable": true,
+    "asfProbeNote": "ASF catalog, regional HH/HV browse and dated NASA GIBS crops verified during study-area expansion.",
     "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28121.3%2016.6%2C122.0%2016.6%2C122.0%2017.3%2C121.3%2017.3%2C121.3%2016.6%29%29"
   },
   "mindoro": {
@@ -64,9 +64,9 @@
   },
   "mekong-delta": {
     "placeId": "mekong-delta",
-    "hasSavedFrames": false,
-    "asfApiReachable": false,
-    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "hasSavedFrames": true,
+    "asfApiReachable": true,
+    "asfProbeNote": "ASF catalog, regional HH/HV browse and dated NASA GIBS crops verified during study-area expansion.",
     "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28105.3%209.6%2C106.2%209.6%2C106.2%2010.5%2C105.3%2010.5%2C105.3%209.6%29%29"
   },
   "murray-darling": {
@@ -197,9 +197,9 @@
   },
   "guayas-babahoyo": {
     "placeId": "guayas-babahoyo",
-    "hasSavedFrames": false,
-    "asfApiReachable": false,
-    "asfProbeNote": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "hasSavedFrames": true,
+    "asfApiReachable": true,
+    "asfProbeNote": "ASF catalog, regional HH/HV browse and dated NASA GIBS crops verified during study-area expansion.",
     "vertexSearchUrl": "https://search.asf.alaska.edu/#/?dataset=NISAR&polygon=POLYGON%28%28-80.1%20-2.3%2C-79.2%20-2.3%2C-79.2%20-1.4%2C-80.1%20-1.4%2C-80.1%20-2.3%29%29"
   },
   "jacui-taquari-rs": {

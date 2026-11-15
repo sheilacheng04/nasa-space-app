@@ -1,5 +1,5 @@
 {
-  "retrievedAt": "2026-11-14T02:46:02.800079+00:00",
+  "retrievedAt": "2026-11-15T04:50:40.586512+00:00",
   "collections": [
     {
       "shortName": "NISAR_L2_GCOV_BETA_V1",
@@ -1103,6 +1103,252 @@
       }
     },
     {
+      "name": "ASF GCOV catalog / cagayan-valley",
+      "url": "https://api.daac.asf.alaska.edu/services/search/param?dataset=NISAR&processingLevel=GCOV&shortName=%5B%27NISAR_L2_GCOV_BETA_V1%27%2C+%27NISAR_L2_GCOV_PROVISIONAL_V1%27%2C+%27NISAR_L2_GCOV_V1%27%5D&intersectsWith=POLYGON+%28%28122+16.6%2C+122+17.3%2C+121.3+17.3%2C+121.3+16.6%2C+122+16.6%29%29&start=2025-10-17T00%3A00%3A00Z&end=2026-11-14T00%3A00%3A00Z&maxResults=1000&output=geojson",
+      "status": "catalog coverage confirmed",
+      "retrievedAt": "2026-11-15T04:46:22.567550+00:00",
+      "maturity": "BETA / PROVISIONAL / VALIDATED; see scene rows",
+      "crid": "per scene",
+      "parameters": {
+        "dataset": "NISAR",
+        "processingLevel": "GCOV",
+        "shortName": [
+          "NISAR_L2_GCOV_BETA_V1",
+          "NISAR_L2_GCOV_PROVISIONAL_V1",
+          "NISAR_L2_GCOV_V1"
+        ],
+        "intersectsWith": "POLYGON ((122 16.6, 122 17.3, 121.3 17.3, 121.3 16.6, 122 16.6))",
+        "start": "2025-10-17T00:00:00Z",
+        "end": "2026-11-14T00:00:00Z",
+        "maxResults": 1000
+      }
+    },
+    {
+      "name": "Observation plan / cagayan-valley",
+      "url": "https://services7.arcgis.com/WSiUmUhlFx4CtMBB/arcgis/rest/services/nisar_merged_observation_plans/FeatureServer/0/query?f=json&where=1%3D1&geometry=121.3%2C16.6%2C122.0%2C17.3&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=track%2Cframe%2Cproducegcov%2Cpassdirection%2CDH%2CDV%2CQP&returnGeometry=false",
+      "retrievedAt": "2026-11-15T04:46:27.930705+00:00",
+      "status": "track/frame intersections checked against official reference plan",
+      "records": [
+        {
+          "track": 32,
+          "frame": 80,
+          "producegcov": 1,
+          "passdirection": "Descending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 39,
+          "frame": 10,
+          "producegcov": 1,
+          "passdirection": "Ascending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 133,
+          "frame": 80,
+          "producegcov": 1,
+          "passdirection": "Descending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        }
+      ],
+      "maturity": "reference plan",
+      "crid": "not applicable",
+      "parameters": {
+        "bbox": [
+          121.3,
+          16.6,
+          122.0,
+          17.3
+        ],
+        "comparison": "track/frame"
+      }
+    },
+    {
+      "name": "ASF GCOV catalog / mekong-delta",
+      "url": "https://api.daac.asf.alaska.edu/services/search/param?dataset=NISAR&processingLevel=GCOV&shortName=%5B%27NISAR_L2_GCOV_BETA_V1%27%2C+%27NISAR_L2_GCOV_PROVISIONAL_V1%27%2C+%27NISAR_L2_GCOV_V1%27%5D&intersectsWith=POLYGON+%28%28106.2+9.6%2C+106.2+10.5%2C+105.3+10.5%2C+105.3+9.6%2C+106.2+9.6%29%29&start=2025-10-17T00%3A00%3A00Z&end=2026-11-14T00%3A00%3A00Z&maxResults=1000&output=geojson",
+      "status": "catalog coverage confirmed",
+      "retrievedAt": "2026-11-15T04:46:22.567914+00:00",
+      "maturity": "BETA / PROVISIONAL / VALIDATED; see scene rows",
+      "crid": "per scene",
+      "parameters": {
+        "dataset": "NISAR",
+        "processingLevel": "GCOV",
+        "shortName": [
+          "NISAR_L2_GCOV_BETA_V1",
+          "NISAR_L2_GCOV_PROVISIONAL_V1",
+          "NISAR_L2_GCOV_V1"
+        ],
+        "intersectsWith": "POLYGON ((106.2 9.6, 106.2 10.5, 105.3 10.5, 105.3 9.6, 106.2 9.6))",
+        "start": "2025-10-17T00:00:00Z",
+        "end": "2026-11-14T00:00:00Z",
+        "maxResults": 1000
+      }
+    },
+    {
+      "name": "Observation plan / mekong-delta",
+      "url": "https://services7.arcgis.com/WSiUmUhlFx4CtMBB/arcgis/rest/services/nisar_merged_observation_plans/FeatureServer/0/query?f=json&where=1%3D1&geometry=105.3%2C9.6%2C106.2%2C10.5&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=track%2Cframe%2Cproducegcov%2Cpassdirection%2CDH%2CDV%2CQP&returnGeometry=false",
+      "retrievedAt": "2026-11-15T04:46:28.630698+00:00",
+      "status": "track/frame intersections checked against official reference plan",
+      "records": [
+        {
+          "track": 47,
+          "frame": 84,
+          "producegcov": 1,
+          "passdirection": "Descending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 47,
+          "frame": 83,
+          "producegcov": 1,
+          "passdirection": "Descending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 155,
+          "frame": 6,
+          "producegcov": 1,
+          "passdirection": "Ascending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 83,
+          "frame": 7,
+          "producegcov": 1,
+          "passdirection": "Ascending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 83,
+          "frame": 6,
+          "producegcov": 1,
+          "passdirection": "Ascending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 155,
+          "frame": 7,
+          "producegcov": 1,
+          "passdirection": "Ascending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 148,
+          "frame": 83,
+          "producegcov": 1,
+          "passdirection": "Descending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        }
+      ],
+      "maturity": "reference plan",
+      "crid": "not applicable",
+      "parameters": {
+        "bbox": [
+          105.3,
+          9.6,
+          106.2,
+          10.5
+        ],
+        "comparison": "track/frame"
+      }
+    },
+    {
+      "name": "ASF GCOV catalog / guayas-babahoyo",
+      "url": "https://api.daac.asf.alaska.edu/services/search/param?dataset=NISAR&processingLevel=GCOV&shortName=%5B%27NISAR_L2_GCOV_BETA_V1%27%2C+%27NISAR_L2_GCOV_PROVISIONAL_V1%27%2C+%27NISAR_L2_GCOV_V1%27%5D&intersectsWith=POLYGON+%28%28-79.2+-2.3%2C+-79.2+-1.4%2C+-80.1+-1.4%2C+-80.1+-2.3%2C+-79.2+-2.3%29%29&start=2025-10-17T00%3A00%3A00Z&end=2026-11-14T00%3A00%3A00Z&maxResults=1000&output=geojson",
+      "status": "catalog coverage confirmed",
+      "retrievedAt": "2026-11-15T04:46:22.568429+00:00",
+      "maturity": "BETA / PROVISIONAL / VALIDATED; see scene rows",
+      "crid": "per scene",
+      "parameters": {
+        "dataset": "NISAR",
+        "processingLevel": "GCOV",
+        "shortName": [
+          "NISAR_L2_GCOV_BETA_V1",
+          "NISAR_L2_GCOV_PROVISIONAL_V1",
+          "NISAR_L2_GCOV_V1"
+        ],
+        "intersectsWith": "POLYGON ((-79.2 -2.3, -79.2 -1.4, -80.1 -1.4, -80.1 -2.3, -79.2 -2.3))",
+        "start": "2025-10-17T00:00:00Z",
+        "end": "2026-11-14T00:00:00Z",
+        "maxResults": 1000
+      }
+    },
+    {
+      "name": "Observation plan / guayas-babahoyo",
+      "url": "https://services7.arcgis.com/WSiUmUhlFx4CtMBB/arcgis/rest/services/nisar_merged_observation_plans/FeatureServer/0/query?f=json&where=1%3D1&geometry=-80.1%2C-2.3%2C-79.2%2C-1.4&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=track%2Cframe%2Cproducegcov%2Cpassdirection%2CDH%2CDV%2CQP&returnGeometry=false",
+      "retrievedAt": "2026-11-15T04:46:27.691361+00:00",
+      "status": "track/frame intersections checked against official reference plan",
+      "records": [
+        {
+          "track": 4,
+          "frame": 1,
+          "producegcov": 1,
+          "passdirection": "Ascending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 112,
+          "frame": 89,
+          "producegcov": 1,
+          "passdirection": "Descending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 3,
+          "frame": 176,
+          "producegcov": 1,
+          "passdirection": "Ascending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        },
+        {
+          "track": 112,
+          "frame": 90,
+          "producegcov": 1,
+          "passdirection": "Descending",
+          "DH": 1,
+          "DV": 0,
+          "QP": 0
+        }
+      ],
+      "maturity": "reference plan",
+      "crid": "not applicable",
+      "parameters": {
+        "bbox": [
+          -80.1,
+          -2.3,
+          -79.2,
+          -1.4
+        ],
+        "comparison": "track/frame"
+      }
+    },
+    {
       "name": "ERA5 luzon / recent",
       "period": "recent",
       "url": "https://archive-api.open-meteo.com/v1/archive?latitude=15.5&longitude=120.9&start_date=2025-01-01&end_date=2026-11-08&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
@@ -1242,6 +1488,114 @@
         "timezone": "UTC"
       },
       "retrievedAt": "2026-11-14T02:44:47.034115+00:00",
+      "status": "ready",
+      "maturity": "reanalysis",
+      "crid": "not applicable"
+    },
+    {
+      "name": "ERA5 cagayan-valley / recent",
+      "period": "recent",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=16.95&longitude=121.65&start_date=2025-01-01&end_date=2026-11-08&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+      "parameters": {
+        "latitude": 16.95,
+        "longitude": 121.65,
+        "start_date": "2025-01-01",
+        "end_date": "2026-11-08",
+        "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
+        "models": "era5",
+        "timezone": "UTC"
+      },
+      "retrievedAt": "2026-11-15T04:47:02.401207+00:00",
+      "status": "ready",
+      "maturity": "reanalysis",
+      "crid": "not applicable"
+    },
+    {
+      "name": "ERA5 cagayan-valley / baseline",
+      "period": "baseline",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=16.95&longitude=121.65&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+      "parameters": {
+        "latitude": 16.95,
+        "longitude": 121.65,
+        "start_date": "1991-01-01",
+        "end_date": "2020-12-31",
+        "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
+        "models": "era5",
+        "timezone": "UTC"
+      },
+      "retrievedAt": "2026-11-15T04:47:03.776639+00:00",
+      "status": "ready",
+      "maturity": "reanalysis",
+      "crid": "not applicable"
+    },
+    {
+      "name": "ERA5 mekong-delta / recent",
+      "period": "recent",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=10.05&longitude=105.75&start_date=2025-01-01&end_date=2026-11-08&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+      "parameters": {
+        "latitude": 10.05,
+        "longitude": 105.75,
+        "start_date": "2025-01-01",
+        "end_date": "2026-11-08",
+        "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
+        "models": "era5",
+        "timezone": "UTC"
+      },
+      "retrievedAt": "2026-11-15T04:47:29.018619+00:00",
+      "status": "ready",
+      "maturity": "reanalysis",
+      "crid": "not applicable"
+    },
+    {
+      "name": "ERA5 mekong-delta / baseline",
+      "period": "baseline",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=10.05&longitude=105.75&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+      "parameters": {
+        "latitude": 10.05,
+        "longitude": 105.75,
+        "start_date": "1991-01-01",
+        "end_date": "2020-12-31",
+        "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
+        "models": "era5",
+        "timezone": "UTC"
+      },
+      "retrievedAt": "2026-11-15T04:47:30.292578+00:00",
+      "status": "ready",
+      "maturity": "reanalysis",
+      "crid": "not applicable"
+    },
+    {
+      "name": "ERA5 guayas-babahoyo / recent",
+      "period": "recent",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-1.85&longitude=-79.65&start_date=2025-01-01&end_date=2026-11-08&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+      "parameters": {
+        "latitude": -1.85,
+        "longitude": -79.65,
+        "start_date": "2025-01-01",
+        "end_date": "2026-11-08",
+        "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
+        "models": "era5",
+        "timezone": "UTC"
+      },
+      "retrievedAt": "2026-11-15T04:48:01.730621+00:00",
+      "status": "ready",
+      "maturity": "reanalysis",
+      "crid": "not applicable"
+    },
+    {
+      "name": "ERA5 guayas-babahoyo / baseline",
+      "period": "baseline",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-1.85&longitude=-79.65&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum&models=era5&timezone=UTC",
+      "parameters": {
+        "latitude": -1.85,
+        "longitude": -79.65,
+        "start_date": "1991-01-01",
+        "end_date": "2020-12-31",
+        "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
+        "models": "era5",
+        "timezone": "UTC"
+      },
+      "retrievedAt": "2026-11-15T04:48:02.856268+00:00",
       "status": "ready",
       "maturity": "reanalysis",
       "crid": "not applicable"

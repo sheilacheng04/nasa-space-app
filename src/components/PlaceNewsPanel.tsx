@@ -74,7 +74,7 @@ export function PlaceNewsPanel({
         <div className="place-news-empty" role="status">
           <p><strong>No saved headlines for this place yet.</strong></p>
           <p className="source-line">
-            Our offline-ready archive of 293 headlines has no matches for {place.name} ({place.country}) yet. Never substituting global headlines as local news.
+            Our saved headline archive has no matches for {place.name} ({place.country}) yet. Never substituting global headlines as local news.
           </p>
         </div>
       )}

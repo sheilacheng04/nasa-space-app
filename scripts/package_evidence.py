@@ -5,9 +5,12 @@ from pipeline_common import *
 def optional(path,default):
  f=DATA/path
  return json.loads(f.read_text(encoding='utf-8')) if f.exists() else default
-def main():
+def main(site_ids=None):
  inventory=read('inventory.json');summaries=[]
+ previous={s['siteId']:s for s in read('evidence.json')}
  for site in read('sites.json'):
+  if site_ids and site['id'] not in site_ids:
+   summaries.append(previous[site['id']]);continue
   sid=site['id'];record=next(r for r in inventory['sites'] if r['siteId']==sid)
   gibs=optional('sites/'+sid+'/gibs/manifest.json',{'frames':[]})
   browse=optional('sites/'+sid+'/browse/manifest.json',{'frames':[]})
@@ -45,4 +48,7 @@ def main():
  save('method.json',{'retrievedAt':now(),'collections':inventory['collections'],'sources':sources,'citation':'NISAR follows NASA\u2019s standard Data Use and Citation Guidance.','citationStatus':'Dataset-specific exact citation not available; linked NASA guidance 403'})
  save('sources.json',[{'name':s['name'],'url':s['url'],'status':s['status'],'reviewedAt':s.get('retrievedAt',''),'note':s.get('maturity','')} for s in sources])
  print('Published evidence for',len(summaries),'sites')
-if __name__=='__main__':main()
+if __name__=='__main__':
+ import argparse
+ parser=argparse.ArgumentParser();parser.add_argument('--site',action='append')
+ main(parser.parse_args().site)

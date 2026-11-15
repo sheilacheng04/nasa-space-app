@@ -37,13 +37,13 @@ export function createBackground(canvas, env = window) {
     glow(width*.78,height*.85,width*.6,palette.blue,quiet?.025:.045);
     if(scene==='story')glow(width*.86,height*.65,width*.4,palette.orange,.09);
     ctx.strokeStyle=palette.blue;ctx.lineWidth=.8;ctx.globalAlpha=quiet?.035:.075;
-    const count=detail*3+2;
+    const count=detail*4+5, gap=Math.max(11,height*.035);
     for(let j=0;j<count;j++){
       ctx.beginPath();
       for(let x=-20;x<=width+20;x+=16){
         const y=scene==='sites'
-          ? height*.7+Math.sin(x/width*4+j*.13+t)*height*.22+j*14
-          : height*.56+j*18+Math.sin(x/width*6+t+j*.18)*height*.095;
+          ? height*.42+j*gap+Math.sin(x/width*4+j*.13+t)*height*.07
+          : height*.44+j*gap+Math.sin(x/width*6+t+j*.18)*height*.075;
         x===-20?ctx.moveTo(x,y):ctx.lineTo(x,y);
       }ctx.stroke();
     }ctx.globalAlpha=1;
@@ -85,7 +85,11 @@ export function createBackground(canvas, env = window) {
   }
   function resize() {
     if(!host)return;
-    width=Math.max(1,host.clientWidth);height=Math.max(1,host.clientHeight);
+    const fullBleed=scene==='sites'||scene==='media'||scene==='method';
+    width=Math.max(1,fullBleed?(doc.documentElement.clientWidth||env.innerWidth):host.clientWidth);
+    height=Math.max(1,host.clientHeight);
+    canvas.style.width=fullBleed?`${width}px`:'100%';
+    canvas.style.left=fullBleed?`${-(host.getBoundingClientRect?.().left||0)}px`:'0';
     dpr=Math.min(env.devicePixelRatio||1,env.innerWidth<700?1.25:2);
     canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
     canvas.dataset.dpr=String(dpr);sync();
@@ -103,10 +107,11 @@ export function createBackground(canvas, env = window) {
   }
   const cameraChanged=event=>{if(event.detail){camera={...camera,...event.detail};if(scene==='globe'&&!doc.hidden&&visible&&!paused&&!motion.matches&&!animated())paint();}};
   doc.addEventListener('visibilitychange',sync);motion.addEventListener('change',sync);
+  env.addEventListener('resize',resize);
   env.addEventListener('globe:camera',cameraChanged);
   return {
-    setScene(next){scene=next;attach();if(!host||!host.isConnected||!host.contains(canvas)||canvas.dataset.scene!==scene)awaiting.observe(doc.getElementById('root'),{childList:true,subtree:true});sync();},
+    setScene(next){scene=next;const previousHost=host;attach();if(host===previousHost)resize();if(!host||!host.isConnected||!host.contains(canvas)||canvas.dataset.scene!==scene)awaiting.observe(doc.getElementById('root'),{childList:true,subtree:true});sync();},
     pause(next){paused=next;try{env.localStorage.setItem(BACKGROUND_KEY,next?'1':'0');}catch{}sync();},
-    destroy(){dead=true;stop();io.disconnect();ro.disconnect();theme.disconnect();awaiting.disconnect();doc.removeEventListener('visibilitychange',sync);motion.removeEventListener('change',sync);env.removeEventListener('globe:camera',cameraChanged);canvas.remove();}
+    destroy(){dead=true;stop();io.disconnect();ro.disconnect();theme.disconnect();awaiting.disconnect();doc.removeEventListener('visibilitychange',sync);motion.removeEventListener('change',sync);env.removeEventListener('resize',resize);env.removeEventListener('globe:camera',cameraChanged);canvas.remove();}
   };
 }

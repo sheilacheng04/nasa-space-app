@@ -4,6 +4,7 @@ import {readFile,writeFile,readdir,mkdir} from 'node:fs/promises';
 import path from 'node:path';
 import {existsSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
+import {gzipSync,gunzipSync} from 'node:zlib';
 const python=process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python';
 execFileSync(existsSync(python)?python:'python',['scripts/prepare_preview_assets.py'],{stdio:'inherit'});
 const root=process.cwd(),data={};
@@ -82,9 +83,17 @@ function unpack(payload){
  return restore(payload.records);
 }
 assert.ok(JSON.stringify(unpack({strings,records:packed}))===JSON.stringify(data),'Offline JSON provenance must round-trip exactly');
-const setup='globalThis.__PACIFIC_DEMO__=true;globalThis.__PACIFIC_DATA__='+'('+unpack.toString()+')('+serialize({strings,records:packed})+')'+';globalThis.__PACIFIC_ASSETS__='+serialize(assets)+';for(const s of globalThis.__PACIFIC_DATA__["sites.json"]){globalThis.__PACIFIC_DATA__["sites/"+s.id+"/evidence.json"].inventory=globalThis.__PACIFIC_DATA__["inventory.json"].sites.find(r=>r.siteId===s.id||r.id===s.id);};{const nbp=globalThis.__PACIFIC_DATA__["news-by-place.json"],byId=new Map(globalThis.__PACIFIC_DATA__["news.json"].items.map(n=>[n.id,n]));nbp.items=nbp.tuples.map(([nid,pid,m])=>{const n=byId.get(nid)||{};return{id:nid+"-"+pid,placeId:pid,title:n.title||"",source:n.source||"",url:n.url||"",date:n.date||"",matchedBy:m,tone:{vader:n.vader??0,vaderAdjusted:n.vaderAdjusted??0,ai:null},aiAnalysis:null};});delete nbp.tuples;};';
+// Lossless built-in compression keeps every saved offline record and thumbnail.
+const payload=serialize({strings,records:packed,assets});
+const compressed=gzipSync(payload,{level:9});
+assert.equal(gunzipSync(compressed).toString('utf8'),payload,'Compressed offline payload must round-trip exactly');
+async function inflate(base64){
+ const bytes=Uint8Array.from(atob(base64),char=>char.charCodeAt(0));
+ return new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+}
+const setup='const embedded=JSON.parse(await ('+inflate.toString()+')('+serialize(compressed.toString('base64'))+'));globalThis.__PACIFIC_DEMO__=true;globalThis.__PACIFIC_DATA__='+'('+unpack.toString()+')('+'embedded'+')'+';globalThis.__PACIFIC_ASSETS__='+'embedded.assets'+';for(const s of globalThis.__PACIFIC_DATA__["sites.json"]){globalThis.__PACIFIC_DATA__["sites/"+s.id+"/evidence.json"].inventory=globalThis.__PACIFIC_DATA__["inventory.json"].sites.find(r=>r.siteId===s.id||r.id===s.id);};{const nbp=globalThis.__PACIFIC_DATA__["news-by-place.json"],byId=new Map(globalThis.__PACIFIC_DATA__["news.json"].items.map(n=>[n.id,n]));nbp.items=nbp.tuples.map(([nid,pid,m])=>{const n=byId.get(nid)||{};return{id:nid+"-"+pid,placeId:pid,title:n.title||"",source:n.source||"",url:n.url||"",date:n.date||"",matchedBy:m,tone:{vader:n.vader??0,vaderAdjusted:n.vaderAdjusted??0,ai:null},aiAnalysis:null};});delete nbp.tuples;};';
 let html=await readFile('index.html','utf8');
-html=html.replace('</head>',()=>'<style>'+css+'</style></head>').replace('<script type="module" src="/src/main.tsx"></script>',()=>'<script>'+setup+(globe+';\n'+bundled.outputFiles[0].text).replaceAll('</script','<\\/script')+'</script>');
+html=html.replace('</head>',()=>'<style>'+css+'</style></head>').replace('<script type="module" src="/src/main.tsx"></script>',()=>'<script>(async()=>{'+setup+(globe+';\n'+bundled.outputFiles[0].text).replaceAll('</script','<\\/script')+'})().catch(()=>{document.getElementById("root").textContent="This offline edition could not open. Please use a current browser with gzip decompression support.";});</script>');
 const size=Buffer.byteLength(html);
 if(size>3000000)throw new Error('Offline first-load budget exceeded: '+size);
 await writeFile('el-nino-app.html',html);

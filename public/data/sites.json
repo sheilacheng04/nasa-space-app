@@ -23,7 +23,8 @@
     "humanDrivers": "Irrigation, crop choice, planting, harvest and changes in land use can also change the image.",
     "selectionNote": "Prompt study box; retained only with real intersecting GCOV footprints.",
     "coverageStatus": "catalog coverage confirmed",
-    "sceneCount": 95
+    "sceneCount": 95,
+    "savedFrameCount": 12
   },
   {
     "id": "angat",
@@ -49,7 +50,8 @@
     "humanDrivers": "Water released from the dam, drinking-water demand and irrigation can matter as much as rainfall.",
     "selectionNote": "Angat uses the existing reservoir-centered box; the supplied 121.4 E center is east of this reservoir.",
     "coverageStatus": "catalog coverage confirmed",
-    "sceneCount": 31
+    "sceneCount": 31,
+    "savedFrameCount": 12
   },
   {
     "id": "dadu",
@@ -75,7 +77,8 @@
     "humanDrivers": "Embankments, drainage, canal operations and settlement patterns influence where water collects. The 2022 flood is a historical test, not evidence for a 2026 El Niño impact.",
     "selectionNote": "Prompt study box; retained only with real intersecting GCOV footprints.",
     "coverageStatus": "catalog coverage confirmed",
-    "sceneCount": 63
+    "sceneCount": 63,
+    "savedFrameCount": 22
   },
   {
     "id": "piura",
@@ -101,6 +104,88 @@
     "humanDrivers": "Irrigation, levees, reservoir releases and land use can change surface water.",
     "selectionNote": "Prompt study box; retained only with real intersecting GCOV footprints.",
     "coverageStatus": "catalog coverage confirmed",
-    "sceneCount": 31
+    "sceneCount": 31,
+    "savedFrameCount": 11
+  },
+  {
+    "id": "cagayan-valley",
+    "subtitle": "A river and farming basin",
+    "type": "Crops & rivers",
+    "question": "How do changing rains affect a farming basin?",
+    "description": "Compare dated views of the Cagayan Valley and Magat Basin with rainfall and temperature context.",
+    "hypothesis": "Rainfall changes may alter field wetness and river conditions. Crop timing and water management must also be considered.",
+    "evidence": "Compare repeated radar images, same-month rainfall baselines and independent river or field observations. Image color alone does not measure crop health.",
+    "disprove": "Changes explained by planting, harvest or reservoir operations would weaken a rainfall explanation.",
+    "humanDrivers": "Irrigation, dam releases, planting schedules and land use can change the radar appearance.",
+    "name": "Cagayan Valley & Magat Basin",
+    "country": "Philippines",
+    "coordinates": [
+      121.65,
+      16.95
+    ],
+    "bbox": [
+      121.3,
+      16.6,
+      122.0,
+      17.3
+    ],
+    "selectionNote": "Existing study-place bounds; promoted only after fetched imagery and context pass the expansion gate.",
+    "coverageStatus": "catalog coverage confirmed",
+    "sceneCount": 31,
+    "savedFrameCount": 10
+  },
+  {
+    "id": "mekong-delta",
+    "subtitle": "Water across a delta",
+    "type": "Delta & agriculture",
+    "question": "How does water move through a farmed delta?",
+    "description": "Follow dated views of the Mekong Delta alongside local rainfall and temperature estimates.",
+    "hypothesis": "Seasonal rainfall and upstream flows may change surface water and field conditions. These images do not measure salinity.",
+    "evidence": "Compare repeated radar views with seasonal rainfall, river gauges and field records. A local weather point does not describe the whole upstream basin.",
+    "disprove": "Tides, irrigation or crop cycles explaining the imagery would weaken an explanation based on local rainfall.",
+    "humanDrivers": "Canals, gates, upstream regulation, irrigation and planting schedules influence water and radar appearance.",
+    "name": "Mekong Delta Salinity & Rice Zone",
+    "country": "Vietnam",
+    "coordinates": [
+      105.75,
+      10.05
+    ],
+    "bbox": [
+      105.3,
+      9.6,
+      106.2,
+      10.5
+    ],
+    "selectionNote": "Existing study-place bounds; promoted only after fetched imagery and context pass the expansion gate.",
+    "coverageStatus": "catalog coverage confirmed",
+    "sceneCount": 107,
+    "savedFrameCount": 11
+  },
+  {
+    "id": "guayas-babahoyo",
+    "subtitle": "A coastal river lowland",
+    "type": "Rivers & rainfall",
+    "question": "What changes when rain reaches a coastal floodplain?",
+    "description": "Explore dated radar views of the Guayas and Babahoyo lowlands with seasonal weather context.",
+    "hypothesis": "Rainfall and river flow may change connected surface-water patterns. A Pacific connection requires independent local evidence.",
+    "evidence": "Compare consistent radar dates with rainfall, river levels and the usual seasonal pattern. Dark pixels alone do not establish flooding.",
+    "disprove": "Stable river levels, seasonal farming or managed drainage explaining the image would weaken a flood interpretation.",
+    "humanDrivers": "Irrigation, drainage, levees and crop management influence where water collects.",
+    "name": "Guayas & Babahoyo River Lowlands",
+    "country": "Ecuador",
+    "coordinates": [
+      -79.65,
+      -1.85
+    ],
+    "bbox": [
+      -80.1,
+      -2.3,
+      -79.2,
+      -1.4
+    ],
+    "selectionNote": "Existing study-place bounds; promoted only after fetched imagery and context pass the expansion gate.",
+    "coverageStatus": "catalog coverage confirmed",
+    "sceneCount": 42,
+    "savedFrameCount": 10
   }
 ]

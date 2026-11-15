@@ -590,6 +590,8 @@ def check_asf_coverage(places: list[dict]) -> dict:
 
 def build_places_json() -> list[dict]:
     normalized = []
+    radar_ids = {s['id'] for s in json.loads((DATA_DIR / 'sites.json').read_text(encoding='utf-8'))
+                 if (DATA_DIR / 'sites' / s['id'] / 'gibs' / 'manifest.json').exists()}
     for item in PLACES_CATALOG:
         entry = {
             "id": item["id"],
@@ -602,12 +604,12 @@ def build_places_json() -> list[dict]:
             "bounds": [round(float(x), 4) for x in item["bounds"]],
             "regime": item["regime"],
             "kind": item["kind"],
-            "hasRadarFrames": bool(item.get("hasRadarFrames", False)),
+            "hasRadarFrames": item['id'] in radar_ids,
             "newsQuery": item["newsQuery"],
             "aliases": list(item["aliases"]),
         }
-        if item.get("siteId") and entry["hasRadarFrames"]:
-            entry["siteId"] = item["siteId"]
+        if entry["hasRadarFrames"]:
+            entry["siteId"] = item['id']
         normalized.append(entry)
 
     out_path = DATA_DIR / "places.json"

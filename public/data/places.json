@@ -72,7 +72,7 @@
     ],
     "regime": "dry",
     "kind": "agriculture",
-    "hasRadarFrames": false,
+    "hasRadarFrames": true,
     "newsQuery": "Cagayan Valley Isabela Magat Dam corn rice drought Philippines",
     "aliases": [
       "Cagayan Valley",
@@ -81,7 +81,8 @@
       "Magat Dam",
       "Tuguegarao",
       "Cagayan"
-    ]
+    ],
+    "siteId": "cagayan-valley"
   },
   {
     "id": "mindoro",
@@ -258,7 +259,7 @@
     ],
     "regime": "dry",
     "kind": "river",
-    "hasRadarFrames": false,
+    "hasRadarFrames": true,
     "newsQuery": "Mekong Delta salinity intrusion rice drought Vietnam",
     "aliases": [
       "Mekong Delta",
@@ -266,7 +267,8 @@
       "Mekong",
       "Ca Mau",
       "Ben Tre"
-    ]
+    ],
+    "siteId": "mekong-delta"
   },
   {
     "id": "murray-darling",
@@ -756,7 +758,7 @@
     ],
     "regime": "wet",
     "kind": "floodplain",
-    "hasRadarFrames": false,
+    "hasRadarFrames": true,
     "newsQuery": "Guayas Babahoyo Los Rios Guayaquil coastal flooding Ecuador",
     "aliases": [
       "Guayas",
@@ -764,7 +766,8 @@
       "Guayaquil",
       "Los Rios",
       "Daule"
-    ]
+    ],
+    "siteId": "guayas-babahoyo"
   },
   {
     "id": "jacui-taquari-rs",

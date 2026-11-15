@@ -28,7 +28,7 @@ export function FirstVisitGuide({
           </li>
           <li>
             <strong>2. Inspect dated radar frames (Sites)</strong>
-            <p>Play 57 real NASA/ISRO NISAR radar observations across 4 sites and explore 34 global El Niño &amp; La Niña study places.</p>
+            <p>Play real NASA/ISRO NISAR radar frames across the study areas and explore global El Niño &amp; La Niña study places.</p>
             <a href="#sites/angat" onClick={onDismiss}>Inspect Angat radar →</a>
           </li>
           <li>

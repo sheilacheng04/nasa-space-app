@@ -141,7 +141,7 @@ export function SitesPage({
           <span className="mono">{latestFrameDate}</span>
         </nav>
 
-        <p className="eyebrow">Step 2 · Local radar evidence · 57 saved observations across 4 radar sites</p>
+        <p className="eyebrow">Step 2 · Local radar evidence · {sites.reduce((sum,site)=>sum+(site.savedFrameCount||0),0)} saved radar frames across {sites.length} radar sites</p>
         <h1>{site.question}</h1>
         <p className="page-purpose-line">
           <strong>What this page is for:</strong> Compare real dated <GlossaryTerm termKey="NISAR" /> <GlossaryTerm termKey="SAR" /> radar images, local <GlossaryTerm termKey="ERA5" /> weather departures, and local news for a single place before drawing conclusions.
@@ -183,7 +183,7 @@ export function SitesPage({
                     }
                   }}
                 >
-                  <optgroup label="Saved NISAR radar sites (4 places)">
+                  <optgroup label={`Saved NISAR radar sites (${sites.length} places)`}>
                     {places
                       .filter((p) => p.hasRadarFrames)
                       .map((p) => (
