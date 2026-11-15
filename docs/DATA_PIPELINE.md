@@ -46,4 +46,6 @@ Run `python scripts/render_globe_frames.py` for radar and `python scripts/fetch_
 
 ## Bounded acquisition expansion without refreshing other data
 
+For adding study areas with saved imagery and weather, see [the study-area expansion workflow](STUDY_AREA_EXPANSION.md). It stages coverage discovery, fetches from the existing source families, gates publication on real images and complete baselines, and packages only the selected new areas.
+
 Use `python scripts/expand_nisar_acquisitions.py --check-access` to investigate GCOV/GSLC/RSLC for the existing sites and publish independently checked acquisition metadata alongside the curated evidence. It does not download full science files or change the existing inventory, imagery, weather or news. See [the verified acquisition report](NISAR_ACQUISITIONS.md) for exact new products, access limitations, snapshot replay and the next calibrated-data candidate. Supplemental metadata remains separately hosted rather than embedded in the offline HTML.

@@ -1,6 +1,8 @@
 # Data status
 
-Reviewed 14 November 2026. Retrieval timestamps are UTC.
+Original review: 14 November 2026. Expansion: 15 November 2026. Retrieval timestamps are UTC.
+
+**Current coverage: 7 radar study areas and 88 saved GIBS frames.** Cagayan Valley (10), Mekong Delta (11) and Guayas–Babahoyo (10) add verified catalog coverage, paired HH/HV quicklooks and complete ERA5 baselines. [Expansion details, source requests and limitations](STUDY_AREA_EXPANSION.md). The original four-site retrieval record below is retained for provenance.
 
 ## Decision gate
 
@@ -198,7 +200,7 @@ The separately hosted [supplemental index](../public/data/nisar/index.json) reco
 
 1. **`public/data/places.json` (34 global study places across 6 regions)**:
    - Contains 34 places spanning **Maritime Southeast Asia** (including 6 Philippine places: `luzon`, `angat`, `cagayan-valley`, `mindoro`, `cotabato-mindanao`, `iloilo-panay`, plus Indonesia, Malaysia, Vietnam, Thailand), **Oceania & South Asia** (Australia, Papua New Guinea, India, plus Pakistan's `dadu` explicitly labeled `regime: "la-nina-reference"`), **Southern & Eastern Africa** (Zimbabwe, Zambia, South Africa, Kenya, Somalia, Ethiopia), **Central America & Northern South America** (Panama, Honduras, Guatemala, Colombia, Brazil Amazon, Guyana), and **Western & Southern South America & Southern US** (Peru `piura` and `tumbes`, Ecuador, Chile, Southern Brazil, Uruguay, California, Texas).
-   - Only the 4 original study sites (`luzon`, `angat`, `dadu`, `piura`) set `hasRadarFrames: true` and carry `siteId` pointing to the 57 saved NASA GIBS WebP radar frames on disk. The remaining 30 global places set `hasRadarFrames: false` and display `"Radar frames not saved for this place"` with a direct ASF Vertex polygon search link (`public/data/nisar/places-coverage.json`) and zero placeholder imagery.
+   - At the original review, only the 4 original study sites (`luzon`, `angat`, `dadu`, `piura`) set `hasRadarFrames: true` and carry `siteId` pointing to the 57 saved NASA GIBS WebP radar frames on disk. The remaining 30 global places set `hasRadarFrames: false` and display `"Radar frames not saved for this place"` with a direct ASF Vertex polygon search link (`public/data/nisar/places-coverage.json`) and zero placeholder imagery.
 2. **`public/data/news-by-place.json` (494 place-matched headline records)**:
    - Built deterministically by `scripts/build_places_and_news.py` from the 293 real headlines in `public/data/news.json` using three explicit match tiers: `"place-name"` (title mentions place or alias), `"query"` (same country + basin/hazard query term), and `"country"` (country-level climate reporting).
    - Preserves `tone: { vader, vaderAdjusted, ai: null }` and `aiAnalysis: null` as required by the Prompt 1 contract for Prompt 2 consumption.

@@ -50,6 +50,7 @@ export function App() {
   );
   const initialized = Boolean(data);
   const optionalData = {
+    sites: states.sites.data || [],
     news: states.news.data,
     sources: states.sources.data,
     evidence: states.evidence.data

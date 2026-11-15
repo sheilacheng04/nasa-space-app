@@ -37,7 +37,15 @@ try{
   await expect(launch).toHaveCount(1);
   await expect(page.locator('#satellite-window-place')).toContainText('Mekong');
   const layout=await launch.evaluate(button=>({height:button.getBoundingClientRect().height,beforeControls:!!(button.compareDocumentPosition(document.querySelector('.illustrative-layers'))&Node.DOCUMENT_POSITION_FOLLOWING)}));
-  assert(layout.height>=44&&layout.beforeControls);
+  assert(layout.height>=48&&layout.beforeControls);
+  for(const theme of ['light','dark']){
+   await page.evaluate(theme=>{document.documentElement.dataset.theme=theme;},theme);
+   // Wait for the existing color transition, then compare rendered colors.
+   await expect.poll(()=>launch.evaluate(button=>{
+    const swatch=document.createElement('span');swatch.style.background='var(--orange)';document.body.append(swatch);
+    const matches=getComputedStyle(button).backgroundColor===getComputedStyle(swatch).backgroundColor;swatch.remove();return matches;
+   })).toBe(true);
+  }
   await launch.click();await expect(page.locator('#local-window')).toBeVisible();
   await page.getByRole('button',{name:'Study radar',exact:true}).click();
   await expect(page.locator('#local-window')).toHaveAttribute('data-state','ready',{timeout:15000});

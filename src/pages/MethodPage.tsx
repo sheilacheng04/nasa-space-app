@@ -44,7 +44,7 @@ export function MethodPage({
   evidenceNotice
 }: {
   active: boolean;
-  data: Pick<Bootstrap, 'news' | 'sources' | 'evidence'>;
+  data: Pick<Bootstrap, 'news' | 'sources' | 'evidence' | 'sites'>;
   newsNotice: ReactNode;
   sourcesNotice: ReactNode;
   evidenceNotice: ReactNode;

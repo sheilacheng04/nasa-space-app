@@ -21,7 +21,7 @@ SAR means **synthetic aperture radar**: a way of making images using microwave e
 | **Media** | Read source-linked headlines about climate and its human impacts. |
 | **Data and method** | Learn where the evidence comes from, how to compare it fairly, and what it can tell us. |
 
-The study areas are Central Luzon and Angat reservoir in the Philippines, Dadu in Pakistan, and Lower Piura in Peru. They are local examples of questions that matter around the world.
+The seven radar study areas are Central Luzon, Angat reservoir and Cagayan Valley in the Philippines; Dadu in Pakistan; Lower Piura in Peru; the Mekong Delta in Vietnam; and Guayas–Babahoyo in Ecuador. They are local examples of questions that matter around the world.
 
 ## Run it on your computer
 
@@ -57,7 +57,7 @@ Choose a view on Sites or Globe, then press **Copy link**. The link restores its
 
 ## Understand the images
 
-- **Radar:** real NISAR preview images from NASA/ISRO, distributed through ASF and NASA GIBS. Sites includes 57 saved images across the four study areas. Their colors represent radar reflections, not natural-color photographs.
+- **Radar:** real NISAR preview images from NASA/ISRO, distributed through ASF and NASA GIBS. Sites includes 88 saved images across seven study areas. Their colors represent radar reflections, not natural-color photographs.
 - **Vegetation:** 21 saved monthly MODIS images show vegetation greenness between January 2025 and October 2026. These are a separate satellite record, not NISAR measurements.
 - **Concept globe:** illustrative Heat, Rain, Combined and Places layers, animated Pacific links and rings, phase playback, site towers, search and a guided tour. These patterns are not measurements or forecasts. Optional dated MODIS imagery requires an internet connection; the concept globe works offline.
 - **Weather and ocean context:** NOAA ocean records and ERA5 weather estimates help explore possible explanations for changes on land.
@@ -67,7 +67,7 @@ Missing dates are shown as gaps. The ocean animation and land-response drawings 
 
 **A changing image is a starting point for investigation.** It does not, on its own, prove a change in water level, crop health or land motion, or show that El Nino caused an event. Calibrated water-area and radar-change measurements are not yet available in this project.
 
-See [data status and limitations](docs/DATA_STATUS.md) for the full record. The saved edition was reviewed on **14 November 2026**; data do not refresh automatically.
+See [data status and limitations](docs/DATA_STATUS.md) for the full record. The original saved edition was reviewed on **14 November 2026**, with three evidence-backed study areas added on **15 November 2026**. See the [expansion report](docs/STUDY_AREA_EXPANSION.md); data do not refresh automatically.
 
 ## Find your way around the repository
 

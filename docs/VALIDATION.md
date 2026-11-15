@@ -1,5 +1,13 @@
 # Validation record
 
+## Additional study areas and satellite-window access · 15 November 2026
+
+Added Cagayan Valley, Mekong Delta and Guayas–Babahoyo using the existing ASF/CMR, NASA GIBS and ERA5 sources. Seven radar areas now contain 88 saved daily frames. Regional pairs, source URLs, exact bounds/dates, incomplete months and image gaps remain explicit. See [the source and limitation report](STUDY_AREA_EXPANSION.md).
+
+`npm test`: **57 passed**, including real image-file checks, matched regional metadata, full weather baselines and unknown GIBS lineage for the added areas. `npm run build` and `npm run demo` passed. `node scripts/study-area-check.mjs` passed all four hosted/offline × 390/1280 px groups with Canvas rendering: every added site decoded its saved radar image, the launcher appeared before the concept controls with a 48 px target, Study radar loaded the new Mekong evidence, close restored focus, and no horizontal overflow occurred. Offline runs made **zero HTTP(S) requests** and no uncaught page errors occurred. Network access is mocked/blocked for these UI tests; actual download evidence comes from the recorded provider requests.
+
+The offline payload now uses lossless gzip with native browser decompression, with an exact build-time round-trip assertion. This preserves the embedded evidence while meeting the existing size limits. Current Chrome was tested; other browsers and a fresh Lighthouse run were not measured for this change. The satellite images are previews; calibrated science products remain unavailable.
+
 ## Vercel missing FastAPI fix · 15 November 2026
 
 Added standard `[project]` metadata and all seven existing pinned runtime dependencies to `pyproject.toml`, which previously contained only Vercel configuration. The Python 3.13 requirement matches `.python-version`; the entrypoint remains `backend.main:app`. No backend behavior, frontend assets, scientific data or dependency versions changed. See [deployment and clean redeployment instructions](FULLSTACK.md#missing-fastapi-during-vercel-startup) and [Vercel's Python dependency documentation](https://vercel.com/docs/functions/runtimes/python#dependencies).
