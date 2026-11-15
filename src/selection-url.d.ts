@@ -1,7 +1,7 @@
 import type {Page} from './types';
 export type HistoryMode='push'|'replace';
 export interface SiteSelection {source?:'gibs'|'browse'|'processed'|'simulated';channel?:string;view?:'timeline'|'swipe'|'change';date?:string;before?:string;after?:string}
-export interface GlobeSelection {mode?:'satellite'|'concept'|'illustrative'|'surface';surface?:'vegetation'|'soil'|'water'|'change';site?:string;date?:string;month?:string}
+export interface GlobeSelection {mode?:'concept'|'illustrative'|'surface';surface?:'vegetation'|'soil'|'water'|'change';site?:string;date?:string;month?:string}
 export function readRoute(hash:string):{page:Page;sub:string;siteSelection:SiteSelection;globeSelection:GlobeSelection};
 export function siteSelection(input:unknown):SiteSelection;
 export function globeSelection(input:unknown):GlobeSelection;

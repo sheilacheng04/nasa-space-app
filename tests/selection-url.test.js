@@ -32,7 +32,7 @@ test('Globe links retain independent radar date, vegetation month, mode and sele
  const selection={mode:'concept',site:'piura',date:'2026-10-31',month:'2025-04'};
  assert.deepEqual(readRoute(globeHash(selection)).globeSelection,selection);
  assert.equal(globeHash({...selection,playing:true,dialog:'search',speed:4}),globeHash(selection));
- for(const mode of ['concept','illustrative'])assert.deepEqual(readRoute(globeHash({...selection,mode})).globeSelection,{...selection,mode});
+ for(const mode of ['concept','illustrative'])assert.deepEqual(readRoute(globeHash({...selection,mode})).globeSelection,{mode,site:selection.site,date:selection.date,month:selection.month});
 });
 test('Unavailable dates remain exact placeholders rather than selecting a different saved frame',()=>{
  const frames=[{date:'2026-10-01',image:'first'},{date:'2026-10-09T21:30:31Z',image:'second'}];
@@ -48,9 +48,16 @@ test('Share links preserve deployment paths, omit top-level and temporary parame
  assert.equal(shareURL('file:///C:/demo.html',hash),null);
 });
 
-test('Removed globe modes fall back to the concept globe',()=>{
- for(const mode of ['surface','satellite']){
-  const selection=readRoute('#globe?mode='+mode+'&site=angat&surface=water').globeSelection;
-  assert.equal(selection.mode,'illustrative');assert.equal(selection.site,'angat');assert.equal(selection.surface,undefined);
+test('Surface mode and its category round-trip through the existing Globe URL',()=>{
+ for(const surface of ['vegetation','soil','water','change']){
+  const selection={mode:'surface',surface,site:'angat',date:'2026-10-09',month:'2026-10'};
+  assert.deepEqual(readRoute(globeHash(selection)).globeSelection,selection);
  }
+});
+test('Unsupported Globe modes and categories use existing defaults',()=>{
+ for(const mode of ['satellite','other']){
+  const selection=readRoute('#globe?mode='+mode+'&site=angat&surface=water').globeSelection;
+  assert.equal(selection.mode,'illustrative');assert.equal(selection.site,'angat');assert.equal(selection.surface,'water');
+ }
+ assert.equal(readRoute('#globe?mode=surface&surface=unknown').globeSelection.surface,undefined);
 });

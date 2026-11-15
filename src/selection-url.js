@@ -17,7 +17,7 @@ export function siteSelection(input){
 export function globeSelection(input){
  const get=key=>input instanceof URLSearchParams?input.get(key):input?.[key];
  const rawSite=get('site')||get('place');
- return {mode:oneOf(get('mode'),['concept','illustrative'])||'illustrative',site:/^[a-z][a-z0-9-]{0,39}$/.test(rawSite||'')?rawSite:undefined,date:validDay(get('date'))?get('date'):undefined,month:/^\d{4}-(0[1-9]|1[0-2])$/.test(get('month')||'')&&validDay(get('month')+'-01')?get('month'):undefined};
+ return {mode:oneOf(get('mode'),['concept','illustrative','surface'])||'illustrative',surface:oneOf(get('surface'),['vegetation','soil','water','change']),site:/^[a-z][a-z0-9-]{0,39}$/.test(rawSite||'')?rawSite:undefined,date:validDay(get('date'))?get('date'):undefined,month:/^\d{4}-(0[1-9]|1[0-2])$/.test(get('month')||'')&&validDay(get('month')+'-01')?get('month'):undefined};
 }
 export function readRoute(hash){
  const [path,query='']=hash.replace(/^#\/?/,'').split('?');let [page,sub='']=path.split('/');
@@ -34,7 +34,7 @@ export function siteHash(site,input={}){
  if(view==='timeline')values.date=s.date||s.after;else{values.before=s.before;values.after=s.after||s.date;}
  return '#sites/'+encodeURIComponent(site)+query(values);
 }
-export function globeHash(input={}){const s=globeSelection(input);return '#globe'+query({mode:s.mode||'illustrative',site:s.site,date:s.date,month:s.month});}
+export function globeHash(input={}){const s=globeSelection(input);return '#globe'+query({mode:s.mode||'illustrative',surface:s.mode==='surface'?s.surface:undefined,site:s.site,date:s.date,month:s.month});}
 export function frameIndex(frames,date){if(!date)return -1;const exact=frames.findIndex(f=>f.date===date);return exact>=0?exact:validDay(date)?frames.findIndex(f=>f.date.slice(0,10)===date):-1;}
 export function includeDates(frames,dates,missing){
  const result=[...frames];for(const date of dates)if(date&&frameIndex(result,date)<0)result.push(missing(date));return result.sort((a,b)=>a.date.localeCompare(b.date));
