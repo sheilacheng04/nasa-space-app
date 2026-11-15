@@ -15,11 +15,14 @@ interface PreviewFrame {
 interface PreviewRecord { siteId: string; gibs: { frames: PreviewFrame[] } }
 type ImageStatus = 'loading' | 'ready' | 'missing' | 'error';
 const decodedImages = new Set<string>();
-const comparisons: Record<string, { dates: string[]; text: string }> = {
-  luzon: { dates: ['2026-06-23', '2026-11-02'], text: 'The later image has more orange patches across the upper and middle areas. The broad green band on the right remains visible in both dates.' },
-  angat: { dates: ['2026-06-23', '2026-11-02'], text: 'The dark, branching shape near the center and upper right appears wider in the later image. Much of the surrounding area remains bright green.' },
-  dadu: { dates: ['2026-06-17', '2026-10-27'], text: 'The winding dark river remains visible in both images. In the later view, more yellow and orange patches appear near the top and beside parts of the river.' },
-  piura: { dates: ['2026-06-21', '2026-10-31'], text: 'Several rectangular patches near the upper right shift from green to yellow and orange. The bright central band also looks more orange in the later image.' }
+const comparisons: Record<string, { dates: string[]; text: string; interpretation: string }> = {
+  luzon: { dates: ['2026-06-23', '2026-11-02'], text: 'The later image has more orange patches across the upper and middle areas. The broad green band on the right remains visible in both dates.', interpretation: 'The changed patches may reflect field moisture, crop stage, harvest, irrigation, or radar processing. They are not enough to label drought or crop damage.' },
+  angat: { dates: ['2026-06-23', '2026-11-02'], text: 'The dark, branching shape near the center and upper right appears wider in the later image. Much of the surrounding area remains bright green.', interpretation: 'The wider dark shape is consistent with a possible change in open water or shoreline, but reservoir releases, rainfall, and viewing conditions must be checked before inferring a water-supply change.' },
+  dadu: { dates: ['2026-06-17', '2026-10-27'], text: 'The winding dark river remains visible in both images. In the later view, more yellow and orange patches appear near the top and beside parts of the river.', interpretation: 'The persistent channel is a useful reference for the floodplain. The new colored patches could reflect wet soil, vegetation, farming, or water; they do not establish new flooding.' },
+  piura: { dates: ['2026-06-21', '2026-10-31'], text: 'Several rectangular patches near the upper right shift from green to yellow and orange. The bright central band also looks more orange in the later image.', interpretation: 'The patchwork is compatible with changing field or soil conditions in a managed river plain. Rainfall, irrigation, river records, and crop timing are needed to separate those causes.' },
+  'cagayan-valley': { dates: ['2026-06-28', '2026-10-26'], text: 'The later image shows more orange variation across the basin, while the main river and green corridors remain recognizable.', interpretation: 'The change may reflect crop stage, field moisture, irrigation, or soil conditions in the farming basin. It does not by itself show drought or crop loss.' },
+  'mekong-delta': { dates: ['2026-06-24', '2026-11-03'], text: 'The later image has a stronger mix of orange and green across the delta, while connected dark waterways remain visible.', interpretation: 'Seasonal rice cycles, tides, canals, irrigation, and soil moisture can all change this pattern. The preview cannot measure salinity or identify one cause.' },
+  'guayas-babahoyo': { dates: ['2026-06-21', '2026-10-31'], text: 'The later view shows more orange in broad lowland patches and along some waterways, while major dark and green corridors persist.', interpretation: 'The visible shift may relate to rainfall, river level, crop stage, or managed drainage in the lowlands. Independent water and rainfall records are needed before calling it flooding.' }
 };
 
 // Compare the same request geometry; offline manifests retain this in their source URL.
@@ -146,9 +149,9 @@ export function StoryPreviewPlayer({ active, sites }: { active: boolean; sites: 
       <p className="story-reading-takeaway">The checkerboard marks missing coverage. Changes in color alone do not prove flooding, crop damage, or an El Niño impact.</p>
       <div className="story-preview-provenance">
         <h4>What looks different in {site.name}?</h4>
-        <p>{pair.length === 2 && comparisons[site.id]?.dates.every((date, index) => pair[index].date === date)
-          ? comparisons[site.id].text
-          : 'A description is not available for this image pair. Compare the same features only where both dates have coverage.'}</p>
+        {pair.length === 2 && comparisons[site.id]?.dates.every((date, index) => pair[index].date === date)
+          ? <><p>{comparisons[site.id].text}</p><p><strong>Interpretation:</strong> {comparisons[site.id].interpretation}</p></>
+          : <p>A description is not available for this image pair. Compare the same features only where both dates have coverage.</p>}
         <p>These are visible differences, not measured impacts. Changes in water, plants, soil, or radar processing could contribute.</p>
         <details><summary>Image source and limits</summary>
           <p>NASA / ISRO NISAR via NASA GIBS. First and last saved previews; intermediate dates are not shown.</p>
