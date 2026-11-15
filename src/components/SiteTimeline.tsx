@@ -166,6 +166,6 @@ export function SiteTimeline({siteName,frames,index,onIndexChange,active,scenes,
   <div className="acquisition-strip site-time-dates" aria-label="Sampled image dates">{frames.map((f,i)=><button key={f.date} className={usable(f)?'has-data':'no-data'} aria-pressed={index===i} title={f.date+(usable(f)?' / available':' / unavailable')} aria-label={'Select '+f.date+(usable(f)?', available image':', no image available')} onClick={()=>seek(i)}><span aria-hidden="true">{f.date.slice(5)}</span></button>)}</div>
   <div className="site-time-readout"><span>{frames[0]?.date}</span><span>{frames.at(-1)?.date}</span></div>
   </details>
-  <details className="reading-notes"><summary>Playback help</summary><p>Space plays or pauses. Arrow keys move between dates. Playback waits for each image; leaving the page pauses it.</p><p>Available images only skips unsaved dates during playback. Turn it off to include those gaps. Steps are observations, not equal intervals of time.</p></details>
+  <details className="reading-notes"><summary>Playback help</summary><p>Space plays or pauses. Arrow keys move between dates. Playback waits for each image; leaving the page pauses it.</p><p>Available images only skips unsaved dates during playback. Turn it off to include those gaps. Steps are observations, not equal intervals of time.</p>{frame?.url&&<p className="source-line"><a href={safeURL(frame.url)} target="_blank" rel="noopener">Open this date at NASA</a></p>}</details>
  </section>;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { dataFile, hosted } from '../api/client';
 import { assetURL, formatDate, safeURL } from '../core.js';
 import { validDay } from '../selection-url.js';
@@ -81,6 +81,15 @@ function DatedPreview({ frame, siteName, label, active }: {
 }
 
 export function StoryPreviewPlayer({ active, sites }: { active: boolean; sites: Site[] }) {
+  const mount=useRef<HTMLDivElement>(null);
+  const [near,setNear]=useState(()=>typeof IntersectionObserver==='undefined');
+  useEffect(()=>{
+    if(!active||near||!mount.current)return;
+    const observer=new IntersectionObserver(entries=>{
+      if(entries.some(entry=>entry.isIntersecting)){setNear(true);observer.disconnect();}
+    },{rootMargin:'600px'});
+    observer.observe(mount.current);return()=>observer.disconnect();
+  },[active,near]);
   const pickerId = useId();
   const [selectedId, setSelectedId] = useState('');
   const [record, setRecord] = useState<PreviewRecord | null>(null);
@@ -112,7 +121,7 @@ export function StoryPreviewPlayer({ active, sites }: { active: boolean; sites: 
 
   if (!site) return <p role="status">No saved study areas are available.</p>;
   return (
-    <div className="story-preview-player card" data-testid="story-preview-player">
+    <div className="story-preview-player card" data-testid="story-preview-player" ref={mount}>
       <div className="story-preview-top">
         <div><p className="eyebrow">Real radar · Two saved dates</p><h3>See what changes between observations</h3></div>
         <div className="story-preview-picker">
@@ -128,7 +137,7 @@ export function StoryPreviewPlayer({ active, sites }: { active: boolean; sites: 
         : <>
           <div className="story-date-views" data-comparison="true">
             {[pair[0], pair[1]].map((frame, index) => <DatedPreview
-              key={site.id + '-' + (frame?.date || 'missing-' + index)} frame={frame} siteName={site.name} active={active}
+              key={site.id + '-' + (frame?.date || 'missing-' + index)} frame={frame} siteName={site.name} active={active&&near}
               label={index === 1 ? 'Later saved date' : 'Earlier saved date'}
             />)}
           </div>

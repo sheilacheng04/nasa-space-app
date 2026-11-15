@@ -11,14 +11,20 @@ const check=s=>{report.checks.push(s);console.log('PASS '+s);};
 try{
  await mkdir('.artifacts',{recursive:true});
  const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+ const eagerStoryFrames=[];page.on('request',r=>{if(/\/sites\/luzon\/gibs\//.test(r.url()))eagerStoryFrames.push(r.url());});
  page.on('pageerror',e=>report.pageErrors.push(e.message));
  page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text());});
  await page.goto(base,{waitUntil:'networkidle'});
  await expect(page.locator('#site-evidence .story-outcomes dt')).toHaveCount(3);
- await expect(page.locator('[data-testid="story-preview-player"] img')).toBeVisible();
- await expect(page.locator('[data-testid="story-preview-player"] img')).toHaveJSProperty('complete',true);
+ if(eagerStoryFrames.length)throw new Error('Below-fold full-resolution Story frames loaded before their section was approached');
+ await page.getByTestId('story-preview-player').scrollIntoViewIfNeeded();
+ await expect(page.locator('[data-testid="story-preview-player"] img')).toHaveCount(2);
+ for(const image of await page.locator('[data-testid="story-preview-player"] img').all()) {
+  await expect(image).toBeVisible();await expect(image).toHaveJSProperty('complete',true);
+ }
+ await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
  await page.screenshot({path:'.artifacts/revision-story-desktop.png',fullPage:true});report.screenshots.push('revision-story-desktop.png');
- await expect(page.locator('#page-story h1')).toContainText('what changes on land');await expect(page.locator('#reading-radar')).toContainText(/synthetic aperture radar/i);await expect(page.locator('#reading-radar')).toContainText('NISAR');
+ await expect(page.locator('#page-story h1')).toContainText('what changes on land');await expect(page.locator('#reading-radar')).toContainText('Radar sends a signal toward Earth and listens for the echo');await expect(page.locator('#reading-radar')).toContainText('NISAR');
  check('Global story explains radar in plain language and presents local outcomes without featuring individual places');
  for(const route of ['sites/angat','media','method']){
   await page.goto(base+'/#'+route,{waitUntil:'networkidle'});
@@ -30,14 +36,11 @@ try{
  await page.getByRole('button',{name:'Before / after',exact:true}).click();await expect(page.locator('#swipe-range')).toBeVisible();
  await page.locator('#swipe-range').fill('72');
  await expect(page.locator('.compare-after')).toHaveAttribute('style',/72%/);
- await page.getByRole('button',{name:'Regional radar views',exact:true}).click();
- await page.getByText('Radar channels and processing details',{exact:true}).click();await page.locator('[data-pol="HV"]').click();await expect(page.locator('[data-pol="HV"]')).toHaveAttribute('aria-pressed','true');
- await expect(page.locator('[data-pol="ratio"]')).toBeDisabled();
+ await page.getByText('Selected image and source details',{exact:true}).click();
+ await page.getByText('Radar channels and processing details',{exact:true}).click();await expect(page.locator('.radar-about')).toContainText('not calibrated measurements');
+ await expect(page.locator('.radar-about')).toContainText('Neither alone measures crop health or water level');
  await expect(page.locator('[data-pol="VV"]')).toHaveCount(0);
- check('Real swipe and HH/HV controls work; missing computed channels are unavailable');
- await page.getByRole('button',{name:'Practice with simulated data',exact:true}).click();
- await expect(page.locator('#radar-status')).toContainText('SIMULATED');
- await page.getByRole('button',{name:'Radar images',exact:true}).click();
+ check('Real swipe works; source details preserve HH/HV limits without exposing unverified VV');
  await page.getByRole('button',{name:'Before / after',exact:true}).click();await page.locator('#date-slider').fill('0');
  await expect(page.locator('#radar-stage-container')).toContainText('No coverage resolved in the saved preview');
  await page.locator('#after-date').selectOption(await page.locator('#before-date').inputValue());await expect(page.locator('#radar-stage-container')).toContainText('Choose an earlier');
@@ -46,7 +49,7 @@ try{
  await page.locator('#site-select').selectOption('angat');
  await page.getByRole('button',{name:'Before / after',exact:true}).click();await expect(page.locator('#swipe-range')).toBeVisible();
  await page.screenshot({path:'.artifacts/revision-sites-desktop.png',fullPage:true});
- check('Simulated mode, missing dates, Dadu distinction and site switching work');
+ check('Missing dates, Dadu distinction and site switching work in the existing GIBS-only Sites view');
  await page.locator('#pending-map').click();
  await expect(page.locator('.maplibregl-canvas')).toBeVisible({timeout:20000});
  check('MapLibre detailed map loads on demand');
@@ -104,7 +107,9 @@ try{
   offline.on('pageerror',e=>report.pageErrors.push('offline: '+e.message));
   await offline.goto(pathToFileURL(path.resolve('el-nino-app.html')).href);
   await expect(offline.locator('#site-evidence .story-outcomes dt')).toHaveCount(3);
-  await expect(offline.locator('[data-testid="story-preview-player"] img')).toHaveJSProperty('naturalWidth',240);
+  await offline.getByTestId('story-preview-player').scrollIntoViewIfNeeded();
+  await expect(offline.locator('[data-testid="story-preview-player"] img')).toHaveCount(2);
+  for(const image of await offline.locator('[data-testid="story-preview-player"] img').all())await expect(image).toHaveJSProperty('naturalWidth',224);
   for(const route of ['sites/angat','media','method','globe']){
    await offline.evaluate(route=>location.hash=route,route);
    if(route==='globe')await expect(offline.locator('#globe-stage')).toHaveAttribute('data-ready','true',{timeout:25000});

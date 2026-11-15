@@ -1,5 +1,41 @@
 # Validation record
 
+## Design refinement · 15 November 2026
+
+Presentation preserves the existing light/dark palette, fonts, rounded controls, five routes, scientific wording, image pixels and saved datasets. The Story headline is unchanged. The header mark and embedded favicon now share the blue/orange ocean split. Shared tokens standardize spacing, headings, radii, shadows and 150/300/600 ms transitions. Reading surfaces stay opaque; the default theme is applied before React renders.
+
+One procedural canvas supplies the faint Story ocean, Sites contours, static Media/Method backgrounds and the Globe star field. It reuses the existing transparent globe stage, camera events and Canvas compatibility renderer. It caps drawing at 30 fps and DPR at 2 (1.25 on narrow screens), pauses for hidden/offscreen hosts, reduces actual detail tiers when drawing is slow, and respects reduced motion. A remembered footer pause control remains available on Globe. The star field, nebula and atmospheric ring are decorative. No satellite position or new scientific layer is implied.
+
+Validation on Windows / Node 25.6.1 / Chrome 157.0.8103.51:
+
+| Check | Result |
+| --- | --- |
+| `npm ci` | Passed; released the verified workspace Vite/esbuild file lock first |
+| `npm test` | 55 passed, including background lifecycle, slow-device tiers, controller gzip budget and CSS color guard |
+| `npm run build` | TypeScript and production build passed |
+| `npm run test:browser` | 14 groups passed, including offline isolation |
+| `npm run test:site-timeline` | 12 groups passed |
+| `npm run test:globe-display` | 17 groups passed; opaque radar RGB pixels unchanged; graphics recovery passed |
+| `npm run test:satellite` | 19 groups passed; offline, 390 px touch and WebGL-off rendering included |
+| `npm run test:story-preview` | All four study areas passed in desktop/mobile hosted and offline comparisons |
+| Design browser audit | 60 page/theme/viewport checks; standard 20 axe scans plus 8 observational Globe scans, including playing controls |
+| Responsive widths | 320, 390, 768, 1280, 1920; 844 × 390 landscape; no document overflow |
+| Controls | 44 px minimum buttons, selects, sliders and disclosures; inline glossary/text links retain text-flow sizing |
+| Background controller | 2,736 bytes gzipped from source; one canvas; start/pause/resume, persistence, offscreen, simulated hidden tab, reduced motion and adaptive tiers tested |
+| `npm run demo` | Generated from source; 2,979,134 bytes, below the unchanged 3,000,000-byte budget |
+| Embedded real image data URIs | 583,548 bytes, unchanged |
+
+The uncompressed first-load audit exposed two eager, below-fold Story PNGs. They now load when the existing comparison approaches the viewport, without downsampling or changing dates, imagery, captions or claims. Their placeholders retain the image height. Hosted first-load responses are about 1.59 MB with no globe engine, radar archive or MapLibre requests. All imagery remains available on approach; standalone data stays embedded and external requests remain zero. `.gitattributes`, `vercel.json`, package dependencies and scientific files are unchanged.
+
+The existing suites contained stale assumptions about the default Globe mode, two-image Story comparison, 224 px embedded thumbnails, collapsed controls and source-mode controls already removed from Sites. They now target the current interface explicitly. Loading/failure tests clear the decoded-image session cache before injection. Sites source-selection behavior is preserved. See [design decisions and test scope](DESIGN_NOTES.md) for details, screenshot pairs, exact Lighthouse scores and frame measurements.
+
+Mobile Lighthouse medians: performance **95 ? 96**, accessibility **97 ? 100**, best practices **100 ? 100**, SEO **92 ? 91**. Autoplay p95 frame interval: **8.8 ms**; maximum **33.4 ms**. Initial uncompressed responses: **1,591,804 bytes**. See [the consolidated record](design/validation-summary.json).
+
+The saved design reports include all 40 before/after images, timing samples, axe results and incomplete findings. Automated scans are not a formal accessibility certification. SVG/canvas interpretation, screen-reader speech, physical-device GPU/battery behavior and additional browser engines remain manual follow-up. Audit-only axe-core 4.14.0 and Lighthouse 13.6.0 were installed under ignored `.artifacts/`; neither is an app dependency.
+
+
+Orange gradient follow-up: strengthened the existing Story hero glow toward its right edge (18% orange tint in light mode, 34% in dark mode), using the original orange token. Build and the CSS color guard passed; four theme/viewport checks found no hero axe violations, horizontal overflow or offline external requests. Story after-screenshots were refreshed. The full-audit Lighthouse/frame measurements above predate this CSS-only tuning.
+
 ## Prompt 1 UX, Shared Data Contracts, Blank-Page Guardrails & Task Flows (14 November 2026)
 
 1. **Unit & Data Contract Tests (`npm test` & Python unittest)**:

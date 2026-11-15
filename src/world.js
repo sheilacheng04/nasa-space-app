@@ -80,7 +80,11 @@ function recordCamera(){
  if(!world||!stage())return;
  const view=world.pointOfView();
  stage().dataset.altitude=view.altitude.toFixed(3);stage().dataset.latitude=view.lat.toFixed(3);stage().dataset.longitude=view.lng.toFixed(3);
- dispatchEvent(new Event('globe:camera'));
+ const element=el('globe-canvas'),box=element.getBoundingClientRect(),parent=stage().getBoundingClientRect();
+ const camera=world.camera?.(),radius=world.__compatibility
+  ? Math.min(box.width,box.height)*.34*3.3/(1+view.altitude)
+  : box.height/(2*Math.tan((camera?.fov||50)*Math.PI/360)*Math.sqrt((1+view.altitude)**2-1));
+ dispatchEvent(new CustomEvent('globe:camera',{detail:{...view,radius,x:box.left-parent.left+box.width/2,y:box.top-parent.top+box.height/2}}));
 }
 function cancelCameraMove(){cancelAnimationFrame(cameraFrame);cameraFrame=0;}
 // The pinned wrapper does not advance globe.gl's camera tween; own one cancelable RAF.

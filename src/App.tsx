@@ -3,6 +3,7 @@ import { dataFile, hosted } from './api/client';
 import { loadSaved } from './core.js';
 import { initLocalWindow } from './local-window.js';
 import { Header } from './components/Header';
+import { Background } from './components/Background';
 import { Search } from './components/Search';
 import { StoryPage } from './pages/StoryPage';
 import { GlobePage } from './pages/GlobePage';
@@ -261,6 +262,7 @@ export function App() {
         <a href="#story/local">Community perspectives</a>
         <a href="#method">Sources and limits ↗</a>
         <span className="mono">NASA Space Apps / 2026</span>
+        <Background page={route.page} />
       </footer>
       <Search
         sitesNotice={!data ? notice('sites') : null}

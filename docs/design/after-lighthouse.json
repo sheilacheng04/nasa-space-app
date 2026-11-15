@@ -1,0 +1,45 @@
+{
+  "phase": "after",
+  "profile": "Lighthouse default simulated mobile; cold storage; Chrome headless --disable-gpu; median of three",
+  "results": [
+    {
+      "run": 1,
+      "scores": {
+        "performance": 96,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 91
+      },
+      "fcpMs": 908.5343,
+      "lcpMs": 2508.9350249999998,
+      "cls": 0,
+      "tbtMs": 118
+    },
+    {
+      "run": 2,
+      "scores": {
+        "performance": 96,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 91
+      },
+      "fcpMs": 908.7302,
+      "lcpMs": 2441.0953,
+      "cls": 0,
+      "tbtMs": 154
+    },
+    {
+      "run": 3,
+      "scores": {
+        "performance": 95,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 91
+      },
+      "fcpMs": 911.6831,
+      "lcpMs": 2525.445425,
+      "cls": 0,
+      "tbtMs": 151.99999999999977
+    }
+  ]
+}

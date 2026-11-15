@@ -1,0 +1,226 @@
+[
+  {
+    "theme": "light",
+    "foreground": "--ink",
+    "background": "--bg",
+    "ratio": 14.97,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--ink",
+    "background": "--bg2",
+    "ratio": 13.91,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--ink",
+    "background": "--card",
+    "ratio": 16.19,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--ink",
+    "background": "--sea",
+    "ratio": 12.94,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--bg",
+    "ratio": 5.53,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--bg2",
+    "ratio": 5.14,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--card",
+    "ratio": 5.98,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--sea",
+    "ratio": 4.78,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--blue",
+    "background": "--bg",
+    "ratio": 4.97,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--blue",
+    "background": "--bg2",
+    "ratio": 4.62,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--blue",
+    "background": "--card",
+    "ratio": 5.37,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--blue",
+    "background": "--sea",
+    "ratio": 4.29,
+    "smallTextAA": false
+  },
+  {
+    "theme": "light",
+    "foreground": "--orange",
+    "background": "--bg",
+    "ratio": 4.68,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--orange",
+    "background": "--bg2",
+    "ratio": 4.35,
+    "smallTextAA": false
+  },
+  {
+    "theme": "light",
+    "foreground": "--orange",
+    "background": "--card",
+    "ratio": 5.06,
+    "smallTextAA": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--orange",
+    "background": "--sea",
+    "ratio": 4.05,
+    "smallTextAA": false
+  },
+  {
+    "theme": "dark",
+    "foreground": "--ink",
+    "background": "--bg",
+    "ratio": 16.34,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--ink",
+    "background": "--bg2",
+    "ratio": 15.24,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--ink",
+    "background": "--card",
+    "ratio": 14.27,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--ink",
+    "background": "--sea",
+    "ratio": 14.97,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--bg",
+    "ratio": 8.61,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--bg2",
+    "ratio": 8.03,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--card",
+    "ratio": 7.52,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--sea",
+    "ratio": 7.89,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--blue",
+    "background": "--bg",
+    "ratio": 8.52,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--blue",
+    "background": "--bg2",
+    "ratio": 7.95,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--blue",
+    "background": "--card",
+    "ratio": 7.44,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--blue",
+    "background": "--sea",
+    "ratio": 7.81,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--orange",
+    "background": "--bg",
+    "ratio": 8.02,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--orange",
+    "background": "--bg2",
+    "ratio": 7.48,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--orange",
+    "background": "--card",
+    "ratio": 7,
+    "smallTextAA": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--orange",
+    "background": "--sea",
+    "ratio": 7.35,
+    "smallTextAA": true
+  }
+]

@@ -66,7 +66,7 @@ export function StoryPage({
       <div className="hero">
         <div className="wrap">
           <p className="eyebrow">NASA Space Apps 2026 · Dancing with the SARs · 57 Real Observations Across 4 Places</p>
-          <h1>When the Pacific warms, what changes on land?</h1>
+          <h1>When the Pacific <span className="warm-accent">warms</span>, what changes on land?</h1>
           <p className="page-purpose-line">
             Follow a changing Pacific—and discover what satellites reveal about life on land.
           </p>
@@ -74,11 +74,11 @@ export function StoryPage({
             <a className="button primary" href="#sites/angat">
               Inspect dated radar at Angat →
             </a>
-            <a className="button secondary" href="#globe">
+            <a className="hero-quiet-link" href="#globe">
               Explore the 3D Globe
             </a>
             <details className="more-actions-dropdown">
-              <summary className="button secondary">More actions ▾</summary>
+              <summary className="hero-quiet-link">More actions ▾</summary>
               <div className="more-actions-menu">
                 <a href="#story/ocean">Start Chapter 1: Ocean shift</a>
                 <a href="#story/site-evidence">Chapter 4: Local outcomes</a>

@@ -58,7 +58,7 @@ const bundled=await build({entryPoints:['src/main.tsx'],bundle:true,write:false,
 }}]});
 const globe=await readFile('node_modules/globe.gl/dist/globe.gl.min.js','utf8');
 let css=await readFile('src/styles.css','utf8');css=css.replace("@import url('./map.css');",await readFile('src/map.css','utf8'));
-for(const name of ['story','globe','local-window','account','editorial','satellite','concept-timeline','site-timeline','weather','radar-evidence','illustrative-globe'])css+='\n'+await readFile('src/'+name+'.css','utf8');
+for(const name of ['story','globe','local-window','account','editorial','satellite','concept-timeline','site-timeline','weather','radar-evidence','illustrative-globe','design'])css+='\n'+await readFile('src/'+name+'.css','utf8');
 css=(await transform(css,{loader:'css',minify:true})).code;
 const serialize=v=>JSON.stringify(v).replaceAll('<','\\u003c');
 // Store repeated long provenance strings once; reconstruct the exact records offline.

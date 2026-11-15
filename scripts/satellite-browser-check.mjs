@@ -22,9 +22,9 @@ try{
  report.firstLoadBytes=resources.reduce((s,r)=>s+r.bytes,0);
  report.globeRequestsOnStory=resources.filter(r=>/globe\.gl|GlobeExperience|globe\/manifest|globe\/frames/.test(r.name)).map(r=>r.name);
  assert.equal(report.globeRequestsOnStory.length,0);assert.ok(report.firstLoadBytes<3000000);pass('Globe engine, controller, manifest and frames stay lazy on Story; first load below 3 MB');
- await page.locator('a[href="#globe"]').first().click();await ready(page);
+ await page.evaluate(()=>{location.hash='globe?mode=satellite';});await ready(page);
  report.liveStatus=await page.locator('.frame-status').textContent();
- await expect(page.locator('#satellite-mode')).toHaveAttribute('aria-pressed','true');
+ await expect(page.locator('#globe-stage')).toHaveAttribute('data-mode','satellite');
  await expect(page.locator('#satellite-scrubber')).toHaveValue(String(frames.length-1));
  await expect(page.locator('.frame-badge')).toContainText(layer.end);
  await expect(page.locator('.sat-source')).toContainText('NASA GIBS');
@@ -34,7 +34,7 @@ try{
  await page.waitForTimeout(400);const still=await camera();await page.waitForTimeout(700);assert.deepEqual(await camera(),still);
  await expect(page.locator('#sat-play')).toHaveAttribute('aria-pressed','false');pass('Reduced motion has no autoplay or rotation');
  await page.locator('#concept-mode').click();await page.waitForTimeout(250);assert.deepEqual(await camera(),still);
- await page.locator('#satellite-mode').click();await page.waitForTimeout(250);assert.deepEqual(await camera(),still);
+ await page.evaluate(()=>{const p=new URLSearchParams(location.hash.split('?')[1]);p.set('mode','satellite');location.hash='globe?'+p;});await page.waitForTimeout(250);assert.deepEqual(await camera(),still);
  await expect(page.locator('.frame-badge')).toContainText(layer.end);await expect(page.locator('.sat-source')).toContainText('NASA GIBS');pass('Mode toggle preserves camera and date');
  await expect(page.locator('.sat-marker-layer button').first()).toBeInViewport();
  await page.screenshot({path:'.artifacts/satellite-desktop.png',fullPage:true});
@@ -78,7 +78,7 @@ try{
  await expect(page.getByRole('link',{name:'Open in Sites',exact:true})).toHaveAttribute('href','#sites/dadu?date='+layer.end);
  await page.getByRole('link',{name:'Open in Sites',exact:true}).click();
  await expect(page.locator('.site-timeline')).toHaveAttribute('data-frame-date',layer.end);await expect(page.locator('.site-timeline')).toHaveAttribute('data-frame-status','missing');pass('Enter selects a site; Open in Sites carries and selects the exact globe date');
- await page.locator('a[href="#globe"]').first().click();await ready(page);
+ await page.evaluate(()=>{location.hash='globe?mode=satellite';});await ready(page);
  await page.locator('#open-search').click();await page.locator('#global-search').fill('Angat');
  await page.locator('#search-results a[href="#sites/angat"]').press('Enter');
  await expect(page.locator('.satellite-site-panel h2')).toContainText('Angat');assert.equal(new URL(page.url()).hash.split('?')[0],'#globe');assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('site'),'angat');pass('Command search flies to a study site and keeps the globe open');
@@ -93,14 +93,14 @@ try{
  // One real current-date site crop response is separately verified by the live network probe.
  report.maxConcurrentImageRequests=maxInflight;assert.ok(maxInflight<=3);pass('All image requests, including site crops, share a three-request limit');
  const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:2,reducedMotion:'reduce'});observe(mobile);
- await mobile.goto(base+'/#globe');await ready(mobile);await mobile.waitForTimeout(300);
+ await mobile.goto(base+'/#globe?mode=satellite');await ready(mobile);await mobile.waitForTimeout(300);
  const mobileMetrics=await mobile.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:innerWidth,sheet:document.querySelector('.satellite-workspace').getBoundingClientRect().toJSON(),stage:document.querySelector('#globe-stage').getBoundingClientRect().toJSON(),canvasWidth:document.querySelector('#globe-canvas canvas').width,canvasCSS:document.querySelector('#globe-canvas canvas').clientWidth}));
- assert.ok(mobileMetrics.page<=mobileMetrics.viewport);assert.ok(mobileMetrics.sheet.bottom<=845);assert.ok(mobileMetrics.canvasWidth/mobileMetrics.canvasCSS<=1.26);report.mobile=mobileMetrics;
+ assert.ok(mobileMetrics.page<=mobileMetrics.viewport);assert.ok(mobileMetrics.sheet.width<=mobileMetrics.viewport);await mobile.locator('#sat-play').scrollIntoViewIfNeeded();await expect(mobile.locator('#sat-play')).toBeInViewport();assert.ok(mobileMetrics.canvasWidth/mobileMetrics.canvasCSS<=1.26);report.mobile=mobileMetrics;
  await mobile.screenshot({path:'.artifacts/satellite-mobile.png',fullPage:true});pass('390px touch viewport has no horizontal overflow and renderer pixel ratio is capped');
  await mobile.close();
  const offline=await browser.newPage({viewport:{width:1200,height:900},reducedMotion:'reduce'});observe(offline);
  let network=0;offline.on('request',r=>{if(/^https?:/.test(r.url()))network++;});
- await offline.goto(pathToFileURL(path.resolve('el-nino-app.html')).href+'#globe');await ready(offline);
+ await offline.goto(pathToFileURL(path.resolve('el-nino-app.html')).href+'#globe?mode=satellite');await ready(offline);
  const embedded=offline.locator('.offline-frames button');await expect(embedded).toHaveCount(3);
  await embedded.first().click();await ready(offline);await expect(offline.locator('.frame-status')).toContainText('Offline NASA GIBS');
  assert.equal(network,0);pass('Single-file edition plays three real embedded dates without network requests');
@@ -114,7 +114,7 @@ try{
  // Force the existing CPU compatibility path and verify an actual dated texture loads.
  const canvas=await browser.newPage({viewport:{width:900,height:800},reducedMotion:'reduce'});observe(canvas);
  await canvas.addInitScript(()=>{const get=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...args){if(String(type).includes('webgl'))return null;return get.call(this,type,...args);};});
- await canvas.goto(base+'/#globe');await ready(canvas);
+ await canvas.goto(base+'/#globe?mode=satellite');await ready(canvas);
  await expect(canvas.locator('#globe-stage')).toHaveAttribute('data-renderer','canvas');
  await canvas.screenshot({path:'.artifacts/satellite-canvas.png'});pass('Canvas compatibility renderer displays a real dated radar texture');
  await canvas.close();

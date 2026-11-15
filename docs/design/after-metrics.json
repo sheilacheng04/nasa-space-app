@@ -1,0 +1,73 @@
+{
+  "phase": "after",
+  "browser": "157.0.8103.51",
+  "screenshots": [
+    "story-light-390px.png",
+    "sites-light-390px.png",
+    "globe-light-390px.png",
+    "media-light-390px.png",
+    "method-light-390px.png",
+    "story-dark-390px.png",
+    "sites-dark-390px.png",
+    "globe-dark-390px.png",
+    "media-dark-390px.png",
+    "method-dark-390px.png",
+    "story-light-1280px.png",
+    "sites-light-1280px.png",
+    "globe-light-1280px.png",
+    "media-light-1280px.png",
+    "method-light-1280px.png",
+    "story-dark-1280px.png",
+    "sites-dark-1280px.png",
+    "globe-dark-1280px.png",
+    "media-dark-1280px.png",
+    "method-dark-1280px.png"
+  ],
+  "frames": [
+    {
+      "route": "story",
+      "fps": 119.74852809100886,
+      "p95Ms": 8.5,
+      "maxMs": 16.69999999999891,
+      "frames": 480,
+      "background": {
+        "state": "running",
+        "scene": "story",
+        "dpr": "1",
+        "frames": "106",
+        "drawMs": "0.08",
+        "layers": "3"
+      }
+    },
+    {
+      "route": "sites/angat",
+      "fps": 119.99700007499811,
+      "p95Ms": 8.5,
+      "maxMs": 11,
+      "frames": 480,
+      "background": {
+        "state": "hidden",
+        "scene": "sites",
+        "dpr": "1",
+        "frames": "109",
+        "drawMs": "0.10",
+        "layers": "3"
+      }
+    },
+    {
+      "route": "globe",
+      "fps": 119.26147332642608,
+      "p95Ms": 8.5,
+      "maxMs": 33.27000000000044,
+      "frames": 480,
+      "background": {
+        "state": "running",
+        "scene": "globe",
+        "dpr": "1",
+        "frames": "200",
+        "drawMs": "0.10",
+        "layers": "3"
+      }
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-15",
+  "unitTests": 55,
+  "browserGroups": {
+    "revision-browser-report": 14,
+    "site-timeline-report": 12,
+    "globe-display-report": 17,
+    "satellite-check-report": 19
+  },
+  "reflowChecks": 60,
+  "axeScans": 28,
+  "axeViolations": 0,
+  "smallSeparateControls": 0,
+  "screenshots": 40,
+  "controllerSourceGzipBytes": 2736,
+  "offlineBytes": 2979134,
+  "embeddedRealImageDataURIBytes": 583548,
+  "offlineExternalRequests": 0,
+  "initialUncompressedBytes": 1591804,
+  "initialHeavyAssets": 0,
+  "lighthouse": {
+    "before": {
+      "performance": 95,
+      "accessibility": 97,
+      "best-practices": 100,
+      "seo": 92
+    },
+    "after": {
+      "performance": 96,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 91
+    },
+    "performanceDelta": 1
+  },
+  "autoplay": {
+    "fps": 118.37422738340567,
+    "p95Ms": 8.799999999999272,
+    "maxMs": 33.399999999999636,
+    "states": [
+      {
+        "date": "2026-11-02",
+        "status": "ready",
+        "ms": 0
+      },
+      {
+        "date": "2026-06-23",
+        "status": "loading",
+        "ms": 2094
+      },
+      {
+        "date": "2026-07-05",
+        "status": "ready",
+        "ms": 3952
+      },
+      {
+        "date": "2026-07-17",
+        "status": "ready",
+        "ms": 5785
+      },
+      {
+        "date": "2026-08-10",
+        "status": "ready",
+        "ms": 7627
+      }
+    ],
+    "playing": "true"
+  },
+  "gradientFollowup": {
+    "description": "Stronger Story hero orange gradient",
+    "heroAxeChecks": 4,
+    "violations": 0,
+    "fullAuditMetricsPredateTuning": true
+  }
+}

@@ -143,7 +143,7 @@ export function MethodPage({
           <p className="page-purpose-line">
             <strong>What this page is for:</strong> See where every map, chart, and headline comes from, how to compare dates fairly, and what satellite previews can and cannot prove.
           </p>
-
+          <div className="hero-actions"><a className="button primary" href="#method/evidence">See the data sources →</a></div>
         </div>
 
         <nav className="method-links" aria-label="Method sections">

@@ -19,6 +19,7 @@ try{
   const latest=valid(id).at(-1);await ready(page,latest.date);
   const dimensions=await page.locator('.site-timeline img').evaluate(img=>[img.naturalWidth,img.naturalHeight]);assert.deepEqual(dimensions,[768,512]);
   await expect(page.locator('.site-timeline')).toHaveAttribute('data-frame-bounds',latest.parameters.BBOX);
+  await page.locator('.site-timeline .reading-notes summary').click();
   const link=new URL(await page.getByRole('link',{name:'Open this date at NASA',exact:true}).getAttribute('href'));
   assert.equal(link.searchParams.get('TIME'),latest.date);assert.equal(link.searchParams.get('BBOX'),latest.parameters.BBOX);
   await expect(page.getByRole('heading',{name:/Backscatter/})).toHaveCount(0);
@@ -26,7 +27,7 @@ try{
  pass('All four sites open their latest real saved frame with the original fixed bounds and exact NASA source date; empty quantitative charts are absent');
  await page.goto(base+'/#sites/angat');const all=frames('angat'),available=valid('angat'),first=available[0],last=available.at(-1);
  await ready(page,last.date);
- const font=await page.locator('.site-time-heading h3').evaluate(el=>getComputedStyle(el).fontFamily);
+ const font=await page.locator('#site-play').evaluate(el=>getComputedStyle(el).fontFamily);
  assert.equal(font,await page.locator('body').evaluate(el=>getComputedStyle(el).fontFamily));
  await page.locator('#site-play').click();await ready(page,first.date);await pause(page);
  const paused=await page.locator('.site-timeline').getAttribute('data-frame-date');await page.waitForTimeout(1900);
@@ -34,6 +35,7 @@ try{
  await page.getByRole('button',{name:'Next radar image',exact:true}).click();await ready(page,available[1].date);
  await page.getByRole('button',{name:'Previous radar image',exact:true}).click();await ready(page,first.date);
  pass('Play from the last frame restarts at the first, pauses reliably, and steps through real chronological images');
+ await page.locator('.site-playback-options summary').click();
  await choose(page,available.at(-2));await ready(page,available.at(-2).date);await page.getByLabel('Site playback speed',{exact:true}).selectOption('4');
  await page.locator('#site-play').click();await ready(page,last.date);await expect(page.locator('#site-play')).toHaveAttribute('aria-pressed','false');
  pass('Playback waits for the selected frame and stops at the last image without looping');
@@ -53,12 +55,15 @@ try{
  await page.getByRole('button',{name:'Watch through time',exact:true}).click();await ready(page,last.date);
  pass('Original before/after controls remain available and share the selected date with playback');
  // Delay a real image response. The selected date must never retain the prior scene.
+ // Reload to clear the session decode cache populated by next-frame prefetch.
+ await page.reload();await ready(page,last.date);await page.locator('.site-playback-options summary').click();
  let delayed=0;const target=available[2],routePattern='**/'+target.image;
  await page.route(routePattern,async route=>{delayed++;await new Promise(resolve=>setTimeout(resolve,1000));await route.continue();});
  await choose(page,target);await expect(player).toHaveAttribute('data-frame-date',target.date);await expect(player).toHaveAttribute('data-frame-status','loading');await expect(player.locator('img')).toHaveCount(0);
  await ready(page,target.date);assert.ok(delayed);await page.unroute(routePattern);
  pass('While a selected image is delayed, its correct date and loading placeholder replace the old scene');
  // An explicit image failure is recoverable and cannot reveal a stale image.
+ await page.goto(base+'/#sites/angat?date='+last.date);await page.reload();await ready(page,last.date);await page.locator('.site-playback-options summary').click();
  const failed=available[3],failurePattern='**/'+failed.image;let failures=0;
  await page.route(failurePattern,route=>++failures===1?route.abort('failed'):route.continue());
  await choose(page,failed);await expect(player).toHaveAttribute('data-frame-status','error');await expect(player.locator('img')).toHaveCount(0);
@@ -70,13 +75,14 @@ try{
  await page.locator('#site-play').click();await page.evaluate(()=>{location.hash='story';});await expect(player).toHaveAttribute('data-playing','false');await expect(player).toBeHidden();
  pass('Reduced-motion changes and leaving Sites pause playback');
  await page.goto(base+'/#sites/angat?date=2026-11-11');await expect(player).toHaveAttribute('data-frame-date','2026-11-11');await expect(player).toHaveAttribute('data-frame-status','missing');await expect(player.locator('img')).toHaveCount(0);
+ await page.locator('.site-timeline .reading-notes summary').click();
  const missingLink=new URL(await page.getByRole('link',{name:'Open this date at NASA',exact:true}).getAttribute('href'));assert.equal(missingLink.searchParams.get('TIME'),'2026-11-11');
  pass('An unavailable date handed off from Globe stays selected without substituting another image');
  await page.goto(base+'/#sites/angat');await ready(page,last.date);await page.screenshot({path:'.artifacts/site-timeline-desktop.png',fullPage:true});
- await page.getByRole('button',{name:'Regional radar views',exact:true}).click();await expect(page.locator('#swipe-range')).toBeVisible();
- await page.getByRole('button',{name:'Practice with simulated data',exact:true}).click();await expect(page.locator('#radar-status')).toContainText('SIMULATED');
- await expect(page.locator('.site-timeline')).toHaveCount(0);
- pass('Regional comparisons and explicitly labeled simulation remain separate from the real site player');
+ await page.getByRole('button',{name:'Before / after',exact:true}).click();await expect(page.locator('#swipe-range')).toBeVisible();
+ await expect(page.locator('.site-timeline')).toBeHidden();
+ await expect(page.locator('.radar-about')).toContainText('Colors alone cannot measure water levels');
+ pass('Before/after remains separate from the real site player and keeps the scientific interpretation limits');
  const mobile=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});mobile.on('pageerror',e=>report.errors.push(e.message));
  await mobile.goto(base+'/#sites/angat');await ready(mobile,last.date);
  assert.ok(await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Mobile document overflows horizontally');

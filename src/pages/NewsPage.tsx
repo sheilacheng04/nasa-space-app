@@ -211,7 +211,7 @@ export function NewsPage({
         <p className="page-purpose-line">
           <strong>What this page is for:</strong> Explore how water, farming, and climate stories are reported across regions and individual study places, while separating headline wording tone from physical event severity.
         </p>
-
+        <div className="hero-actions"><a className="button primary" href="#media" onClick={(event)=>{event.preventDefault();document.getElementById('media-dashboard')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}}>Explore saved headlines →</a></div>
       </div>
 
       <div className="wrap">

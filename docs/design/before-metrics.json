@@ -1,0 +1,52 @@
+{
+  "phase": "before",
+  "browser": "157.0.8103.51",
+  "screenshots": [
+    "story-light-390px.png",
+    "sites-light-390px.png",
+    "globe-light-390px.png",
+    "media-light-390px.png",
+    "method-light-390px.png",
+    "story-dark-390px.png",
+    "sites-dark-390px.png",
+    "globe-dark-390px.png",
+    "media-dark-390px.png",
+    "method-dark-390px.png",
+    "story-light-1280px.png",
+    "sites-light-1280px.png",
+    "globe-light-1280px.png",
+    "media-light-1280px.png",
+    "method-light-1280px.png",
+    "story-dark-1280px.png",
+    "sites-dark-1280px.png",
+    "globe-dark-1280px.png",
+    "media-dark-1280px.png",
+    "method-dark-1280px.png"
+  ],
+  "frames": [
+    {
+      "route": "story",
+      "fps": 119.99501060246973,
+      "p95Ms": 8.600000000000364,
+      "maxMs": 10.200000000000728,
+      "frames": 481,
+      "background": null
+    },
+    {
+      "route": "sites/angat",
+      "fps": 120.00300007500189,
+      "p95Ms": 8.600000000000364,
+      "maxMs": 9.199999999998909,
+      "frames": 480,
+      "background": null
+    },
+    {
+      "route": "globe",
+      "fps": 119.24915355506873,
+      "p95Ms": 8.600000000000364,
+      "maxMs": 25,
+      "frames": 479,
+      "background": null
+    }
+  ]
+}

@@ -1,0 +1,1717 @@
+{
+  "reflow": [
+    {
+      "theme": "light",
+      "route": "story",
+      "width": 320,
+      "height": 900,
+      "scroll": 320,
+      "offenders": [
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 348.328125
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 479.921875
+        },
+        {
+          "tag": "SPAN",
+          "cls": "chapter-pill-num",
+          "right": 376.234375
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 602.890625
+        },
+        {
+          "tag": "SPAN",
+          "cls": "chapter-pill-num",
+          "right": 507.828125
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 728.265625
+        },
+        {
+          "tag": "SPAN",
+          "cls": "chapter-pill-num",
+          "right": 630.796875
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "sites/angat",
+      "width": 320,
+      "height": 900,
+      "scroll": 320,
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 392
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 373.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 464
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 445.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 536
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 517.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 608
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 589.0625
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "globe",
+      "width": 320,
+      "height": 900,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "media",
+      "width": 320,
+      "height": 900,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "method",
+      "width": 320,
+      "height": 900,
+      "scroll": 320,
+      "offenders": [
+        {
+          "tag": "TABLE",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "CAPTION",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "THEAD",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "right": 362.890625
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TBODY",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "right": 661
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "story",
+      "width": 390,
+      "height": 900,
+      "scroll": 390,
+      "offenders": [
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 479.921875
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 602.890625
+        },
+        {
+          "tag": "SPAN",
+          "cls": "chapter-pill-num",
+          "right": 507.828125
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 728.265625
+        },
+        {
+          "tag": "SPAN",
+          "cls": "chapter-pill-num",
+          "right": 630.796875
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "sites/angat",
+      "width": 390,
+      "height": 900,
+      "scroll": 390,
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 464
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 445.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 536
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 517.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 608
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 589.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 680
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 661.0625
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "globe",
+      "width": 390,
+      "height": 900,
+      "scroll": 390,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "media",
+      "width": 390,
+      "height": 900,
+      "scroll": 390,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "method",
+      "width": 390,
+      "height": 900,
+      "scroll": 390,
+      "offenders": [
+        {
+          "tag": "TABLE",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "CAPTION",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "THEAD",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TBODY",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TD",
+          "cls": "",
+          "right": 661
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "story",
+      "width": 768,
+      "height": 1024,
+      "scroll": 768,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "sites/angat",
+      "width": 768,
+      "height": 1024,
+      "scroll": 768,
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 839.03125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 820.09375
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 911.03125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 892.09375
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 983.03125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 964.09375
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 1055.03125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1036.09375
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "globe",
+      "width": 768,
+      "height": 1024,
+      "scroll": 768,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "media",
+      "width": 768,
+      "height": 1024,
+      "scroll": 768,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "method",
+      "width": 768,
+      "height": 1024,
+      "scroll": 768,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "story",
+      "width": 1280,
+      "height": 900,
+      "scroll": 1280,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "sites/angat",
+      "width": 1280,
+      "height": 900,
+      "scroll": 1280,
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 1298
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 1370
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1351.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 1442
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1423.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 1514
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1495.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 1586
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "globe",
+      "width": 1280,
+      "height": 900,
+      "scroll": 1280,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "media",
+      "width": 1280,
+      "height": 900,
+      "scroll": 1280,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "method",
+      "width": 1280,
+      "height": 900,
+      "scroll": 1280,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "story",
+      "width": 1920,
+      "height": 1080,
+      "scroll": 1920,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "sites/angat",
+      "width": 1920,
+      "height": 1080,
+      "scroll": 1920,
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 1978
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1959.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 2050
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 2031.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 2122
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 2103.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 2194
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 2175.0625
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "globe",
+      "width": 1920,
+      "height": 1080,
+      "scroll": 1920,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "media",
+      "width": 1920,
+      "height": 1080,
+      "scroll": 1920,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "method",
+      "width": 1920,
+      "height": 1080,
+      "scroll": 1920,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "story",
+      "width": 844,
+      "height": 390,
+      "scroll": 844,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "sites/angat",
+      "width": 844,
+      "height": 390,
+      "scroll": 844,
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 913.3125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 894.375
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 985.3125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 966.375
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 1057.3125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1038.375
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 1129.3125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1110.375
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "globe",
+      "width": 844,
+      "height": 390,
+      "scroll": 844,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "media",
+      "width": 844,
+      "height": 390,
+      "scroll": 844,
+      "offenders": []
+    },
+    {
+      "theme": "light",
+      "route": "method",
+      "width": 844,
+      "height": 390,
+      "scroll": 844,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "story",
+      "width": 320,
+      "height": 900,
+      "scroll": 320,
+      "offenders": [
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 348.328125
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 479.921875
+        },
+        {
+          "tag": "SPAN",
+          "cls": "chapter-pill-num",
+          "right": 376.234375
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 602.890625
+        },
+        {
+          "tag": "SPAN",
+          "cls": "chapter-pill-num",
+          "right": 507.828125
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 728.265625
+        },
+        {
+          "tag": "SPAN",
+          "cls": "chapter-pill-num",
+          "right": 630.796875
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "sites/angat",
+      "width": 320,
+      "height": 900,
+      "scroll": 320,
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 392
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 373.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 464
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 445.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 536
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 517.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 608
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 589.0625
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "globe",
+      "width": 320,
+      "height": 900,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "media",
+      "width": 320,
+      "height": 900,
+      "scroll": 320,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "method",
+      "width": 320,
+      "height": 900,
+      "scroll": 320,
+      "offenders": [
+        {
+          "tag": "TABLE",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "CAPTION",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "THEAD",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "right": 362.890625
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TBODY",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "right": 661
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "story",
+      "width": 390,
+      "height": 900,
+      "scroll": 390,
+      "offenders": [
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 479.921875
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 602.890625
+        },
+        {
+          "tag": "SPAN",
+          "cls": "chapter-pill-num",
+          "right": 507.828125
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "right": 728.265625
+        },
+        {
+          "tag": "SPAN",
+          "cls": "chapter-pill-num",
+          "right": 630.796875
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "sites/angat",
+      "width": 390,
+      "height": 900,
+      "scroll": 390,
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 464
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 445.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 536
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 517.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 608
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 589.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 680
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 661.0625
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "globe",
+      "width": 390,
+      "height": 900,
+      "scroll": 390,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "media",
+      "width": 390,
+      "height": 900,
+      "scroll": 390,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "method",
+      "width": 390,
+      "height": 900,
+      "scroll": 390,
+      "offenders": [
+        {
+          "tag": "TABLE",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "CAPTION",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "THEAD",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TH",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TBODY",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TR",
+          "cls": "",
+          "right": 661
+        },
+        {
+          "tag": "TD",
+          "cls": "",
+          "right": 661
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "story",
+      "width": 768,
+      "height": 1024,
+      "scroll": 768,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "sites/angat",
+      "width": 768,
+      "height": 1024,
+      "scroll": 768,
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 839.03125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 820.09375
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 911.03125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 892.09375
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 983.03125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 964.09375
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 1055.03125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1036.09375
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "globe",
+      "width": 768,
+      "height": 1024,
+      "scroll": 768,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "media",
+      "width": 768,
+      "height": 1024,
+      "scroll": 768,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "method",
+      "width": 768,
+      "height": 1024,
+      "scroll": 768,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "story",
+      "width": 1280,
+      "height": 900,
+      "scroll": 1280,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "sites/angat",
+      "width": 1280,
+      "height": 900,
+      "scroll": 1280,
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 1298
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 1370
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1351.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 1442
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1423.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 1514
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1495.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 1586
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "globe",
+      "width": 1280,
+      "height": 900,
+      "scroll": 1280,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "media",
+      "width": 1280,
+      "height": 900,
+      "scroll": 1280,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "method",
+      "width": 1280,
+      "height": 900,
+      "scroll": 1280,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "story",
+      "width": 1920,
+      "height": 1080,
+      "scroll": 1920,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "sites/angat",
+      "width": 1920,
+      "height": 1080,
+      "scroll": 1920,
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 1978
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1959.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 2050
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 2031.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 2122
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 2103.0625
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 2194
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 2175.0625
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "globe",
+      "width": 1920,
+      "height": 1080,
+      "scroll": 1920,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "media",
+      "width": 1920,
+      "height": 1080,
+      "scroll": 1920,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "method",
+      "width": 1920,
+      "height": 1080,
+      "scroll": 1920,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "story",
+      "width": 844,
+      "height": 390,
+      "scroll": 844,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "sites/angat",
+      "width": 844,
+      "height": 390,
+      "scroll": 844,
+      "offenders": [
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 913.3125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 894.375
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 985.3125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 966.375
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "no-data",
+          "right": 1057.3125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1038.375
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "has-data",
+          "right": 1129.3125
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "right": 1110.375
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "globe",
+      "width": 844,
+      "height": 390,
+      "scroll": 844,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "media",
+      "width": 844,
+      "height": 390,
+      "scroll": 844,
+      "offenders": []
+    },
+    {
+      "theme": "dark",
+      "route": "method",
+      "width": 844,
+      "height": 390,
+      "scroll": 844,
+      "offenders": []
+    }
+  ],
+  "axe": [
+    {
+      "theme": "light",
+      "route": "story",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 27
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "sites/angat",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 55
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "globe",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 4
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "media",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 6
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "method",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 5
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "story",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 21
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "sites/angat",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 54
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "globe",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 3
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "media",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 5
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "method",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 5
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "story",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 26
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "sites/angat",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 55
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "globe",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 4
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "media",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 6
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "method",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 5
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "story",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 20
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "sites/angat",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 54
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "globe",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 3
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "media",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 5
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "method",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 5
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "globe?mode=satellite",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 3
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 23
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "globe?mode=concept",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 3
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 19
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "globe?mode=satellite",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 3
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 9
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "route": "globe?mode=concept",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 3
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 17
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "globe?mode=satellite",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 3
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 23
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "globe?mode=concept",
+      "width": 390,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 3
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 19
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "globe?mode=satellite",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 3
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 9
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "route": "globe?mode=concept",
+      "width": 1280,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 3
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 17
+        }
+      ]
+    }
+  ],
+  "background": [
+    {
+      "drawingFramesIn1100Ms": 26,
+      "checks": "start, one canvas, aria-hidden, remembered pause/resume, hidden tab, offscreen, reduced motion"
+    }
+  ],
+  "touch": [
+    {
+      "theme": "light",
+      "route": "story",
+      "small": []
+    },
+    {
+      "theme": "light",
+      "route": "sites/angat",
+      "small": []
+    },
+    {
+      "theme": "light",
+      "route": "globe",
+      "small": []
+    },
+    {
+      "theme": "light",
+      "route": "media",
+      "small": []
+    },
+    {
+      "theme": "light",
+      "route": "method",
+      "small": []
+    },
+    {
+      "theme": "dark",
+      "route": "story",
+      "small": []
+    },
+    {
+      "theme": "dark",
+      "route": "sites/angat",
+      "small": []
+    },
+    {
+      "theme": "dark",
+      "route": "globe",
+      "small": []
+    },
+    {
+      "theme": "dark",
+      "route": "media",
+      "small": []
+    },
+    {
+      "theme": "dark",
+      "route": "method",
+      "small": []
+    }
+  ],
+  "errors": []
+}

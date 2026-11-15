@@ -2,7 +2,6 @@ import type { SiteSelection, HistoryMode } from '../selection-url.js';
 import { useEffect, useMemo, useState } from 'react';
 import { dataFile } from '../api/client';
 import { RadarEvidence } from '../components/RadarEvidence';
-import { knownMetadata, footprintOverlap, coverageExplanation } from '../radar-data.js';
 import { weatherChart } from '../charts.js';
 import { weatherRows, weatherDomain } from '../weather-data.js';
 import type { ClimateContext } from '../concept-data';
@@ -12,7 +11,6 @@ import { formatDate } from '../core.js';
 import { GlossaryTerm } from '../components/GlossaryTerm';
 import { FigureCaption } from '../components/FigureCaption';
 import { PlaceNewsPanel } from '../components/PlaceNewsPanel';
-import { WhereToNext } from '../components/FirstVisitGuide';
 import type { NewsByPlaceData, Site, StudyPlace } from '../types';
 
 export function SitesPage({
@@ -144,12 +142,13 @@ export function SitesPage({
         </nav>
 
         <p className="eyebrow">Step 2 · Local radar evidence · 57 saved observations across 4 radar sites</p>
+        <h1>{site.question}</h1>
         <p className="page-purpose-line">
           <strong>What this page is for:</strong> Compare real dated <GlossaryTerm termKey="NISAR" /> <GlossaryTerm termKey="SAR" /> radar images, local <GlossaryTerm termKey="ERA5" /> weather departures, and local news for a single place before drawing conclusions.
         </p>
 
         <div className="section-title">
-          <h1>{site.question}</h1>
+          <a className="button primary" href="#sites" onClick={(event)=>{event.preventDefault();document.querySelector('#page-sites .site-timeline')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}}>Inspect dated radar →</a>
           <div className="site-pickers-group">
             <label className="site-picker">
               Choose a place
@@ -463,84 +462,6 @@ export function SitesPage({
           <PlaceNewsPanel place={activePlace} newsByPlace={newsByPlace} maxItems={5} />
         </section>
 
-        <section className="story-section">
-          <h2>Follow the evidence further</h2>
-          <p>
-            Explore the broader vegetation record on the Globe, or read how we keep observations, explanations and unknowns separate.
-          </p>
-          <div className="hero-actions">
-            <a
-              className="button secondary"
-              href={`#globe?mode=satellite&site=${site.id}&date=${encodeURIComponent(latestFrameDate.slice(0, 10))}`}
-            >
-              Explore land through time
-            </a>
-            <a className="button secondary" href="#method">
-              How we know
-            </a>
-          </div>
-          <details>
-            <summary>Image dates and technical records</summary>
-            <p>
-              {Number.isFinite(evidence?.inventory?.n)
-                ? 'The catalog contains ' +
-                  evidence.inventory.n +
-                  ' satellite scenes, including overlapping views and processing versions.'
-                : 'The catalog scene count is not available.'}{' '}
-              That count is not the number of independent measurements. Track/frame identifies a viewing path; <GlossaryTerm termKey="provisional" label="maturity" /> describes review status; <GlossaryTerm termKey="CRID" /> identifies the processing version.
-            </p>
-            <p>{coverageExplanation}</p>
-            <p>
-              Measured site-change series:{' '}
-              {Number.isFinite(evidence?.series?.n)
-                ? evidence.series.n + ' observations'
-                : 'observation count not available'}
-              . No quantitative water-area estimate is substituted for missing measurements.
-            </p>
-            <div className="table-scroll" role="region" aria-label="Scrollable scientific data table" tabIndex={0}>
-              <table>
-                <caption>Saved radar acquisition catalog and geometric study-box overlap</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Image date (UTC)</th>
-                    <th scope="col">Track / frame</th>
-                    <th scope="col">Review status</th>
-                    <th scope="col">Processing version</th>
-                    <th scope="col">Geometric overlap of study box</th>
-                    <th scope="col">Planned path</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {evidence?.inventory?.scenes?.map((s: any) => (
-                    <tr key={s.id}>
-                      <th scope="row">
-                        <a href={s.sourceUrl}>{s.date.slice(0, 10)}</a>
-                      </th>
-                      <td className="mono">
-                        {knownMetadata(s.track) || 'not available'} / {knownMetadata(s.frame) || 'not available'}
-                      </td>
-                      <td>{knownMetadata(s.maturity) || 'not available'}</td>
-                      <td className="mono">{knownMetadata(s.crid) || 'not available'}</td>
-                      <td>{footprintOverlap(s.bboxCoverageFraction)}</td>
-                      <td>{s.matchesObservationPlan ? 'Track/frame match' : 'not available'}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </details>
-        </section>
-
-        <WhereToNext
-          stepNumber="Step 3 of 5 · Globe"
-          nextHref={`#globe?mode=satellite&site=${site.id}&date=${encodeURIComponent(latestFrameDate.slice(0, 10))}`}
-          nextLabel="See This Place and Date on the 3D Globe"
-          whyText="Compare global NISAR radar swaths, monthly MODIS vegetation greenness, and the Philippines focus preset on an interactive 3D Earth."
-          secondaryLinks={[
-            { href: `#media?place=${activePlace?.id || site.id}`, label: 'See local news on Media →' },
-            { href: '#story', label: '← Back to Story' }
-          ]}
-        />
       </div>
     </section>
   );
