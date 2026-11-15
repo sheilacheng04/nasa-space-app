@@ -81,7 +81,7 @@ export function SitesPage({
     if (!active) return;
     let live = true;
     setWeather({ siteId: site.id, state: 'loading', data: null });
-    dataFile<ClimateContext>('context/' + site.id + '.json')
+    dataFile<ClimateContext>('context/' + site.id + '.json', { reload: weatherAttempt > 0 })
       .then((value) => {
         if (!value || !Array.isArray(value.monthly) || !Array.isArray(value.baselineMonthly))
           throw new Error('Invalid weather record');

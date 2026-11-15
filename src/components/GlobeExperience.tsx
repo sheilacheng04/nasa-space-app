@@ -11,7 +11,7 @@ import ConceptTimeline from './ConceptTimeline';
 import IllustrativeGlobe from './IllustrativeGlobe';
 import type { ConceptPlayback } from './ConceptTimeline';
 import ConceptVegetation from './ConceptVegetation';
-import {frameIndex,includeDates} from '../selection-url.js';
+import {frameIndex,includeDates,readRoute} from '../selection-url.js';
 import type {GlobeSelection,HistoryMode} from '../selection-url.js';
 import {PlaceNewsPanel} from './PlaceNewsPanel';
 import {WhereToNext} from './FirstVisitGuide';
@@ -37,7 +37,7 @@ function OceanStrip({enso,news,frame,start,end}:{enso:Enso;news?:News;frame?:Glo
 }
 export default function GlobeExperience({active,sites,places=[],newsByPlace,points,place,enso,news,oceanNotice,newsNotice,selection,onSelection,navigationKey}:{active:boolean;sites:Site[];places?:StudyPlace[];newsByPlace?:NewsByPlaceData;points:Observation[];place:Place|null;enso?:Enso;news?:News;oceanNotice:ReactNode;newsNotice:ReactNode;selection:GlobeSelection;onSelection:(selection:GlobeSelection,history?:HistoryMode)=>void;navigationKey:number}){
  const [manifest,setManifest]=useState<GlobeManifest|null>(null),[manifestError,setManifestError]=useState(''),[retryManifest,setRetryManifest]=useState(0);
- const mode=selection.mode||'satellite',selected=sites.find(site=>site.id===selection.site)||null;
+ const mode=(['concept','illustrative'].includes(selection.mode||'')?selection.mode:'illustrative') as NonNullable<GlobeSelection['mode']>,selected=sites.find(site=>site.id===selection.site)||null;
  const selectedStudyPlace=useMemo(()=>places.find(p=>p.id===selection.site||p.siteId===selection.site)||(selected?places.find(p=>p.siteId===selected.id||p.id===selected.id):null)||null,[places,selection.site,selected]);
  const latestSelection=useRef(selection);latestSelection.current=selection;
  const change=useCallback((patch:GlobeSelection,history:HistoryMode='push')=>{if(Object.entries(patch).some(([key,value])=>latestSelection.current[key as keyof GlobeSelection]!==value))onSelection({...latestSelection.current,...patch},history);},[onSelection]);
@@ -64,9 +64,9 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
  const frames=useMemo(()=>includeDates<GlobeFrame>(layer?.frames||[],[selection.date],date=>({date,layer:layerId,status:'no-data',maturity:'not available',maturityWindow:'not available',reason:'This requested date is not in the saved date record; live availability is unverified.'})),[layer,layerId,selection.date]);
  const requestedOutside=Boolean(selection.date&&layer&&frameIndex(layer.frames,selection.date)<0);
  const found=frameIndex(frames,selection.date),index=found>=0?found:Math.max(0,frames.length-1),frame=frames[index];
- latestSelection.current={...selection,mode,date:selection.date||frame?.date,month:selection.month||concept?.month};
+ latestSelection.current={...selection,mode,date:selection.date||(mode==='illustrative'?undefined:frame?.date),month:selection.month||concept?.month};
  function setIndex(next:number|((index:number)=>number),history:HistoryMode='replace'){const target=frames[typeof next==='function'?next(index):next];if(target)change({date:target.date},history);}
- const setMonth=useCallback((month:string,history:HistoryMode='push')=>change({month},history),[change]);
+ const setMonth=useCallback((month:string,history:HistoryMode='push')=>{const liveMode=readRoute(location.hash).globeSelection.mode||'illustrative';if(liveMode!=='concept')return;change({month},history);},[change]);
  const currentFrame=useRef(frame);currentFrame.current=frame;
  const bestIndex=useMemo(()=>frames.reduce((best,f,i)=>(f.nontransparentPixels||0)>(frames[best]?.nontransparentPixels||0)?i:best,0),[frames]);
  const dates=useMemo(()=>frames.map(f=>time(f.date)),[frames]),range=dates.length?dates.at(-1)!-dates[0]:1;
@@ -77,7 +77,7 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
   if(active){setGlobeMode(modeRef.current);void initGlobe(sites,points,(id:string)=>{location.hash='sites/'+id+(currentFrame.current?'?date='+currentFrame.current.date:'');}).then(globe=>{if(!current)return;if(globe){setReady(true);initLocalWindow();resumeGlobe();setGlobeMode(modeRef.current);}else{setStatus('error');setMessage('The globe renderer is unavailable.');}});}
   else{setPlaying(false);setGuidedTour(false);pauseGlobe();closeLocalWindow();}
   return()=>{current=false;pauseGlobe();closeLocalWindow();};
- },[active,sites]);
+ },[active,sites,mode]);
  useEffect(()=>{if(ready&&active&&place)flyTo(...place.geometry.coordinates);},[ready,active,place]);
  useLayoutEffect(()=>{closeLocalWindow();},[mode,active]);
  useLayoutEffect(()=>{setPlaying(false);if(ready&&active){setGlobeMode(mode);if(mode==='satellite'&&loaded&&loaded.date===frame?.date)void setSatelliteTexture(loaded.url,loaded.image,loaded.date).catch(()=>{setStatus('error');setMessage('The radar texture could not be displayed.');});}},[mode,ready,active]);
@@ -186,7 +186,7 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
  }
  useEffect(()=>{setGeographicContext(context);},[context,ready]);
  useEffect(()=>{const update=()=>setBasemap(document.getElementById('globe-stage')?.dataset.basemap||'loading');addEventListener('globe:basemap',update);update();return()=>removeEventListener('globe:basemap',update);},[ready]);
- const openConceptRadar=useCallback((date:string)=>{setPlaying(false);change({date,mode:'satellite'});},[change]);
+ const openConceptRadar=useCallback((date:string)=>{setPlaying(false);location.hash='sites/'+(selected?.id||'angat')+'?date='+date;},[selected?.id]);
  useEffect(()=>setPlaying(false),[navigationKey]);
  useEffect(()=>{if(active&&ready&&selected&&mode!=='illustrative')flyTo(...selected.coordinates,mode==='concept'?1.2:.65);},[active,ready,selected?.id]);
  const gap=manifest?.gap;
@@ -196,7 +196,7 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
  const readablePins=useMemo(()=>pins.filter(p=>p.visible).sort((a,b)=>Number(b.id===selected?.id)-Number(a.id===selected?.id)).reduce<typeof pins>((shown,pin)=>{if(shown.every(p=>Math.hypot(p.x-pin.x,p.y-pin.y)>=48))shown.push(pin);return shown;},[]),[pins,selected?.id]);
  return <div className="satellite-page" data-view-mode={mode} ref={section} onKeyDownCapture={key}>
  <div className="satellite-heading"><div><p className="eyebrow">Earth / a record through time · {sites.reduce((sum,site)=>sum+(site.savedFrameCount||0),0)} saved radar frames across {sites.length} radar sites</p><h1>{mode==='satellite'?'Earth through time':mode==='illustrative'?'The concept globe':'Seasons seen from space'}</h1></div><div className="globe-heading-controls"><div className="mode-switch" role="group" aria-label="Globe mode"><button id="concept-mode" aria-pressed={mode==='concept'} onClick={()=>setMode('concept')}>Land through time</button><button id="illustrative-mode" aria-pressed={mode==='illustrative'} onClick={()=>setMode('illustrative')}>Concept globe</button></div>{selection.site&&!selected&&<p role="status">Requested study site is not in this edition. {mode==='concept'?'The default study area is shown.':'No site crop is selected.'}</p>}</div></div>
- <div className="globe-hero-summary"><p className="coverage-note">{mode==='satellite'?<>Play dated <GlossaryTerm termKey="NISAR"/> radar images from NASA <GlossaryTerm termKey="GIBS"/>. Colored strips show where the satellite observed Earth; coverage changes with each date.</>:mode==='illustrative'?'Follow an illustrative climate progression, explore connected places, and take a guided tour.':<>Play real monthly <GlossaryTerm termKey="MODIS"/> satellite images to follow vegetation <GlossaryTerm termKey="greenness"/>. Compare seasons and local weather, then explore possible explanations.</>}</p><button type="button" className="button primary" onClick={()=>document.getElementById('globe-stage')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})}>Explore Earth →</button></div>
+ <div className="globe-hero-summary"><p className="coverage-note">{mode==='satellite'?<>Play dated <GlossaryTerm termKey="NISAR"/> radar images from NASA <GlossaryTerm termKey="GIBS"/>. Colored strips show where the satellite observed Earth; coverage changes with each date.</>:mode==='illustrative'?'Play dated NOAA observations through time, explore connected places, and take a guided tour.':<>Play real monthly <GlossaryTerm termKey="MODIS"/> satellite images to follow vegetation <GlossaryTerm termKey="greenness"/>. Compare seasons and local weather, then explore possible explanations.</>}</p><button type="button" className="button primary" onClick={()=>document.getElementById('globe-stage')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})}>Explore Earth →</button></div>
  <div className="globe-content"><div className="globe-visual">
  <div id="globe-stage" data-mode={mode} data-frame-status={status} className="satellite-stage">
  <div id="globe-canvas"/><p id="globe-status" className="globe-status" role="status">Loading globe…</p>
@@ -230,7 +230,7 @@ export default function GlobeExperience({active,sites,places=[],newsByPlace,poin
  <ConceptVegetation playing={!!monthPlayback?.playing} active={active&&mode==='concept'} month={selection.month||concept?.month||''} onStatus={setVegetationStatus}/>
  </div>
  <ConceptTimeline oceanNotice={oceanNotice} requestedMonth={selection.month} onMonthChange={setMonth} navigationKey={navigationKey} onPlaybackChange={setMonthPlayback} waiting={vegetationStatus==='loading'} active={active&&mode==='concept'} sites={sites} enso={enso} selectedSiteId={selected?.id} radarDates={frames.filter(f=>f.status==='ready').map(f=>f.date)} onSnapshot={receiveConcept} onSelectSite={focusConceptSite} onOpenRadar={openConceptRadar}/>
- <IllustrativeGlobe active={active&&mode==='illustrative'} ready={ready} sites={sites} news={news} newsNotice={newsNotice} navigationKey={navigationKey} selectedSiteId={selected?.id}/>
+ <IllustrativeGlobe enso={enso} active={active&&mode==='illustrative'} ready={ready} sites={sites} news={news} newsNotice={newsNotice} navigationKey={navigationKey} selectedSiteId={selected?.id}/>
  </div>
  <div className="satellite-workspace" hidden={mode!=='satellite'}>
  <section className="playback-sheet" aria-label="Radar playback options and evidence">

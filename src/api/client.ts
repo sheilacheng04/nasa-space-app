@@ -31,12 +31,13 @@ export async function request<T>(url: string, options: RequestInit & { timeout?:
     throw error;
   } finally { clearTimeout(timer); }
 }
+const dataCache = createJSONCache();
 export function dataFile<T = unknown>(path: string,options:{reload?:boolean}={}): Promise<T> {
   if (!hosted) {
     const data = globalThis.__PACIFIC_DATA__?.[path];
     return data === undefined ? Promise.reject(new Error('This file is not included in the offline demo.')) : Promise.resolve(structuredClone(data) as T);
   }
-  return request<T>('./data/' + path,options.reload?{cache:'reload'}:{});
+  return dataCache(path, () => request<T>('./data/' + path,options.reload?{cache:'reload'}:{}), Boolean(options.reload));
 }
 const startupCache=createJSONCache();
 export function startupFile<K extends DatasetKey>(key:K,reload=false):Promise<Required<Bootstrap>[K]>{

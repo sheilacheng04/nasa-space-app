@@ -1,19 +1,19 @@
 import {geoOrthographic,geoMercator,geoPath,geoGraticule10,geoDistance,geoCentroid} from 'd3-geo';
-import {feature} from 'topojson-client';
 import {dataFile,geocode} from './services.js';
+import {geography as loadGeography} from './geography.js';
 import './globe.css';
 import {loadGlobe} from './globe-loader.js';
 import {createCanvasGlobe} from './canvas-globe.js';
 import {composeSatelliteSurface} from './satellite-surface.js';
 import {esc,finite,assetURL} from './core.js';
 import {illustrationDefaults,renderIllustration,clearIllustration} from './illustrative-globe.js';
-let countries,world,observer,geographyPromise;
+let countries,world,observer;
 let globeMode='satellite',satelliteURL=null,satelliteImage=null,satelliteDate='',geographicContext=true,textureVersion=0;
 let surfaceOwner=null,surfaceReady=null,surfaceMaterial=null,originalMaterial=null,TextureType=null,textureOptions=null,lastSurfaceTexture=null;
 let lastSurface=null,lastMarkers=null,motionQuery;
 let baseImage=null,basePromise=null,conceptImage=null,conceptImageDate='';
 let illustration={...illustrationDefaults},illustrativeSelection=null,illustrativeImage=null,illustrativeDate='',illustrativeVisited=false;
-export async function geography(){if(!geographyPromise)geographyPromise=dataFile('world.topo.json').then(topo=>countries=feature(topo,topo.objects.countries)).catch(error=>{geographyPromise=null;throw error;});return geographyPromise;}
+export async function geography(){countries=await loadGeography();return countries;}
 export async function drawPacific(){const data=await geography(),projection=geoOrthographic().rotate([160,-10]).translate([280,270]).scale(222),path=geoPath(projection);const g=path(geoGraticule10());const band={type:'Polygon',coordinates:[[[-175,-5],[-175,5],[-115,5],[-115,-5],[-175,-5]]]};
  document.getElementById('pacific-map').innerHTML=`<svg viewBox="0 0 560 540" role="img" aria-label="Pacific-centered globe. Orange arrows illustrate an eastward shift of warm surface water, not measured temperatures."><defs><marker id="warm-arrow" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#da8c59" stroke-width="1"/></marker></defs><circle cx="280" cy="270" r="233" fill="none" stroke="#b6c3ba" stroke-width=".7"/><circle cx="280" cy="270" r="222" fill="#17313b"/><path d="${g}" fill="none" stroke="#65848b" stroke-opacity=".35" stroke-width=".6"/><path d="${path(data)}" fill="#7d9490" stroke="#a4b8ad" stroke-width=".5"/><path d="${path(band)}" fill="#d78a52" fill-opacity=".2"/><path d="M133 282Q268 249 403 286" fill="none" stroke="#da8c59" stroke-width="2" marker-end="url(#warm-arrow)"/><path d="M150 299Q278 276 388 303" fill="none" stroke="#da8c59" stroke-width="1" stroke-opacity=".6"/><text x="280" y="248" text-anchor="middle" fill="#d9e5de" font-size="10" letter-spacing="4">PACIFIC OCEAN</text><text x="278" y="331" text-anchor="middle" fill="#e5a171" font-size="8" letter-spacing="2">EQUATORIAL WARM POOL</text><path d="M80 270H480" stroke="#b8cac0" stroke-dasharray="2 5" opacity=".3"/><text x="280" y="509" text-anchor="middle" font-size="8" fill="#5f6867" letter-spacing="3">A CONNECTED OCEAN · A CHANGING LANDSCAPE</text></svg>`;
 }
@@ -25,6 +25,8 @@ let globeSites=[],globePoints=[],placeIndex=[],selectSite=()=>{},globePromise=nu
 let intersector,visible=false,routeActive=false,rendering=false,cameraFrame=0,searchSequence=0;
 let forceCanvas=false,recovering=false,rendererGeneration=0,rotating=false,listenersBound=false;
 let conceptSnapshot={date:'',month:'',sites:[]};
+let surfaceSnapshot={month:'',category:'vegetation',color:'#43b99b',sites:[]};
+export function setSurfaceSnapshot(snapshot){surfaceSnapshot=snapshot;refreshGlobe();}
 const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 const el=id=>document.getElementById(id);
 const normalize=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
@@ -115,7 +117,7 @@ function conceptMarkers(){
 }
 function refreshGlobe(){
  if(!world||!routeActive||document.hidden)return;
- const inputs=[world,globeMode,globeSites,globePoints,conceptSnapshot,illustration,illustrativeSelection,reduced(),illustrativeImage];if(lastMarkers&&inputs.every((value,i)=>value===lastMarkers[i]))return;lastMarkers=inputs;
+ const inputs=[world,globeMode,globeSites,globePoints,conceptSnapshot,surfaceSnapshot,illustration,illustrativeSelection,reduced(),illustrativeImage];if(lastMarkers&&inputs.every((value,i)=>value===lastMarkers[i]))return;lastMarkers=inputs;
  if(globeMode==='illustrative'){
   const counts=renderIllustration(world,countries,globeSites,globePoints,illustration,illustrativeSelection,reduced(),Boolean(illustrativeImage));
   if(stage()){Object.assign(stage().dataset,{layer:illustration.layer,phase:String(Math.round(illustration.phase)),visiblePoints:String(counts.points),arcCount:String(counts.arcs),ringCount:String(counts.rings),labelCount:String(counts.labels)});}
@@ -125,10 +127,11 @@ function refreshGlobe(){
  world.polygonsData([]).arcsData([]).ringsData([]).showAtmosphere(false);
  if(stage())stage().dataset.ringCount='0';
  const userMarkers=globePoints.filter(p=>finite(p.lat)&&finite(p.lng)).map(p=>({...p,user:true,signal:'user'}));
- const markers=[...(globeMode==='concept'?conceptMarkers():[]),...userMarkers];
- world.pointsMerge(false).pointsData(markers).pointRadius(.48).pointAltitude(.003)
-  .pointColor(d=>d.user?'#d2dce8':signalColor[d.signal]).labelSize(.5).labelColor('#eaf2ff').labelsData([]);
+ const markers=[...(globeMode==='surface'?surfaceSnapshot.sites:globeMode==='concept'?conceptMarkers():[]),...userMarkers];
+ world.pointsMerge(false).pointsData(markers).pointRadius(d=>d.surface&&d.selected?.65:.48).pointAltitude(.003)
+  .pointColor(d=>d.user?'#d2dce8':d.surface?(d.selected?'#ff7a3d':d.color):signalColor[d.signal]).labelSize(.5).labelColor('#eaf2ff').labelsData([]);
  if(stage()){
+  stage().dataset.surfaceMonth=surfaceSnapshot.month;stage().dataset.surfaceCategory=surfaceSnapshot.category;stage().dataset.surfaceSignals=JSON.stringify(surfaceSnapshot.sites.map(s=>({id:s.id,status:s.status,previews:s.previews,acquisitions:s.acquisitions})));
   stage().dataset.conceptDate=conceptSnapshot.date||'';
   stage().dataset.conceptSignals=JSON.stringify((conceptSnapshot.sites||[]).map(s=>({id:s.id,signal:s.signal||'unknown',rainAnomaly:finite(s.rainAnomaly)?s.rainAnomaly:null})));
   stage().dataset.userPointCount=String(userMarkers.length);stage().dataset.visiblePoints=String(markers.length);stage().dataset.arcCount='0';stage().dataset.labelCount='0';
@@ -162,6 +165,7 @@ function selectLocation(place){
   if(stage())stage().dataset.selected=place.name;
   note(place.name+' / '+(place.user?'user-supplied observation':'geographic locator'));return;
  }
+ if(place.surface){dispatchEvent(new CustomEvent('globe:surface-select',{detail:{id:place.id}}));flyTo(place.lng,place.lat,.3);return;}
  if(place.site){dispatchEvent(new CustomEvent('globe:select-site',{detail:{id:place.id}}));return;}
  flyTo(place.lng,place.lat,place.feature?1.1:.8);
  if(stage())stage().dataset.selected=place.siteName||place.name;
@@ -253,7 +257,7 @@ export async function initGlobe(sites,points,onSelect){
    instance=createWorld(Globe,element,graphics);world=instance;
    instance.width(Math.max(1,element.clientWidth)).height(Math.max(1,element.clientHeight)).backgroundColor('rgba(0,0,0,0)').showAtmosphere(false)
     .polygonsData([]).polygonsTransitionDuration(0).polygonLabel(f=>'<div class="globe-tooltip"><strong>'+esc(f.properties.name)+'</strong><br>Illustrative climate pattern / click to explore</div>').onPolygonClick(f=>{const [lng,lat]=geoCentroid(f);selectLocation({name:f.properties.name,feature:f,lng,lat});}).pointsData([]).pointLat('lat').pointLng('lng').pointRadius(.48).pointResolution(12)
-    .pointLabel(d=>'<div class="globe-tooltip"><strong>'+esc(d.siteName||d.name)+'</strong><br>'+(d.user?'Your observation / '+esc(d.date||'Date not supplied')+' / '+esc(d.value??'No value')+' '+esc(d.category||''):globeMode==='illustrative'?'Study area / illustrative climate pattern':esc(conceptSnapshot.month||conceptSnapshot.date)+' / '+esc(d.name))+'</div>')
+    .pointLabel(d=>'<div class="globe-tooltip"><strong>'+esc(d.siteName||d.name)+'</strong><br>'+(d.user?'Your observation / '+esc(d.date||'Date not supplied')+' / '+esc(d.value??'No value')+' '+esc(d.category||''):d.surface?esc(d.name):globeMode==='illustrative'?'Study area / illustrative climate pattern':esc(conceptSnapshot.month||conceptSnapshot.date)+' / '+esc(d.name))+'</div>')
     .onPointClick(selectLocation).labelsData([]).labelLat('lat').labelLng('lng').labelText('name').labelColor(()=>'#f2f6fb')
     .labelSize(.5).labelAltitude(.018).labelDotRadius(.22).labelResolution(2).onLabelClick(selectLocation)
     .arcsData([]).ringsData([]).onGlobeClick(({lat,lng})=>selectLocation({name:lat.toFixed(3)+', '+lng.toFixed(3),lat,lng}));
@@ -372,7 +376,7 @@ function drawSurface(){
  if(!world.__compatibility&&(!TextureType||!surfaceMaterial))return;
  const radar=globeMode==='satellite'?satelliteImage:null,vegetation=globeMode==='concept'?conceptImage:null;
  const illustrated=globeMode==='illustrative',optical=illustrated?illustrativeImage:null;
- const context=!illustrated&&(globeMode==='concept'||geographicContext);
+ const context=!illustrated&&(globeMode==='concept'||globeMode==='surface'||geographicContext);
  if(stage()){stage().dataset.illustrativeImageDate=optical?illustrativeDate:'';}
  if(illustrated&&!optical){
   if(stage())Object.assign(stage().dataset,{radarVisible:'false',radarDate:'',vegetationVisible:'false',vegetationDate:'',geographicContext:'false'});
@@ -403,7 +407,7 @@ function drawSurface(){
 }
 export function setGeographicContext(enabled){geographicContext=Boolean(enabled);drawSurface();}
 export function setGlobeMode(mode){
- const next=['concept','illustrative'].includes(mode)?mode:'satellite',changed=globeMode!==next;if(changed)++textureVersion;globeMode=next;
+ const next=['concept','illustrative','surface'].includes(mode)?mode:'satellite',changed=globeMode!==next;if(changed)++textureVersion;globeMode=next;
  if(stage())stage().dataset.mode=next;if(!world)return;
  if(changed)stopRotation();world.showAtmosphere(next==='illustrative');world.polygonsTransitionDuration(next==='illustrative'&&!reduced()?180:0);
  if(next==='illustrative'&&!illustrativeVisited){illustrativeVisited=true;world.pointOfView({lat:5,lng:-160,altitude:2.3},0);rotating=!reduced();world.controls().autoRotate=rotating;setPressed('globe-rotate',rotating);}

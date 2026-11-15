@@ -51,15 +51,27 @@ pre{font:11px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;max-wi
 .std-caption-body{margin-top:6px;display:grid;gap:6px;color:var(--muted);font-size:12px}
 .std-caption-body p{margin:0}
 
-/* FirstVisitGuide & WhereToNext */
-.first-visit-guide{background:var(--bg2);border-bottom:1px solid var(--line);padding:14px 0}
-.first-visit-guide-inner{padding-top:6px;padding-bottom:6px}
-.first-visit-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
-.first-visit-head h2{font-size:18px;margin:2px 0 0}
-.first-visit-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;list-style:none;padding:0;margin:0}
-.first-visit-steps li{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-md);padding:12px;font-size:13px}
-.first-visit-steps li strong{display:block;margin-bottom:4px;font-size:14px}
-.first-visit-steps li p{margin:0 0 8px;color:var(--muted);font-size:12px}
+/* FirstVisitGuide (Help Modal Popup) & WhereToNext */
+.help-guide-dialog{width:min(780px,94vw);max-height:88dvh;padding:0;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--card);color:var(--ink);overflow:hidden}
+.help-guide-dialog::backdrop{backdrop-filter:blur(4px)}
+.help-guide-modal-panel{padding:22px 24px;max-height:88dvh;overflow-y:auto}
+.first-visit-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
+.first-visit-head h2{font-size:22px;margin:2px 0 0}
+.help-guide-close-icon{font-size:20px;line-height:1;flex-shrink:0}
+.help-guide-intro{font-size:13.5px;color:var(--muted);margin:0 0 16px;max-width:680px;line-height:1.55}
+.first-visit-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;list-style:none;padding:0;margin:0 0 16px}
+.first-visit-steps li{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius-md);padding:14px;font-size:13px;display:flex;flex-direction:column;justify-content:space-between;gap:6px}
+.help-step-badge{display:inline-block;align-self:flex-start;font-size:10px;padding:2px 8px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--line);color:var(--orange);font-weight:700}
+.first-visit-steps li strong{display:block;margin:2px 0;font-size:14px;color:var(--ink)}
+.first-visit-steps li p{margin:0 0 6px;color:var(--muted);font-size:12px;line-height:1.5;flex:1}
+.first-visit-steps li a{font-size:12px;font-weight:600;color:var(--blue)}
+.help-step-links{display:flex;gap:10px;flex-wrap:wrap}
+.help-guide-science{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:16px}
+.help-guide-science h3{font-size:13px;margin:0 0 8px;color:var(--ink)}
+.help-guide-science-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;font-size:12px}
+.help-guide-science-grid strong{display:block;font-size:12px;margin-bottom:3px;color:var(--blue)}
+.help-guide-science-grid p{margin:0;font-size:11.5px;color:var(--muted);line-height:1.45}
+.help-guide-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--line)}
 .where-to-next{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin:28px 0 12px;padding:18px 20px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-card)}
 .where-to-next h3{margin:4px 0 6px;font-size:20px}
 .where-to-next p{margin:0;color:var(--muted);max-width:580px;font-size:14px}
@@ -157,7 +169,7 @@ pre{font:11px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;max-wi
 .method-source-card{padding:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-md);font-size:13px}
 .method-source-card h4{margin:4px 0 8px}
 
-@media(max-width:760px){.hero-observation{grid-template-columns:1fr;gap:16px}.hero-observation>img{height:280px}.radar-evidence{padding:14px}.site-picker{width:100%}.radar-stage{height:320px}.radar-tabs button{font-size:11px;padding:7px 10px}.image-label{font-size:8px;padding:6px;left:8px;top:8px}.image-label.right{right:8px}.acquisition-controls{gap:10px}.acquisition-controls select{font-size:12px}.swipe-control{flex-wrap:wrap;gap:10px;font-size:11px}.swipe-control input{min-width:130px}.chart-grid{grid-template-columns:1fr}.table-scroll table{min-width:620px}.evidence-list{grid-template-columns:1fr}.evidence-row{display:grid;grid-template-columns:100px minmax(0,1fr);gap:14px}.evidence-row figure{margin:0}.evidence-row img{height:120px}.evidence-row h3{font-size:17px}.evidence-row p{font-size:12px}.rain-departures>span{min-width:54px;margin-right:4px;font-size:10px;padding:8px}.caption-top{flex-wrap:wrap}.evidence-lead img{width:72px}.hero-observation figcaption{min-width:0}.first-visit-steps{grid-template-columns:1fr}.story-preview-stage{grid-template-columns:1fr}.story-date-views{grid-template-columns:1fr}.where-to-next-actions{align-items:flex-start}}
+@media(max-width:760px){.hero-observation{grid-template-columns:1fr;gap:16px}.hero-observation>img{height:280px}.radar-evidence{padding:14px}.site-picker{width:100%}.radar-stage{height:320px}.radar-tabs button{font-size:11px;padding:7px 10px}.image-label{font-size:8px;padding:6px;left:8px;top:8px}.image-label.right{right:8px}.acquisition-controls{gap:10px}.acquisition-controls select{font-size:12px}.swipe-control{flex-wrap:wrap;gap:10px;font-size:11px}.swipe-control input{min-width:130px}.chart-grid{grid-template-columns:1fr}.table-scroll table{min-width:620px}.evidence-list{grid-template-columns:1fr}.evidence-row{display:grid;grid-template-columns:100px minmax(0,1fr);gap:14px}.evidence-row figure{margin:0}.evidence-row img{height:120px}.evidence-row h3{font-size:17px}.evidence-row p{font-size:12px}.rain-departures>span{min-width:54px;margin-right:4px;font-size:10px;padding:8px}.caption-top{flex-wrap:wrap}.evidence-lead img{width:72px}.hero-observation figcaption{min-width:0}.first-visit-steps,.help-guide-science-grid{grid-template-columns:1fr}.help-guide-modal-panel{padding:16px}.first-visit-head h2{font-size:19px}.story-preview-stage{grid-template-columns:1fr}.story-date-views{grid-template-columns:1fr}.where-to-next-actions{align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){.evidence-row,.frame-progress-fill{transition:none}}
 
 /* Keep the original orange/blue scheme legible in both themes. */

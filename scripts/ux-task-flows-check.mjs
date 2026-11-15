@@ -68,16 +68,15 @@ try {
   await attachLocalDistServer(context);
   const page = await context.newPage();
 
-  // First-visit guide check (Task F8)
+  // First-visit guide popup check (Task F8 / Help Guide Redesign)
   await page.goto(`${base}/#story`, { waitUntil: 'networkidle' });
-  await expect(page.getByTestId('first-visit-guide')).toBeVisible();
-  await page.locator('#dismiss-guide').click();
   await expect(page.getByTestId('first-visit-guide')).toHaveCount(0);
   await page.locator('#open-guide').click();
   await expect(page.getByTestId('first-visit-guide')).toBeVisible();
   await page.locator('#dismiss-guide').click();
-  report.featureChecks.push('Dismissable 3-step first-visit guide (localStorage) + header ? button (#open-guide) works');
-  console.log('PASS First-visit guide and ? button');
+  await expect(page.getByTestId('first-visit-guide')).toHaveCount(0);
+  report.featureChecks.push('Modal 3-step help guide popup (#open-guide / #dismiss-guide) works');
+  console.log('PASS Help guide popup and ? button');
 
   // Flow 1: Understand what El Niño is and how the Pacific shifts (<= 5 clicks)
   {
@@ -106,7 +105,7 @@ try {
   {
     let clicks = 0;
     await page.goto(`${base}/#story`, { waitUntil: 'networkidle' });
-    await page.getByRole('link', { name: /2.*Sites/ }).click();
+    await page.getByRole('link', { name: /^(2.*)?Sites$/ }).click();
     clicks++;
     await expect(page.locator('#site-select')).toHaveValue('angat');
     await expect(page.locator('#page-sites')).toContainText('Angat');
@@ -151,7 +150,7 @@ try {
   {
     let clicks = 0;
     await page.goto(`${base}/#story`, { waitUntil: 'networkidle' });
-    await page.getByRole('link', { name: /2.*Sites/ }).click();
+    await page.getByRole('link', { name: /^(2.*)?Sites$/ }).click();
     clicks++;
     await page.locator('#site-select').selectOption('luzon');
     clicks++;
@@ -173,7 +172,7 @@ try {
   {
     let clicks = 0;
     await page.goto(`${base}/#story`, { waitUntil: 'networkidle' });
-    await page.getByRole('link', { name: /5.*Data and method/ }).click();
+    await page.getByRole('link', { name: /^(5.*)?Data and method$/ }).click();
     clicks++;
     await expect(page.locator('#page-method')).toBeVisible();
     await page.locator('.method-links a[href="#method/limits"]').click();

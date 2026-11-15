@@ -1,5 +1,5 @@
 export type IllustrationLayer='heat'|'rain'|'stress'|'geography';
-export interface IllustrationState {layer:IllustrationLayer;phase:number;links:boolean;towers:boolean;labels:boolean;userData:boolean}
+export interface IllustrationState {layer:IllustrationLayer;phase:number;anomaly:number;links:boolean;towers:boolean;labels:boolean;userData:boolean}
 export const illustrationDefaults:IllustrationState;
 export const illustrationLegends:Record<IllustrationLayer,[string,string,string,string]>;
 export function phaseLabel(phase:number):string;

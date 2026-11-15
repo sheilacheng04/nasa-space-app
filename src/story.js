@@ -1,6 +1,6 @@
 import './story.css';
 import {geoNaturalEarth1,geoPath,geoGraticule10} from 'd3-geo';
-import {geography} from './world.js';
+import {geography} from './geography.js';
 
 const stages=[
  {value:0,name:'Normal year',caption:'Steady trade winds push warm surface water west. Rain follows the warm pool near Asia and Australia, while cool water rises near South America.'},
