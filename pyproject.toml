@@ -18,4 +18,4 @@ entrypoint = "backend.main:app"
 
 [tool.vercel.fastapi.static]
 cdn = true
-exclude = false
+exclude = true
